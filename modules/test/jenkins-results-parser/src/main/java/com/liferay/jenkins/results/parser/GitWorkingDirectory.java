@@ -415,50 +415,49 @@ public class GitWorkingDirectory {
 
 			return;
 		}
-		else {
-			Remote remote = remoteBranch.getRemote();
 
-			String remoteURL = remote.getRemoteURL();
+		Remote remote = remoteBranch.getRemote();
 
-			if (remoteURL.contains("github-dev.liferay.com")) {
-				executeBashCommands("rm -f ~/.ssh/known_hosts");
-			}
+		String remoteURL = remote.getRemoteURL();
 
-			if (remoteURL.contains("github.com:liferay/")) {
-				remoteURL = remoteURL.replace(
-					"github.com:liferay/", "github-dev.liferay.com:liferay/");
+		if (remoteURL.contains("github-dev.liferay.com")) {
+			executeBashCommands("rm -f ~/.ssh/known_hosts");
+		}
 
-				Remote gitHubDevRemote = null;
+		if (remoteURL.contains("github.com:liferay/")) {
+			remoteURL = remoteURL.replace(
+				"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
-				try {
-					gitHubDevRemote = addRemote(
-						true, "github-dev-remote", remoteURL);
+			Remote gitHubDevRemote = null;
 
-					Branch localGitRemoteBranch = getBranch(
-						remoteBranch.getName(), gitHubDevRemote);
+			try {
+				gitHubDevRemote = addRemote(
+					true, "github-dev-remote", remoteURL);
 
-					if (localGitRemoteBranch != null) {
-						fetch(localBranch, noTags, localGitRemoteBranch);
+				Branch localGitRemoteBranch = getBranch(
+					remoteBranch.getName(), gitHubDevRemote);
 
-						String upstreamBranchSHA = remoteBranch.getSHA();
+				if (localGitRemoteBranch != null) {
+					fetch(localBranch, noTags, localGitRemoteBranch);
 
-						if (localSHAExists(upstreamBranchSHA)) {
-							if (!upstreamBranchSHA.equals(
-									localGitRemoteBranch.getSHA())) {
+					String upstreamBranchSHA = remoteBranch.getSHA();
 
-								createLocalBranch(
-									localBranch.getName(), true,
-									remoteBranch.getSHA());
-							}
+					if (localSHAExists(upstreamBranchSHA)) {
+						if (!upstreamBranchSHA.equals(
+								localGitRemoteBranch.getSHA())) {
 
-							return;
+							createLocalBranch(
+								localBranch.getName(), true,
+								remoteBranch.getSHA());
 						}
+
+						return;
 					}
 				}
-				finally {
-					if (gitHubDevRemote != null) {
-						removeRemote(gitHubDevRemote);
-					}
+			}
+			finally {
+				if (gitHubDevRemote != null) {
+					removeRemote(gitHubDevRemote);
 				}
 			}
 		}
@@ -471,15 +470,13 @@ public class GitWorkingDirectory {
 			sb.append(" --no-tags ");
 		}
 
-		Remote remote = remoteBranch.getRemote();
-
 		sb.append(remote.getName());
 
 		String remoteBranchName = remoteBranch.getName();
 
 		if ((remoteBranchName != null) && !remoteBranchName.isEmpty()) {
 			sb.append(" ");
-			sb.append(remoteBranch.getName());
+			sb.append(remoteBranchName);
 
 			if (localBranch != null) {
 				sb.append(":");
@@ -754,6 +751,43 @@ public class GitWorkingDirectory {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", getGitHubUserName(branchRemote), "/",
 			getRepositoryName(), "/tree/", branchName, "/", relativePath);
+	}
+
+	public List<File> getModifiedFilesList() {
+		return getModifiedFilesList(null);
+	}
+
+	public List<File> getModifiedFilesList(String grepPredicateString) {
+		List<File> modifiedFiles = new ArrayList<>();
+
+		Branch currentBranch = getCurrentBranch();
+
+		String bashCommand = JenkinsResultsParserUtil.combine(
+			"git diff --diff-filter=AM --name-only ",
+			_getMergeBaseCommitSHA(
+				currentBranch, getBranch(_upstreamBranchName, null)),
+			" ", currentBranch.getSHA());
+
+		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
+			bashCommand = JenkinsResultsParserUtil.combine(
+				bashCommand, " | grep ", grepPredicateString);
+		}
+
+		ExecutionResult executionResult = executeBashCommands(bashCommand);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				"Unable to get current branch modified files\n" +
+					executionResult.getStandardError());
+		}
+
+		String gitDiffOutput = executionResult.getStandardOut();
+
+		for (String line : gitDiffOutput.split("\n")) {
+			modifiedFiles.add(new File(_workingDirectory, line));
+		}
+
+		return modifiedFiles;
 	}
 
 	public Remote getRemote(String name) {
@@ -1295,17 +1329,16 @@ public class GitWorkingDirectory {
 
 				break;
 			}
-			catch (InterruptedException | IOException | TimeoutException e) {
+			catch (IOException | TimeoutException e) {
 				if (retries == maxRetries) {
 					throw new RuntimeException(
 						"Unable to execute bash commands: " +
 							Arrays.toString(commands),
 						e);
 				}
-				else {
-					System.out.println("Fetch attempt failed retrying... ");
-					e.printStackTrace();
-				}
+
+				System.out.println("Fetch attempt failed retrying... ");
+				e.printStackTrace();
 			}
 		}
 
@@ -1629,6 +1662,31 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				"Unable to get build property " + key, ioe);
 		}
+	}
+
+	private String _getMergeBaseCommitSHA(Branch... branches) {
+		if (branches.length < 2) {
+			throw new IllegalArgumentException(
+				"Unable to perform merge-base with less than two branches");
+		}
+
+		StringBuilder sb = new StringBuilder("git merge-base");
+
+		for (Branch branch : branches) {
+			sb.append(" ");
+			sb.append(branch.getName());
+		}
+
+		ExecutionResult executionResult = executeBashCommands(sb.toString());
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get merge base commit SHA\n",
+					executionResult.getStandardError()));
+		}
+
+		return executionResult.getStandardOut();
 	}
 
 	private String _log(int num, File file, String format) {

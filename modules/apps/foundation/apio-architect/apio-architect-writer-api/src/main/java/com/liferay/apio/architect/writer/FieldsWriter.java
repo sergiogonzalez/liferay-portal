@@ -49,7 +49,6 @@ import java.util.stream.Stream;
  * @author Alejandro Hernández
  * @param  <T> the model's type
  * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
- * @review
  */
 public class FieldsWriter<T, S> {
 

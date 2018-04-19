@@ -61,9 +61,11 @@ public class ApioApplicationRegistrar {
 		_serviceRegistration = bundleContext.registerService(
 			Application.class, application, properties);
 
-		PersonModel.computePersonModels();
-		BlogPostingModel.computeBlogPostingModels();
-		BlogPostingCommentModel.computeBlogPostingCommentModels();
+		PersonModel.compute();
+
+		BlogPostingModel.compute();
+
+		BlogPostingCommentModel.compute();
 	}
 
 	@Deactivate

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-result-message')]</td>
+	<td>//div[@class='sheet']/div[contains(@class,'sheet-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,6 +71,11 @@
 <tr>
 	<td>ERROR_3</td>
 	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning')) and (not(contains(@id,'warningMessage')))])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_4</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-danger')) and (not(contains(@id,'warningMessage')))])</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,17 +150,12 @@
 </tr>
 <tr>
 	<td>INFO_4</td>
-	<td>xpath=(//div[contains(@class,'alert-info') and contains(@class,'alert-warning')]/a)[1]</td>
+	<td>xpath=(//div[contains(@class,'alert-info')]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_ARTICLE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/span/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_NO_RESULTS_FOUND</td>
-	<td>//div[contains(@class,'empty-result-message')]//div[contains(@class,'text-center')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,11 +215,6 @@
 </tr>
 <tr>
 	<td>SUCCESS</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_LOCALIZED</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>

@@ -23,8 +23,6 @@ import static com.liferay.apio.architect.routes.RoutesTestUtil.REQUEST_PROVIDE_F
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
-import static java.util.Collections.singletonMap;
-
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -33,6 +31,7 @@ import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.alias.routes.CreateItemFunction;
 import com.liferay.apio.architect.alias.routes.GetPageFunction;
+import com.liferay.apio.architect.form.Body;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -207,7 +206,9 @@ public class CollectionRoutesTest {
 	private String _testAndReturnNoParameterCreatorRoute(
 		Map<String, Object> body) {
 
-		assertThat(body, is(_body));
+		Optional<String> optional = _body.getValueOptional("key");
+
+		assertThat(body.get("key"), is(optional.get()));
 
 		return "Apio";
 	}
@@ -274,7 +275,7 @@ public class CollectionRoutesTest {
 		Optional<CollectionRoutes<String>> optional = Optional.of(
 			collectionRoutes);
 
-		Map body = optional.flatMap(
+		Map map = optional.flatMap(
 			CollectionRoutes::getFormOptional
 		).map(
 			form -> {
@@ -284,7 +285,9 @@ public class CollectionRoutesTest {
 			}
 		).get();
 
-		assertThat(body, is(_body));
+		Optional<String> valueOptional = _body.getValueOptional("key");
+
+		assertThat(map.get("key"), is(valueOptional.get()));
 
 		SingleModel<String> singleModel = optional.flatMap(
 			CollectionRoutes::getCreateItemFunctionOptional
@@ -293,7 +296,7 @@ public class CollectionRoutesTest {
 			null
 		).apply(
 			_body
-		);
+		).getUnchecked();
 
 		assertThat(singleModel.getResourceName(), is("name"));
 		assertThat(singleModel.getModel(), is("Apio"));
@@ -303,7 +306,7 @@ public class CollectionRoutesTest {
 		).get(
 		).apply(
 			null
-		);
+		).getUnchecked();
 
 		assertThat(page.getItems(), hasSize(1));
 		assertThat(page.getItems(), hasItem("Apio"));
@@ -320,6 +323,6 @@ public class CollectionRoutesTest {
 		assertThat(operation.name, is("name/create"));
 	}
 
-	private final Map<String, Object> _body = singletonMap("key", "value");
+	private final Body _body = __ -> Optional.of("Apio");
 
 }

@@ -156,7 +156,6 @@ public class HALTestUtil {
 	 * the first nested model.
 	 *
 	 * @return the matcher
-	 * @review
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheFirstNested() {
 		Conditions.Builder builder = new Conditions.Builder();
@@ -258,7 +257,6 @@ public class HALTestUtil {
 	 * the second nested model.
 	 *
 	 * @return the matcher
-	 * @review
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheSecondNested(
 		String id) {

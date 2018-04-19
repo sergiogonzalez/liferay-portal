@@ -18,6 +18,9 @@ import static com.liferay.apio.architect.alias.ProvideFunction.curry;
 import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.cache.ManagerCache.INSTANCE;
 
+import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
+
 import com.liferay.apio.architect.logger.ApioLogger;
 import com.liferay.apio.architect.router.ItemRouter;
 import com.liferay.apio.architect.routes.ItemRoutes;
@@ -64,8 +67,11 @@ public class ItemRouterManagerImpl
 					className);
 
 				if (!nameOptional.isPresent()) {
-					_apioLogger.warning(
-						"Unable to find a name for class name " + className);
+					if (_apioLogger != null) {
+						_apioLogger.warning(
+							"Unable to find a Representable for class name " +
+								className);
+					}
 
 					return;
 				}
@@ -81,12 +87,18 @@ public class ItemRouterManagerImpl
 					name, curry(_providerManager::provideMandatory),
 					neededProviders::add);
 
+				ItemRoutes<Object, Object> itemRoutes = itemRouter.itemRoutes(
+					builder);
+
 				List<String> missingProviders =
 					_providerManager.getMissingProviders(neededProviders);
 
 				if (!missingProviders.isEmpty()) {
-					_apioLogger.warning(
-						"Missing providers for classes: " + missingProviders);
+					if (_apioLogger != null) {
+						_apioLogger.warning(
+							"Missing providers for classes: " +
+								missingProviders);
+					}
 
 					return;
 				}
@@ -95,18 +107,20 @@ public class ItemRouterManagerImpl
 					_pathIdentifierMapperManager.hasPathIdentifierMapper(name);
 
 				if (!hasPathIdentifierMapper) {
-					_apioLogger.warning(
-						"Missing path identifier mapper for resource with " +
-							"name " + name);
+					if (_apioLogger != null) {
+						_apioLogger.warning(
+							"Missing path identifier mapper for resource " +
+								"with name " + name);
+					}
 
 					return;
 				}
 
-				INSTANCE.putItemRoutes(name, itemRouter.itemRoutes(builder));
+				INSTANCE.putItemRoutes(name, itemRoutes);
 			});
 	}
 
-	@Reference
+	@Reference(cardinality = OPTIONAL, policyOption = GREEDY)
 	private ApioLogger _apioLogger;
 
 	@Reference

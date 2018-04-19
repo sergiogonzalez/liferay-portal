@@ -300,7 +300,7 @@ version 1.0.182.
 - [LPS-76626]: The `BuildServiceTask`'s `databaseNameMaxLengthCheckEnabled`
 property is no longer available.
 
-## 2.1.0 - *(Unreleased)*
+## 2.1.0 - 2018-03-21
 
 ### Added
 - [LPS-78023]: Add the property `uadDir` and `uadTestIntegrationDir` to all
@@ -308,7 +308,61 @@ tasks that extend `BuildServiceTask`.
 
 ### Changed
 - [LPS-78023]: Update the [Liferay Portal Tools Service Builder] dependency to
-version 1.0.182.
+version 1.0.183.
+
+## 2.1.1 - 2018-03-27
+
+### Changed
+- [LPS-78477]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.184.
+
+## 2.1.2 - 2018-03-27
+
+### Changed
+- [LPS-78901]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.185.
+
+## 2.1.3 - 2018-03-29
+
+### Changed
+- [LPS-74544]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.186.
+
+## 2.1.4 - 2018-04-04
+
+### Changed
+- [LPS-79365]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.187.
+
+## 2.1.5 - 2018-04-05
+
+### Changed
+- [LPS-79365]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.188.
+
+## 2.1.6 - 2018-04-06
+
+### Changed
+- [LPS-78971]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.189.
+
+## 2.1.7 - 2018-04-09
+
+### Changed
+- [LPS-79385]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.190.
+
+## 2.1.8 - 2018-04-13
+
+### Changed
+- [LPS-77639]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.191.
+
+## 2.1.9 - 2018-04-13
+
+### Changed
+- [LPS-79623]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.192.
 
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
@@ -337,6 +391,7 @@ version 1.0.182.
 [LPS-74207]: https://issues.liferay.com/browse/LPS-74207
 [LPS-74278]: https://issues.liferay.com/browse/LPS-74278
 [LPS-74348]: https://issues.liferay.com/browse/LPS-74348
+[LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LPS-74824]: https://issues.liferay.com/browse/LPS-74824
 [LPS-75009]: https://issues.liferay.com/browse/LPS-75009
 [LPS-75010]: https://issues.liferay.com/browse/LPS-75010
@@ -345,4 +400,11 @@ version 1.0.182.
 [LPS-75859]: https://issues.liferay.com/browse/LPS-75859
 [LPS-76018]: https://issues.liferay.com/browse/LPS-76018
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
+[LPS-77639]: https://issues.liferay.com/browse/LPS-77639
 [LPS-78023]: https://issues.liferay.com/browse/LPS-78023
+[LPS-78477]: https://issues.liferay.com/browse/LPS-78477
+[LPS-78901]: https://issues.liferay.com/browse/LPS-78901
+[LPS-78971]: https://issues.liferay.com/browse/LPS-78971
+[LPS-79365]: https://issues.liferay.com/browse/LPS-79365
+[LPS-79385]: https://issues.liferay.com/browse/LPS-79385
+[LPS-79623]: https://issues.liferay.com/browse/LPS-79623

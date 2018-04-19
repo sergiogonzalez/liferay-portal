@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.endpoint;
 
 import static com.liferay.apio.architect.test.util.result.TryMatchers.aFailTry;
-import static com.liferay.apio.architect.test.util.result.TryMatchers.aSuccessTry;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -23,6 +22,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.representor.Representor.Builder;
@@ -50,10 +50,10 @@ public class BinaryEndpointTest {
 	public void testBinaryEndpointWithEmptyRepresentorReturnsFailure() {
 		BinaryEndpoint binaryEndpoint = _getBinaryEndpoint(null);
 
-		Try<InputStream> inputStreamTry =
-			binaryEndpoint.getCollectionItemInputStreamTry("", "", "");
+		Try<BinaryFile> binaryFileTry =
+			binaryEndpoint.getCollectionItemBinaryFileTry("", "", "");
 
-		assertThat(inputStreamTry, is(aFailTry()));
+		assertThat(binaryFileTry, is(aFailTry()));
 	}
 
 	@Test
@@ -62,32 +62,34 @@ public class BinaryEndpointTest {
 			__ -> Optional.of(_representor()),
 			(name, id) -> Try.fail(new IllegalArgumentException()));
 
-		Try<InputStream> inputStreamTry =
-			binaryEndpoint.getCollectionItemInputStreamTry("", "", "");
+		Try<BinaryFile> binaryFileTry =
+			binaryEndpoint.getCollectionItemBinaryFileTry("", "", "");
 
-		assertThat(inputStreamTry, is(aFailTry()));
+		assertThat(binaryFileTry, is(aFailTry()));
 	}
 
 	@Test
 	public void testBinaryEndpointWithNoPresentIdReturnFailure() {
 		BinaryEndpoint binaryEndpoint = _getBinaryEndpoint(_representor());
 
-		Try<InputStream> inputStreamTry =
-			binaryEndpoint.getCollectionItemInputStreamTry("", "", "");
+		Try<BinaryFile> binaryFileTry =
+			binaryEndpoint.getCollectionItemBinaryFileTry("", "", "");
 
-		assertThat(inputStreamTry, is(aFailTry()));
+		assertThat(binaryFileTry, is(aFailTry()));
 	}
 
 	@Test
 	public void testBinaryEndpointWithValidFunctionsReturnInputStream() {
 		BinaryEndpoint binaryEndpoint = _getBinaryEndpoint(_representor());
 
-		Try<InputStream> inputStreamTry =
-			binaryEndpoint.getCollectionItemInputStreamTry("", "", "binary");
+		Try<BinaryFile> binaryFileTry =
+			binaryEndpoint.getCollectionItemBinaryFileTry("", "", "binary");
 
-		assertThat(inputStreamTry, is(aSuccessTry()));
+		BinaryFile binaryFile = binaryFileTry.getUnchecked();
 
-		InputStream inputStream = inputStreamTry.getUnchecked();
+		assertThat(binaryFile.getSize(), is(0L));
+
+		InputStream inputStream = binaryFile.getInputStream();
 
 		String result = Try.fromFallibleWithResources(
 			() -> new BufferedReader(new InputStreamReader(inputStream)),
@@ -114,7 +116,7 @@ public class BinaryEndpointTest {
 					new SingleModel<>("apio", name, Collections.emptyList()));
 			});
 
-		binaryEndpoint.getCollectionItemInputStreamTry("a", "b", "binaryId");
+		binaryEndpoint.getCollectionItemBinaryFileTry("a", "b", "binaryId");
 
 		assertThat(names, contains("a", "b", "a"));
 	}
@@ -136,7 +138,10 @@ public class BinaryEndpointTest {
 		).identifier(
 			Function.identity()
 		).addBinary(
-			"binary", __ -> new ByteArrayInputStream("Apio".getBytes(UTF_8))
+			"binary",
+			__ -> new BinaryFile(
+				new ByteArrayInputStream("Apio".getBytes(UTF_8)), 0L,
+				"image/png")
 		).build();
 	}
 

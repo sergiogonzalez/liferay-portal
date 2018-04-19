@@ -14,37 +14,34 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.io.Serializable;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.HashMap;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Chema Balsas
  */
-public class NavigationItem implements Serializable {
+public class NavigationItem extends HashMap<String, Object> {
 
-	public String getHref() {
-		return _href;
+	public NavigationItem() {
+		_request = null;
 	}
 
-	public String getLabel() {
-		return _label;
-	}
-
-	public boolean isActive() {
-		return _active;
-	}
-
-	public boolean isDisabled() {
-		return _disabled;
+	public NavigationItem(HttpServletRequest request) {
+		_request = request;
 	}
 
 	public void setActive(boolean active) {
-		_active = active;
+		put("active", active);
 	}
 
 	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
+		put("disabled", disabled);
 	}
 
 	public void setHref(PortletURL portletURL, Object... parameters) {
@@ -58,24 +55,30 @@ public class NavigationItem implements Serializable {
 				String parameterName = String.valueOf(parameters[i]);
 				String parameterValue = String.valueOf(parameters[i + 1]);
 
-				portletURL.setParameter(parameterName, parameterValue);
+				if (Validator.isNotNull(parameterValue)) {
+					portletURL.setParameter(parameterName, parameterValue);
+				}
+				else {
+					portletURL.setParameter(parameterName, (String)null);
+				}
 			}
 		}
 
-		_href = portletURL.toString();
+		setHref(portletURL.toString());
 	}
 
 	public void setHref(String href) {
-		_href = href;
+		put("href", href);
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		if (Validator.isNotNull(_request)) {
+			label = LanguageUtil.get(_request, label);
+		}
+
+		put("label", label);
 	}
 
-	private boolean _active;
-	private boolean _disabled;
-	private String _href;
-	private String _label;
+	private final HttpServletRequest _request;
 
 }

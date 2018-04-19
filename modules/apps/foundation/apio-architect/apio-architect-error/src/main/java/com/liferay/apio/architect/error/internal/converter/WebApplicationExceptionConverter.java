@@ -37,7 +37,7 @@ public abstract class WebApplicationExceptionConverter {
 	protected APIError convert(WebApplicationException exception) {
 		String description = _getDescription(exception.getMessage());
 
-		return new APIErrorImpl(
+		return new APIError(
 			exception, getTitle(), description, getType(),
 			getStatusType().getStatusCode());
 	}

@@ -14,10 +14,13 @@
 
 package com.liferay.twitter.internal.upgrade;
 
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.twitter.internal.configuration.TwitterGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -27,9 +30,17 @@ public class TwitterServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
+
 		registry.register(
-			"com.liferay.twitter.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
+			"1.0.0", "1.0.1",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.twitter.configuration." +
+					"TwitterGroupServiceConfiguration",
+				TwitterGroupServiceConfiguration.class.getName()));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

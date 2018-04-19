@@ -33,12 +33,15 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -110,7 +113,7 @@ public class WebDriverUtil extends PropsValues {
 			"webdriver.chrome.driver",
 			SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_CHROME_DRIVER_EXECUTABLE);
 
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
+		ChromeOptions chromeOptions = new ChromeOptions();
 
 		Map<String, Object> preferences = new HashMap<>();
 
@@ -125,9 +128,13 @@ public class WebDriverUtil extends PropsValues {
 
 		preferences.put("download.prompt_for_download", false);
 
-		desiredCapabilities.setCapability("chrome.prefs", preferences);
+		chromeOptions.setCapability("chrome.prefs", preferences);
 
-		return new ChromeDriver(desiredCapabilities);
+		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_ARGS)) {
+			chromeOptions.addArguments(PropsValues.BROWSER_CHROME_BIN_ARGS);
+		}
+
+		return new ChromeDriver(chromeOptions);
 	}
 
 	private WebDriver _getEdgeDriver() {
@@ -135,9 +142,9 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getEdgeRemoteDriver() {
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.edge();
+		EdgeOptions edgeOptions = new EdgeOptions();
 
-		desiredCapabilities.setCapability("platform", "WINDOWS");
+		edgeOptions.setCapability("platform", "WINDOWS");
 
 		URL url = null;
 
@@ -148,7 +155,7 @@ public class WebDriverUtil extends PropsValues {
 		catch (MalformedURLException murle) {
 		}
 
-		return new RemoteWebDriver(url, desiredCapabilities);
+		return new RemoteWebDriver(url, edgeOptions);
 	}
 
 	private WebDriver _getFirefoxDriver() {
@@ -157,15 +164,7 @@ public class WebDriverUtil extends PropsValues {
 			"webdriver.gecko.driver",
 			SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_GECKO_DRIVER_EXECUTABLE);
 
-		FirefoxProfile firefoxProfile = new FirefoxProfile();
-
-		try {
-			firefoxProfile.addExtension(
-				WebDriverUtil.class,
-				"/META-INF/resources/firefox/extensions/jserrorcollector.xpi");
-		}
-		catch (Exception e) {
-		}
+		FirefoxOptions firefoxOptions = new FirefoxOptions();
 
 		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
 
@@ -174,30 +173,19 @@ public class WebDriverUtil extends PropsValues {
 				outputDirName, StringPool.FORWARD_SLASH, StringPool.BACK_SLASH);
 		}
 
-		firefoxProfile.setPreference("browser.download.dir", outputDirName);
-
-		firefoxProfile.setPreference("browser.download.folderList", 2);
-		firefoxProfile.setPreference(
+		firefoxOptions.addPreference("browser.download.dir", outputDirName);
+		firefoxOptions.addPreference("browser.download.folderList", 2);
+		firefoxOptions.addPreference(
 			"browser.download.manager.showWhenStarting", false);
-		firefoxProfile.setPreference("browser.download.useDownloadDir", true);
-		firefoxProfile.setPreference(
+		firefoxOptions.addPreference("browser.download.useDownloadDir", true);
+		firefoxOptions.addPreference(
 			"browser.helperApps.alwaysAsk.force", false);
-		firefoxProfile.setPreference(
+		firefoxOptions.addPreference(
 			"browser.helperApps.neverAsk.saveToDisk",
 			"application/excel,application/msword,application/pdf," +
 				"application/zip,audio/mpeg3,image/jpeg,image/png,text/plain");
-		firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
-		firefoxProfile.setPreference("dom.max_script_run_time", 300);
-
-		FirefoxOptions firefoxOptions = new FirefoxOptions();
-
-		firefoxOptions.setProfile(firefoxProfile);
-
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-
-		desiredCapabilities.setCapability("locationContextEnabled", false);
-
-		firefoxOptions.merge(desiredCapabilities);
+		firefoxOptions.addPreference("dom.max_chrome_script_run_time", 300);
+		firefoxOptions.addPreference("dom.max_script_run_time", 300);
 
 		if (Validator.isNotNull(PropsValues.BROWSER_FIREFOX_BIN_FILE)) {
 			File file = new File(PropsValues.BROWSER_FIREFOX_BIN_FILE);
@@ -207,32 +195,49 @@ public class WebDriverUtil extends PropsValues {
 			firefoxOptions.setBinary(firefoxBinary);
 		}
 
+		firefoxOptions.setCapability("locationContextEnabled", false);
+
+		try {
+			FirefoxProfile firefoxProfile = new FirefoxProfile();
+
+			firefoxProfile.addExtension(
+				WebDriverUtil.class,
+				"/META-INF/resources/firefox/extensions/jserrorcollector.xpi");
+
+			firefoxOptions.setProfile(firefoxProfile);
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to add the jserrorcollector.xpi extension to the " +
+					"Firefox profile.");
+		}
+
 		return new FirefoxDriver(firefoxOptions);
 	}
 
 	private WebDriver _getInternetExplorerDriver() {
-		DesiredCapabilities desiredCapabilities =
-			DesiredCapabilities.internetExplorer();
+		InternetExplorerOptions internetExplorerOptions =
+			new InternetExplorerOptions();
 
-		desiredCapabilities.setCapability(
+		internetExplorerOptions.setCapability(
 			InternetExplorerDriver.
 				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
 			true);
 
-		return new InternetExplorerDriver(desiredCapabilities);
+		return new InternetExplorerDriver(internetExplorerOptions);
 	}
 
 	private WebDriver _getInternetExplorerRemoteDriver() {
-		DesiredCapabilities desiredCapabilities =
-			DesiredCapabilities.internetExplorer();
+		InternetExplorerOptions internetExplorerOptions =
+			new InternetExplorerOptions();
 
-		desiredCapabilities.setCapability(
+		internetExplorerOptions.setCapability(
 			InternetExplorerDriver.
 				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
 			true);
-		desiredCapabilities.setCapability(
+		internetExplorerOptions.setCapability(
 			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
-		desiredCapabilities.setCapability(
+		internetExplorerOptions.setCapability(
 			"version", PropsValues.BROWSER_VERSION);
 
 		URL url = null;
@@ -244,7 +249,7 @@ public class WebDriverUtil extends PropsValues {
 		catch (MalformedURLException murle) {
 		}
 
-		return new RemoteWebDriver(url, desiredCapabilities);
+		return new RemoteWebDriver(url, internetExplorerOptions);
 	}
 
 	private WebDriver _getIOSMobileDriver() {

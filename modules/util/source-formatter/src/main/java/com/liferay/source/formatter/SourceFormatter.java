@@ -130,15 +130,15 @@ public class SourceFormatter {
 
 				sourceFormatterArgs.setRecentChangesFileNames(
 					GitUtil.getCurrentBranchFileNames(
-						baseDirName, gitWorkingBranchName));
+						baseDirName, gitWorkingBranchName, false));
 			}
 			else if (formatLatestAuthor) {
 				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getLatestAuthorFileNames(baseDirName));
+					GitUtil.getLatestAuthorFileNames(baseDirName, false));
 			}
 			else if (formatLocalChanges) {
 				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getLocalChangesFileNames(baseDirName));
+					GitUtil.getLocalChangesFileNames(baseDirName, false));
 			}
 
 			String fileNamesString = ArgumentsUtil.getString(
@@ -391,21 +391,6 @@ public class SourceFormatter {
 		return _sourceMismatchExceptions;
 	}
 
-	private boolean _containsSourceFormatterFile() {
-		List<String> recentChangesFileNames =
-			_sourceFormatterArgs.getRecentChangesFileNames();
-
-		if (recentChangesFileNames != null) {
-			for (String recentChangesFileName : recentChangesFileNames) {
-				if (recentChangesFileName.contains("/source-formatter/")) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private List<String> _getCheckNames() {
 		List<String> checkNames = new ArrayList<>();
 
@@ -516,24 +501,7 @@ public class SourceFormatter {
 		return properties;
 	}
 
-	private SourceFormatterSuppressions _getSourceFormatterSuppressions()
-		throws Exception {
-
-		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
-			_sourceFormatterArgs.getBaseDirName(), _allFileNames,
-			_sourceFormatterExcludes, "checkstyle-suppressions.xml",
-			"source-formatter-suppressions.xml",
-			"sourcechecks-suppressions.xml");
-
-		return SuppressionsLoader.loadSuppressions(
-			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);
-	}
-
 	private void _init() throws Exception {
-		if (_isPortalSource() && _containsSourceFormatterFile()) {
-			_sourceFormatterArgs.setRecentChangesFileNames(null);
-		}
-
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
 
@@ -575,7 +543,14 @@ public class SourceFormatter {
 
 		_projectPathPrefix = _getProjectPathPrefix();
 
-		_sourceFormatterSuppressions = _getSourceFormatterSuppressions();
+		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
+			_sourceFormatterArgs.getBaseDirName(), _allFileNames,
+			_sourceFormatterExcludes, "checkstyle-suppressions.xml",
+			"source-formatter-suppressions.xml",
+			"sourcechecks-suppressions.xml");
+
+		_sourceFormatterSuppressions = SuppressionsLoader.loadSuppressions(
+			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);
 
 		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(
 			"sourcechecks.xml");

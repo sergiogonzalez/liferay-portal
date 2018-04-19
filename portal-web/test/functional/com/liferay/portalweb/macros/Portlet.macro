@@ -1,6 +1,16 @@
 <definition>
 	<command name="_clickAddPortlet">
-		<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK" />
+		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
+
+		<if>
+			<equals arg1="${browserType}" arg2="safari" />
+			<then>
+				<execute function="Click" locator1="ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK" />
+			</then>
+			<else>
+				<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK" />
+			</else>
+		</if>
 
 		<execute function="MouseOver" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" />
 
@@ -111,19 +121,7 @@
 		<if>
 			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
 			<then>
-				<var method="TestPropsUtil#get('browser.type')" name="browserType" />
-
-				<if>
-					<equals arg1="${browserType}" arg2="safari" />
-					<then>
-						<execute function="Pause" locator1="10000" />
-
-						<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-					</then>
-					<else>
-						<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-					</else>
-				</if>
+				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</then>
 		</if>
 
@@ -272,10 +270,10 @@
 	<command name="dragAndDropPortletToColumnPG" summary="Drag and drop the '${portletName}' portlet from column ${columnNumberFrom} to column ${columnNumberTo}">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
 		<execute function="DragAndDrop#dragAndDropPortletToObject" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER" locator2="Home#PAGE_COLUMN_${columnNumberTo}" value1="${portletName}" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="expandTree">
@@ -561,13 +559,13 @@
 	<command name="viewSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#SPECIFIC_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}'">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewUndeployMessage">

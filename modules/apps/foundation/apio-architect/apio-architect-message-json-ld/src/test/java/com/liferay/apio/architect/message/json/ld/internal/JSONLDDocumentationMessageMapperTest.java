@@ -53,7 +53,7 @@ public class JSONLDDocumentationMessageMapperTest {
 		).where(
 			"@id", is(aJsonString(equalTo("http://api.example.com/doc/")))
 		).where(
-			"@type", is(aJsonString(equalTo("hydra:ApiDocumentation")))
+			"@type", is(aJsonString(equalTo("ApiDocumentation")))
 		).where(
 			"description", is(aJsonString(equalTo("Description")))
 		).where(

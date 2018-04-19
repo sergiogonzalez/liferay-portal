@@ -15,6 +15,7 @@
 package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.Page;
 
 /**
@@ -25,5 +26,5 @@ import com.liferay.apio.architect.pagination.Page;
  * @param  <T> the model's type
  */
 @FunctionalInterface
-public interface GetPageFunction<T> extends RequestFunction<Page<T>> {
+public interface GetPageFunction<T> extends RequestFunction<Try<Page<T>>> {
 }

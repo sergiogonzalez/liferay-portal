@@ -16,7 +16,8 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,6 +42,17 @@ public class LayoutPageTemplateEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateCollectionId,
+		java.lang.String name, int type, long[] fragmentEntryIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateEntry(groupId,
+			layoutPageTemplateCollectionId, name, type, fragmentEntryIds,
+			serviceContext);
+	}
+
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateCollectionId,
 		java.lang.String name, long[] fragmentEntryIds,
@@ -94,6 +106,15 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplateEntries(groupId, type, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -119,6 +140,18 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateCollectionId, name, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, java.lang.String name, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator) {
+		return getService()
+				   .getLayoutPageTemplateEntries(groupId, name, type, start,
+			end, orderByComparator);
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(long groupId, int type) {
+		return getService().getLayoutPageTemplateEntriesCount(groupId, type);
+	}
+
 	public static int getLayoutPageTemplateEntriesCount(long groupId,
 		long layoutPageTemplateFolder) {
 		return getService()
@@ -133,6 +166,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateFolder, name);
 	}
 
+	public static int getLayoutPageTemplateEntriesCount(long groupId,
+		java.lang.String name, int type) {
+		return getService()
+				   .getLayoutPageTemplateEntriesCount(groupId, name, type);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -140,6 +179,14 @@ public class LayoutPageTemplateEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, long classNameId, long classTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			classNameId, classTypeId);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
@@ -174,6 +221,17 @@ public class LayoutPageTemplateEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<LayoutPageTemplateEntryService, LayoutPageTemplateEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(LayoutPageTemplateEntryService.class);
+	private static ServiceTracker<LayoutPageTemplateEntryService, LayoutPageTemplateEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LayoutPageTemplateEntryService.class);
+
+		ServiceTracker<LayoutPageTemplateEntryService, LayoutPageTemplateEntryService> serviceTracker =
+			new ServiceTracker<LayoutPageTemplateEntryService, LayoutPageTemplateEntryService>(bundle.getBundleContext(),
+				LayoutPageTemplateEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

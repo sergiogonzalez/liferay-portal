@@ -14,14 +14,14 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.API_DOCUMENTATION;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.CONTEXT;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.DESCRIPTION;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_PROFILE;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.ID;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_CONTEXT;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_DESCRIPTION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_ID;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TITLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TYPE;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TITLE;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE_API_DOCUMENTATION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.URL_HYDRA_PROFILE;
 
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
@@ -55,7 +55,7 @@ public class JSONLDDocumentationMessageMapper
 		JSONObjectBuilder jsonObjectBuilder, String description) {
 
 		jsonObjectBuilder.field(
-			DESCRIPTION
+			FIELD_NAME_DESCRIPTION
 		).stringValue(
 			description
 		);
@@ -64,7 +64,7 @@ public class JSONLDDocumentationMessageMapper
 	@Override
 	public void mapTitle(JSONObjectBuilder jsonObjectBuilder, String title) {
 		jsonObjectBuilder.field(
-			TITLE
+			FIELD_NAME_TITLE
 		).stringValue(
 			title
 		);
@@ -76,21 +76,21 @@ public class JSONLDDocumentationMessageMapper
 		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.field(
-			CONTEXT
+			FIELD_NAME_CONTEXT
 		).stringValue(
-			HYDRA_PROFILE
+			URL_HYDRA_PROFILE
 		);
 
 		jsonObjectBuilder.field(
-			ID
+			FIELD_NAME_ID
 		).stringValue(
 			"http://api.example.com/doc/"
 		);
 
 		jsonObjectBuilder.field(
-			TYPE
+			FIELD_NAME_TYPE
 		).stringValue(
-			API_DOCUMENTATION
+			TYPE_API_DOCUMENTATION
 		);
 	}
 

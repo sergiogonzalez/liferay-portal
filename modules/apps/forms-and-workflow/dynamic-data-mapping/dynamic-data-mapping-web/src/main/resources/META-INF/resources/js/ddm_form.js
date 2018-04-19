@@ -767,6 +767,10 @@ AUI.add(
 							instance.updateTranslationsDefaultValue();
 
 							fieldJSON.value = instance.get('localizationMap');
+
+							var form = instance.getForm();
+
+							form.addAvailableLanguageIds(AObject.keys(fieldJSON.value));
 						}
 
 						var fields = instance.get('fields');
@@ -785,8 +789,10 @@ AUI.add(
 
 						var value = instance.getValue();
 
-						if (AObject.keys(localizationMap).length != 0) {
-							this.removeNotAvailableLocales(localizationMap);
+						if (Lang.isObject(localizationMap)) {
+							if (AObject.keys(localizationMap).length != 0) {
+								this.removeNotAvailableLocales(localizationMap);
+							}
 						}
 
 						if (instance.get('localizable')) {
@@ -1122,6 +1128,10 @@ AUI.add(
 
 						var datePicker = instance.getDatePicker();
 
+						if (!datePicker) {
+							return '';
+						}
+
 						var selectedDate = datePicker.getDate();
 
 						var formattedDate = A.DataType.Date.format(selectedDate);
@@ -1156,6 +1166,10 @@ AUI.add(
 						var instance = this;
 
 						var datePicker = instance.getDatePicker();
+
+						if (!datePicker) {
+							return;
+						}
 
 						datePicker.set('activeInput', instance.getInputNode());
 
@@ -2878,7 +2892,11 @@ AUI.add(
 						if (inputLocalized) {
 							inputLocalized.get('items').forEach(
 								function(item) {
-									localizationMap[item] = inputLocalized.getValue(item);
+									var value = inputLocalized.getValue(item);
+
+									if (value.trim() !== '') {
+										localizationMap[item] = value;
+									}
 								}
 							);
 						}
@@ -3086,6 +3104,10 @@ AUI.add(
 		var Form = A.Component.create(
 			{
 				ATTRS: {
+					availableLanguageIds: {
+						value: []
+					},
+
 					ddmFormValuesInput: {
 						setter: A.one
 					},
@@ -3189,6 +3211,20 @@ AUI.add(
 						instance.repeatableInstances = null;
 					},
 
+					addAvailableLanguageIds: function(availableLanguageIds) {
+						var instance = this;
+
+						var currentAvailableLanguageIds = instance.get('availableLanguageIds');
+
+						availableLanguageIds.forEach(
+							function(item) {
+								if (currentAvailableLanguageIds.indexOf(item) == -1) {
+									currentAvailableLanguageIds.push(item);
+								}
+							}
+						);
+					},
+
 					moveField: function(parentField, oldIndex, newIndex) {
 						var instance = this;
 
@@ -3252,6 +3288,16 @@ AUI.add(
 									sortCondition: function(event) {
 										var dropNode = event.drop.get('node');
 
+										var dropNodeAncestor = dropNode.ancestor();
+
+										var dragNode = event.drag.get('node');
+
+										var dragNodeAncestor =  dragNode.ancestor();
+
+										if (dropNodeAncestor.get('id') != dragNodeAncestor.get('id')) {
+											return false;
+										}
+
 										return dropNode.getData('fieldName') === fieldName;
 									}
 								}
@@ -3277,12 +3323,12 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var translationManager = instance.get('translationManager');
+						var fieldValues = AArray.invoke(instance.get('fields'), 'toJSON');
 
 						return {
-							availableLanguageIds: translationManager.get('availableLocales'),
-							defaultLanguageId: translationManager.get('defaultLocale'),
-							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
+							availableLanguageIds: instance.get('availableLanguageIds'),
+							defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+							fieldValues: fieldValues
 						};
 					},
 

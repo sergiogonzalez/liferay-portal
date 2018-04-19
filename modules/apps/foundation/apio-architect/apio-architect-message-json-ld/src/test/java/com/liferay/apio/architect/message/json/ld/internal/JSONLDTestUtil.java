@@ -32,6 +32,7 @@ import com.liferay.apio.architect.test.util.json.Conditions;
 import com.liferay.apio.architect.test.util.json.Conditions.Builder;
 import com.liferay.apio.architect.test.util.json.JsonMatchers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,10 +53,8 @@ import org.hamcrest.Matcher;
 public class JSONLDTestUtil {
 
 	/**
-	 * A {@link Matcher} that checks if a {@link JsonElement} is a link to
+	 * A {@code Matcher} that checks if a {@code JsonElement} is a link to
 	 * Hydra's profile.
-	 *
-	 * @review
 	 */
 	public static final Matcher<JsonElement> IS_A_LINK_TO_HYDRA_PROFILE =
 		isALinkTo("https://www.w3.org/ns/hydra/core#");
@@ -82,36 +81,25 @@ public class JSONLDTestUtil {
 
 		Builder builder = new Builder();
 
-		Builder stepBuilder = builder.where(
-			"embedded2", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"linked1", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"linked2", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"relatedCollection1", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"relatedCollection2", IS_A_TYPE_ID_JSON_OBJECT
-		);
+		List<Matcher<? super JsonElement>> theContext = new ArrayList<>();
 
-		Conditions contextConditions = null;
+		theContext.add(aJsonObjectWhere("embedded2", IS_A_TYPE_ID_JSON_OBJECT));
+		theContext.add(aJsonObjectWhere("linked1", IS_A_TYPE_ID_JSON_OBJECT));
+		theContext.add(aJsonObjectWhere("linked2", IS_A_TYPE_ID_JSON_OBJECT));
+		theContext.add(
+			aJsonObjectWhere("relatedCollection1", IS_A_TYPE_ID_JSON_OBJECT));
+		theContext.add(
+			aJsonObjectWhere("relatedCollection2", IS_A_TYPE_ID_JSON_OBJECT));
 
 		if (addVocab) {
-			contextConditions = stepBuilder.where(
-				"@vocab", is(aJsonString(equalTo("http://schema.org/")))
-			).where(
-				"hydra", IS_A_LINK_TO_HYDRA_PROFILE
-			).build();
+			theContext.add(
+				aJsonObjectWhere(
+					"@vocab", is(aJsonString(equalTo("http://schema.org/")))));
+			theContext.add(IS_A_LINK_TO_HYDRA_PROFILE);
 		}
-		else {
-			contextConditions = stepBuilder.build();
-		}
-
-		Matcher<JsonElement> isAJsonObjectWithTheContext = is(
-			aJsonObjectWith(contextConditions));
 
 		Builder rootElementBuilder = builder.where(
-			"@context", isAJsonObjectWithTheContext
+			"@context", is(aJsonArrayThat(contains(theContext)))
 		).where(
 			"@id", isALinkTo("localhost/p/model/" + id)
 		).where(
@@ -181,7 +169,7 @@ public class JSONLDTestUtil {
 		}
 
 		Conditions conditions = rootElementBuilder.where(
-			"hydra:operation", containsTheRootOperations()
+			"operation", containsTheRootOperations()
 		).build();
 
 		return aJsonObjectWith(conditions);
@@ -193,7 +181,6 @@ public class JSONLDTestUtil {
 	 *
 	 * @return the matcher
 	 */
-	@SuppressWarnings("unchecked")
 	public static Matcher<? extends JsonElement> containsTheRootOperations() {
 		Builder builder = new Builder();
 
@@ -258,14 +245,12 @@ public class JSONLDTestUtil {
 
 		Builder builder = new Builder();
 
-		Conditions firstEmbeddedContextConditions = builder.where(
-			"linked", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"relatedCollection", IS_A_TYPE_ID_JSON_OBJECT
-		).build();
+		List<Matcher<? super JsonElement>> theContext = Arrays.asList(
+			aJsonObjectWhere("linked", IS_A_TYPE_ID_JSON_OBJECT),
+			aJsonObjectWhere("relatedCollection", IS_A_TYPE_ID_JSON_OBJECT));
 
 		Builder firstEmbeddedBuilder = builder.where(
-			"@context", is(aJsonObjectWith(firstEmbeddedContextConditions))
+			"@context", is(aJsonArrayThat(contains(theContext)))
 		).where(
 			"@id", isALinkTo("localhost/p/first-inner-model/first")
 		).where(
@@ -310,7 +295,7 @@ public class JSONLDTestUtil {
 		).build();
 
 		Conditions conditions = firstEmbeddedBuilder.where(
-			"hydra:operation", is(aJsonArrayThat(contains(anOperation)))
+			"operation", is(aJsonArrayThat(contains(anOperation)))
 		).build();
 
 		return aJsonObjectWith(conditions);
@@ -321,7 +306,6 @@ public class JSONLDTestUtil {
 	 * the first nested model.
 	 *
 	 * @return the matcher
-	 * @review
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheFirstNested() {
 		Builder builder = new Builder();
@@ -346,18 +330,15 @@ public class JSONLDTestUtil {
 	 * @return the matcher
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheSecondEmbedded() {
+		List<Matcher<? super JsonElement>> theContext = Arrays.asList(
+			aJsonObjectWhere("embedded", IS_A_TYPE_ID_JSON_OBJECT),
+			aJsonObjectWhere("linked", IS_A_TYPE_ID_JSON_OBJECT),
+			aJsonObjectWhere("relatedCollection", IS_A_TYPE_ID_JSON_OBJECT));
+
 		Conditions.Builder builder = new Conditions.Builder();
 
-		Conditions secondEmbeddedContextConditions = builder.where(
-			"embedded", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"linked", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"relatedCollection", IS_A_TYPE_ID_JSON_OBJECT
-		).build();
-
 		Conditions secondEmbeddedConditions = builder.where(
-			"@context", is(aJsonObjectWith(secondEmbeddedContextConditions))
+			"@context", is(aJsonArrayThat(contains(theContext)))
 		).where(
 			"@id", isALinkTo("localhost/p/second-inner-model/first")
 		).where(
@@ -395,23 +376,19 @@ public class JSONLDTestUtil {
 	 * the second nested model.
 	 *
 	 * @return the matcher
-	 * @review
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheSecondNested(
 		String id) {
 
+		List<Matcher<? super JsonElement>> theContext = Arrays.asList(
+			aJsonObjectWhere("bidirectionalModel3", IS_A_TYPE_ID_JSON_OBJECT),
+			aJsonObjectWhere("linked3", IS_A_TYPE_ID_JSON_OBJECT),
+			aJsonObjectWhere("relatedCollection3", IS_A_TYPE_ID_JSON_OBJECT));
+
 		Builder builder = new Builder();
 
-		Conditions secondNestedContextConditions = builder.where(
-			"linked3", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"bidirectionalModel3", IS_A_TYPE_ID_JSON_OBJECT
-		).where(
-			"relatedCollection3", IS_A_TYPE_ID_JSON_OBJECT
-		).build();
-
 		Conditions secondNestedConditions = builder.where(
-			"@context", is(aJsonObjectWith(secondNestedContextConditions))
+			"@context", is(aJsonArrayThat(contains(theContext)))
 		).where(
 			"@type", containsTheTypes("Type 4")
 		).where(
@@ -438,7 +415,6 @@ public class JSONLDTestUtil {
 	 * the third nested model.
 	 *
 	 * @return the matcher
-	 * @review
 	 */
 	public static Conditions isAJsonObjectWithTheThirdNested() {
 		Builder builder = new Builder();

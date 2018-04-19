@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -67,24 +66,11 @@ public class ApioApplication extends Application {
 
 		singletons.addAll(_messageBodyWriters);
 
-		singletons.addAll(_containerRequestFilters);
-
 		singletons.addAll(_containerResponseFilters);
 
 		singletons.addAll(_exceptionMappers);
 
 		return singletons;
-	}
-
-	@Reference(
-		cardinality = MULTIPLE, policyOption = GREEDY,
-		target = "(liferay.apio.architect.container.request.filter=true)"
-	)
-	public void setContainerRequestFilter(
-		ServiceReference<ContainerRequestFilter> serviceReference,
-		ContainerRequestFilter containerRequestFilter) {
-
-		_containerRequestFilters.add(containerRequestFilter);
 	}
 
 	@Reference(
@@ -132,14 +118,6 @@ public class ApioApplication extends Application {
 	}
 
 	@SuppressWarnings("unused")
-	public <T> void unsetContainerRequestFilter(
-		ServiceReference<ContainerRequestFilter> serviceReference,
-		ContainerRequestFilter containerRequestFilter) {
-
-		_containerRequestFilters.remove(containerRequestFilter);
-	}
-
-	@SuppressWarnings("unused")
 	public <T> void unsetContainerResponseFilter(
 		ServiceReference<ContainerResponseFilter> serviceReference,
 		ContainerResponseFilter containerResponseFilter) {
@@ -171,8 +149,6 @@ public class ApioApplication extends Application {
 		_messageBodyWriters.remove(messageBodyWriter);
 	}
 
-	private final List<ContainerRequestFilter> _containerRequestFilters =
-		new ArrayList<>();
 	private final List<ContainerResponseFilter> _containerResponseFilters =
 		new ArrayList<>();
 	private final List<ExceptionMapper> _exceptionMappers = new ArrayList<>();

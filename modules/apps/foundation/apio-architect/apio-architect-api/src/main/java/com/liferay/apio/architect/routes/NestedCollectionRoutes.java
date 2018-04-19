@@ -25,10 +25,12 @@ import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.function.HexaFunction;
-import com.liferay.apio.architect.function.PentaFunction;
-import com.liferay.apio.architect.function.TetraFunction;
-import com.liferay.apio.architect.function.TriFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableHexaFunction;
+import com.liferay.apio.architect.function.throwable.ThrowablePentaFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableTetraFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableTriFunction;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -130,14 +132,15 @@ public class NestedCollectionRoutes<T, S> {
 		/**
 		 * Adds a route to a creator function that has no extra parameters.
 		 *
-		 * @param  biFunction the creator function that adds the collection item
+		 * @param  throwableBiFunction the creator function that adds the
+		 *         collection item
 		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
 		 */
 		public <R> Builder<T, S> addCreator(
-			BiFunction<S, R, T> biFunction,
+			ThrowableBiFunction<S, R, T> throwableBiFunction,
 			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -149,12 +152,13 @@ public class NestedCollectionRoutes<T, S> {
 			_form = form;
 
 			_nestedCreateItemFunction =
-				httpServletRequest -> identifier -> body -> biFunction.andThen(
-					t -> new SingleModel<>(
-						t, _nestedName, Collections.emptyList())
-				).apply(
-					identifier, form.get(body)
-				);
+				httpServletRequest -> identifier -> body -> Try.fromFallible(
+					() -> throwableBiFunction.andThen(
+						t -> new SingleModel<>(
+							t, _nestedName, Collections.emptyList())
+					).apply(
+						identifier, form.get(body)
+					));
 
 			return this;
 		}
@@ -162,8 +166,8 @@ public class NestedCollectionRoutes<T, S> {
 		/**
 		 * Adds a route to a creator function that has four extra parameters.
 		 *
-		 * @param  hexaFunction the creator function that adds the collection
-		 *         item
+		 * @param  throwableHexaFunction the creator function that adds the
+		 *         collection item
 		 * @param  aClass the class of the creator function's third parameter
 		 * @param  bClass the class of the creator function's fourth parameter
 		 * @param  cClass the class of the creator function's fifth parameter
@@ -174,8 +178,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, B, C, D, R> Builder<T, S> addCreator(
-			HexaFunction<S, R, A, B, C, D, T> hexaFunction, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			ThrowableHexaFunction<S, R, A, B, C, D, T> throwableHexaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
 			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -195,7 +199,7 @@ public class NestedCollectionRoutes<T, S> {
 				httpServletRequest -> identifier -> body -> provide(
 					_provideFunction.apply(httpServletRequest), aClass, bClass,
 					cClass, dClass,
-					a -> b -> c -> d -> hexaFunction.andThen(
+					a -> b -> c -> d -> throwableHexaFunction.andThen(
 						t -> new SingleModel<>(
 							t, _nestedName, Collections.emptyList())
 					).apply(
@@ -208,8 +212,8 @@ public class NestedCollectionRoutes<T, S> {
 		/**
 		 * Adds a route to a creator function that has three extra parameters.
 		 *
-		 * @param  pentaFunction the creator function that adds the collection
-		 *         item
+		 * @param  throwablePentaFunction the creator function that adds the
+		 *         collection item
 		 * @param  aClass the class of the creator function's third parameter
 		 * @param  bClass the class of the creator function's fourth parameter
 		 * @param  cClass the class of the creator function's fifth parameter
@@ -219,8 +223,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, B, C, R> Builder<T, S> addCreator(
-			PentaFunction<S, R, A, B, C, T> pentaFunction, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass,
+			ThrowablePentaFunction<S, R, A, B, C, T> throwablePentaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -239,7 +243,7 @@ public class NestedCollectionRoutes<T, S> {
 				httpServletRequest -> identifier -> body -> provide(
 					_provideFunction.apply(httpServletRequest), aClass, bClass,
 					cClass,
-					a -> b -> c -> pentaFunction.andThen(
+					a -> b -> c -> throwablePentaFunction.andThen(
 						t -> new SingleModel<>(
 							t, _nestedName, Collections.emptyList())
 					).apply(
@@ -252,8 +256,8 @@ public class NestedCollectionRoutes<T, S> {
 		/**
 		 * Adds a route to a creator function that has two extra parameters.
 		 *
-		 * @param  tetraFunction the creator function that adds the collection
-		 *         item
+		 * @param  throwableTetraFunction the creator function that adds the
+		 *         collection item
 		 * @param  aClass the class of the creator function's third parameter
 		 * @param  bClass the class of the creator function's fourth parameter
 		 * @param  permissionBiFunction the permission function for this route
@@ -262,8 +266,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, B, R> Builder<T, S> addCreator(
-			TetraFunction<S, R, A, B, T> tetraFunction, Class<A> aClass,
-			Class<B> bClass,
+			ThrowableTetraFunction<S, R, A, B, T> throwableTetraFunction,
+			Class<A> aClass, Class<B> bClass,
 			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -280,7 +284,7 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedCreateItemFunction =
 				httpServletRequest -> identifier -> body -> provide(
 					_provideFunction.apply(httpServletRequest), aClass, bClass,
-					a -> b -> tetraFunction.andThen(
+					a -> b -> throwableTetraFunction.andThen(
 						t -> new SingleModel<>(
 							t, _nestedName, Collections.emptyList())
 					).apply(
@@ -293,8 +297,8 @@ public class NestedCollectionRoutes<T, S> {
 		/**
 		 * Adds a route to a creator function that has one extra parameter.
 		 *
-		 * @param  triFunction the creator function that adds the collection
-		 *         item
+		 * @param  throwableTriFunction the creator function that adds the
+		 *         collection item
 		 * @param  aClass the class of the creator function's third parameter
 		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
@@ -302,7 +306,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, R> Builder<T, S> addCreator(
-			TriFunction<S, R, A, T> triFunction, Class<A> aClass,
+			ThrowableTriFunction<S, R, A, T> throwableTriFunction,
+			Class<A> aClass,
 			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -318,7 +323,7 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedCreateItemFunction =
 				httpServletRequest -> identifier -> body -> provide(
 					_provideFunction.apply(httpServletRequest), aClass,
-					a -> triFunction.andThen(
+					a -> throwableTriFunction.andThen(
 						t -> new SingleModel<>(
 							t, _nestedName, Collections.emptyList())
 					).apply(
@@ -336,7 +341,7 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public Builder<T, S> addGetter(
-			BiFunction<Pagination, S, PageItems<T>> biFunction) {
+			ThrowableBiFunction<Pagination, S, PageItems<T>> biFunction) {
 
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
@@ -365,7 +370,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, B, C, D> Builder<T, S> addGetter(
-			HexaFunction<Pagination, S, A, B, C, D, PageItems<T>> hexaFunction,
+			ThrowableHexaFunction<Pagination, S, A, B, C, D, PageItems<T>>
+				hexaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
 
@@ -402,7 +408,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, B, C> Builder<T, S> addGetter(
-			PentaFunction<Pagination, S, A, B, C, PageItems<T>> pentaFunction,
+			ThrowablePentaFunction<Pagination, S, A, B, C, PageItems<T>>
+				pentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -434,7 +441,8 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A, B> Builder<T, S> addGetter(
-			TetraFunction<Pagination, S, A, B, PageItems<T>> tetraFunction,
+			ThrowableTetraFunction<Pagination, S, A, B, PageItems<T>>
+				tetraFunction,
 			Class<A> aClass, Class<B> bClass) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -464,7 +472,7 @@ public class NestedCollectionRoutes<T, S> {
 		 * @return the updated builder
 		 */
 		public <A> Builder<T, S> addGetter(
-			TriFunction<Pagination, S, A, PageItems<T>> triFunction,
+			ThrowableTriFunction<Pagination, S, A, PageItems<T>> triFunction,
 			Class<A> aClass) {
 
 			_neededProviderConsumer.accept(aClass.getName());

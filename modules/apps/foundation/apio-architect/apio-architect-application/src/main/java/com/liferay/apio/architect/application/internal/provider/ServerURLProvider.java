@@ -33,8 +33,17 @@ public class ServerURLProvider implements Provider<ServerURL> {
 	@Override
 	public ServerURL createContext(HttpServletRequest httpServletRequest) {
 		return () -> {
-			StringBuilder sb = new StringBuilder(
-				httpServletRequest.getScheme());
+			StringBuilder sb = new StringBuilder();
+
+			String forwardedProto = httpServletRequest.getHeader(
+				"X-Forwarded-Proto");
+
+			if (forwardedProto != null) {
+				sb.append(forwardedProto);
+			}
+			else {
+				sb.append(httpServletRequest.getScheme());
+			}
 
 			sb.append("://");
 

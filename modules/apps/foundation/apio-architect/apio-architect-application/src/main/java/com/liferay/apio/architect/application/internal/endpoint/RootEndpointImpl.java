@@ -46,6 +46,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,7 +97,7 @@ public class RootEndpointImpl implements RootEndpoint {
 	}
 
 	@Override
-	public String home() {
+	public Response home() {
 		List<String> resourceNames =
 			_collectionRouterManager.getResourceNames();
 
@@ -119,7 +121,11 @@ public class RootEndpointImpl implements RootEndpoint {
 
 		rootJsonObject.add("resources", resourcesJsonObject);
 
-		return rootJsonObject.toString();
+		return Response.ok(
+			rootJsonObject.toString()
+		).type(
+			MediaType.valueOf("application/json")
+		).build();
 	}
 
 	@Override
@@ -159,7 +165,7 @@ public class RootEndpointImpl implements RootEndpoint {
 			_itemRouterManager::getItemRoutesOptional
 		).mapOptional(
 			ItemRoutes::getItemFunctionOptional, notFound(name, id)
-		).map(
+		).flatMap(
 			function -> function.apply(
 				_httpServletRequest
 			).apply(

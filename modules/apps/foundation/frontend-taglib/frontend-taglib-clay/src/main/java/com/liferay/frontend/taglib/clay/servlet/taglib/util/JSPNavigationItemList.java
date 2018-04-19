@@ -25,11 +25,13 @@ import javax.servlet.jsp.PageContext;
 public class JSPNavigationItemList extends NavigationItemList {
 
 	public JSPNavigationItemList(PageContext pageContext) {
+		currentURL = (String)pageContext.findAttribute("currentURL");
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");
 		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
+	protected String currentURL; 
 	protected RenderResponse renderResponse;
 	protected HttpServletRequest request;
 

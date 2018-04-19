@@ -14,33 +14,29 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.filter;
 
-import com.liferay.apio.architect.error.APIError;
-import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveExceptionConverter;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.logger.ApioLogger;
-import com.liferay.apio.architect.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.wiring.osgi.manager.ErrorMessageMapperManager;
-import com.liferay.apio.architect.wiring.osgi.manager.ExceptionConverterManager;
-import com.liferay.apio.architect.writer.ErrorWriter;
+import com.liferay.apio.architect.functional.Try.Failure;
+import com.liferay.apio.architect.jaxrs.json.internal.util.ErrorUtil;
 
 import java.io.IOException;
-
-import java.util.Optional;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Request;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
- * Filters and converts a {@link Try.Failure} entity to its corresponding {@link
- * APIError}, and writes that error to the response.
+ * Filters and converts a {@link Failure} entity to its corresponding {@code
+ * Response};
  *
  * @author Alejandro Hernández
  */
@@ -56,51 +52,47 @@ public class FailureFilter implements ContainerResponseFilter {
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		Object entity = containerResponseContext.getEntity();
+		Try<Object> objectTry = Try.fromFallible(
+			containerResponseContext::getEntity);
 
-		if (entity instanceof Try.Failure) {
-			Try.Failure failure = (Try.Failure)entity;
+		objectTry.map(
+			Failure.class::cast
+		).map(
+			Failure::getException
+		).map(
+			exception -> _errorUtil.getErrorResponse(
+				exception, _request, _httpHeaders)
+		).ifSuccess(
+			response -> {
+				containerResponseContext.setStatus(response.getStatus());
 
-			Exception exception = failure.getException();
+				MultivaluedMap<String, Object> headers =
+					containerResponseContext.getHeaders();
 
-			Optional<APIError> optional = _exceptionConverterManager.convert(
-				exception);
+				headers.remove(CONTENT_TYPE);
 
-			APIError apiError = optional.orElseThrow(
-				() -> new MustHaveExceptionConverter(exception.getClass()));
+				MediaType mediaType = response.getMediaType();
 
-			if (_apioLogger != null) {
-				_apioLogger.error(apiError);
+				if (mediaType != null) {
+					headers.add(CONTENT_TYPE, mediaType.toString());
+				}
+
+				Object entity = response.getEntity();
+
+				if (entity != null) {
+					containerResponseContext.setEntity(entity);
+				}
 			}
-
-			ErrorMessageMapper errorMessageMapper =
-				_errorMessageMapperManager.getErrorMessageMapper(
-					apiError, _httpHeaders);
-
-			String result = ErrorWriter.writeError(
-				errorMessageMapper, apiError, _httpHeaders);
-
-			MultivaluedMap<String, Object> headers =
-				containerResponseContext.getHeaders();
-
-			headers.remove("Content-Type");
-			headers.add("Content-Type", errorMessageMapper.getMediaType());
-
-			containerResponseContext.setEntity(result);
-			containerResponseContext.setStatus(apiError.getStatusCode());
-		}
+		);
 	}
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private ApioLogger _apioLogger;
-
 	@Reference
-	private ErrorMessageMapperManager _errorMessageMapperManager;
-
-	@Reference
-	private ExceptionConverterManager _exceptionConverterManager;
+	private ErrorUtil _errorUtil;
 
 	@Context
 	private HttpHeaders _httpHeaders;
+
+	@Context
+	private Request _request;
 
 }

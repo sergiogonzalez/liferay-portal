@@ -22,13 +22,13 @@
 
 <clay:management-toolbar
 	creationMenu="<%= managementToolbarsDisplayContext.getCreationMenu() %>"
-	filterItems="<%= managementToolbarsDisplayContext.getFilterItems() %>"
+	filterItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="mySearchActionURL"
 	searchFormName="mySearchName"
 	searchInputName="mySearchInputName"
 	selectable="<%= true %>"
 	sortingOrder="desc"
-	viewTypes="<%= managementToolbarsDisplayContext.getViewTypesItems() %>"
+	viewTypes="<%= managementToolbarsDisplayContext.getViewTypeItems() %>"
 />
 
 <h3>ACTIVE STATE</h3>

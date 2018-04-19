@@ -20,11 +20,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 
 /**
- * An implementation of a {@code ServiceTrackerMapListener} that clears the
- * {@code ManagerCache} on every change.
+ * Provides an implementation of a {@link ServiceTrackerMapListener} that clears
+ * the {@link
+ * com.liferay.apio.architect.wiring.osgi.internal.manager.cache.ManagerCache}
+ * on every change.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class ClearCacheServiceTrackerMapListener<T, U>
 	implements ServiceTrackerMapListener<U, T, T> {

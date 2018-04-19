@@ -23,9 +23,12 @@ import com.liferay.apio.architect.alias.routes.CreateItemFunction;
 import com.liferay.apio.architect.alias.routes.GetPageFunction;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.function.PentaFunction;
-import com.liferay.apio.architect.function.TetraFunction;
-import com.liferay.apio.architect.function.TriFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableFunction;
+import com.liferay.apio.architect.function.throwable.ThrowablePentaFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableTetraFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableTriFunction;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -36,7 +39,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -117,7 +119,7 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a creator function that has one extra parameter.
 		 *
-		 * @param  biFunction the creator function
+		 * @param  throwableBiFunction the creator function
 		 * @param  aClass the class of the creator function's second parameter
 		 * @param  permissionFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
@@ -125,7 +127,7 @@ public class CollectionRoutes<T> {
 		 * @return the updated builder
 		 */
 		public <A, R> Builder<T> addCreator(
-			BiFunction<R, A, T> biFunction, Class<A> aClass,
+			ThrowableBiFunction<R, A, T> throwableBiFunction, Class<A> aClass,
 			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -140,7 +142,7 @@ public class CollectionRoutes<T> {
 
 			_createItemFunction = httpServletRequest -> body -> provide(
 				_provideFunction.apply(httpServletRequest), aClass,
-				a -> biFunction.andThen(
+				a -> throwableBiFunction.andThen(
 					t -> new SingleModel<>(t, _name, Collections.emptyList())
 				).apply(
 					form.get(body), a
@@ -152,14 +154,14 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a creator function that has no extra parameters.
 		 *
-		 * @param  function the creator function
+		 * @param  throwableFunction the creator function
 		 * @param  permissionFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
 		 */
 		public <R> Builder<T> addCreator(
-			Function<R, T> function,
+			ThrowableFunction<R, T> throwableFunction,
 			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -171,11 +173,13 @@ public class CollectionRoutes<T> {
 			_form = form;
 
 			_createItemFunction = httpServletRequest -> body ->
-				function.andThen(
-					t -> new SingleModel<>(t, _name, Collections.emptyList())
-				).apply(
-					form.get(body)
-				);
+				Try.fromFallible(
+					() -> throwableFunction.andThen(
+						t -> new SingleModel<>(
+							t, _name, Collections.emptyList())
+					).apply(
+						form.get(body)
+					));
 
 			return this;
 		}
@@ -183,7 +187,7 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a creator function that has four extra parameters.
 		 *
-		 * @param  pentaFunction the creator function
+		 * @param  throwablePentaFunction the creator function
 		 * @param  aClass the class of the creator function's second parameter
 		 * @param  bClass the class of the creator function's third parameter
 		 * @param  cClass the class of the creator function's fourth parameter
@@ -194,8 +198,8 @@ public class CollectionRoutes<T> {
 		 * @return the updated builder
 		 */
 		public <A, B, C, D, R> Builder<T> addCreator(
-			PentaFunction<R, A, B, C, D, T> pentaFunction, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			ThrowablePentaFunction<R, A, B, C, D, T> throwablePentaFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
 			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -214,7 +218,7 @@ public class CollectionRoutes<T> {
 			_createItemFunction = httpServletRequest -> body -> provide(
 				_provideFunction.apply(httpServletRequest), aClass, bClass,
 				cClass, dClass,
-				a -> b -> c -> d -> pentaFunction.andThen(
+				a -> b -> c -> d -> throwablePentaFunction.andThen(
 					t -> new SingleModel<>(t, _name, Collections.emptyList())
 				).apply(
 					form.get(body), a, b, c, d
@@ -226,7 +230,7 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a creator function that has three extra parameters.
 		 *
-		 * @param  pentaFunction the creator function
+		 * @param  throwableTetraFunction the creator function
 		 * @param  aClass the class of the creator function's second parameter
 		 * @param  bClass the class of the creator function's third parameter
 		 * @param  cClass the class of the creator function's fourth parameter
@@ -236,8 +240,8 @@ public class CollectionRoutes<T> {
 		 * @return the updated builder
 		 */
 		public <A, B, C, R> Builder<T> addCreator(
-			TetraFunction<R, A, B, C, T> pentaFunction, Class<A> aClass,
-			Class<B> bClass, Class<C> cClass,
+			ThrowableTetraFunction<R, A, B, C, T> throwableTetraFunction,
+			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
@@ -255,7 +259,7 @@ public class CollectionRoutes<T> {
 			_createItemFunction = httpServletRequest -> body -> provide(
 				_provideFunction.apply(httpServletRequest), aClass, bClass,
 				cClass,
-				a -> b -> c -> pentaFunction.andThen(
+				a -> b -> c -> throwableTetraFunction.andThen(
 					t -> new SingleModel<>(t, _name, Collections.emptyList())
 				).apply(
 					form.get(body), a, b, c
@@ -267,7 +271,7 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a creator function that has two extra parameters.
 		 *
-		 * @param  triFunction the creator function
+		 * @param  throwableTriFunction the creator function
 		 * @param  aClass the class of the creator function's second parameter
 		 * @param  bClass the class of the creator function's third parameter
 		 * @param  permissionFunction the permission function for this route
@@ -276,8 +280,9 @@ public class CollectionRoutes<T> {
 		 * @return the updated builder
 		 */
 		public <A, B, R> Builder<T> addCreator(
-			TriFunction<R, A, B, T> triFunction, Class<A> aClass,
-			Class<B> bClass, Function<Credentials, Boolean> permissionFunction,
+			ThrowableTriFunction<R, A, B, T> throwableTriFunction,
+			Class<A> aClass, Class<B> bClass,
+			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -292,7 +297,7 @@ public class CollectionRoutes<T> {
 
 			_createItemFunction = httpServletRequest -> body -> provide(
 				_provideFunction.apply(httpServletRequest), aClass, bClass,
-				a -> b -> triFunction.andThen(
+				a -> b -> throwableTriFunction.andThen(
 					t -> new SingleModel<>(t, _name, Collections.emptyList())
 				).apply(
 					form.get(body), a, b
@@ -304,12 +309,13 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a collection page function with one extra parameter.
 		 *
-		 * @param  biFunction the function that calculates the page
+		 * @param  throwableBiFunction the function that calculates the page
 		 * @param  aClass the class of the page function's third parameter
 		 * @return the updated builder
 		 */
 		public <A> Builder<T> addGetter(
-			BiFunction<Pagination, A, PageItems<T>> biFunction,
+			ThrowableBiFunction<Pagination, A, PageItems<T>>
+				throwableBiFunction,
 			Class<A> aClass) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -317,7 +323,7 @@ public class CollectionRoutes<T> {
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
 				aClass, Credentials.class,
-				pagination -> a -> credentials -> biFunction.andThen(
+				pagination -> a -> credentials -> throwableBiFunction.andThen(
 					items -> new Page<>(
 						_name, items, pagination, _getOperations(credentials))
 				).apply(
@@ -331,16 +337,16 @@ public class CollectionRoutes<T> {
 		 * Adds a route to a collection page function with none extra
 		 * parameters.
 		 *
-		 * @param  function the function that calculates the page
+		 * @param  throwableFunction the function that calculates the page
 		 * @return the updated builder
 		 */
 		public Builder<T> addGetter(
-			Function<Pagination, PageItems<T>> function) {
+			ThrowableFunction<Pagination, PageItems<T>> throwableFunction) {
 
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
 				Credentials.class,
-				pagination -> credentials -> function.andThen(
+				pagination -> credentials -> throwableFunction.andThen(
 					items -> new Page<>(
 						_name, items, pagination, _getOperations(credentials))
 				).apply(
@@ -354,7 +360,7 @@ public class CollectionRoutes<T> {
 		 * Adds a route to a collection page function with four extra
 		 * parameters.
 		 *
-		 * @param  pentaFunction the function that calculates the page
+		 * @param  throwablePentaFunction the function that calculates the page
 		 * @param  aClass the class of the page function's second parameter
 		 * @param  bClass the class of the page function's third parameter
 		 * @param  cClass the class of the page function's fourth parameter
@@ -362,7 +368,8 @@ public class CollectionRoutes<T> {
 		 * @return the updated builder
 		 */
 		public <A, B, C, D> Builder<T> addGetter(
-			PentaFunction<Pagination, A, B, C, D, PageItems<T>> pentaFunction,
+			ThrowablePentaFunction<Pagination, A, B, C, D, PageItems<T>>
+				throwablePentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
 
@@ -375,7 +382,7 @@ public class CollectionRoutes<T> {
 				_provideFunction.apply(httpServletRequest), Pagination.class,
 				aClass, bClass, cClass, dClass, Credentials.class,
 				pagination -> a -> b -> c -> d -> credentials ->
-					pentaFunction.andThen(
+					throwablePentaFunction.andThen(
 						items -> new Page<>(
 							_name, items, pagination,
 							_getOperations(credentials))
@@ -390,14 +397,15 @@ public class CollectionRoutes<T> {
 		 * Adds a route to a collection page function with three extra
 		 * parameters.
 		 *
-		 * @param  tetraFunction the function that calculates the page
+		 * @param  throwableTetraFunction the function that calculates the page
 		 * @param  aClass the class of the page function's second parameter
 		 * @param  bClass the class of the page function's third parameter
 		 * @param  cClass the class of the page function's fourth parameter
 		 * @return the updated builder
 		 */
 		public <A, B, C> Builder<T> addGetter(
-			TetraFunction<Pagination, A, B, C, PageItems<T>> tetraFunction,
+			ThrowableTetraFunction<Pagination, A, B, C, PageItems<T>>
+				throwableTetraFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -408,7 +416,7 @@ public class CollectionRoutes<T> {
 				_provideFunction.apply(httpServletRequest), Pagination.class,
 				aClass, bClass, cClass, Credentials.class,
 				pagination -> a -> b -> c -> credentials ->
-					tetraFunction.andThen(
+					throwableTetraFunction.andThen(
 						items -> new Page<>(
 							_name, items, pagination,
 							_getOperations(credentials))
@@ -422,13 +430,14 @@ public class CollectionRoutes<T> {
 		/**
 		 * Adds a route to a collection page function with two extra parameters.
 		 *
-		 * @param  triFunction the function that calculates the page
+		 * @param  throwableTriFunction the function that calculates the page
 		 * @param  aClass the class of the page function's second parameter
 		 * @param  bClass the class of the page function's third parameter
 		 * @return the updated builder
 		 */
 		public <A, B> Builder<T> addGetter(
-			TriFunction<Pagination, A, B, PageItems<T>> triFunction,
+			ThrowableTriFunction<Pagination, A, B, PageItems<T>>
+				throwableTriFunction,
 			Class<A> aClass, Class<B> bClass) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -437,12 +446,14 @@ public class CollectionRoutes<T> {
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
 				aClass, bClass, Credentials.class,
-				pagination -> a -> b -> credentials -> triFunction.andThen(
-					items -> new Page<>(
-						_name, items, pagination, _getOperations(credentials))
-				).apply(
-					pagination, a, b
-				));
+				pagination -> a -> b -> credentials ->
+					throwableTriFunction.andThen(
+						items -> new Page<>(
+							_name, items, pagination,
+							_getOperations(credentials))
+					).apply(
+						pagination, a, b
+					));
 
 			return this;
 		}

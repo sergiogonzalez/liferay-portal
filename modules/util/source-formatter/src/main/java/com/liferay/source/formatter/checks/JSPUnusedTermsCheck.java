@@ -322,7 +322,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		if (!checkedForIncludesFileNames.contains(fileName)) {
 			includeFileNames.addAll(
 				JSPSourceUtil.getJSPIncludeFileNames(
-					fileName, includeFileNames, contentsMap));
+					fileName, includeFileNames, contentsMap, false));
 			includeFileNames.addAll(
 				JSPSourceUtil.getJSPReferenceFileNames(
 					fileName, includeFileNames, contentsMap));
@@ -449,6 +449,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private String _removeUnusedVariables(
 			String fileName, String absolutePath, String content)
 		throws Exception {
+
+		if (absolutePath.contains("/src/main/resources/alloy_mvc/jsp/") &&
+			absolutePath.endsWith(".jspf")) {
+
+			return content;
+		}
 
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();

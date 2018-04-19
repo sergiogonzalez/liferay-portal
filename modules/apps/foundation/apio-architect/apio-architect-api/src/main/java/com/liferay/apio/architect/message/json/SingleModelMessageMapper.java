@@ -23,8 +23,6 @@ import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.List;
 
-import javax.ws.rs.core.HttpHeaders;
-
 /**
  * Maps {@link SingleModel} data to its representation in a JSON object.
  * Instances of this interface work like events. The {@code
@@ -33,11 +31,12 @@ import javax.ws.rs.core.HttpHeaders;
  * only map the provided part of the resource to its representation in a JSON
  * object. To enable this, each method receives a {@link JSONObjectBuilder}.
  *
- * The methods {@link #onStart(JSONObjectBuilder, SingleModel, HttpHeaders)}
- * and {@link #onFinish(JSONObjectBuilder, SingleModel, HttpHeaders)} are
- * called when the writer starts and finishes the single model item,
- * respectively. Otherwise, the message mapper's methods aren't called in a
- * particular order.
+ * <p>
+ * The methods {@link #onStart(JSONObjectBuilder, Object, HttpHeaders)} and
+ * {@link #onFinish(JSONObjectBuilder, Object, HttpHeaders)} are called when the
+ * writer starts and finishes the single model item, respectively. Otherwise,
+ * the message mapper's methods aren't called in a particular order.
+ * </p>
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -46,14 +45,8 @@ import javax.ws.rs.core.HttpHeaders;
  */
 @ConsumerType
 @SuppressWarnings("unused")
-public interface SingleModelMessageMapper<T> {
-
-	/**
-	 * Returns the media type the mapper represents.
-	 *
-	 * @return the media type the mapper represents
-	 */
-	public String getMediaType();
+public interface SingleModelMessageMapper<T>
+	extends MessageMapper<SingleModel<T>> {
 
 	/**
 	 * Maps a resource's boolean field to its JSON object representation.
@@ -354,18 +347,6 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
-	 * Finishes the model. This is the final mapper method the writer calls.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the model
-	 * @param singleModel the single model
-	 * @param httpHeaders the current request's HTTP headers
-	 */
-	public default void onFinish(
-		JSONObjectBuilder jsonObjectBuilder, SingleModel<T> singleModel,
-		HttpHeaders httpHeaders) {
-	}
-
-	/**
 	 * Finishes an embedded model's operation. This is the final
 	 * embedded-operation-mapper method the writer calls.
 	 *
@@ -396,19 +377,6 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
-	 * Starts the model. This is the first mapper method the writer calls for
-	 * the model.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the model
-	 * @param singleModel the single model
-	 * @param httpHeaders the current request's HTTP headers
-	 */
-	public default void onStart(
-		JSONObjectBuilder jsonObjectBuilder, SingleModel<T> singleModel,
-		HttpHeaders httpHeaders) {
-	}
-
-	/**
 	 * Starts an embedded model's operation. This is the first
 	 * embedded-operation-mapper method the writer calls.
 	 *
@@ -436,21 +404,6 @@ public interface SingleModelMessageMapper<T> {
 	public default void onStartOperation(
 		JSONObjectBuilder singleModelJSONObjectBuilder,
 		JSONObjectBuilder operationJSONObjectBuilder, Operation operation) {
-	}
-
-	/**
-	 * Returns {@code true} if the mapper can map all things related to the
-	 * current request.
-	 *
-	 * @param  singleModel the single model
-	 * @param  httpHeaders the HTTP headers of the current request
-	 * @return {@code true} if the mapper can map the request; {@code false}
-	 *         otherwise
-	 */
-	public default boolean supports(
-		SingleModel<T> singleModel, HttpHeaders httpHeaders) {
-
-		return true;
 	}
 
 }

@@ -37,53 +37,59 @@ long classNameId = BeanParamUtil.getLong(assetDisplayTemplate, request, "classNa
 	<portlet:param name="mvcPath" value="/edit_asset_display_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editAssetDisplayTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editAssetDisplayTemplateURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="assetDisplayTemplateId" type="hidden" value="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.getAssetDisplayTemplateId() : 0 %>" />
 
 	<aui:model-context bean="<%= assetDisplayTemplate %>" model="<%= AssetDisplayTemplate.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" cssClass="asset-display-template-name" name="name" placeholder="name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input autoFocus="<%= true %>" cssClass="asset-display-template-name" name="name" placeholder="name" />
 
-			<aui:select label="asset-type" name="classNameId">
+				<aui:select label="asset-type" name="classNameId">
 
-				<%
-				for (long availableClassNameId : assetDisplayTemplateDisplayContext.getAvailableClassNameIds()) {
-					ClassName className = ClassNameLocalServiceUtil.getClassName(availableClassNameId);
+					<%
+					for (long availableClassNameId : assetDisplayTemplateDisplayContext.getAvailableClassNameIds()) {
+						ClassName className = ClassNameLocalServiceUtil.getClassName(availableClassNameId);
 
-					boolean selected = false;
+						boolean selected = false;
 
-					if ((assetDisplayTemplate != null) && (availableClassNameId == classNameId)) {
-						selected = true;
+						if ((assetDisplayTemplate != null) && (availableClassNameId == classNameId)) {
+							selected = true;
+						}
+					%>
+
+						<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= selected %>" value="<%= availableClassNameId %>" />
+
+					<%
 					}
-				%>
+					%>
 
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= selected %>" value="<%= availableClassNameId %>" />
+				</aui:select>
 
-				<%
-				}
-				%>
+				<aui:input checked="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.isMain() : false %>" label="default-template-for-selected-asset-type" name="main" type="checkbox" />
+			</liferay-frontend:fieldset>
 
-			</aui:select>
-
-			<aui:input checked="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.isMain() : false %>" label="default-template-for-selected-asset-type" name="main" type="checkbox" />
-		</aui:fieldset>
-
-		<%@ include file="/edit_asset_display_template_script.jspf" %>
-	</aui:fieldset-group>
+			<%@ include file="/edit_asset_display_template_script.jspf" %>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
 	<%
 	String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
 	%>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button onClick="<%= taglibOnClick %>" type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	Liferay.after(

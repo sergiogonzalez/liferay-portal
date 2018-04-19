@@ -86,20 +86,20 @@
 			<if>
 				<equals arg1="${portlet}" arg2="Dynamic Data Mapping Form" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Form">
+					<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Form">
 						<var name="key_portletTitleName" value="Form" />
 					</execute>
 				</then>
 				<elseif>
 					<equals arg1="${portlet}" arg2="RSS" />
 					<then>
-						<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="RSS Publisher">
+						<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="RSS Publisher">
 							<var name="key_portletTitleName" value="RSS Publisher" />
 						</execute>
 					</then>
 				</elseif>
 				<else>
-					<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="${portlet}">
+					<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="${portlet}">
 						<var name="key_portletTitleName" value="${portlet}" />
 					</execute>
 				</else>
@@ -114,11 +114,14 @@
 
 		<execute macro="NavigationMenu#gotoAddPage" />
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Test Page Name" />
+		<execute macro="SitePages#_addPage">
+			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Page#saveAddPage" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Liferay" />
+		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/test-page-name" />
 	</command>

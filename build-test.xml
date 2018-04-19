@@ -627,6 +627,14 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				regexp="(-Xmx)(\d*\w*)"
 				replace="\12048m"
 			/>
+
+			<propertyregex
+				input="${poshi.java.jdk.opts}"
+				override="true"
+				property="poshi.java.jdk.opts"
+				regexp="PermSize"
+				replace="MetaspaceSize"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -1287,6 +1295,12 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-blacklist-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=[&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees&quot;]</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-captcha-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
@@ -1507,6 +1521,8 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 	<macrodef name="prepare-gecko-driver">
 		<sequential>
+			<stop-gecko-driver />
+
 			<if>
 				<os family="mac" />
 				<then>
@@ -1804,48 +1820,29 @@ ${portal.legacy.file.content}</echo>
 			<if>
 				<os family="mac" />
 				<then>
-					<mirrors-get
-						dest="tools/selenium/SafariDriver.safariextz"
-						src="http://selenium-release.storage.googleapis.com/2.45/SafariDriver.safariextz"
-					/>
-
-					<execute>
-						open ${basedir.unix}/tools/selenium/SafariDriver.safariextz
-					</execute>
-
 					<echo file="tools/selenium/safaridriver.scpt">
 						<![CDATA[
+tell application "Safari" to activate
+delay 1
+
 tell application "System Events"
 	tell process "Safari"
-		repeat until (exists window 1) and subrole of window 1 is "AXDialog"
+		tell menu bar item "Develop" of menu bar 1
+			click
 			delay 1
-		end repeat
-
-		click button 1 of front window
+				set checkValue to (value of attribute "AXMenuItemMarkChar" of menu item "Allow Remote Automation" of menu 1)
+				if checkValue is not equal to "✓" then
+					click menu item "Allow Remote Automation" of menu 1
+				else
+					key code 53
+				end if
+		end tell
 	end tell
 end tell
 
 tell application "Safari" to quit
 						]]>
 					</echo>
-
-					<if>
-						<contains string="${os.version}" substring="10.11" />
-						<then>
-							<replace
-								file="tools/selenium/safaridriver.scpt"
-							>
-								<replacefilter>
-									<replacetoken><![CDATA[repeat until (exists window 1) and subrole of window 1 is "AXDialog"]]></replacetoken>
-									<replacevalue><![CDATA[repeat until exists button 1 of sheet 1 of window 1]]></replacevalue>
-								</replacefilter>
-								<replacefilter>
-									<replacetoken><![CDATA[click button 1 of front window]]></replacetoken>
-									<replacevalue><![CDATA[click button 1 of sheet 1 of window 1]]></replacevalue>
-								</replacefilter>
-							</replace>
-						</then>
-					</if>
 
 					<execute>
 						osascript ${basedir.unix}/tools/selenium/safaridriver.scpt
@@ -2360,94 +2357,34 @@ ${tomcat-gc-log}
 		<sequential>
 			<beanshell>
 				<![CDATA[
-					import org.apache.tools.ant.DirectoryScanner;
+					import com.liferay.jenkins.results.parser.AxisTestClassGroup;
+					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+					import com.liferay.jenkins.results.parser.TestClassGroup;
+					import com.liferay.jenkins.results.parser.TestClassGroupFactory;
 
-					List getClassGroups(List classFileNames, int groupsSize) {
-						List classFileNameGroups = new ArrayList(groupsSize);
+					PortalGitWorkingDirectory portalGitWorkingDirectory = new PortalGitWorkingDirectory(project.getProperty("git.working.branch.name"), project.getProperty("project.dir"));
 
-						for (int i = 0; i < groupsSize; i++) {
-							classFileNameGroups.add(new ArrayList());
-						}
+					TestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
 
-						int i = 0;
-
-						for (String classFileName : classFileNames) {
-							List classFileNameGroup = classFileNameGroups.get(i++ % groupsSize);
-
-							classFileNameGroup.add(classFileName);
-						}
-
-						return classFileNameGroups;
-					}
-
-					List getClassFileNames() {
-						DirectoryScanner directoryScanner = new DirectoryScanner();
-
-						String testClassModulesBaseDir = project.getProperty("test.class.modules.base.dir");
-						String testClassNamesExcludes = project.getProperty("test.class.names.excludes");
-						String testClassNamesIncludes = project.getProperty("test.class.names.includes");
-
-						if (testClassModulesBaseDir != null) {
-							int x = testClassModulesBaseDir.indexOf("modules");
-
-							if (x != -1) {
-								testClassModulesBaseDir = testClassModulesBaseDir.substring(x);
-
-								StringBuilder sb = new StringBuilder();
-
-								for (String testClassNamesInclude : testClassNamesIncludes.split(",")) {
-									sb.append(testClassModulesBaseDir);
-									sb.append(File.separator);
-									sb.append(testClassNamesInclude);
-									sb.append(",");
-								}
-
-								testClassNamesIncludes = sb.toString();
-							}
-						}
-
-						directoryScanner.setBasedir(project.getBaseDir());
-						directoryScanner.setExcludes(testClassNamesExcludes.split(","));
-						directoryScanner.setIncludes(testClassNamesIncludes.split(","));
-
-						directoryScanner.scan();
-
-						List classFileNames = new ArrayList();
-
-						for (String fileName : directoryScanner.getIncludedFiles()) {
-							String classFileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
-
-							classFileName = classFileName.concat("class");
-
-							classFileNames.add(classFileName);
-						}
-
-						Collections.sort(classFileNames);
-
-						return classFileNames;
-					}
-
-					StringBuilder sb = new StringBuilder();
-
-					int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
+					int axisCount = batchTestClassGroup.getAxisCount();
 
 					String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
 
 					String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
 
-					List classFileNames = getClassFileNames();
+					StringBuilder sb = new StringBuilder();
 
-					List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
+					for (i = 0; i < axisCount; i++) {
+						AxisTestClassGroup axisTestClassGroup = batchTestClassGroup.getAxisTestClassGroup(i);
 
-					for (i = 0; i < allTestClassGroupsSize; i++) {
-						List testClassGroup = testClassGroups.get(i);
+						List testClassGroup = axisTestClassGroup.getTestClassFiles();
 
 						sb.append("TEST_CLASS_GROUP_");
 						sb.append(i);
 						sb.append("=");
 
-						for (String testClass : testClassGroup) {
-							sb.append(testClass);
+						for (File testClass : testClassGroup) {
+							sb.append(testClass.toPath());
 							sb.append(",");
 						}
 
@@ -2467,12 +2404,12 @@ ${tomcat-gc-log}
 
 					sb.append("TEST_CLASS_GROUPS=");
 
-					for (int i = 0; i < allTestClassGroupsSize; i++) {
+					for (int i = 0; i < axisCount; i++) {
 						sb.append(i);
 						sb.append(" ");
 					}
 
-					if (allTestClassGroupsSize > 0) {
+					if (axisCount > 0) {
 						sb.setLength(sb.length() - 1);
 					}
 
@@ -2954,7 +2891,7 @@ go</echo>
 			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
 			<var name="app.server.tomcat.lib.global.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/lib/ext" />
 			<var name="app.server.tomcat.zip.name" value="apache-tomcat-${app.server.tomcat.version}.zip" />
-			<var name="app.server.tomcat.zip.url" value="http://archive.apache.org/dist/tomcat/tomcat-8/v${app.server.tomcat.version}/bin/${app.server.tomcat.zip.name}" />
+			<var name="app.server.tomcat.zip.url" value="http://archive.apache.org/dist/tomcat/tomcat-9/v${app.server.tomcat.version}/bin/${app.server.tomcat.zip.name}" />
 
 			<echo append="true" file="app.server.${user.name}.properties">
 				app.server.tomcat.dir=${app.server.tomcat.dir}
@@ -3886,6 +3823,24 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-gecko-driver">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<execute failonerror="false">
+						killall geckodriver
+					</execute>
+				</then>
+				<else>
+					<execute failonerror="false">
+						taskkill.exe /F /IM geckodriver.exe
+					</execute>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-ie-driver">
 		<sequential>
 			<exec executable="taskkill.exe">
@@ -4484,6 +4439,13 @@ go]]></replacevalue>
 		</if>
 
 		<if>
+			<equals arg1="${browser.type}" arg2="firefox" />
+			<then>
+				<stop-gecko-driver />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${browser.type}" arg2="internetexplorer" />
 			<then>
 				<stop-ie-driver />
@@ -4824,6 +4786,54 @@ go]]></replacevalue>
 		<delete dir="/tmp/sprite" />
 	</target>
 
+	<target name="deploy-blade-templates">
+		<if>
+			<equals arg1="${blade.templates}" arg2="simple" />
+			<then>
+				<if>
+					<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" type="dir" />
+					<then>
+						<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple" />
+					</then>
+				</if>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet">
+					mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -DartifactId=com.npm.simple -Dauthor=liferay -DbuildType=maven -DclassName=Foo -DgroupId=com.test -DinteractiveMode=false -DliferayVersion=7.1 -Dpackage=com.test -DprojectType=standalone -Dversion=1.0.0
+				</execute>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple">
+					mvn package
+				</execute>
+
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/com.npm.simple/target/com.npm.simple-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
+			</then>
+			<else>
+				<if>
+					<available file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" type="dir" />
+					<then>
+						<delete dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}" />
+					</then>
+				</if>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet">
+					mvn archetype:generate --batch-mode -DarchetypeArtifactId=com.liferay.project.templates.npm.${blade.templates}.portlet -DarchetypeGroupId=com.liferay -DarchetypeVersion=1.0.4 -DartifactId=com.npm.${blade.templates} -Dauthor=liferay -DbuildType=maven -DclassName=Foo -DgroupId=com.test -DinteractiveMode=false -DliferayVersion=7.1 -Dpackage=com.test -DprojectType=standalone -Dversion=1.0.0
+				</execute>
+
+				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}">
+					mvn package
+				</execute>
+
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/com.npm.${blade.templates}/target/com.npm.${blade.templates}-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
+			</else>
+		</if>
+	</target>
+
 	<target name="deploy-dependency-jars">
 		<get-testcase-property property.name="liferay.training.dependency.jars" />
 
@@ -5146,6 +5156,7 @@ go]]></replacevalue>
 					<then>
 						<move
 							file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+							overwrite="true"
 							tofile="${liferay.home}/osgi/configs/@{file.names}"
 						/>
 
@@ -5158,6 +5169,20 @@ go]]></replacevalue>
 						/>
 					</then>
 				</if>
+			</sequential>
+		</for>
+
+		<pathconvert property="osgi.configs">
+			<path>
+				<fileset
+					dir="${liferay.home}/osgi/configs"
+				/>
+			</path>
+		</pathconvert>
+
+		<for delimiter=":" list="${osgi.configs}" param="osgi.config">
+			<sequential>
+				<print-file file.name="@{osgi.config}" />
 			</sequential>
 		</for>
 	</target>
@@ -6011,6 +6036,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	<target name="prepare-osgi-module-configurations">
 		<get-testcase-property property.name="osgi.module.configurations" />
 
+		<prepare-blacklist-configuration />
+
 		<if>
 			<not>
 				<contains string="${osgi.module.configurations}" substring="maxChallenges" />
@@ -6566,6 +6593,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</echo>
 
 		<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
+
+		<if>
+			<isset property="browser.chrome.bin.args" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					browser.chrome.bin.args=${browser.chrome.bin.args}
+				</echo>
+			</then>
+		</if>
 
 		<if>
 			<isset property="browser.firefox.bin.file" />
@@ -9367,6 +9403,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="blade.templates" />
+
+		<if>
+			<isset property="blade.templates" />
+			<then>
+				<antcall target="deploy-blade-templates" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="openam.enabled" />
 
 		<if>
@@ -9383,16 +9428,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-elasticsearch.xml" target="start-elasticsearch" />
-
-				<get-testcase-property property.name="elastic.kibana.enabled" />
-
-				<if>
-					<equals arg1="${elastic.kibana.enabled}" arg2="true" />
-					<then>
-						<ant antfile="build-test-elasticsearch.xml" target="start-kibana" />
-					</then>
-				</if>
+				<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
 			</then>
 		</if>
 
@@ -9742,17 +9778,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="elastic.kibana.enabled" />
-
-		<if>
-			<equals arg1="${elastic.kibana.enabled}" arg2="true" />
-			<then>
-				<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
-
-				<ant antfile="build-test-elasticsearch.xml" target="stop-kibana" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="openam.enabled" />
 
 		<if>
@@ -9767,7 +9792,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-elasticsearch.xml" target="stop-elasticsearch" />
+				<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
 			</then>
 		</if>
 

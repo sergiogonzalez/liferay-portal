@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
+	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "display-pages") %>'>
+		<liferay-util:include page="/view_display_pages.jsp" servletContext="<%= application %>" />
+	</c:when>
 	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "pages") %>'>
 		<liferay-util:include page="/view_layouts.jsp" servletContext="<%= application %>" />
 	</c:when>

@@ -14,14 +14,17 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+
+import java.util.List;
 
 /**
  * @author Chema Balsas
  */
 public class DropdownsDisplayContext {
 
-	public DropdownItemList getDefaultDropdownItems() {
+	public List<DropdownItem> getDefaultDropdownItems() {
 		if (_defaultDropdownItems != null) {
 			return _defaultDropdownItems;
 		}
@@ -59,12 +62,12 @@ public class DropdownsDisplayContext {
 		return _defaultDropdownItems;
 	}
 
-	public DropdownItemList getGroupDropdownItems() {
+	public List<DropdownItem> getGroupDropdownItems() {
 		if (_groupDropdownItems != null) {
 			return _groupDropdownItems;
 		}
 
-		DropdownItemList group1DropdownItems = new DropdownItemList() {
+		List<DropdownItem> group1DropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -80,7 +83,7 @@ public class DropdownsDisplayContext {
 			}
 		};
 
-		DropdownItemList group2DropdownItems = new DropdownItemList() {
+		List<DropdownItem> group2DropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -116,7 +119,7 @@ public class DropdownsDisplayContext {
 		return _groupDropdownItems;
 	}
 
-	public DropdownItemList getIconDropdownItems() {
+	public List<DropdownItem> getIconDropdownItems() {
 		if (_iconDropdownItems != null) {
 			return _iconDropdownItems;
 		}
@@ -170,12 +173,12 @@ public class DropdownsDisplayContext {
 		return _iconDropdownItems;
 	}
 
-	public DropdownItemList getInputDropdownItems() {
+	public List<DropdownItem> getInputDropdownItems() {
 		if (_inputDropdownItems != null) {
 			return _inputDropdownItems;
 		}
 
-		DropdownItemList group1DropdownItems = new DropdownItemList() {
+		List<DropdownItem> group1DropdownItems = new DropdownItemList() {
 			{
 				addCheckbox(
 					dropdownCheckboxItem -> {
@@ -193,7 +196,7 @@ public class DropdownsDisplayContext {
 			}
 		};
 
-		DropdownItemList group2DropdownItems = new DropdownItemList() {
+		List<DropdownItem> group2DropdownItems = new DropdownItemList() {
 			{
 				addRadio(
 					dropdownRadioItem -> {
@@ -233,9 +236,9 @@ public class DropdownsDisplayContext {
 		return _inputDropdownItems;
 	}
 
-	private DropdownItemList _defaultDropdownItems;
-	private DropdownItemList _groupDropdownItems;
-	private DropdownItemList _iconDropdownItems;
-	private DropdownItemList _inputDropdownItems;
+	private List<DropdownItem> _defaultDropdownItems;
+	private List<DropdownItem> _groupDropdownItems;
+	private List<DropdownItem> _iconDropdownItems;
+	private List<DropdownItem> _inputDropdownItems;
 
 }

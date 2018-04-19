@@ -27,7 +27,27 @@ import java.util.Optional;
  * @author Alejandro Hernández
  */
 @ProviderType
-public interface APIError {
+public class APIError {
+
+	public APIError(
+		Exception exception, String title, String type, int statusCode) {
+
+		_exception = exception;
+		_title = title;
+		_type = type;
+		_statusCode = statusCode;
+	}
+
+	public APIError(
+		Exception exception, String title, String description, String type,
+		int statusCode) {
+
+		_exception = exception;
+		_title = title;
+		_description = description;
+		_type = type;
+		_statusCode = statusCode;
+	}
 
 	/**
 	 * Returns the API error's description, if present; {@code Optional#empty()}
@@ -36,21 +56,27 @@ public interface APIError {
 	 * @return the API error's description, if present; {@code Optional#empty()}
 	 *         otherwise
 	 */
-	public Optional<String> getDescription();
+	public Optional<String> getDescription() {
+		return Optional.ofNullable(_description);
+	}
 
 	/**
 	 * Returns the API error's original exception.
 	 *
 	 * @return the API error's original exception
 	 */
-	public Exception getException();
+	public Exception getException() {
+		return _exception;
+	}
 
 	/**
 	 * Returns the API error's HTTP status code.
 	 *
 	 * @return the API error's HTTP status code
 	 */
-	public int getStatusCode();
+	public int getStatusCode() {
+		return _statusCode;
+	}
 
 	/**
 	 * Returns the API error's title. This value is the same for all API errors
@@ -58,7 +84,9 @@ public interface APIError {
 	 *
 	 * @return the API error's title
 	 */
-	public String getTitle();
+	public String getTitle() {
+		return _title;
+	}
 
 	/**
 	 * Returns the API error's type. Note that this is different from the API
@@ -68,6 +96,14 @@ public interface APIError {
 	 *
 	 * @return the API error's type
 	 */
-	public String getType();
+	public String getType() {
+		return _type;
+	}
+
+	private String _description;
+	private final Exception _exception;
+	private final int _statusCode;
+	private final String _title;
+	private final String _type;
 
 }

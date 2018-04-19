@@ -38,7 +38,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panel" value="Attachments" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
@@ -58,7 +58,7 @@
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panel" value="Attachments" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
@@ -119,7 +119,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="More Settings" />
+			<var name="panel" value="More Settings" />
 		</execute>
 
 		<execute function="Check" locator1="Checkbox#ANONYMOUS" />
@@ -142,14 +142,18 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="More Settings" />
+			<var name="panel" value="More Settings" />
 		</execute>
 
 		<execute function="Check" locator1="Checkbox#MARK_AS_A_QUESTION" />
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
+		<execute function="AssertClick" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK" value1="${breadcrumbNameUppercase}">
+			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+
+			<var name="key_breadcrumbName" value="${breadcrumbName}" />
+		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
 			<var name="threadSubject" value="${threadSubject}" />
@@ -167,7 +171,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panel" value="Attachments" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
@@ -196,7 +200,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Permissions" />
+			<var name="panel" value="Permissions" />
 		</execute>
 
 		<execute function="Select" locator1="AssetPermissions#VIEWABLE_AS_SELECT" value1="${viewableBySelection}" />
@@ -217,7 +221,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="More Settings" />
+			<var name="panel" value="More Settings" />
 		</execute>
 
 		<execute function="Select" locator1="MessageBoardsEditMessage#PRIORITY_SELECT" value1="${threadPriority}" />
@@ -239,7 +243,7 @@
 		<execute function="AssertElementPresent" locator1="CKEditor#BODY_FIELD" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
+			<var name="panel" value="Categorization" />
 		</execute>
 
 		<if>
@@ -331,7 +335,13 @@
 	</command>
 
 	<command name="cancelEdit">
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS">
+			<var name="key_threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubjectEdit}" />
 
@@ -371,7 +381,7 @@
 			<equals arg1="${threadAttachmentRemove}" arg2="true" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Attachments" />
+					<var name="panel" value="Attachments" />
 				</execute>
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${mbAttachmentFile}">
@@ -411,7 +421,13 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="PortletEntry#clickEditFromEllipsis" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS">
+			<var name="key_threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
 
 		<if>
 			<isset var="threadSubjectEdit" />
@@ -545,7 +561,11 @@
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_ACTIONS_LOCK" value1="Lock" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Lock">
+			<var name="key_menuItem" value="Lock" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -884,9 +904,11 @@
 	</command>
 
 	<command name="restoreMBAttachmentCP">
-		<execute function="Click" locator1="MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1" />
+		<execute function="Click" locator1="MessageBoardsRemovedAttachments#REMOVED_ATTACHMENT_LINK" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsRemovedAttachments#ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}">
+		<execute macro="IFrame#selectModalFrame" />
+
+		<execute function="AssertElementPresent" locator1="MessageBoardsRemovedAttachments#ATTACHMENT_FILE_NAME">
 			<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 		</execute>
 
@@ -898,6 +920,10 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This message does not have file attachments in the Recycle Bin." />
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="saveNewThreadAsDraft">
@@ -914,7 +940,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#H3_HEADER" value1="Edit" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#TITLE_HEADER" value1="Edit" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -1017,7 +1043,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 
-		<execute function="Click" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
+		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
+			<var name="key_breadcrumbName" value="Home" />
+		</execute>
 	</command>
 
 	<command name="viewAsWorkflowAsset">
@@ -1119,11 +1147,16 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_ACTIONS_UNLOCK" value1="Unlock" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_REPLY_1" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_QUICK_REPLY_1" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_REPLY_WITH_QUOTE_1" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_EDIT_1" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unlock">
+			<var name="key_menuItem" value="Unlock" />
+		</execute>
 	</command>
 
 	<command name="viewMarkAsAnswerPG">
@@ -1158,7 +1191,7 @@
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="More Settings" />
+			<var name="panel" value="More Settings" />
 		</execute>
 
 		<execute function="AssertChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
@@ -1178,7 +1211,7 @@
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="More Settings" />
+			<var name="panel" value="More Settings" />
 		</execute>
 
 		<execute function="AssertNotChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
@@ -1480,7 +1513,9 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_CATEGORIES" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no top posters." />
+		<execute macro="PortletEntry#viewEmptyMessage">
+			<var name="entity" value="Top Posters" />
+		</execute>
 	</command>
 
 	<command name="viewStatisticsPostsCountPG">

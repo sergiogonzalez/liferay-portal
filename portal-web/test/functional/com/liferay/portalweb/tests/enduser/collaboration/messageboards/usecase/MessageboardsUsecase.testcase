@@ -1708,8 +1708,10 @@
 
 		<execute function="Click" locator1="NavBar#HOME" />
 
-		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS">
-			<var name="key_itemName" value="MB Thread Message Subject 1" />
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="replyCount" value="0" />
+			<var name="threadSubject" value="MB Thread Message Subject 1" />
 		</execute>
 
 		<execute macro="RSS#viewFeed">
@@ -1993,13 +1995,15 @@
 		<var name="key_categoryName" value="MB Category Name" />
 		<var name="key_threadSubject" value="MB Thread Message Subject" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Subscribe">
 			<var name="key_menuItem" value="Subscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
 
 		<execute macro="Navigator#gotoPage">
@@ -2012,7 +2016,12 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
+			<var name="key_menuItem" value="Unsubscribe" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
@@ -2034,13 +2043,14 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#SUBSCRIBE_LINK" />
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Subscribe" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="MB Category Name" />
+
 		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />
 
 		<execute macro="Navigator#gotoPage">
@@ -2053,7 +2063,12 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Unsubscribe">
+			<var name="key_menuItem" value="Unsubscribe" />
+		</execute>
 	</command>
 
 	<command name="ViewQuestionOnSplitThread" priority="3">
@@ -2088,6 +2103,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPGAsQuestion">
+			<var name="breadcrumbName" value="Home" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>

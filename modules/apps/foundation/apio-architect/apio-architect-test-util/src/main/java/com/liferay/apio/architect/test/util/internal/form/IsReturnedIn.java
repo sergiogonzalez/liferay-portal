@@ -21,8 +21,8 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 /**
- * Provides a {@code Matcher} that checks if the element returned
- * by a function matches another specific {@code Matcher}.
+ * Provides a {@code Matcher} that checks if the element returned by a function
+ * matches another specific {@code Matcher}.
  *
  * @author Alejandro Hernández
  */

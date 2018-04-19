@@ -1,7 +1,11 @@
 AUI.add(
 	'liferay-ddm-form-builder-rule-builder',
 	function(A) {
+		var Lang = A.Lang;
+
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
+
+		var ACTION_LABEL = '<span class="label label-lg label-secondary">{content}</span>';
 
 		var MAP_ACTION_DESCRIPTIONS = {
 			'auto-fill': 'auto-fill',
@@ -21,6 +25,10 @@ AUI.add(
 
 					roles: {
 						value: []
+					},
+
+					ruleDraft: {
+						value: {}
 					},
 
 					rules: {
@@ -76,6 +84,7 @@ AUI.add(
 
 						instance.on('rulesChange', A.bind(instance._onRulesChange, instance));
 						instance.on('*:saveRule', A.bind(instance._handleSaveRule, instance));
+						instance.on('*:saveRuleDraft', A.bind(instance._handleSaveRuleDraft, instance));
 						instance.on('*:cancelRule', A.bind(instance._handleCancelRule, instance));
 
 						instance._eventHandlers = [
@@ -213,10 +222,31 @@ AUI.add(
 						return pages;
 					},
 
+					isRuleDraftEmpty: function(ruleDraft) {
+						var instance = this;
+
+						var ruleDraftIsEmpty = [];
+						var ruleDraftKeys = A.Object.keys(ruleDraft);
+						var ruleDraftValues = A.Object.values(ruleDraft);
+
+						if (!(ruleDraftKeys.length === 0)) {
+							ruleDraftIsEmpty = ruleDraftValues.filter(
+								function(ruleDraftValue) {
+									if ((typeof (ruleDraftValue) !== 'string') && ruleDraftValue.length > 0) {
+										return ruleDraftValue;
+									}
+								}
+							);
+						}
+						return ruleDraftIsEmpty.length == 0;
+					},
+
 					renderRule: function(rule) {
 						var instance = this;
 
 						var formBuilder = instance.get('formBuilder');
+
+						var ruleDraft = instance.get('ruleDraft');
 
 						if (!instance._ruleClasses) {
 							instance._ruleClasses = new Liferay.DDM.FormBuilderRenderRule(
@@ -236,7 +266,12 @@ AUI.add(
 						instance._ruleClasses.set('fields', instance.getFields());
 						instance._ruleClasses.set('pages', instance.getPages());
 
-						instance._ruleClasses.render(rule);
+						if (!instance.isRuleDraftEmpty(ruleDraft)) {
+							instance._ruleClasses.render(ruleDraft);
+						}
+						else {
+							instance._ruleClasses.render(rule);
+						}
 					},
 
 					show: function() {
@@ -283,45 +318,109 @@ AUI.add(
 					_getActionDescription: function(type, action) {
 						var instance = this;
 
+						var actionDescription = '';
 						var actionKey = MAP_ACTION_DESCRIPTIONS[type];
 
 						if (actionKey) {
-							if (type === 'jump-to-page') {
-								var pages = instance.getPages();
+							if (type === 'auto-fill') {
+								var fieldList = action.outputs;
+								var fieldListLabels = [];
 
-								return {
-									param0: pages[action.target].label,
-									type: 'jumptopage'
-								};
-							}
-							else if (type === 'auto-fill') {
-								var fieldListDescription = [];
-
-								for (var output in action.outputs) {
-									fieldListDescription.push(action.outputs[output]);
+								for (var output in fieldList) {
+									fieldListLabels.push(
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: fieldList[output]
+											}
+										)
+									);
 								}
 
-								return {
-									param0: fieldListDescription,
-									param1: instance._getDataProviderLabel(action.ddmDataProviderInstanceUUID),
-									type: 'autofill'
-								};
+								actionDescription = Lang.sub(
+									Liferay.Language.get('autofill-x-from-data-provider-x'),
+									[
+										fieldListLabels,
+										instance._getDataProviderLabel(action.ddmDataProviderInstanceUUID)
+									]
+								);
 							}
 							else if (type === 'calculate') {
-
-								return {
-									param0: action.expression.replace(/\[|\]/g, ''),
-									param1: instance._getFieldLabel(action.target),
-									type: type
-								};
+								actionDescription = Lang.sub(
+									Liferay.Language.get('calculate-field-x-as-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.expression.replace(/\[|\]/g, '')
+											}
+										),
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: instance._getFieldLabel(action.target)
+											}
+										)
+									]
+								);
 							}
-							return {
-								param0: action.label,
-								type: type
-							};
+							else if (type === 'enable') {
+								actionDescription = Lang.sub(
+									Liferay.Language.get('enable-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.label
+											}
+										)
+									]
+								);
+							}
+							else if (type === 'jump-to-page') {
+								var pages = instance.getPages();
+
+								actionDescription = Lang.sub(
+									Liferay.Language.get('jump-to-page-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: pages[action.target].label
+											}
+										)
+									]
+								);
+							}
+							else if (type === 'require') {
+								actionDescription = Lang.sub(
+									Liferay.Language.get('require-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.label
+											}
+										)
+									]
+								);
+							}
+							else if (type === 'show') {
+								actionDescription = Lang.sub(
+									Liferay.Language.get('show-x'),
+									[
+										Lang.sub(
+											ACTION_LABEL,
+											{
+												content: action.label
+											}
+										)
+									]
+								);
+							}
 						}
 
-						return {};
+						return window.DDMRuleBuilder.render.Soy.toIncDom(actionDescription);
 					},
 
 					_getActionsDescription: function(actions) {
@@ -431,6 +530,8 @@ AUI.add(
 					_handleCancelRule: function() {
 						var instance = this;
 
+						instance.set('ruleDraft', {});
+
 						instance.syncUI();
 
 						instance._showAddRuleButton();
@@ -453,11 +554,15 @@ AUI.add(
 
 						var ruleId = target.getData('card-id');
 
+						var rule = instance.get('rules')[ruleId];
+
 						instance._currentRuleId = ruleId;
 
-						instance.renderRule(instance.get('rules')[ruleId]);
-
 						instance._hideAddRuleButton();
+
+						instance.set('ruleDraft', rule);
+
+						instance.renderRule(rule);
 					},
 
 					_handleSaveRule: function(event) {
@@ -478,11 +583,31 @@ AUI.add(
 							rules.push(rule);
 						}
 
+						var ruleDraft = {
+							actions: {},
+							condition: {},
+							'logical-operator': ''
+						};
+
+						instance.set('ruleDraft', ruleDraft);
+
 						instance.syncUI();
 
 						instance._currentRuleId = null;
 
 						instance._showAddRuleButton();
+					},
+
+					_handleSaveRuleDraft: function(event) {
+						var instance = this;
+
+						var rule = {
+							actions: event.actions,
+							conditions: event.conditions,
+							'logical-operator': event['logical-operator']
+						};
+
+						instance.set('ruleDraft', rule);
 					},
 
 					_hideAddRuleButton: function() {

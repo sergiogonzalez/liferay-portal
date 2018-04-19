@@ -67,7 +67,6 @@ public abstract class BaseManager<T, U> {
 	 * Returns the service tracker key stream.
 	 *
 	 * @return the service tracker key stream
-	 * @review
 	 */
 	public Stream<U> getKeyStream() {
 		Set<U> keys = serviceTrackerMap.keySet();

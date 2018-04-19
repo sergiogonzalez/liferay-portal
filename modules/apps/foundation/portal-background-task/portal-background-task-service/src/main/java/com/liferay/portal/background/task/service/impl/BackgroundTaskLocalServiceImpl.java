@@ -518,6 +518,25 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public List<BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, String[] taskExecutorClassNames, boolean completed,
+		int start, int end, boolean orderByType) {
+
+		return backgroundTaskFinder.findByG_T_C(
+			groupIds, taskExecutorClassNames, completed, start, end,
+			orderByType);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, String[] taskExecutorClassNames, int start, int end,
+		boolean orderByType) {
+
+		return backgroundTaskFinder.findByG_T_C(
+			groupIds, taskExecutorClassNames, null, start, end, orderByType);
+	}
+
+	@Override
 	public int getBackgroundTasksCount(
 		long groupId, String taskExecutorClassName) {
 

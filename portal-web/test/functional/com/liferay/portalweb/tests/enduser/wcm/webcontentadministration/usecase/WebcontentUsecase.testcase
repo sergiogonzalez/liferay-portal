@@ -1038,8 +1038,9 @@
 			<var name="webContentTitle" value="Basic S.P.A.C.E. Banner" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Japanese (Japan)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="ja-JP" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -1303,8 +1304,8 @@
 			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="WEB_CONTENT_ARTICLE_VIEW_PERMISSIONS_CHECK_ENABLED" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="articleViewPermissionsCheckEnabled" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -3244,8 +3245,9 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -3258,8 +3260,9 @@
 			<var name="fieldValue" value="Spanish (Spain) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="English (United States)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldname" value="Title" />
+			<var name="locale" value="en-US" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -3272,8 +3275,9 @@
 			<var name="fieldValue" value="English (United States) Image Description" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -3461,7 +3465,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Details" />
+			<var name="panel" value="Details" />
 		</execute>
 
 		<execute macro="PortletEntry#inputDescriptionTextInput">
@@ -3548,8 +3552,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="French (France)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -3592,8 +3597,9 @@
 			<var name="webContentTitle" value="WC WebContent Titre" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="français (France)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -3602,7 +3608,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewStructureAndTemplateLocalization">
-			<var name="panelHeading" value="Structure et gabarit" />
+			<var name="panel" value="Structure et gabarit" />
 			<var name="structureLocalizationName" value="nom de la structure de wc" />
 			<var name="templateLocalizationName" value="nom de la template de wc" />
 		</execute>
@@ -3627,7 +3633,7 @@
 		<execute macro="IFrame#selectEditAssetFrame" />
 
 		<execute macro="WebContent#viewStructureAndTemplateLocalization">
-			<var name="panelHeading" value="结构和模板" />
+			<var name="panel" value="结构和模板" />
 			<var name="structureLocalizationName" value="wc 结构名称" />
 			<var name="templateLocalizationName" value="wc 模板名称" />
 		</execute>

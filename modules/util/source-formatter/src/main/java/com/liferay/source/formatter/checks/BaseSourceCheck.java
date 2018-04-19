@@ -34,7 +34,6 @@ import java.io.File;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +68,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	@Override
 	public boolean isModulesCheck() {
 		return false;
 	}
@@ -85,6 +89,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	@Override
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
 	}
 
 	@Override
@@ -600,21 +609,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _portalSource;
 	}
 
-	protected boolean isReadOnly(String absolutePath) {
-
-		// This method should only be called temporarily by checks with new
-		// logic. After all source in all subrepositories has been changed
-		// according to new formatting rules, the call should be reverted.
-
-		for (String readOnlyDirName : _readOnlyDirNames) {
-			if (absolutePath.contains(readOnlyDirName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean isSubrepository() {
 		return _subrepository;
 	}
@@ -690,11 +684,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private static final String _GIT_LIFERAY_PORTAL_URL =
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
-	private static final List<String> _readOnlyDirNames = Arrays.asList(
-		"/modules/apps/analytics/", "/modules/apps/foundation/apio-architect/",
-		"/modules/private/apps/", "/modules/test/poshi-runner/");
-
 	private String _baseDirName;
+	private boolean _enabled = true;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;

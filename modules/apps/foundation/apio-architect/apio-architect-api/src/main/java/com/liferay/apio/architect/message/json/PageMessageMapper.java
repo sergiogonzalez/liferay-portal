@@ -36,9 +36,9 @@ import javax.ws.rs.core.HttpHeaders;
  * enable this, each method receives a {@link JSONObjectBuilder}.
  *
  * <p>
- * The methods {@link #onStart(JSONObjectBuilder, Page, HttpHeaders)} and {@link
- * #onFinish(JSONObjectBuilder, Page, HttpHeaders)} are called when the writer
- * starts and finishes the page, respectively. The methods {@link
+ * The methods {@link #onStart(JSONObjectBuilder, Object, HttpHeaders)} and
+ * {@link #onFinish(JSONObjectBuilder, Object, HttpHeaders)} are called when the
+ * writer starts and finishes the page, respectively. The methods {@link
  * #onStartItem(JSONObjectBuilder, JSONObjectBuilder, SingleModel, HttpHeaders)}
  * and {@link #onFinishItem(JSONObjectBuilder, JSONObjectBuilder, SingleModel,
  * HttpHeaders)} are called when the writer starts and finishes an item,
@@ -59,14 +59,7 @@ import javax.ws.rs.core.HttpHeaders;
  */
 @ConsumerType
 @SuppressWarnings("unused")
-public interface PageMessageMapper<T> {
-
-	/**
-	 * Returns the media type the mapper represents.
-	 *
-	 * @return the media type the mapper represents
-	 */
-	public String getMediaType();
+public interface PageMessageMapper<T> extends MessageMapper<Page<T>> {
 
 	/**
 	 * Returns the {@link SingleModelMessageMapper} used by the item methods.
@@ -636,19 +629,6 @@ public interface PageMessageMapper<T> {
 	}
 
 	/**
-	 * Finishes the page. This is the final page message mapper method the
-	 * writer calls.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the page
-	 * @param page the page
-	 * @param httpHeaders the current request's HTTP headers
-	 */
-	public default void onFinish(
-		JSONObjectBuilder jsonObjectBuilder, Page<T> page,
-		HttpHeaders httpHeaders) {
-	}
-
-	/**
 	 * Finishes the item. This is the final page message mapper method the
 	 * writer calls for the item.
 	 *
@@ -687,19 +667,6 @@ public interface PageMessageMapper<T> {
 	}
 
 	/**
-	 * Starts the page. This is the first page message mapper method the writer
-	 * calls for the page.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the page
-	 * @param page the page
-	 * @param httpHeaders the current request's HTTP headers
-	 */
-	public default void onStart(
-		JSONObjectBuilder jsonObjectBuilder, Page<T> page,
-		HttpHeaders httpHeaders) {
-	}
-
-	/**
 	 * Starts the item. This is the first page message mapper method the writer
 	 * calls for the item.
 	 *
@@ -735,19 +702,6 @@ public interface PageMessageMapper<T> {
 				singleModelMessageMapper.onStartOperation(
 					pageJSONObjectBuilder, operationJSONObjectBuilder,
 					operation));
-	}
-
-	/**
-	 * Returns {@code true} if the mapper can map all things related to the
-	 * current request.
-	 *
-	 * @param  page the page
-	 * @param  httpHeaders the current request's HTTP headers
-	 * @return {@code true} if the mapper can map the request; {@code false}
-	 *         otherwise
-	 */
-	public default boolean supports(Page<T> page, HttpHeaders httpHeaders) {
-		return true;
 	}
 
 }

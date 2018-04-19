@@ -14,17 +14,26 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
  */
 public class ManagementToolbarsDisplayContext {
 
-	public DropdownItemList getActionDropdownItems() {
+	public ManagementToolbarsDisplayContext(HttpServletRequest request) {
+		_request = request;
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}
@@ -33,11 +42,13 @@ public class ManagementToolbarsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
+						dropdownItem.setHref("#edit");
 						dropdownItem.setLabel("Edit");
 					});
 
 				add(
 					dropdownItem -> {
+						dropdownItem.setHref("#download");
 						dropdownItem.setIcon("download");
 						dropdownItem.setLabel("Download");
 						dropdownItem.setQuickAction(true);
@@ -45,6 +56,7 @@ public class ManagementToolbarsDisplayContext {
 
 				add(
 					dropdownItem -> {
+						dropdownItem.setHref("#delete");
 						dropdownItem.setLabel("Delete");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setQuickAction(true);
@@ -55,52 +67,48 @@ public class ManagementToolbarsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public Map<String, Object> getCreationMenu() {
+	public CreationMenu getCreationMenu() {
 		if (_creationMenu != null) {
 			return _creationMenu;
 		}
 
-		_creationMenu = new HashMap<>();
-
-		DropdownItemList creationMenuItems = new DropdownItemList() {
+		_creationMenu = new CreationMenu(_request) {
 			{
-				add(
+				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#1");
 						dropdownItem.setLabel("Sample 1");
 					});
 
-				add(
+				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#2");
 						dropdownItem.setLabel("Sample 2");
 					});
 
-				add(
+				addFavoriteDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#3");
-						dropdownItem.setLabel("Sample 3");
+						dropdownItem.setLabel("Favorite 1");
 					});
 
-				add(
+				addFavoriteDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#4");
-						dropdownItem.setLabel("Sample 4");
+						dropdownItem.setLabel("Other item");
 					});
 			}
 		};
 
-		_creationMenu.put("items", creationMenuItems);
-
 		return _creationMenu;
 	}
 
-	public DropdownItemList getFilterItems() {
-		if (_filterItems != null) {
-			return _filterItems;
+	public List<DropdownItem> getFilterDropdownItems() {
+		if (_filterDropdownItems != null) {
+			return _filterDropdownItems;
 		}
 
-		DropdownItemList filterByItems = new DropdownItemList() {
+		List<DropdownItem> filterByDropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -116,7 +124,7 @@ public class ManagementToolbarsDisplayContext {
 			}
 		};
 
-		DropdownItemList orderByItems = new DropdownItemList() {
+		List<DropdownItem> orderByDropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -132,59 +140,59 @@ public class ManagementToolbarsDisplayContext {
 			}
 		};
 
-		_filterItems = new DropdownItemList() {
+		_filterDropdownItems = new DropdownItemList() {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(filterByItems);
+						dropdownGroupItem.setDropdownItems(
+							filterByDropdownItems);
 						dropdownGroupItem.setLabel("Filter By");
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(orderByItems);
+						dropdownGroupItem.setDropdownItems(
+							orderByDropdownItems);
 						dropdownGroupItem.setLabel("Order By");
 					});
 			}
 		};
 
-		return _filterItems;
+		return _filterDropdownItems;
 	}
 
-	public DropdownItemList getViewTypesItems() {
-		if (_viewTypes != null) {
-			return _viewTypes;
+	public List<ViewTypeItem> getViewTypeItems() {
+		if (_viewTypeItems != null) {
+			return _viewTypeItems;
 		}
 
-		_viewTypes = new DropdownItemList() {
+		_viewTypeItems = new ViewTypeItemList() {
 			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setIcon("cards2");
-						dropdownItem.setLabel("Card");
+				addCardViewTypeItem(
+					viewTypeItem -> {
+						viewTypeItem.setActive(true);
+						viewTypeItem.setLabel("Card");
 					});
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setIcon("list");
-						dropdownItem.setLabel("List");
+				addListViewTypeItem(
+					viewTypeItem -> {
+						viewTypeItem.setLabel("List");
 					});
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setIcon("table");
-						dropdownItem.setLabel("Table");
+				addTableViewTypeItem(
+					viewTypeItem -> {
+						viewTypeItem.setLabel("Table");
 					});
 			}
 		};
 
-		return _viewTypes;
+		return _viewTypeItems;
 	}
 
-	private DropdownItemList _actionDropdownItems;
-	private Map<String, Object> _creationMenu;
-	private DropdownItemList _filterItems;
-	private DropdownItemList _viewTypes;
+	private List<DropdownItem> _actionDropdownItems;
+	private CreationMenu _creationMenu;
+	private List<DropdownItem> _filterDropdownItems;
+	private final HttpServletRequest _request;
+	private List<ViewTypeItem> _viewTypeItems;
 
 }

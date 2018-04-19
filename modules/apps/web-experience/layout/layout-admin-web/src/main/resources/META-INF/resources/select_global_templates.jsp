@@ -65,12 +65,14 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 
 <portlet:actionURL name="/layout/add_layout_prototype_layout" var="addLayoutPrototypeLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
+	<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
 	<portlet:param name="portletResource" value="<%= portletDisplay.getPortletName() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
 	<portlet:param name="stagingGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getStagingGroupId()) %>" />
 	<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
+	<portlet:param name="explicitCreation" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
 <%

@@ -5,20 +5,10 @@ AUI.add(
 	function(A) {
 		var Do = A.Do;
 		var Lang = A.Lang;
-		var UA = A.UA;
-
-		var contentFilter = new CKEDITOR.filter(
-			{
-				$1: {
-					attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
-					classes: false,
-					elements: CKEDITOR.dtd,
-					styles: false
-				}
-			}
-		);
 
 		var KEY_ENTER = 13;
+
+		var UA = A.UA;
 
 		var LiferayAlloyEditor = A.Component.create(
 			{
@@ -100,7 +90,6 @@ AUI.add(
 
 						nativeEditor.on('error', instance._onError, instance);
 						nativeEditor.on('instanceReady', instance._onInstanceReady, instance);
-						nativeEditor.on('paste', instance._onPaste, instance);
 
 						if (instance.get('onBlurMethod')) {
 							nativeEditor.on('blur', instance._onBlur, instance);
@@ -344,10 +333,8 @@ AUI.add(
 
 						setTimeout(
 							function() {
-								if (activeElement) {
-									nativeEditor.focusManager.blur(true);
-									activeElement.focus();
-								}
+								nativeEditor.focusManager.blur(true);
+								activeElement.focus();
 							},
 							100
 						);
@@ -377,10 +364,13 @@ AUI.add(
 						if (UA.edge && parseInt(UA.edge, 10) >= 14) {
 							A.soon(
 								function() {
-									var nativeEditor = instance.getNativeEditor();
+									if (document.activeElement && document.activeElement !== document.body) {
+										var nativeEditor = instance.getNativeEditor();
 
-									nativeEditor.once('focus', A.bind('_onFocusFix', instance, document.activeElement, nativeEditor));
-									nativeEditor.focus();
+										nativeEditor.once('focus', A.bind('_onFocusFix', instance, document.activeElement, nativeEditor));
+
+										nativeEditor.focus();
+									}
 								}
 							);
 						}
@@ -407,18 +397,6 @@ AUI.add(
 						if (event.data.keyCode === KEY_ENTER) {
 							event.cancel();
 						}
-					},
-
-					_onPaste: function(event) {
-						var fragment = CKEDITOR.htmlParser.fragment.fromHtml(event.data.dataValue);
-
-						var writer = new CKEDITOR.htmlParser.basicWriter();
-
-						contentFilter.applyTo(fragment);
-
-						fragment.writeHtml(writer);
-
-						event.data.dataValue = writer.getHtml();
 					},
 
 					_validateEditorMethod: function(method) {

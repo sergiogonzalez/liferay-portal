@@ -39,33 +39,39 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 	<portlet:param name="mvcPath" value="/edit_team.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editTeamURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= editTeamURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="teamId" type="hidden" value="<%= teamId %>" />
 
-	<liferay-ui:error exception="<%= DuplicateTeamException.class %>" message="please-enter-a-unique-name" />
-	<liferay-ui:error exception="<%= TeamNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= DuplicateTeamException.class %>" message="please-enter-a-unique-name" />
+		<liferay-ui:error exception="<%= TeamNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:model-context bean="<%= team %>" model="<%= Team.class %>" />
+		<aui:model-context bean="<%= team %>" model="<%= Team.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<c:if test="<%= team != null %>">
-				<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />
-			</c:if>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<c:if test="<%= team != null %>">
+					<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />
+				</c:if>
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
-			<aui:input name="description" placeholder="description" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+				<aui:input name="description" placeholder="description" />
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <%
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);

@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.alias;
 
-import java.io.InputStream;
+import com.liferay.apio.architect.file.BinaryFile;
 
 import java.util.function.Function;
 
@@ -26,5 +26,5 @@ import java.util.function.Function;
  * @param  <T> the model's type
  */
 @FunctionalInterface
-public interface BinaryFunction<T> extends Function<T, InputStream> {
+public interface BinaryFunction<T> extends Function<T, BinaryFile> {
 }

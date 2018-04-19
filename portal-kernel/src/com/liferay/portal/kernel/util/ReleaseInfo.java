@@ -211,6 +211,8 @@ public class ReleaseInfo {
 
 	public static final int RELEASE_7_0_5_BUILD_NUMBER = 7005;
 
+	public static final int RELEASE_7_0_6_BUILD_NUMBER = 7006;
+
 	public static final int RELEASE_7_0_10_BUILD_NUMBER = 7010;
 
 	public static final int RELEASE_7_1_0_BUILD_NUMBER = 7100;
@@ -272,7 +274,7 @@ public class ReleaseInfo {
 
 	private static final String _CODE_NAME = "Judson";
 
-	private static final String _DATE = "March 23, 2018";
+	private static final String _DATE = "April 6, 2018";
 
 	private static final String _NAME = "Liferay Community Edition Portal";
 
@@ -288,7 +290,7 @@ public class ReleaseInfo {
 
 	private static final String _VERSION = "7.1.0";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.1.0 CE M2";
+	private static final String _VERSION_DISPLAY_NAME = "7.1.0 CE Alpha";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;

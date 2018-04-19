@@ -90,7 +90,7 @@
 				</execute>
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Structure and Template" />
+					<var name="panel" value="Structure and Template" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
@@ -131,7 +131,7 @@
 				<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Structure and Template" />
+					<var name="panel" value="Structure and Template" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
@@ -352,10 +352,10 @@
 		<if>
 			<equals arg1="${scopeSelectionDefault}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Web Content Display" />
+				<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Web Content Display" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Web Content Display (${scopeSelection})" />
+				<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Portlet#TITLE" value1="Web Content Display (${scopeSelection})" />
 			</else>
 		</if>
 

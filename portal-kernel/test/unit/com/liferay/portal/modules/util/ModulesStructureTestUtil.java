@@ -68,6 +68,15 @@ public class ModulesStructureTestUtil {
 		return false;
 	}
 
+	public static String getAbsolutePath(Path path) {
+		Path absolutePath = path.toAbsolutePath();
+
+		absolutePath = absolutePath.normalize();
+
+		return StringUtil.replace(
+			absolutePath.toString(), File.separatorChar, CharPool.SLASH);
+	}
+
 	public static List<GradleDependency> getGradleDependencies(
 			String gradleContent, Path gradlePath, Path rootDirPath)
 		throws IOException {
@@ -108,7 +117,7 @@ public class ModulesStructureTestUtil {
 			try {
 				GradleDependency gradleDependency = new GradleDependency(
 					dependency, configuration, moduleGroup, moduleName,
-					moduleVersion);
+					moduleVersion, false);
 
 				gradleDependencies.add(gradleDependency);
 			}
@@ -180,7 +189,7 @@ public class ModulesStructureTestUtil {
 
 			GradleDependency gradleDependency = new GradleDependency(
 				dependency, configuration, moduleGroup, moduleName,
-				moduleVersion);
+				moduleVersion, true);
 
 			gradleDependencies.add(gradleDependency);
 		}

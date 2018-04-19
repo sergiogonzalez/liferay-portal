@@ -174,6 +174,18 @@
 - [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
 4.3.1.
 
+## 2.0.28 - 2018-03-30
+
+### Changed
+- [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
+4.3.2.
+
+## 2.0.29 - 2018-04-05
+
+### Changed
+- [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
+4.3.3.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

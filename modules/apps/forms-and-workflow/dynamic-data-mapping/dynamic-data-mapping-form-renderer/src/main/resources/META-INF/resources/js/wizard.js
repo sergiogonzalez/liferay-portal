@@ -3,10 +3,12 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_WIZARD_ITEM = '<li class="{state}">' +
-				'<div class="progress-bar-title">{title}</div>' +
-				'<div class="divider"></div>' +
-				'<div class="progress-bar-step">{number}</div>' +
+		var TPL_WIZARD_ITEM = '<li class="{state} multi-step-item multi-step-item-expand">' +
+				'<div class="multi-step-divider"></div>' +
+				'<div class="multi-step-indicator">' +
+					'<div class="multi-step-indicator-label">{title}</div>' +
+					'<a class="multi-step-icon" data-multi-step-icon="{number}" href="#1"></a>' +
+				'</div>' +
 			'</li>';
 
 		var Wizard = A.Component.create(
@@ -39,7 +41,7 @@ AUI.add(
 
 						boundingBox.all('li').each(
 							function(itemNode) {
-								var title = itemNode.one('.progress-bar-title').text();
+								var title = itemNode.one('.multi-step-indicator-label').text();
 
 								var state = itemNode.attr('class');
 
@@ -67,7 +69,7 @@ AUI.add(
 				UI_ATTRS: ['items'],
 
 				prototype: {
-					CONTENT_TEMPLATE: '<ul class="multi-step-progress-bar multi-step-progress-bar-collapse"></ul>',
+					CONTENT_TEMPLATE: '<ol class="multi-step-nav multi-step-nav-collapse-sm multi-step-indicator-label-top"></ol>',
 
 					renderUI: function() {
 						var instance = this;
@@ -195,6 +197,12 @@ AUI.add(
 						items.splice(index, 1);
 
 						instance.set('items', items);
+
+						var selected = instance.get('selected');
+
+						if (selected > 0) {
+							instance.set('selected', selected - 1);
+						}
 					},
 
 					_setState: function(index, state) {
@@ -217,6 +225,16 @@ AUI.add(
 						contentBox.empty();
 
 						contentBox.append(instance._getItemsNodeList(val));
+
+						instance._updateLastPageItem();
+					},
+
+					_updateLastPageItem: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						contentBox.one('li:last-child').removeClass('multi-step-item-expand');
 					},
 
 					_valueItemsNodeList: function() {

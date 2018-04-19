@@ -16,7 +16,8 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -68,6 +69,20 @@ public class DDMFormInstanceRecordServiceUtil {
 		return getService().getFormInstanceRecords(ddmFormInstanceId);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> getFormInstanceRecords(
+		long ddmFormInstanceId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFormInstanceRecords(ddmFormInstanceId, status, start,
+			end, orderByComparator);
+	}
+
+	public static int getFormInstanceRecordsCount(long ddmFormInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFormInstanceRecordsCount(ddmFormInstanceId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -100,6 +115,17 @@ public class DDMFormInstanceRecordServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DDMFormInstanceRecordService, DDMFormInstanceRecordService> _serviceTracker =
-		ServiceTrackerFactory.open(DDMFormInstanceRecordService.class);
+	private static ServiceTracker<DDMFormInstanceRecordService, DDMFormInstanceRecordService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMFormInstanceRecordService.class);
+
+		ServiceTracker<DDMFormInstanceRecordService, DDMFormInstanceRecordService> serviceTracker =
+			new ServiceTracker<DDMFormInstanceRecordService, DDMFormInstanceRecordService>(bundle.getBundleContext(),
+				DDMFormInstanceRecordService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -145,6 +145,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
 		npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
 		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
+		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
 	private void _configureTasksDownloadNode(Project project) {
@@ -270,11 +271,18 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						continue;
 					}
 
-					File file = dependencyProject.file(".lfrbuild-portal");
+					File lfrBuildPortalFile = dependencyProject.file(
+						".lfrbuild-portal");
 
-					if (!file.exists()) {
-						throw new GradleException(
-							"Please create marker file " + file);
+					if (!lfrBuildPortalFile.exists()) {
+						File lfrBuildCIFile = dependencyProject.file(
+							".lfrbuild-ci");
+
+						if (!lfrBuildCIFile.exists()) {
+							throw new GradleException(
+								"Please create marker file " +
+									lfrBuildPortalFile);
+						}
 					}
 				}
 			}

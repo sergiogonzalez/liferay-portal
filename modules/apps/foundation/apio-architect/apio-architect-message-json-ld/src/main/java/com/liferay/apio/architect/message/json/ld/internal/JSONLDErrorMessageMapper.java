@@ -14,11 +14,11 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.DESCRIPTION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_DESCRIPTION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_STATUS_CODE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TITLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TYPE;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.STATUS_CODE;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TITLE;
-import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE;
 
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
@@ -48,7 +48,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, String description) {
 
 		jsonObjectBuilder.field(
-			DESCRIPTION
+			FIELD_NAME_DESCRIPTION
 		).stringValue(
 			description
 		);
@@ -59,7 +59,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, Integer statusCode) {
 
 		jsonObjectBuilder.field(
-			STATUS_CODE
+			FIELD_NAME_STATUS_CODE
 		).numberValue(
 			statusCode
 		);
@@ -68,7 +68,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 	@Override
 	public void mapTitle(JSONObjectBuilder jsonObjectBuilder, String title) {
 		jsonObjectBuilder.field(
-			TITLE
+			FIELD_NAME_TITLE
 		).stringValue(
 			title
 		);
@@ -77,7 +77,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 	@Override
 	public void mapType(JSONObjectBuilder jsonObjectBuilder, String type) {
 		jsonObjectBuilder.field(
-			TYPE
+			FIELD_NAME_TYPE
 		).stringValue(
 			type
 		);

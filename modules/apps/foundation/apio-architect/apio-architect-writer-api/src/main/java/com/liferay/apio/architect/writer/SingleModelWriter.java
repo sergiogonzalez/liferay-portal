@@ -45,7 +45,6 @@ import java.util.function.Function;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @review
  */
 public class SingleModelWriter<T> {
 
@@ -207,16 +206,14 @@ public class SingleModelWriter<T> {
 	}
 
 	/**
-	 * Writes a related {@link SingleModel} with the {@code
+	 * Writes a related {@link SingleModel} with the {@link
 	 * SingleModelMessageMapper}. This method uses a {@link FieldsWriter} to
 	 * write the different fields of its {@link Representor}. If no {@code
-	 * Representor} or {@code Path} exists for the model, this method doesn't
-	 * perform any action.
+	 * Representor} or {@link com.liferay.apio.architect.uri.Path} exists for
+	 * the model, this method doesn't do anything.
 	 *
-	 * @param  singleModel the {@code SingleModel} to write
-	 * @param  embeddedPathElements the embedded path elements of the related
-	 *         model
-	 * @review
+	 * @param singleModel the {@code SingleModel} to write
+	 * @param embeddedPathElements the related model's embedded path elements
 	 */
 	public <S> void writeEmbeddedModelFields(
 		SingleModel<S> singleModel, FunctionalList<String> embeddedPathElements,
@@ -339,8 +336,7 @@ public class SingleModelWriter<T> {
 	/**
 	 * Creates {@code SingleModelWriter} instances.
 	 *
-	 * @param  <T> the model's type
-	 * @review
+	 * @param <T> the model's type
 	 */
 	public static class Builder<T> {
 

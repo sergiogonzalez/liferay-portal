@@ -24,7 +24,6 @@ import java.util.function.BiFunction;
  * identifier. The function returns an optional {@link Path} for the resource.
  *
  * @author Alejandro Hernández
- * @review
  */
 @FunctionalInterface
 public interface PathFunction

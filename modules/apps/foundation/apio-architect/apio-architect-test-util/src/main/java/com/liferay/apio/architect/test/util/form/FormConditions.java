@@ -18,15 +18,18 @@ import static com.liferay.apio.architect.date.DateTransformer.asDate;
 
 import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
 
+import com.liferay.apio.architect.form.Body;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.functional.Try;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -80,7 +83,11 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 		 * @return the {@code FormConditions} instance
 		 */
 		public FormConditions<T> build() {
-			return new FormConditions<>(_body, _matchers);
+			Body body = Body.create(
+				key -> Optional.ofNullable(_map.get(key)),
+				key -> Optional.ofNullable(_listMap.get(key)));
+
+			return new FormConditions<>(body, _matchers);
 		}
 
 		/**
@@ -104,7 +111,7 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 		public Builder<T> whereBoolean(
 			String key, Function<Object, Matcher<T>> function) {
 
-			_add(key, function, true);
+			_add(key, function, "true", true);
 
 			return this;
 		}
@@ -136,7 +143,7 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 
 			Date date = dateTry.orElseThrow(AssertionError::new);
 
-			_body.put(key, dateString);
+			_map.put(key, dateString);
 			_matchers.add(function.apply(date));
 
 			return this;
@@ -163,7 +170,7 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 		public Builder<T> whereDouble(
 			String key, Function<Object, Matcher<T>> function) {
 
-			_add(key, function, 21.2D);
+			_add(key, function, "21.2", 21.2);
 
 			return this;
 		}
@@ -189,13 +196,13 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 		public Builder<T> whereLong(
 			String key, Function<Object, Matcher<T>> function) {
 
-			_add(key, function, 42L);
+			_add(key, function, "42", 42L);
 
 			return this;
 		}
 
 		/**
-		 * Adds a new {@code Matcher} for a boolean part of the form.
+		 * Adds a new {@code Matcher} for a string part of the form.
 		 *
 		 * <p>
 		 * The form function should return the value {@code "String"}.
@@ -215,19 +222,58 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 		public Builder<T> whereString(
 			String key, Function<Object, Matcher<T>> function) {
 
-			_add(key, function, "String");
+			_add(key, function, "String", "String");
+
+			return this;
+		}
+
+		/**
+		 * Adds a new {@code Matcher} for a string list part of the form.
+		 *
+		 * <p>
+		 * The form function should return a list containing {@code "String1"}
+		 * and {@code "String2}.
+		 * </p>
+		 *
+		 * <p>
+		 * To provide information about the form method to call, use the method
+		 * {@link FormMatchers#isReturnedIn(Function)}.
+		 * </p>
+		 *
+		 * @param  key the name of the field read from the HTTP body
+		 * @param  function the function that takes the field value and returns
+		 *         a {@code Matcher} for the {@code Form}. Use the method {@link
+		 *         FormMatchers#isReturnedIn(Function)}.
+		 * @return the builder's next step
+		 */
+		public Builder<T> whereStringList(
+			String key, Function<Object, Matcher<T>> function) {
+
+			_addList(
+				key, function, Arrays.asList("String1", "String2"),
+				Arrays.asList("String1", "String2"));
 
 			return this;
 		}
 
 		private void _add(
-			String key, Function<Object, Matcher<T>> function, Object value) {
+			String key, Function<Object, Matcher<T>> function, String value,
+			Object transformedValue) {
 
-			_body.put(key, value);
-			_matchers.add(function.apply(value));
+			_map.put(key, value);
+			_matchers.add(function.apply(transformedValue));
 		}
 
-		private final Map<String, Object> _body = new HashMap<>();
+		private void _addList(
+			String key, Function<Object, Matcher<T>> function,
+			List<String> list, List<Object> transformedList) {
+
+			_listMap.put(key, list);
+			_matchers.add(function.apply(transformedList));
+		}
+
+		private final Map<String, List<String>> _listMap = new HashMap<>();
+		private final Map<String, String> _map = new HashMap<>();
 		private final List<Matcher<T>> _matchers = new ArrayList<>();
 
 	}
@@ -298,14 +344,12 @@ public class FormConditions<T> extends TypeSafeDiagnosingMatcher<Form<T>> {
 		return result;
 	}
 
-	private FormConditions(
-		Map<String, Object> body, List<Matcher<T>> matchers) {
-
+	private FormConditions(Body body, List<Matcher<T>> matchers) {
 		_body = body;
 		_matchers = matchers;
 	}
 
-	private final Map<String, Object> _body;
+	private final Body _body;
 	private final List<Matcher<T>> _matchers;
 
 }

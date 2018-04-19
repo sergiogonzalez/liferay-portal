@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Eric Yan
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "search")
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration",
 	localization = "content/Language",
@@ -30,6 +30,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @ProviderType
 public interface DefaultSearchResultPermissionFilterConfiguration {
+
+	@Meta.AD(
+		deflt = "0",
+		description = "permission-filtered-search-result-accurate-count-threshold-help",
+		name = "permission-filtered-search-result-accurate-count-threshold",
+		required = false
+	)
+	public int permissionFilteredSearchResultAccurateCountThreshold();
 
 	@Meta.AD(
 		deflt = "1000", description = "search-query-result-window-limit-help",

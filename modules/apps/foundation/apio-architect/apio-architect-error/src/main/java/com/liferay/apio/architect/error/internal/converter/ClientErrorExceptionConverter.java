@@ -38,7 +38,7 @@ public class ClientErrorExceptionConverter
 
 		int status = response.getStatus();
 
-		return new APIErrorImpl(
+		return new APIError(
 			exception, "General server error", "client-error", status);
 	}
 

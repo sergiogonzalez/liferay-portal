@@ -1726,6 +1726,174 @@ another task with the same name is being executed in a parent project.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.577.
 
+## 2.3.106 - 2018-03-23
+
+### Changed
+- [LPS-78911]: Update the [Liferay Source Formatter] dependency to version
+1.0.578.
+
+## 2.3.107 - 2018-03-26
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.579.
+
+## 2.3.108 - 2018-03-26
+
+### Changed
+- [LPS-79191]: Update the [Liferay Source Formatter] dependency to version
+1.0.580.
+
+## 2.3.109 - 2018-03-27
+
+### Changed
+- [LPS-79192]: Update the [Liferay Source Formatter] dependency to version
+1.0.581.
+
+## 2.3.110 - 2018-03-27
+
+### Changed
+- [LPS-78854]: Update the [Liferay Source Formatter] dependency to version
+1.0.582.
+
+## 2.3.111 - 2018-03-27
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.583.
+
+## 2.3.112 - 2018-03-27
+
+### Changed
+- [LPS-79131]: Update the [Liferay Source Formatter] dependency to version
+1.0.584.
+
+## 2.3.113 - 2018-03-27
+
+### Changed
+- [LPS-79226]: Update the [Liferay Source Formatter] dependency to version
+1.0.585.
+
+## 2.3.114 - 2018-03-29
+
+### Changed
+- [LPS-79286]: Update the [Liferay Source Formatter] dependency to version
+1.0.586.
+
+## 2.3.115 - 2018-03-30
+
+### Changed
+- [LPS-79282]: Update the [Liferay Source Formatter] dependency to version
+1.0.587.
+
+## 2.3.116 - 2018-03-31
+
+### Changed
+- [LPS-79248]: Update the [Liferay Source Formatter] dependency to version
+1.0.588.
+
+## 2.3.117 - 2018-04-02
+
+### Changed
+- [LPS-79192]: Update the [Liferay Source Formatter] dependency to version
+1.0.589.
+
+## 2.3.118 - 2018-04-02
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.590.
+
+## 2.3.119 - 2018-04-02
+
+### Changed
+- [LPS-75010]: Update the [Liferay Source Formatter] dependency to version
+1.0.591.
+
+## 2.3.120 - 2018-04-03
+
+### Changed
+- [LPS-75010]: Update the [Liferay Source Formatter] dependency to version
+1.0.592.
+
+## 2.3.121 - 2018-04-04
+
+### Changed
+- [LPS-79360]: Update the [Liferay Source Formatter] dependency to version
+1.0.593.
+
+## 2.3.122 - 2018-04-04
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.594.
+
+## 2.3.123 - 2018-04-05
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.595.
+
+## 2.3.124 - 2018-04-10
+
+### Changed
+- [LPS-78308]: Update the [Liferay Source Formatter] dependency to version
+1.0.596.
+
+## 2.3.125 - 2018-04-10
+
+### Changed
+- [LPS-78911]: Update the [Liferay Source Formatter] dependency to version
+1.0.597.
+
+## 2.3.126 - 2018-04-11
+
+### Changed
+- [LPS-75010]: Update the [Liferay Source Formatter] dependency to version
+1.0.598.
+
+## 2.3.127 - 2018-04-12
+
+### Changed
+- [LPS-79576]: Update the [Liferay Source Formatter] dependency to version
+1.0.600.
+
+## 2.3.128 - 2018-04-12
+
+### Changed
+- [LPS-79576]: Update the [Liferay Source Formatter] dependency to version
+1.0.601.
+
+## 2.3.129 - 2018-04-12
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.602.
+
+## 2.3.130 - 2018-04-13
+
+### Changed
+- [LPS-79576]: Update the [Liferay Source Formatter] dependency to version
+1.0.603.
+
+## 2.3.131 - 2018-04-16
+
+### Changed
+- [LPS-79576]: Update the [Liferay Source Formatter] dependency to version
+1.0.604.
+
+## 2.3.132 - 2018-04-16
+
+### Changed
+- [LPS-79576]: Update the [Liferay Source Formatter] dependency to version
+1.0.605.
+
+## 2.3.133 - 2018-04-17
+
+### Changed
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.606.
+
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
@@ -1793,6 +1961,7 @@ another task with the same name is being executed in a parent project.
 [LPS-74749]: https://issues.liferay.com/browse/LPS-74749
 [LPS-74849]: https://issues.liferay.com/browse/LPS-74849
 [LPS-74867]: https://issues.liferay.com/browse/LPS-74867
+[LPS-75010]: https://issues.liferay.com/browse/LPS-75010
 [LPS-75047]: https://issues.liferay.com/browse/LPS-75047
 [LPS-75100]: https://issues.liferay.com/browse/LPS-75100
 [LPS-75164]: https://issues.liferay.com/browse/LPS-75164
@@ -1845,4 +2014,15 @@ another task with the same name is being executed in a parent project.
 [LPS-78669]: https://issues.liferay.com/browse/LPS-78669
 [LPS-78767]: https://issues.liferay.com/browse/LPS-78767
 [LPS-78772]: https://issues.liferay.com/browse/LPS-78772
+[LPS-78854]: https://issues.liferay.com/browse/LPS-78854
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
+[LPS-79131]: https://issues.liferay.com/browse/LPS-79131
+[LPS-79191]: https://issues.liferay.com/browse/LPS-79191
+[LPS-79192]: https://issues.liferay.com/browse/LPS-79192
+[LPS-79226]: https://issues.liferay.com/browse/LPS-79226
+[LPS-79248]: https://issues.liferay.com/browse/LPS-79248
+[LPS-79282]: https://issues.liferay.com/browse/LPS-79282
+[LPS-79286]: https://issues.liferay.com/browse/LPS-79286
+[LPS-79360]: https://issues.liferay.com/browse/LPS-79360
+[LPS-79576]: https://issues.liferay.com/browse/LPS-79576
+[LPS-79679]: https://issues.liferay.com/browse/LPS-79679

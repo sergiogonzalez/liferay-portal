@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ADD_CATEGORY</td>
-	<td>//span[contains(.,'Add Category')]</td>
+	<td>//a[contains(.,'Add Category')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,11 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBCATEGORY</td>
-	<td>//span[contains(.,'Add Subcategory')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_SUBFOLDER</td>
 	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>
@@ -165,7 +160,7 @@
 </tr>
 <tr>
 	<td>BROWSE</td>
-	<td>//input[contains(@id,'file')]</td>
+	<td>//fieldset[contains(@class,'fieldset')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -500,7 +495,7 @@
 </tr>
 <tr>
 	<td>NEW_THREAD</td>
-	<td>//span[contains(.,'New Thread')]</td>
+	<td>//a[contains(.,'New Thread')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -535,7 +530,7 @@
 </tr>
 <tr>
 	<td>PLUS</td>
-	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button[span[contains(@class,'icon-plus')]]</td>
+	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and @aria-label='add'] | //a[contains(@class,'btn') and *[contains(@class,'icon-plus')]] | //button[*[contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -741,11 +736,6 @@
 <tr>
 	<td>SEND_PASSWORD_RESET_LINK</td>
 	<td>//button[contains(.,'Send Password Reset Link')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHARE</td>
-	<td>//button[contains(.,'Share')]</td>
 	<td></td>
 </tr>
 <tr>

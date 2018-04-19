@@ -63,6 +63,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Blob;
 import java.sql.Types;
 
@@ -918,7 +920,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-			if (!Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
+			if (Validator.isNotNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				ContainerModel containerModel = null;
 
 				try {

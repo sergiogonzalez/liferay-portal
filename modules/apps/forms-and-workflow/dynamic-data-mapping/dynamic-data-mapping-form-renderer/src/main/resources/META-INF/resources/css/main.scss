@@ -23,6 +23,25 @@
 	}
 }
 
+body .ddm-user-view-content {
+	.liferay-ddm-form-renderer-wizard {
+		padding: 40px 34px 31px;
+	}
+
+	.multi-step-item.active .multi-step-divider {
+		background-color: #1865FB;
+	}
+
+	.multi-step-indicator-label {
+		margin-top: -28px;
+	}
+}
+
+.portlet-forms .ddm-form-basic-info .ddm-form-name {
+	color: #000;
+	font-weight: 500;
+}
+
 .lfr-ddm-form-container {
 	word-break: normal;
 
@@ -54,7 +73,7 @@
 		position: relative;
 
 		&.has-error .liferay-ddm-form-field-date .input-group-addon {
-			border-width: 0 0 2px 0;
+			border-width: 0 0 2px;
 		}
 
 		@include keyframes(spin) {
@@ -343,6 +362,10 @@
 	}
 }
 
+.lfr-ddm-form-paginated .pagination {
+	justify-content: center;
+}
+
 .liferay-ddm-form-field-fieldset {
 	margin-bottom: 0 !important;
 
@@ -389,6 +412,12 @@
 			text-transform: uppercase;
 			width: auto;
 		}
+	}
+}
+
+.liferay-ddm-form-renderer-pagination-content {
+	a {
+		pointer-events: none;
 	}
 }
 

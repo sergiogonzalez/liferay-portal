@@ -47,6 +47,7 @@ public class Page<T> {
 		Path path, List<Operation> operations) {
 
 		_resourceName = resourceName;
+
 		_items = pageItems.getItems();
 		_itemsPerPage = pagination.getItemsPerPage();
 		_pageNumber = pagination.getPageNumber();

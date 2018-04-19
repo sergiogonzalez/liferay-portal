@@ -235,6 +235,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setClassNameId(long classNameId);
 
 	/**
+	 * Returns the class type ID of this layout page template entry.
+	 *
+	 * @return the class type ID of this layout page template entry
+	 */
+	public long getClassTypeId();
+
+	/**
+	 * Sets the class type ID of this layout page template entry.
+	 *
+	 * @param classTypeId the class type ID of this layout page template entry
+	 */
+	public void setClassTypeId(long classTypeId);
+
+	/**
 	 * Returns the name of this layout page template entry.
 	 *
 	 * @return the name of this layout page template entry
@@ -248,6 +262,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	 * @param name the name of this layout page template entry
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the type of this layout page template entry.
+	 *
+	 * @return the type of this layout page template entry
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this layout page template entry.
+	 *
+	 * @param type the type of this layout page template entry
+	 */
+	public void setType(int type);
 
 	/**
 	 * Returns the html preview entry ID of this layout page template entry.

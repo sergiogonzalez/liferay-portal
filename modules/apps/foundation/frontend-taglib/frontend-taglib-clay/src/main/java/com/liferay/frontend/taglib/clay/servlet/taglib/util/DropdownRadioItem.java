@@ -14,32 +14,29 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Carlos Lancha
  */
 public class DropdownRadioItem extends DropdownItem {
 
 	public DropdownRadioItem() {
-		super("radio");
+		this(null);
 	}
 
-	public String getInputValue() {
-		return _inputValue;
-	}
+	public DropdownRadioItem(HttpServletRequest request) {
+		super(request);
 
-	public boolean isChecked() {
-		return _checked;
+		put("type", "radio");
 	}
 
 	public void setChecked(boolean checked) {
-		_checked = checked;
+		put("checked", checked);
 	}
 
 	public void setInputValue(String inputValue) {
-		_inputValue = inputValue;
+		put("inputValue", inputValue);
 	}
-
-	private boolean _checked;
-	private String _inputValue;
 
 }

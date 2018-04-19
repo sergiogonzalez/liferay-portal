@@ -50,6 +50,7 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ExternalModuleDependency;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
 
@@ -133,118 +134,6 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 	}
 
-	private static class OSGiLicenseReportConfigurator
-		extends BaseLicenseReportConfigurator<LiferayOSGiPlugin> {
-
-		public OSGiLicenseReportConfigurator(Project project) {
-			super(project);
-		}
-
-		@Override
-		protected String[] addConfigurations() throws Exception {
-			super.addConfigurations();
-
-			final Set<String> dependencyNames = new HashSet<>();
-
-			Map<String, String> bundleInstructions =
-				GradlePluginsDefaultsUtil.getBundleInstructions(project);
-
-			_addBundleDependencyNames(
-				dependencyNames, bundleInstructions, Constants.INCLUDERESOURCE);
-			_addBundleDependencyNames(
-				dependencyNames, bundleInstructions,
-				Constants.INCLUDE_RESOURCE);
-
-			Configuration providedConfiguration = GradleUtil.getConfiguration(
-				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
-
-			DependencySet dependencySet =
-				providedConfiguration.getDependencies();
-
-			dependencySet.withType(
-				ExternalModuleDependency.class,
-				new Action<ExternalModuleDependency>() {
-
-					@Override
-					public void execute(
-						ExternalModuleDependency externalModuleDependency) {
-
-						if (dependencyNames.contains(
-								externalModuleDependency.getName())) {
-
-							GradleUtil.addDependency(
-								project, LICENSE_REPORT_CONFIGURATION_NAME,
-								externalModuleDependency.getGroup(),
-								externalModuleDependency.getName(),
-								externalModuleDependency.getVersion());
-						}
-					}
-
-				});
-
-			return new String[] {
-				LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME,
-				LICENSE_REPORT_CONFIGURATION_NAME
-			};
-		}
-
-		@Override
-		protected String getArchiveExtension() {
-			return Jar.DEFAULT_EXTENSION;
-		}
-
-		private void _addBundleDependencyNames(
-			Set<String> dependencyNames, Map<String, String> bundleInstructions,
-			String key) {
-
-			String value = bundleInstructions.get(key);
-
-			if (Validator.isNull(value)) {
-				return;
-			}
-
-			Matcher matcher = _bundleDependencyNamePattern.matcher(value);
-
-			while (matcher.find()) {
-				String dependencyName = matcher.group(1);
-
-				dependencyNames.add(dependencyName);
-			}
-		}
-
-		private static final Pattern _bundleDependencyNamePattern =
-			Pattern.compile("[@=]{1,2}(.+)-\\[0-9\\]\\*\\.jar");
-
-	}
-
-	private static class ThirdPartyVersionsXmlReportRenderer
-		extends VersionsXmlReportRenderer {
-
-		public ThirdPartyVersionsXmlReportRenderer(
-			String fileName, LicenseReportExtension licenseReportExtension,
-			Callable<String> moduleFileNamePrefixCallable) {
-
-			super(
-				fileName, licenseReportExtension, moduleFileNamePrefixCallable);
-		}
-
-		@Override
-		protected boolean isExcluded(ModuleData moduleData) {
-			String group = moduleData.getGroup();
-			String name = moduleData.getName();
-
-			if ((group.equals("com.liferay") ||
-				 group.startsWith("com.liferay.")) &&
-				name.startsWith("com.liferay.")) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-	}
-
 	private abstract static class
 		BaseLicenseReportConfigurator<P extends Plugin<? extends Project>>
 			implements Action<P> {
@@ -321,6 +210,127 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 		protected abstract String getArchiveExtension();
 
 		protected final Project project;
+
+	}
+
+	private static class OSGiLicenseReportConfigurator
+		extends BaseLicenseReportConfigurator<LiferayOSGiPlugin> {
+
+		public OSGiLicenseReportConfigurator(Project project) {
+			super(project);
+		}
+
+		@Override
+		protected String[] addConfigurations() throws Exception {
+			super.addConfigurations();
+
+			final Set<String> dependencyNames = new HashSet<>();
+
+			Map<String, String> bundleInstructions =
+				GradlePluginsDefaultsUtil.getBundleInstructions(project);
+
+			_addBundleDependencyNames(
+				dependencyNames, bundleInstructions, Constants.INCLUDERESOURCE);
+			_addBundleDependencyNames(
+				dependencyNames, bundleInstructions,
+				Constants.INCLUDE_RESOURCE);
+
+			_addDependenciesLicenseReport(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, dependencyNames);
+			_addDependenciesLicenseReport(
+				ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
+				dependencyNames);
+
+			return new String[] {
+				LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME,
+				LICENSE_REPORT_CONFIGURATION_NAME
+			};
+		}
+
+		@Override
+		protected String getArchiveExtension() {
+			return Jar.DEFAULT_EXTENSION;
+		}
+
+		private void _addBundleDependencyNames(
+			Set<String> dependencyNames, Map<String, String> bundleInstructions,
+			String key) {
+
+			String value = bundleInstructions.get(key);
+
+			if (Validator.isNull(value)) {
+				return;
+			}
+
+			Matcher matcher = _bundleDependencyNamePattern.matcher(value);
+
+			while (matcher.find()) {
+				String dependencyName = matcher.group(1);
+
+				dependencyNames.add(dependencyName);
+			}
+		}
+
+		private void _addDependenciesLicenseReport(
+			String configurationName, final Set<String> dependencyNames) {
+
+			Configuration configuration = GradleUtil.getConfiguration(
+				project, configurationName);
+
+			DependencySet dependencySet = configuration.getDependencies();
+
+			dependencySet.withType(
+				ExternalModuleDependency.class,
+				new Action<ExternalModuleDependency>() {
+
+					@Override
+					public void execute(
+						ExternalModuleDependency externalModuleDependency) {
+
+						if (dependencyNames.contains(
+								externalModuleDependency.getName())) {
+
+							GradleUtil.addDependency(
+								project, LICENSE_REPORT_CONFIGURATION_NAME,
+								externalModuleDependency.getGroup(),
+								externalModuleDependency.getName(),
+								externalModuleDependency.getVersion());
+						}
+					}
+
+				});
+		}
+
+		private static final Pattern _bundleDependencyNamePattern =
+			Pattern.compile("[@=]{1,2}(.+)-\\[0-9\\]\\*\\.jar");
+
+	}
+
+	private static class ThirdPartyVersionsXmlReportRenderer
+		extends VersionsXmlReportRenderer {
+
+		public ThirdPartyVersionsXmlReportRenderer(
+			String fileName, LicenseReportExtension licenseReportExtension,
+			Callable<String> moduleFileNamePrefixCallable) {
+
+			super(
+				fileName, licenseReportExtension, moduleFileNamePrefixCallable);
+		}
+
+		@Override
+		protected boolean isExcluded(ModuleData moduleData) {
+			String group = moduleData.getGroup();
+			String name = moduleData.getName();
+
+			if ((group.equals("com.liferay") ||
+				 group.startsWith("com.liferay.")) &&
+				name.startsWith("com.liferay.")) {
+
+				return true;
+			}
+
+			return false;
+		}
 
 	}
 

@@ -546,7 +546,8 @@ AUI.add(
 							confirmFn: confirmFn,
 							id: 'cancelFieldChangesDialog',
 							labelHTML: Liferay.Language.get('yes-cancel'),
-							title: Liferay.Language.get('cancel-field-changes-question')
+							title: Liferay.Language.get('cancel-field-changes-question'),
+							width: 320
 						};
 
 						FormBuilderConfirmDialog.open(config);
@@ -561,7 +562,7 @@ AUI.add(
 							id: 'deleteFieldDialog',
 							labelHTML: Liferay.Language.get('yes-delete'),
 							title: Liferay.Language.get('delete-field-dialog-title'),
-							width: 300
+							width: 320
 						};
 
 						FormBuilderConfirmDialog.open(config);
@@ -915,6 +916,8 @@ AUI.add(
 					_getFieldActionsLayout: function() {
 						var instance = this;
 
+						instance._toggleRequiredMessage();
+
 						return '<div class="lfr-ddm-field-actions-container"> ' +
 							'<button class="btn btn-monospaced btn-sm label-primary lfr-duplicate-field" type="button">' + Liferay.Util.getLexiconIconTpl('paste') + '</button>' +
 							'<button class="btn btn-monospaced btn-sm label-primary lfr-delete-field" type="button">' + Liferay.Util.getLexiconIconTpl('trash') + '</button>' +
@@ -1239,9 +1242,7 @@ AUI.add(
 										message: Lang.sub(
 											Liferay.Language.get('all-fields-marked-with-x-are-required'),
 											[
-												'<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">' +
-											 		'<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#asterisk" />' +
-												'</svg>'
+												'<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">' + '<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#asterisk" />' + '</svg>'
 											]
 										)
 									}
@@ -1349,6 +1350,25 @@ AUI.add(
 						var rows = instance.getActiveLayout().get('rows');
 
 						rows.forEach(instance._syncRowLastColumnUI);
+					},
+
+					_toggleRequiredMessage: function() {
+						var instance = this;
+
+						instance._renderRequiredFieldsWarning();
+
+						var warningMessage = instance.get('container').one('.required-warning');
+
+						if (instance.get('container').one('.lfr-ddm-form-field-container .lexicon-icon-asterisk')) {
+							warningMessage.removeAttribute('style')
+							warningMessage.removeClass('hide');
+							warningMessage.set('hidden', false);
+						}
+						else {
+							warningMessage.addClass('hide');
+							warningMessage.setStyle('display', 'none');
+							warningMessage.set('hidden', true);
+						}
 					},
 
 					_traverseFormPages: function() {

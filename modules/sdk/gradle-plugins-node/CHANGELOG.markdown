@@ -211,17 +211,29 @@ don't match, the `node_modules` directory is deleted before running
 ## 4.3.0 - 2018-03-15
 
 ### Added
-- [LPS-78741]: Add property `useNpmCI` to `NpmInstallTask`. If `true`, run
-`npm ci` instead of `npm install`.
+- [LPS-78741]: Add the property `useNpmCI` to the `NpmInstallTask`. If `true`,
+run `npm ci` instead of `npm install`.
 
 ### Fixed
 - [LPS-73472]: Allow single `"bin"` values in the `package.json` files.
 
-## 4.3.1 - 2018-03-21
+## 4.3.1 - 2018-03-22
 
 ### Fixed
-- [LPS-78741]: If the `nodeModulesDigestFile` matches the `node_modules` directory's
-digest, do not run `npm ci` or `npm install`.
+- [LPS-78741]: Do not run `npm install` if the `nodeModulesDigestFile` matches
+the `node_modules` directory's digest.
+
+## 4.3.2 - 2018-03-30
+
+### Changed
+- [LPS-78741]: Do not run `npm ci` if the `nodeModulesDigestFile` matches the
+`node_modules` directory's digest.
+
+## 4.3.3 - 2018-04-05
+
+### Fixed
+- [LPS-78741]: Fix the `npmPackageLock` task execution when the `npmInstall`
+task's `useNpmCI` property is set to `true`.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

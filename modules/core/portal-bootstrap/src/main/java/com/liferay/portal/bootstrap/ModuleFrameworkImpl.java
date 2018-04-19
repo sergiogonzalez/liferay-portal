@@ -796,6 +796,89 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	private Map<String, Bundle> _deployStaticBundlesFromFile(
+			File file, Set<String> overrideStaticFileNames)
+		throws IOException {
+
+		Map<String, Bundle> bundles = new HashMap<>();
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			List<ZipEntry> zipEntries = new ArrayList<>();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = StringUtil.toLowerCase(zipEntry.getName());
+
+				if (!name.endsWith(".jar")) {
+					continue;
+				}
+
+				Matcher matcher = _pattern.matcher(name);
+
+				if (matcher.matches()) {
+					String fileName = matcher.group(1) + matcher.group(4);
+
+					if (overrideStaticFileNames.contains(fileName)) {
+						if (_log.isInfoEnabled()) {
+							StringBundler sb = new StringBundler(7);
+
+							sb.append(zipFile);
+							sb.append(":");
+							sb.append(zipEntry);
+							sb.append(" is overridden by ");
+							sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
+							sb.append("/static/");
+							sb.append(fileName);
+
+							_log.info(sb.toString());
+						}
+
+						continue;
+					}
+				}
+
+				zipEntries.add(zipEntry);
+			}
+
+			Collections.sort(
+				zipEntries,
+				new Comparator<ZipEntry>() {
+
+					@Override
+					public int compare(ZipEntry zipEntry1, ZipEntry zipEntry2) {
+						String name1 = zipEntry1.getName();
+						String name2 = zipEntry2.getName();
+
+						return name1.compareTo(name2);
+					}
+
+				});
+
+			for (ZipEntry zipEntry : zipEntries) {
+				String zipEntryName = zipEntry.getName();
+
+				String location =
+					"file:/" + zipEntryName + "?protocol=lpkg&static=true";
+
+				try (InputStream inputStream = zipFile.getInputStream(
+						zipEntry)) {
+
+					Bundle bundle = _installInitialBundle(
+						location, inputStream);
+
+					if (bundle != null) {
+						bundles.put(location, bundle);
+					}
+				}
+			}
+		}
+
+		return bundles;
+	}
+
 	private String _getAttributeValue(String name) {
 		Manifest manifest = null;
 
@@ -824,14 +907,23 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Dictionary<String, Object> _getProperties(
 		Object bean, String beanName) {
 
+		Class<?> clazz = bean.getClass();
+
+		OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
+			OSGiBeanProperties.class);
+
+		return _getProperties(osgiBeanProperties, beanName);
+	}
+
+	private Dictionary<String, Object> _getProperties(
+		OSGiBeanProperties osgiBeanProperties, String beanName) {
+
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
-		Map<String, Object> osgiBeanProperties =
-			OSGiBeanProperties.Convert.fromObject(bean);
-
 		if (osgiBeanProperties != null) {
-			properties.putAll(osgiBeanProperties);
+			properties.putAll(
+				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
 		}
 
 		properties.put(ServicePropsKeys.BEAN_ID, beanName);
@@ -1033,23 +1125,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return true;
 	}
 
-	private boolean _isIgnoredInterface(String interfaceClassName) {
-		for (String ignoredClass :
-				PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
-
-			if (!ignoredClass.startsWith(StringPool.EXCLAMATION) &&
-				(ignoredClass.equals(interfaceClassName) ||
-				 (ignoredClass.endsWith(StringPool.STAR) &&
-				  interfaceClassName.startsWith(
-					  ignoredClass.substring(0, ignoredClass.length() - 1))))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _refreshBundles(List<Bundle> refreshBundles) {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
@@ -1117,19 +1192,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private ServiceRegistration<?> _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
-		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
+		Class<?> clazz = bean.getClass();
 
-		interfaces.add(bean.getClass());
+		OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
+			OSGiBeanProperties.class);
 
-		List<String> names = new ArrayList<>(interfaces.size());
-
-		for (Class<?> interfaceClass : interfaces) {
-			String interfaceClassName = interfaceClass.getName();
-
-			if (!_isIgnoredInterface(interfaceClassName)) {
-				names.add(interfaceClassName);
-			}
-		}
+		Set<String> names = OSGiBeanProperties.Service.interfaceNames(
+			bean, osgiBeanProperties,
+			PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES);
 
 		if (names.isEmpty()) {
 			return null;
@@ -1138,7 +1208,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				names.toArray(new String[names.size()]), bean,
-				_getProperties(bean, beanName));
+				_getProperties(osgiBeanProperties, beanName));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1298,88 +1368,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
 
-		File file = new File(
-			deployDir + StringPool.SLASH +
-				StaticLPKGResolver.getStaticLPKGFileName());
+		for (String staticFileName :
+				StaticLPKGResolver.getStaticLPKGFileNames()) {
 
-		if (file.exists()) {
-			try (ZipFile zipFile = new ZipFile(file)) {
-				Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+			File file = new File(deployDir + StringPool.SLASH + staticFileName);
 
-				List<ZipEntry> zipEntries = new ArrayList<>();
-
-				while (enumeration.hasMoreElements()) {
-					ZipEntry zipEntry = enumeration.nextElement();
-
-					String name = StringUtil.toLowerCase(zipEntry.getName());
-
-					if (!name.endsWith(".jar")) {
-						continue;
-					}
-
-					zipEntries.add(zipEntry);
-				}
-
-				Collections.sort(
-					zipEntries,
-					new Comparator<ZipEntry>() {
-
-						@Override
-						public int compare(
-							ZipEntry zipEntry1, ZipEntry zipEntry2) {
-
-							String name1 = zipEntry1.getName();
-							String name2 = zipEntry2.getName();
-
-							return name1.compareTo(name2);
-						}
-
-					});
-
-				for (ZipEntry zipEntry : zipEntries) {
-					try (InputStream inputStream = zipFile.getInputStream(
-							zipEntry)) {
-
-						String zipEntryName = zipEntry.getName();
-
-						Matcher matcher = _pattern.matcher(zipEntryName);
-
-						if (matcher.matches()) {
-							String fileName =
-								matcher.group(1) + matcher.group(4);
-
-							if (overrideStaticFileNames.contains(fileName)) {
-								if (_log.isInfoEnabled()) {
-									StringBundler sb = new StringBundler(7);
-
-									sb.append(zipFile);
-									sb.append(":");
-									sb.append(zipEntry);
-									sb.append(" is overridden by ");
-									sb.append(
-										PropsValues.MODULE_FRAMEWORK_BASE_DIR);
-									sb.append("/static/");
-									sb.append(fileName);
-
-									_log.info(sb.toString());
-								}
-
-								continue;
-							}
-						}
-
-						String location =
-							"file:/" + zipEntryName +
-								"?protocol=lpkg&static=true";
-
-						Bundle bundle = _installInitialBundle(
-							location, inputStream);
-
-						if (bundle != null) {
-							bundles.put(location, bundle);
-						}
-					}
-				}
+			if (file.exists()) {
+				bundles.putAll(
+					_deployStaticBundlesFromFile(
+						file, overrideStaticFileNames));
 			}
 		}
 

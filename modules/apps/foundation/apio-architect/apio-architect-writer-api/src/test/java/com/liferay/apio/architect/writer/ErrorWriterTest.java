@@ -27,7 +27,6 @@ import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.test.util.json.Conditions;
-import com.liferay.apio.architect.test.util.result.MockAPIError;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -64,7 +63,9 @@ public class ErrorWriterTest {
 	public void testWriteErrorCreatesCorrectJsonObject() {
 		ErrorMessageMapper errorMessageMapper = new TestErrorMessageMapper();
 
-		APIError apiError = new MockAPIError();
+		APIError apiError = new APIError(
+			new IllegalArgumentException(), "A title", "A description",
+			"A type", 404);
 
 		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
 

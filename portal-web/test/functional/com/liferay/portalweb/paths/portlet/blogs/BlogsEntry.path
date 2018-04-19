@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ENTRY_COVER_IMAGE</td>
-	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_uploadFileName}')]</td>
+	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_uploadFileName}')] | //div[contains(@class,'cover-image')]//img</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_VIEW_COUNT</td>
-	<td>//div[contains(@class,'profile-header')]//div[contains(@class,'nameplate')]</td>
+	<td>//div[contains(@class,'metadata')]//div[@class='autofit-row']/div/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>FLAG_LINK</td>
-	<td>//div[contains(@class,'taglib-flags')]//button[contains(@class,'btn-link')]</td>
+	<td>//div[contains(@class,'taglib-flags')]//button[contains(@type,'button')]</td>
 	<td></td>
 </tr>
 <tr>

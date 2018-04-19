@@ -16,7 +16,8 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -52,16 +53,6 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 		com.liferay.layout.page.template.model.LayoutPageTemplateCollection layoutPageTemplateCollection) {
 		return getService()
 				   .addLayoutPageTemplateCollection(layoutPageTemplateCollection);
-	}
-
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutPageTemplateCollection(userId, groupId, name,
-			description, type, serviceContext);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection addLayoutPageTemplateCollection(
@@ -317,6 +308,17 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<LayoutPageTemplateCollectionLocalService, LayoutPageTemplateCollectionLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(LayoutPageTemplateCollectionLocalService.class);
+	private static ServiceTracker<LayoutPageTemplateCollectionLocalService, LayoutPageTemplateCollectionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LayoutPageTemplateCollectionLocalService.class);
+
+		ServiceTracker<LayoutPageTemplateCollectionLocalService, LayoutPageTemplateCollectionLocalService> serviceTracker =
+			new ServiceTracker<LayoutPageTemplateCollectionLocalService, LayoutPageTemplateCollectionLocalService>(bundle.getBundleContext(),
+				LayoutPageTemplateCollectionLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -20,6 +20,7 @@ import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.isALinkTo;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayThat;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
@@ -64,17 +65,17 @@ public class JSONLDPageMessageMapperTest {
 		Builder builder = new Builder();
 
 		Conditions conditions = builder.where(
-			"@context", _isAJsonObjectWithTheContext
+			"@context", is(aJsonArrayThat(contains(_theContext)))
 		).where(
 			"@id", isALinkTo("localhost/p/name/id/root")
 		).where(
-			"@type", containsTheTypes("hydra:Collection")
+			"@type", containsTheTypes("Collection")
 		).where(
 			"member", is(aJsonArrayThat(contains(_theMembers)))
 		).where(
 			"numberOfItems", is(aJsonInt(equalTo(3)))
 		).where(
-			"hydra:operation", is(aJsonArrayThat(_containsTheOperations))
+			"operation", is(aJsonArrayThat(_containsTheOperations))
 		).where(
 			"totalItems", is(aJsonInt(equalTo(9)))
 		).where(
@@ -93,16 +94,16 @@ public class JSONLDPageMessageMapperTest {
 
 	private static final Matcher<Iterable<? extends JsonElement>>
 		_containsTheOperations;
-	private static final Matcher<JsonElement> _isAJsonObjectWithTheContext;
 	private static final Matcher<? extends JsonElement>
 		_isAJsonObjectWithTheView;
+	private static final List<Matcher<? super JsonElement>> _theContext;
 	private static final List<Matcher<? super JsonElement>> _theMembers;
 
 	static {
 		Builder builder = new Builder();
 
 		Conditions viewConditions = builder.where(
-			"@type", containsTheTypes("hydra:PartialCollectionView")
+			"@type", containsTheTypes("PartialCollectionView")
 		).where(
 			"@id", isALinkTo("localhost/p/name/id/root?page=2&per_page=3")
 		).where(
@@ -117,13 +118,10 @@ public class JSONLDPageMessageMapperTest {
 
 		_isAJsonObjectWithTheView = is(aJsonObjectWith(viewConditions));
 
-		Conditions contextConditions = builder.where(
-			"@vocab", isALinkTo("http://schema.org/")
-		).where(
-			"hydra", IS_A_LINK_TO_HYDRA_PROFILE
-		).build();
-
-		_isAJsonObjectWithTheContext = is(aJsonObjectWith(contextConditions));
+		_theContext = Arrays.asList(
+			aJsonObjectWhere(
+				"@vocab", is(aJsonString(equalTo("http://schema.org/")))),
+			IS_A_LINK_TO_HYDRA_PROFILE);
 
 		_theMembers = Arrays.asList(
 			aRootElementJsonObjectWithId("1", false, true),

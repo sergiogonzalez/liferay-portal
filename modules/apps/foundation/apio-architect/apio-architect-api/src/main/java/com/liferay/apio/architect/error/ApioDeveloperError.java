@@ -26,63 +26,6 @@ import com.liferay.apio.architect.uri.Path;
 public class ApioDeveloperError extends Error {
 
 	/**
-	 * Represents the error the developer should throw when a documentation
-	 * message mapper is missing.
-	 */
-	public static class MustHaveDocumentationMessageMapper
-		extends ApioDeveloperError {
-
-		public MustHaveDocumentationMessageMapper(String mediaType) {
-			super(
-				"Documentation media type " + mediaType +
-					" does not have a message mapper");
-		}
-
-	}
-
-	/**
-	 * Represents the error the developer should throw when an exception
-	 * converter is missing.
-	 */
-	public static class MustHaveExceptionConverter extends ApioDeveloperError {
-
-		public MustHaveExceptionConverter(Class<?> exceptionClass) {
-			super(
-				"Exception class " + exceptionClass.getName() +
-					" does not have a converter");
-		}
-
-	}
-
-	/**
-	 * Represents the error the developer should throw when a form message
-	 * mapper is missing.
-	 */
-	public static class MustHaveFormMessageMapper extends ApioDeveloperError {
-
-		public MustHaveFormMessageMapper(String mediaType) {
-			super(
-				"Form media type " + mediaType +
-					" does not have a message mapper");
-		}
-
-	}
-
-	/**
-	 * Represents the error the developer should throw when a message mapper is
-	 * missing.
-	 */
-	public static class MustHaveMessageMapper extends ApioDeveloperError {
-
-		public MustHaveMessageMapper(String mediaType, String name) {
-			super(
-				"Media type " + mediaType + " and name " + name + " does not " +
-					"have a message mapper");
-		}
-
-	}
-
-	/**
 	 * Represents the error the developer should throw when an identifier's path
 	 * mapper is missing.
 	 */
@@ -91,21 +34,6 @@ public class ApioDeveloperError extends Error {
 
 		public MustHavePathIdentifierMapper(Path path) {
 			super(path.asURI() + " path does not have a valid path mapper");
-		}
-
-	}
-
-	/**
-	 * Represents the error the developer should throw when a problem JSON error
-	 * message mapper is missing.
-	 */
-	public static class MustHaveProblemJSONErrorMessageMapper
-		extends ApioDeveloperError {
-
-		public MustHaveProblemJSONErrorMessageMapper() {
-			super(
-				"Media type application/problem+json does not have a message " +
-					"mapper");
 		}
 
 	}

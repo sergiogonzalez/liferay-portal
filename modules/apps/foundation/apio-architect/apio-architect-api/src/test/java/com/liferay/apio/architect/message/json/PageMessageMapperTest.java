@@ -21,15 +21,10 @@ import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.liferay.apio.architect.pagination.Page;
-
 import java.util.Optional;
-
-import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -45,15 +40,6 @@ public class PageMessageMapperTest {
 			pageMessageMapper.getSingleModelMessageMapperOptional();
 
 		assertThat(optional, is(emptyOptional()));
-	}
-
-	@Test
-	public void testMessageMapperIsEmptyByDefaultAndSupportsMapping() {
-		PageMessageMapper<Integer> pageMessageMapper = () -> "mediaType";
-
-		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
-
-		assertThat(pageMessageMapper.supports(page, httpHeaders), is(true));
 	}
 
 	@Test
@@ -220,9 +206,6 @@ public class PageMessageMapperTest {
 			null, null, null
 		);
 	}
-
-	@Mock
-	public Page<Integer> page;
 
 	private static void _callAllItemMethods(
 		PageMessageMapper<Integer> pageMessageMapper) {

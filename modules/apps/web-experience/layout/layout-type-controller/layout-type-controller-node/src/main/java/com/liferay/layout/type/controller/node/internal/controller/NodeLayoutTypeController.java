@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE},
+	property = "layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE,
 	service = LayoutTypeController.class
 )
 public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
@@ -49,11 +49,6 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
-	}
-
-	@Override
-	public boolean isInstanceable() {
 		return false;
 	}
 

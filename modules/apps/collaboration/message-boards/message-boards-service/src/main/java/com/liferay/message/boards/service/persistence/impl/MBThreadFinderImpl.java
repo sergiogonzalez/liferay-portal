@@ -20,7 +20,7 @@ import com.liferay.message.boards.model.impl.MBThreadImpl;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -105,7 +106,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -160,7 +161,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -214,56 +215,8 @@ public class MBThreadFinderImpl
 		long groupId, long userId, Date lastPostDate,
 		QueryDefinition<MBThread> queryDefinition) {
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_LPD);
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = updateSQL(sql, queryDefinition);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(lastPostDate);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
-			}
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return countByG_U_LPD_A(
+			groupId, userId, lastPostDate, true, queryDefinition);
 	}
 
 	@Override
@@ -276,7 +229,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_A);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_A);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -331,7 +284,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_C);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -382,6 +335,71 @@ public class MBThreadFinderImpl
 	}
 
 	@Override
+	public int countByG_U_LPD_A(
+		long groupId, long userId, Date lastPostDate, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_LPD);
+
+			if (userId <= 0) {
+				if (includeAnonymous) {
+					sql = StringUtil.replace(
+						sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				}
+
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			sql = updateSQL(sql, queryDefinition);
+
+			if (!includeAnonymous) {
+				sql = _customSQL.appendCriteria(
+					sql, "AND (MBMessage.anonymous = [$FALSE$])");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(lastPostDate);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
 	public int countByS_G_U_C(
 		long groupId, long userId, long[] categoryIds,
 		QueryDefinition<MBThread> queryDefinition) {
@@ -404,7 +422,7 @@ public class MBThreadFinderImpl
 			QueryDefinition queryDefinition = new QueryDefinition(
 				WorkflowConstants.STATUS_ANY);
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
@@ -475,7 +493,7 @@ public class MBThreadFinderImpl
 			QueryDefinition queryDefinition = new QueryDefinition(
 				WorkflowConstants.STATUS_ANY);
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
@@ -527,7 +545,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
+			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -556,7 +574,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -603,7 +621,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -649,48 +667,8 @@ public class MBThreadFinderImpl
 		long groupId, long userId, Date lastPostDate,
 		QueryDefinition<MBThread> queryDefinition) {
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_LPD);
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = updateSQL(sql, queryDefinition);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("MBThread", MBThreadImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(lastPostDate);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
-			}
-
-			return (List<MBThread>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return findByG_U_LPD_A(
+			groupId, userId, lastPostDate, true, queryDefinition);
 	}
 
 	@Override
@@ -703,7 +681,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_A);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_A);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -742,7 +720,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_S_G_U);
+			String sql = _customSQL.get(getClass(), FIND_BY_S_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -782,7 +760,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_C_A);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_A);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -807,6 +785,63 @@ public class MBThreadFinderImpl
 			qPos.add(groupId);
 			qPos.add(userId);
 			qPos.add(anonymous);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			return (List<MBThread>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<MBThread> findByG_U_LPD_A(
+		long groupId, long userId, Date lastPostDate, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_LPD);
+
+			if (userId <= 0) {
+				if (includeAnonymous) {
+					sql = StringUtil.replace(
+						sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				}
+
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			sql = updateSQL(sql, queryDefinition);
+
+			if (!includeAnonymous) {
+				sql = _customSQL.appendCriteria(
+					sql, "AND (MBMessage.anonymous = [$FALSE$])");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(lastPostDate);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
 				qPos.add(queryDefinition.getStatus());
@@ -860,7 +895,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
@@ -914,7 +949,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_S_G_U);
+			String sql = _customSQL.get(getClass(), COUNT_BY_S_G_U);
 
 			sql = updateSQL(sql, queryDefinition);
 
@@ -961,7 +996,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_S_G_U_C);
+			String sql = _customSQL.get(getClass(), COUNT_BY_S_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -1048,7 +1083,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_C, queryDefinition,
 				MBThreadImpl.TABLE_NAME);
 
@@ -1095,7 +1130,7 @@ public class MBThreadFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_S_G_U_C);
+			String sql = _customSQL.get(getClass(), FIND_BY_S_G_U_C);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
@@ -1151,16 +1186,18 @@ public class MBThreadFinderImpl
 		}
 
 		if (queryDefinition.isExcludeStatus()) {
-			return CustomSQLUtil.appendCriteria(
-				sql, "AND (MBThread.status != ?)");
+			return _customSQL.appendCriteria(sql, "AND (MBThread.status != ?)");
 		}
 
-		return CustomSQLUtil.appendCriteria(sql, "AND (MBThread.status = ?)");
+		return _customSQL.appendCriteria(sql, "AND (MBThread.status = ?)");
 	}
 
 	private static final String _INNER_JOIN_SQL =
 		"INNER JOIN MBMessage ON MBThread.threadId = MBMessage.threadId";
 
 	private static final String _USER_ID_SQL = "AND (MBMessage.userId = ?)";
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

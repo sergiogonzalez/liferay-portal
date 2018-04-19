@@ -15,9 +15,10 @@
 package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.form.Body;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.single.model.SingleModel;
 
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -30,6 +31,6 @@ import java.util.function.Function;
  *         String}, etc.)
  */
 @FunctionalInterface
-public interface UpdateItemFunction<T, S> extends RequestFunction
-	<Function<S, Function<Map<String, Object>, SingleModel<T>>>> {
+public interface UpdateItemFunction<T, S>
+	extends RequestFunction <Function<S, Function<Body, Try<SingleModel<T>>>>> {
 }

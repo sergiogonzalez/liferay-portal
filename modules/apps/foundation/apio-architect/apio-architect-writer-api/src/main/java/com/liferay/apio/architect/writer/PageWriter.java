@@ -52,7 +52,6 @@ import java.util.function.Function;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @review
  */
 public class PageWriter<T> {
 
@@ -154,8 +153,7 @@ public class PageWriter<T> {
 	/**
 	 * Creates {@code PageWriter} instances.
 	 *
-	 * @param  <T> the model's type
-	 * @review
+	 * @param <T> the model's type
 	 */
 	public static class Builder<T> {
 

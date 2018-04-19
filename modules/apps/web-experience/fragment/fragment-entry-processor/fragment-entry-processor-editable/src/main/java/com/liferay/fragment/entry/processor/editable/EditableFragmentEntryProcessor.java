@@ -18,6 +18,7 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,15 +46,14 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
-	property = {"fragment.entry.processor.priority:Integer=2"},
+	immediate = true, property = "fragment.entry.processor.priority:Integer=2",
 	service = FragmentEntryProcessor.class
 )
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html)
+			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -108,8 +108,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
+		_validateAttributes(html);
 		_validateDuplicatedIds(html);
-		_validateEmptyIds(html);
 	}
 
 	private Document _getDocument(String html) {
@@ -122,6 +122,38 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private void _validateAttribute(Element element, String attribute)
+		throws FragmentEntryContentException {
+
+		if (element.hasAttr(attribute)) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		throw new FragmentEntryContentException(
+			LanguageUtil.format(
+				resourceBundle,
+				"you-must-define-all-require-attributes-x-for-each-editable-" +
+					"element",
+				String.join(StringPool.COMMA, _REQUIRED_ATTRIBUTES)));
+	}
+
+	private void _validateAttributes(String html)
+		throws FragmentEntryContentException {
+
+		Document document = _getDocument(html);
+
+		for (Element element : document.getElementsByTag("lfr-editable")) {
+			for (String attribute : _REQUIRED_ATTRIBUTES) {
+				_validateAttribute(element, attribute);
+			}
+
+			_validateType(element);
+		}
 	}
 
 	private void _validateDuplicatedIds(String html)
@@ -154,25 +186,26 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
-	private void _validateEmptyIds(String html)
+	private void _validateType(Element element)
 		throws FragmentEntryContentException {
 
-		Document document = _getDocument(html);
+		EditableElementParser editableElementParser =
+			_editableElementParsers.get(element.attr("type"));
 
-		for (Element element : document.getElementsByTag("lfr-editable")) {
-			if (element.hasAttr("id")) {
-				continue;
-			}
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
-			throw new FragmentEntryContentException(
-				LanguageUtil.get(
-					resourceBundle,
-					"you-must-define-an-unique-id-for-each-editable-element"));
+		if (editableElementParser != null) {
+			return;
 		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		throw new FragmentEntryContentException(
+			LanguageUtil.get(
+				resourceBundle,
+				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
+
+	private static final String[] _REQUIRED_ATTRIBUTES = {"id", "type"};
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();

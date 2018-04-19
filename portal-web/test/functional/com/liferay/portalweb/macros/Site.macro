@@ -67,19 +67,15 @@
 				<equals arg1="${singleSiteTypePermission}" arg2="true" />
 			</not>
 			<then>
-				<var name="siteType" value="${siteType}" />
-
 				<if>
-					<not>
-						<contains string="${siteTemplateName}" substring="{siteTemplateName}" />
-					</not>
+					<contains string="${siteTemplateName}" substring="{siteTemplateName}" />
 					<then>
-						<var name="siteType" value="${siteTemplateName}" />
+						<var name="siteTemplateName" value="${siteType} Site" />
 					</then>
 				</if>
 
 				<execute macro="LexiconEntry#gotoEntry">
-					<var name="rowEntry" value="${siteType} Site" />
+					<var name="rowEntry" value="${siteTemplateName}" />
 				</execute>
 
 				<execute macro="PortletEntry#inputName">
@@ -100,7 +96,7 @@
 					<equals arg1="${uncheckPropagation}" arg2="true" />
 					<then>
 						<execute macro="Panel#expandPanel">
-							<var name="panelHeading" value="Pages" />
+							<var name="panel" value="Pages" />
 						</execute>
 
 						<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_PROPAGATION" />
@@ -181,7 +177,7 @@
 
 	<command name="addVirtualHostsURLCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Site URL" />
+			<var name="panel" value="Site URL" />
 		</execute>
 
 		<if>
@@ -529,7 +525,7 @@
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_ADVANCED_TAB" value1="Advanced" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Recycle Bin" />
+			<var name="panel" value="Recycle Bin" />
 		</execute>
 
 		<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
@@ -555,7 +551,7 @@
 
 	<command name="editFriendlyURLCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Site URL" />
+			<var name="panel" value="Site URL" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
@@ -584,7 +580,7 @@
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_ADVANCED_TAB" value1="Advanced" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Analytics" />
+			<var name="panel" value="Analytics" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#GOOGLE_ANALYTICS_ID" value1="${googleAnalyticsID}" />
@@ -921,7 +917,7 @@
 
 	<command name="selectPageType">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Pages" />
+			<var name="panel" value="Pages" />
 		</execute>
 
 		<if>
@@ -938,7 +934,7 @@
 						<equals arg1="${checkPropagation}" arg2="true" />
 						<then>
 							<execute macro="Panel#expandPanel">
-								<var name="panelHeading" value="Pages" />
+								<var name="panel" value="Pages" />
 							</execute>
 
 							<execute function="Check#checkToggleSwitch" locator1="Checkbox#PRIVATE_PAGES_ENABLE_PROPAGATION" />
@@ -1003,15 +999,15 @@
 	<command name="viewCannotAdd">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Blank Site">
-			<var name="key_menuItem" value="Blank Site" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Blank Site" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${siteName}" />
 		</execute>
 
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickModalSubmit" />
 
 		<if>
 			<equals arg1="${siteNameInvalid}" arg2="Duplicate" />
@@ -1274,10 +1270,12 @@
 	</command>
 
 	<command name="viewSiteClonedFromSiteTemplateCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Site Template" />
+			<var name="panel" value="Site Template" />
 		</execute>
 
 		<if>

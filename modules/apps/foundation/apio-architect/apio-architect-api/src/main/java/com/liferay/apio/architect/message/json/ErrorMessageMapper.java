@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.apio.architect.error.APIError;
 
-import javax.ws.rs.core.HttpHeaders;
-
 /**
  * Represents errors in a different format. Instances of this interface work
  * like events. The {@link APIError} writer calls each of the {@code
@@ -27,23 +25,18 @@ import javax.ws.rs.core.HttpHeaders;
  * provided part of the error to its representation in a JSON object. To enable
  * this, each method receives a {@link JSONObjectBuilder}.
  *
- * Besides {@link #onStart(JSONObjectBuilder, APIError, HttpHeaders)} and
- * {@link #onFinish(JSONObjectBuilder, APIError, HttpHeaders)}, which are
- * respectively called when the writer starts and finishes the error, the
- * methods aren't called in a particular order.
+ * <p>
+ * Besides {@link #onStart(JSONObjectBuilder, Object, HttpHeaders)} and {@link
+ * #onFinish(JSONObjectBuilder, Object, HttpHeaders)}, which are respectively
+ * called when the writer starts and finishes the error, the methods aren't
+ * called in a particular order.
+ * </p>
  *
  * @author Alejandro Hernández
  */
 @ConsumerType
 @SuppressWarnings("unused")
-public interface ErrorMessageMapper {
-
-	/**
-	 * Returns the mapper's media type.
-	 *
-	 * @return the mapper's media type.
-	 */
-	public String getMediaType();
+public interface ErrorMessageMapper extends MessageMapper<APIError> {
 
 	/**
 	 * Maps an error description to its JSON object representation.
@@ -83,45 +76,6 @@ public interface ErrorMessageMapper {
 	 */
 	public default void mapType(
 		JSONObjectBuilder jsonObjectBuilder, String type) {
-	}
-
-	/**
-	 * Finishes the API error.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the API error
-	 * @param apiError the API error
-	 * @param httpHeaders the current request's HTTP headers
-	 */
-	public default void onFinish(
-		JSONObjectBuilder jsonObjectBuilder, APIError apiError,
-		HttpHeaders httpHeaders) {
-	}
-
-	/**
-	 * Starts the API error.
-	 *
-	 * @param jsonObjectBuilder the JSON object builder for the API error
-	 * @param apiError the API error
-	 * @param httpHeaders the current request's HTTP headers
-	 */
-	public default void onStart(
-		JSONObjectBuilder jsonObjectBuilder, APIError apiError,
-		HttpHeaders httpHeaders) {
-	}
-
-	/**
-	 * Returns {@code true} if the mapper can map all things related to the
-	 * current request.
-	 *
-	 * @param  apiError the API error.
-	 * @param  httpHeaders the current request's HTTP headers.
-	 * @return {@code true} if the mapper can map the request; {@code false}
-	 *         otherwise.
-	 */
-	public default boolean supports(
-		APIError apiError, HttpHeaders httpHeaders) {
-
-		return true;
 	}
 
 }

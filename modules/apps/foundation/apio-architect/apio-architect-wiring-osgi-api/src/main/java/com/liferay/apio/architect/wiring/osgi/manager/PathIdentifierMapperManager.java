@@ -29,25 +29,24 @@ import java.util.Optional;
 public interface PathIdentifierMapperManager {
 
 	/**
-	 * Checks if a {@code PathIdentifierMapper} for a resource has been
-	 * published.
+	 * Returns {@code true} if a {@link
+	 * com.liferay.apio.architect.uri.mapper.PathIdentifierMapper} for a
+	 * resource has been published.
 	 *
-	 * @param  name the name of the resource
+	 * @param  name the resource's name
 	 * @return {@code true} if a {@code PathIdentifierMapper} for a resource is
-	 *         present
-	 * @review
+	 *         present; {@code false} otherwise
 	 */
 	public boolean hasPathIdentifierMapper(String name);
 
 	/**
 	 * Converts a {@code Path} to its equivalent identifier of type {@code T},
 	 * if a valid {@link
-	 * com.liferay.apio.architect.uri.mapper.PathIdentifierMapper} can be found.
-	 * Throws a {@code MustHavePathIdentifierMapper} exception otherwise.
+	 * com.liferay.apio.architect.uri.mapper.PathIdentifierMapper} can be found;
+	 * throws a {@code MustHavePathIdentifierMapper} exception otherwise.
 	 *
 	 * @param  path the {@code Path}
 	 * @return the identifier
-	 * @review
 	 */
 	public <T> T mapToIdentifierOrFail(Path path);
 

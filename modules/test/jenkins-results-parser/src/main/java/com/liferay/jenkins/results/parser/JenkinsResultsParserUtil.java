@@ -36,8 +36,15 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -196,7 +203,7 @@ public class JenkinsResultsParserUtil {
 		return URLDecoder.decode(url, "UTF-8");
 	}
 
-	public static void delete(File file) throws IOException {
+	public static void delete(File file) {
 		if (!file.exists()) {
 			System.out.println(
 				"Unable to delete because file does not exist " +
@@ -235,9 +242,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(
-			boolean exitOnFirstFail, File basedir, long timeout,
+			boolean exitOnFirstFail, File baseDir, long timeout,
 			String... commands)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		System.out.print("Executing commands: ");
 
@@ -270,7 +277,7 @@ public class JenkinsResultsParserUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(bashCommands);
 
-		processBuilder.directory(basedir.getAbsoluteFile());
+		processBuilder.directory(baseDir.getAbsoluteFile());
 
 		Process process = new BufferedProcess(1000000, processBuilder.start());
 
@@ -325,7 +332,7 @@ public class JenkinsResultsParserUtil {
 
 	public static Process executeBashCommands(
 			boolean exitOnFirstFail, String... commands)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		return executeBashCommands(
 			exitOnFirstFail, new File("."), _BASH_COMMAND_TIMEOUT_DEFAULT,
@@ -333,7 +340,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(String... commands)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		return executeBashCommands(
 			true, new File("."), _BASH_COMMAND_TIMEOUT_DEFAULT, commands);
@@ -423,10 +430,10 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	public static List<File> findFiles(File basedir, String regex) {
+	public static List<File> findFiles(File baseDir, String regex) {
 		List<File> files = new ArrayList<>();
 
-		for (File file : basedir.listFiles()) {
+		for (File file : baseDir.listFiles()) {
 			String fileName = file.getName();
 
 			if (file.isDirectory()) {
@@ -525,9 +532,7 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
-	public static String getAxisVariable(JSONObject jsonObject)
-		throws Exception {
-
+	public static String getAxisVariable(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = (JSONArray)jsonObject.get("actions");
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {
@@ -647,6 +652,63 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static List<URL> getIncludedResourceURLs(
+			String[] resourceIncludesRelativeGlobs, File rootDir)
+		throws IOException {
+
+		final List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		for (String resourceIncludesRelativeGlob :
+				resourceIncludesRelativeGlobs) {
+
+			pathMatchers.add(
+				fileSystem.getPathMatcher(
+					combine(
+						"glob:", rootDir.getAbsolutePath(), File.separator,
+						resourceIncludesRelativeGlob)));
+		}
+
+		final List<URL> includedResourceURLs = new ArrayList<>();
+
+		Path rootDirPath = rootDir.toPath();
+
+		if (!Files.exists(rootDirPath)) {
+			System.out.println(
+				combine(
+					"Directory ", rootDirPath.toString(), " does not exist."));
+
+			return includedResourceURLs;
+		}
+
+		Files.walkFileTree(
+			rootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					for (PathMatcher pathMatcher : pathMatchers) {
+						if (pathMatcher.matches(filePath)) {
+							URI uri = filePath.toUri();
+
+							includedResourceURLs.add(uri.toURL());
+
+							break;
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return includedResourceURLs;
+	}
+
 	public static float getJavaVersionNumber() {
 		Matcher matcher = _javaVersionPattern.matcher(
 			System.getProperty("java.version"));
@@ -707,7 +769,7 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static String getJobVariant(String json) throws Exception {
+	public static String getJobVariant(String json) {
 		return getJobVariant(new JSONObject(json));
 	}
 
@@ -848,6 +910,18 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static Properties getProperties(File... propertiesFiles) {
+		Properties properties = new Properties();
+
+		for (File propertiesFile : propertiesFiles) {
+			if ((propertiesFile != null) && propertiesFile.exists()) {
+				properties.putAll(_getProperties(propertiesFile));
+			}
+		}
+
+		return properties;
+	}
+
 	public static List<String> getRandomList(List<String> list, int size) {
 		if (list.size() < size) {
 			throw new IllegalStateException(
@@ -889,7 +963,7 @@ public class JenkinsResultsParserUtil {
 
 	public static String getRegexLiteral(String string) {
 		if (string == null) {
-			throw new NullPointerException("String may not be null");
+			throw new NullPointerException("String is NULL");
 		}
 
 		String specialCharactersString = "\\^$.|?*+()[]{}";
@@ -948,6 +1022,30 @@ public class JenkinsResultsParserUtil {
 		throws Exception {
 
 		return getSlaves(getBuildProperties(), jenkinsMasterPatternString);
+	}
+
+	public static boolean isFileInDirectory(File directory, File file) {
+		if (directory == null) {
+			throw new IllegalArgumentException("Directory is NULL");
+		}
+
+		if (file == null) {
+			throw new IllegalArgumentException("File is NULL");
+		}
+
+		if (!directory.isDirectory()) {
+			throw new IllegalArgumentException(
+				directory.getName() + " is not a directory");
+		}
+
+		String directoryAbsolutePath = directory.getAbsolutePath();
+		String fileAbsolutePath = file.getAbsolutePath();
+
+		if (fileAbsolutePath.startsWith(directoryAbsolutePath)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static String merge(String... strings) {
@@ -1042,7 +1140,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void sendEmail(
 			String body, String from, String subject, String to)
-		throws InterruptedException, IOException, TimeoutException {
+		throws IOException, TimeoutException {
 
 		File file = new File("/tmp/" + body.hashCode() + ".txt");
 
@@ -1540,23 +1638,6 @@ public class JenkinsResultsParserUtil {
 
 	}
 
-	public static class TokenHTTPAuthorization extends HTTPAuthorization {
-
-		public TokenHTTPAuthorization(String token) {
-			super(Type.TOKEN);
-
-			this.token = token;
-		}
-
-		@Override
-		public String toString() {
-			return combine("token ", token);
-		}
-
-		protected String token;
-
-	}
-
 	public abstract static class HTTPAuthorization {
 
 		public Type getType() {
@@ -1574,6 +1655,23 @@ public class JenkinsResultsParserUtil {
 		}
 
 		protected Type type;
+
+	}
+
+	public static class TokenHTTPAuthorization extends HTTPAuthorization {
+
+		public TokenHTTPAuthorization(String token) {
+			super(Type.TOKEN);
+
+			this.token = token;
+		}
+
+		@Override
+		public String toString() {
+			return combine("token ", token);
+		}
+
+		protected String token;
 
 	}
 
@@ -1628,6 +1726,56 @@ public class JenkinsResultsParserUtil {
 			Integer.toString(key.hashCode()), ".txt");
 
 		return new File(fileName);
+	}
+
+	private static Properties _getProperties(File basePropertiesFile) {
+		if (!basePropertiesFile.exists()) {
+			throw new RuntimeException(
+				"Unable to find properties file " +
+					basePropertiesFile.getPath());
+		}
+
+		List<File> propertiesFiles = new ArrayList<>();
+
+		propertiesFiles.add(basePropertiesFile);
+
+		String propertiesFileName = basePropertiesFile.getName();
+
+		String[] environments = {
+			System.getenv("HOSTNAME"), System.getenv("HOST"),
+			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
+		};
+
+		for (String environment : environments) {
+			if (environment == null) {
+				continue;
+			}
+
+			File environmentPropertyFile = new File(
+				basePropertiesFile.getParentFile(),
+				propertiesFileName.replace(
+					".properties", "." + environment + ".properties"));
+
+			if (environmentPropertyFile.exists()) {
+				propertiesFiles.add(environmentPropertyFile);
+			}
+		}
+
+		Properties properties = new Properties();
+
+		try {
+			for (File propertiesFile : propertiesFiles) {
+				properties.load(new FileInputStream(propertiesFile));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load properties file " +
+					basePropertiesFile.getPath(),
+				ioe);
+		}
+
+		return properties;
 	}
 
 	private static String _getRedactTokenKey(int index) {

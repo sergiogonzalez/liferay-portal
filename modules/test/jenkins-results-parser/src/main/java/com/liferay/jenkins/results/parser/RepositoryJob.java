@@ -15,12 +15,10 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -28,69 +26,77 @@ import java.util.Properties;
 public abstract class RepositoryJob extends BaseJob {
 
 	public String getBranchName() {
-		return branchName;
+		if (_branchName != null) {
+			return _branchName;
+		}
+
+		Matcher matcher = _jobNamePattern.matcher(jobName);
+
+		if (matcher.find()) {
+			_branchName = matcher.group("branchName");
+
+			return _branchName;
+		}
+
+		_branchName = "master";
+
+		return _branchName;
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
+		if (gitWorkingDirectory != null) {
+			return gitWorkingDirectory;
+		}
+
+		checkRepositoryDir();
+
+		try {
+			gitWorkingDirectory = new GitWorkingDirectory(
+				getBranchName(), repositoryDir.getAbsolutePath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create Git working directory for branch ",
+					getBranchName(), " in repository ",
+					repositoryDir.getAbsolutePath()),
+				ioe);
+		}
+
 		return gitWorkingDirectory;
+	}
+
+	public void setRepositoryDir(File repositoryDir) {
+		if (this.repositoryDir != null) {
+			throw new IllegalStateException(
+				"Repository directory is already set to " +
+					this.repositoryDir.getPath());
+		}
+
+		this.repositoryDir = repositoryDir;
 	}
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
 	}
 
-	protected Properties getGitWorkingDirectoryProperties(
-		String propertiesFilePath) {
-
-		try {
-			Properties properties = new Properties();
-
-			List<File> propertiesFiles = _getPropertiesFiles(
-				propertiesFilePath);
-
-			for (File propertiesFile : propertiesFiles) {
-				if (!propertiesFile.exists()) {
-					continue;
-				}
-
-				properties.load(new FileInputStream(propertiesFile));
-			}
-
-			return properties;
+	protected void checkRepositoryDir() {
+		if (repositoryDir == null) {
+			throw new IllegalStateException("Repository directory is not set");
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+
+		if (!repositoryDir.exists()) {
+			throw new IllegalStateException(
+				repositoryDir.getPath() + " does not exist");
 		}
 	}
 
-	protected String branchName;
 	protected GitWorkingDirectory gitWorkingDirectory;
+	protected File repositoryDir;
 
-	private List<File> _getPropertiesFiles(String propertiesFilePath) {
-		List<File> propertiesFiles = new ArrayList<>();
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");
 
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
-		propertiesFiles.add(new File(workingDirectory, propertiesFilePath));
-
-		String[] environments = {
-			System.getenv("HOSTNAME"), System.getenv("HOST"),
-			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
-		};
-
-		for (String environment : environments) {
-			if (environment == null) {
-				continue;
-			}
-
-			propertiesFiles.add(
-				new File(
-					workingDirectory,
-					propertiesFilePath.replace(
-						".properties", "." + environment + ".properties")));
-		}
-
-		return propertiesFiles;
-	}
+	private String _branchName;
 
 }

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT},
+	property = "layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT,
 	service = LayoutTypeController.class
 )
 public class LinkToPageLayoutTypeController
@@ -69,11 +69,6 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
-	}
-
-	@Override
-	public boolean isInstanceable() {
 		return false;
 	}
 

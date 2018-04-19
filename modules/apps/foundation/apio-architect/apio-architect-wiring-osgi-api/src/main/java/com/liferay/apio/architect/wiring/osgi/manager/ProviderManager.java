@@ -34,23 +34,21 @@ import javax.servlet.http.HttpServletRequest;
 public interface ProviderManager {
 
 	/**
-	 * Returns the list of missing providers class names.
+	 * Returns the list of missing providers' class names.
 	 *
 	 * @param  neededProviders the list of needed providers
-	 * @return the list of missing providers class names
-	 * @review
+	 * @return the list of missing providers
 	 */
 	public List<String> getMissingProviders(Collection<String> neededProviders);
 
 	/**
-	 * Returns the instance of type {@code T} if a valid {@code Provider} can be
-	 * found. Throws a {@code NotFoundException} otherwise.
+	 * Returns an instance of type {@code T} if a valid {@code Provider} is
+	 * found; throws a {@code NotFoundException} otherwise.
 	 *
 	 * @param  httpServletRequest the current request
 	 * @param  clazz the class type {@code T}
-	 * @return the instance of {@code T}, if a valid {@code Provider} is
-	 *         present; throws {@code NotFoundException} otherwise
-	 * @review
+	 * @return the {@code T} instance, if a valid {@code Provider} is found;
+	 *         throws {@code NotFoundException} otherwise
 	 */
 	public <T> T provideMandatory(
 		HttpServletRequest httpServletRequest, Class<T> clazz);

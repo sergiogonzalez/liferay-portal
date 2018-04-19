@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.search;
 
+import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
@@ -60,7 +61,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = {"index.on.startup=false"},
+	immediate = true, property = "index.on.startup=false",
 	service = {ConfigurationModelIndexer.class, Indexer.class}
 )
 public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
@@ -136,6 +137,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		BooleanQuery searchQuery = new BooleanQueryImpl();
 
 		addSearchLocalizedTerm(
+			searchQuery, searchContext, FieldNames.CONFIGURATION_CATEGORY,
+			false);
+		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(
@@ -192,6 +196,24 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		document.addKeyword(
 			FieldNames.CONFIGURATION_MODEL_ID, configurationModel.getID());
 		document.addKeyword(Field.COMPANY_ID, CompanyConstants.SYSTEM);
+
+		ConfigurationCategory configurationCategory =
+			_configurationModelRetriever.getConfigurationCategory(
+				configurationModel.getCategory());
+
+		if (configurationCategory != null) {
+			ResourceBundleLoader configurationCategoryResourceBundleLoader =
+				_resourceBundleLoaderProvider.getResourceBundleLoader(
+					configurationCategory.getBundleSymbolicName());
+
+			Map<Locale, String> configurationCategoryValues = _translate(
+				configurationCategoryResourceBundleLoader,
+				GetterUtil.getString(
+					"category." + configurationModel.getCategory()));
+
+			document.addLocalizedText(
+				FieldNames.CONFIGURATION_CATEGORY, configurationCategoryValues);
+		}
 
 		ResourceBundleLoader resourceBundleLoader =
 			_resourceBundleLoaderProvider.getResourceBundleLoader(

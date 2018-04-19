@@ -266,6 +266,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPGAsQuestion">
+			<var name="breadcrumbName" value="MB Category Name" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
@@ -392,7 +393,9 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="MessageboardsPermissions#checkReplyToMessageForGuestPG" />
+		<execute macro="MessageboardsPermissions#checkReplyToMessageForGuestPG">
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 
@@ -516,6 +519,56 @@
 		</execute>
 	</command>
 
+	<command name="AddMBThreadWithMultipleAttachments" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#NEW_THREAD" value1="New Thread" />
+
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="MB Thread Message Subject" />
+
+		<execute macro="AlloyEditor#typeEditor">
+			<var name="content" value="MB Thread Message Body" />
+			<var name="editor" value="body" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Attachments" />
+		</execute>
+
+		<var name="mbThreadDocuments" value="Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4" />
+
+		<for list="${mbThreadDocuments}" param="mbThreadAttachment">
+			<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
+
+			<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${mbThreadAttachment}" />
+
+			<execute function="AssertTextEquals" locator1="MessageBoardsEditMessage#ATTACHMENTS_SELECTED_FILE" value1="${mbThreadAttachment}">
+				<var name="key_attachmentName" value="${mbThreadAttachment}" />
+			</execute>
+		</for>
+
+		<execute macro="PortletEntry#publish" />
+
+		<for list="${mbThreadDocuments}" param="mbThreadAttachment">
+			<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE" value1="${mbThreadAttachment}">
+				<var name="key_mbThreadAttachment" value="${mbThreadAttachment}" />
+			</execute>
+		</for>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<for list="${mbThreadDocuments}" param="mbThreadAttachment">
+			<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE" value1="${mbThreadAttachment}">
+				<var name="key_mbThreadAttachment" value="${mbThreadAttachment}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="CancelEditOnThread" priority="5">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
@@ -539,6 +592,7 @@
 
 		<execute macro="MessageboardsThread#cancelEdit">
 			<var name="threadBodyEdit" value="Message Boards Thread Body Edit" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
 			<var name="threadSubjectEdit" value="Message Boards Thread Subject Edit" />
 		</execute>
 
@@ -651,6 +705,7 @@
 
 		<execute macro="MessageboardsThread#editPG">
 			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -681,6 +736,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#editPG">
+			<var name="threadSubject" value="MB Thread Message Subject" />
 			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
 		</execute>
 
@@ -715,6 +771,7 @@
 
 		<execute macro="MessageboardsThread#editPG">
 			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
 		</execute>
 
@@ -883,7 +940,9 @@
 
 		<execute macro="MessageboardsThread#downloadAttachmentPG" />
 
-		<execute function="Click" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" />
+		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
+			<var name="key_breadcrumbName" value="Home" />
+		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
 			<var name="threadReplyBody" value="MB Thread Reply Body" />

@@ -47,7 +47,7 @@
 			<isset var="viewableBy" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Permissions" />
+					<var name="panel" value="Permissions" />
 				</execute>
 
 				<execute function="Select" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
@@ -90,7 +90,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Related Assets" />
+			<var name="panel" value="Related Assets" />
 		</execute>
 
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
@@ -121,7 +121,7 @@
 
 	<command name="addExpirationDateCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Schedule" />
+			<var name="panel" value="Schedule" />
 		</execute>
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
@@ -147,7 +147,7 @@
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
@@ -165,7 +165,7 @@
 		<execute function="Type" locator1="TextInput#URL" value1="${targetFriendlyUrl}" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Web Content Constraints" />
+			<var name="panel" value="Web Content Constraints" />
 		</execute>
 
 		<execute function="AssertClick" locator1="WCEditWebContent#SELECT_STRUCTURE" value1="Select" />
@@ -183,25 +183,13 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Presentation Settings" />
+			<var name="panel" value="Presentation Settings" />
 		</execute>
 
 		<execute function="Select" locator1="Select#FEED_ITEM_CONTENT" value1="${feedContent}" />
 		<execute function="Select" locator1="Select#FEED_TYPE" value1="${feedType}" />
 
 		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="addLocale">
-		<execute function="Click" locator1="Translation#ADD" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${language}">
-			<var name="key_menuItem" value="${language}" />
-		</execute>
-
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="${language}" />
-		</execute>
 	</command>
 
 	<command name="addLocalizedPGViaWCD">
@@ -299,7 +287,7 @@
 
 	<command name="addPriority">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="Type" locator1="WC#PRIORITY" value1="${priority}" />
@@ -330,7 +318,7 @@
 
 	<command name="addTagPGViaWCD">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
@@ -405,7 +393,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertClick" locator1="WCEditWebContent#SELECT_STRUCTURE" value1="Select" />
@@ -425,7 +413,7 @@
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
@@ -461,7 +449,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute macro="AssetCategorization#addMultipleCategories">
@@ -702,7 +690,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<for list="${tagNameList}" param="tagName">
@@ -722,8 +710,9 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -731,8 +720,9 @@
 			<var name="webContentTitle" value="WC Titulo" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="German (Germany)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -740,8 +730,9 @@
 			<var name="webContentTitle" value="WC Titel" />
 		</execute>
 
-		<execute macro="WebContent#addLocale">
-			<var name="language" value="Finnish (Finland)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="fi-FI" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -765,8 +756,6 @@
 		<execute macro="AssetPublisherPortlet#addAsset">
 			<var name="assetType" value="Basic Web Content" />
 		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -919,7 +908,7 @@
 
 	<command name="editDisplayPage">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Page" />
+			<var name="panel" value="Display Page" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
@@ -1241,7 +1230,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Related Assets" />
+			<var name="panel" value="Related Assets" />
 		</execute>
 
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
@@ -1325,7 +1314,7 @@
 
 	<command name="selectCategory">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<if>
@@ -1363,17 +1352,11 @@
 		</if>
 	</command>
 
-	<command name="selectLocale">
-		<execute function="AssertClick" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" value1="${language}">
-			<var name="key_localizedLanguage" value="${language}" />
-		</execute>
-	</command>
-
 	<command name="selectTemplateCP">
 		<execute function="ScrollBy" value1="0, 50" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
@@ -1400,7 +1383,7 @@
 		</if>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
@@ -1521,7 +1504,7 @@
 
 	<command name="viewCategorizationCategoryCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
@@ -1533,7 +1516,7 @@
 
 	<command name="viewCategorizationCategoryNotVisibleCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY">
@@ -1543,7 +1526,7 @@
 
 	<command name="viewCategorizationVocabularyCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Metadata" />
+			<var name="panel" value="Metadata" />
 		</execute>
 
 		<var name="count" value="1" />
@@ -1679,13 +1662,6 @@
 		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" />
 	</command>
 
-	<command name="viewDefaultLanguage">
-		<var name="key_localizedLanguage" value="${language}" />
-
-		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" value1="${language}" />
-	</command>
-
 	<command name="viewDefaultPGViaWCD">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="This application is not visible to users yet" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="Select Web Content to make it visible" />
@@ -1701,7 +1677,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Page" />
+			<var name="panel" value="Display Page" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_ITEM" value1="${displayPageSelection}" />
@@ -1782,7 +1758,7 @@
 
 	<command name="viewExpirationDateCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Schedule" />
+			<var name="panel" value="Schedule" />
 		</execute>
 
 		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
@@ -1934,7 +1910,7 @@
 
 	<command name="viewSelectedTemplateCP">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
+			<var name="panel" value="Structure and Template" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
@@ -1981,7 +1957,7 @@
 			<isset var="structureLocalizationName" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureLocalizationName}" />
@@ -1992,7 +1968,7 @@
 			<isset var="templateLocalizationName" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="${panelHeading}" />
+					<var name="panel" value="${panel}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateLocalizationName}" />
@@ -2064,8 +2040,9 @@
 			<var name="fieldValue" value="${webContentTextBox}" />
 		</execute>
 
-		<execute macro="WebContent#selectLocale">
-			<var name="language" value="Spanish (Spain)" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Title" />
+			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />
@@ -2103,7 +2080,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Permissions" />
+			<var name="panel" value="Permissions" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />

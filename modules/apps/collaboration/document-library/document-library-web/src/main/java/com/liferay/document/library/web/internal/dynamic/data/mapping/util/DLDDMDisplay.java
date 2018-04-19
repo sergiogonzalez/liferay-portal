@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = "javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
 	service = DDMDisplay.class
 )
 public class DLDDMDisplay extends BaseDDMDisplay {
@@ -95,7 +95,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public boolean isShowBackURLInTitleBar() {
-		return true;
+		return false;
 	}
 
 	private final DDMDisplayTabItem _defaultTabItem =

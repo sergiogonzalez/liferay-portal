@@ -26,10 +26,11 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -59,12 +60,12 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 
 	@Override
 	protected String getApplicationName() {
-		return BlogsUADConstants.UAD_ENTITY_SET_NAME;
+		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
-	protected UADEntityAggregator getUADEntityAggregator() {
-		return _uadEntityAggregator;
+	protected UADAggregator getUADAggregator() {
+		return _uadAggregator;
 	}
 
 	@Override
@@ -73,8 +74,13 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	}
 
 	@Override
-	protected String getUADEntityTypeDescription() {
+	protected String getTypeDescription() {
 		return "A blog post";
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_blogsEntryUADEntityTestHelper.cleanUpDependencies(_blogsEntries);
 	}
 
 	@DeleteAfterTestRun
@@ -83,7 +89,7 @@ public class BlogsEntryUADEntityDisplayTest extends BaseUADEntityDisplayTestCase
 	private BlogsEntryUADEntityTestHelper _blogsEntryUADEntityTestHelper;
 	@Inject(filter = "model.class.name=" +
 	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
-	private UADEntityAggregator _uadEntityAggregator;
+	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
 	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
 	private UADEntityDisplay _uadEntityDisplay;

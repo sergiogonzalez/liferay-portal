@@ -76,7 +76,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
+			<var name="panel" value="Configuration" />
 		</execute>
 
 		<if>
@@ -144,7 +144,7 @@
 		</if>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
+			<var name="panel" value="Configuration" />
 		</execute>
 
 		<if>
@@ -223,7 +223,7 @@
 			<isset var="categoryName" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Categorization" />
+					<var name="panel" value="Categorization" />
 				</execute>
 
 				<execute macro="AssetCategorization#addCategory">
@@ -295,7 +295,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Custom Fields" />
+			<var name="panel" value="Custom Fields" />
 		</execute>
 
 		<execute function="Select" locator1="KnowledgeBaseArticle#CUSTOM_FIELD_BOOLEAN" value1="${selectBoolean}" />
@@ -756,7 +756,7 @@
 			<isset var="selectBoolean" />
 			<then>
 				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Custom Fields" />
+					<var name="panel" value="Custom Fields" />
 				</execute>
 
 				<execute function="Select" locator1="KnowledgeBaseArticle#CUSTOM_FIELD_BOOLEAN" value1="${selectBoolean}" />
@@ -864,12 +864,6 @@
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="${socialBookmarkSite}" />
 		</for>
-	</command>
-
-	<command name="enableSourceURL">
-		<execute function="Check" locator1="Checkbox#SOURCE_URL_ENABLED" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="goBackCP">
@@ -1497,18 +1491,6 @@
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#DISPLAY_TITLE" />
 	</command>
 
-	<command name="viewDisabledKBSocialBookmarkSites">
-		<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-		</execute>
-	</command>
-
-	<command name="viewEnabledKBSocialBookmarkSites">
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-		</execute>
-	</command>
-
 	<command name="viewFriendlyURLCP">
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2">
 			<var name="key_rowEntry" value="${kbArticleTitle}" />
@@ -1519,7 +1501,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
+			<var name="panel" value="Configuration" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleFriendlyURL}" />
@@ -1765,7 +1747,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
+			<var name="panel" value="Configuration" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CKEditor#SOURCE_URL" value1="${kbArticleSourceURL}" />
@@ -1777,7 +1759,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Configuration" />
+			<var name="panel" value="Configuration" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CKEditor#SOURCE_URL" value1="${kbArticleSourceURL}" />

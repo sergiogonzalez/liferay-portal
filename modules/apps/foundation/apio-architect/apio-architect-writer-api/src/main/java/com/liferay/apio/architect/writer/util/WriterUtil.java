@@ -46,11 +46,10 @@ public class WriterUtil {
 	 * @param  embeddedPathElements the embedded path element list
 	 * @param  requestInfo the current request's information
 	 * @param  pathFunction the function to get the {@link Path}
-	 * @param  rootRepresentorFunction the function to get the {@link
-	 *         Representor} of the parent model
+	 * @param  rootRepresentorFunction the function to get the parent model's
+	 *         {@link Representor}
 	 * @param  rootSingleModel the parent model
 	 * @return the {@code FieldsWriter} for the model
-	 * @review
 	 */
 	public static <T, S> Optional<FieldsWriter<T, ?>> getFieldsWriter(
 		SingleModel<T> singleModel, FunctionalList<String> embeddedPathElements,
@@ -116,20 +115,19 @@ public class WriterUtil {
 	}
 
 	/**
-	 * Returns a model's {@link Path}, if the model's {@code Representor} and
-	 * {@code Path} exist. Otherwise, this method returns {@code
-	 * Optional#empty()}.
+	 * Returns a model's {@link com.liferay.apio.architect.uri.Path}, if the
+	 * model's {@link com.liferay.apio.architect.representor.Representor} and
+	 * {@code Path} exist; otherwise returns {@code Optional#empty()}.
 	 *
 	 * @param  singleModel the single model
 	 * @param  pathFunction the function that gets the {@code Path}
 	 * @param  representorFunction the function that gets the {@code
 	 *         Representor}
-	 * @param  rootRepresentorFunction the function that gets the {@code
-	 *         Representor} for the parent model
+	 * @param  rootRepresentorFunction the function that gets the parent model's
+	 *         {@code Representor}
 	 * @param  rootSingleModel the parent model
 	 * @return the model's {@code Path}, if the model's {@code Representor} and
 	 *         {@code Path} exist; returns {@code Optional#empty()} otherwise
-	 * @review
 	 */
 	public static <T, S> Optional<Path> getPathOptional(
 		SingleModel<T> singleModel, PathFunction pathFunction,

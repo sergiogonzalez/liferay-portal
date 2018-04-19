@@ -88,7 +88,12 @@ if (layoutSetPrototypeId > 0) {
 	<portlet:param name="mvcPath" value="/edit_site.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editGroupURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
+<liferay-frontend:edit-form
+	action="<%= editGroupURL %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'
+>
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -105,14 +110,21 @@ if (layoutSetPrototypeId > 0) {
 	request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
 	%>
 
-	<liferay-ui:form-navigator
-		backURL="<%= backURL %>"
-		formModelBean="<%= group %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
-		markupView="lexicon"
-		showButtons="<%= true %>"
-	/>
-</aui:form>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:form-navigator
+			backURL="<%= backURL %>"
+			formModelBean="<%= group %>"
+			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= backURL %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	function <portlet:namespace />saveGroup(forceDisable) {

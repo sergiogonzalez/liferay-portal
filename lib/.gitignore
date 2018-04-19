@@ -3,8 +3,10 @@
 /development/annotations.jar
 /development/ant-apache-bsf.jar
 /development/appium.jar
+/development/biz.aQute.bnd.jar
 /development/catalina.jar
 /development/com.liferay.ant.bnd.jar
+/development/com.liferay.jenkins.results.parser.jar
 /development/com.liferay.util.taglib.compat.jar
 /development/db2jcc.jar
 /development/db2jcc_license_cu.jar
@@ -71,6 +73,7 @@
 /development/tlddoc.jar
 /development/tomcat-api.jar
 /development/tomcat-coyote.jar
+/development/tomcat-util.jar
 /development/velocity.jar
 /development/velocity-tools.jar
 /development/websocket-api.jar

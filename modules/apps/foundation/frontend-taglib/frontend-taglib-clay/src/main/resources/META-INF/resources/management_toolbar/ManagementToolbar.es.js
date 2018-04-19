@@ -19,14 +19,29 @@ class ManagementToolbar extends ClayManagementToolbar {
 
 		Liferay.componentReady(this.searchContainerId).then(
 			searchContainer => {
-				this._eventHandler = new EventHandler();
-				this._searchContainer = searchContainer;
-
-				this._eventHandler.add(
+				this._eventHandler = [
 					searchContainer.on('rowToggled', this._handleSearchContainerRowToggled, this)
-				);
+				];
+
+				this._searchContainer = searchContainer;
 			}
 		);
+
+		if (this.infoPanelId) {
+			let sidenavToggle = $(this.refs.infoButton);
+
+			if (!sidenavToggle.sideNavigation('instance')) {
+				sidenavToggle.sideNavigation(
+					{
+						container: '#' + this.infoPanelId,
+						position: 'right',
+						type: 'relative',
+						typeMobile: 'fixed',
+						width: '320px'
+					}
+				);
+			}
+		}
 	}
 
 	/**
@@ -38,7 +53,11 @@ class ManagementToolbar extends ClayManagementToolbar {
 		super.disposed();
 
 		if (this._eventHandler) {
-			this._eventHandler.removeAllListeners();
+			this._eventHandler.forEach(
+				eventHandler => {
+					eventHandler.detach();
+				}
+			);
 		}
 	}
 
@@ -110,6 +129,17 @@ class ManagementToolbar extends ClayManagementToolbar {
  */
 
 ManagementToolbar.STATE = {
+
+	/**
+	 * Id to get the infoPanel node.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @review
+	 * @type {?string|undefined}
+	 */
+
+	infoPanelId: Config.string(),
 
 	/**
 	 * Id to get a instance of the searchContainer.

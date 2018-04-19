@@ -16,7 +16,8 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -43,7 +44,9 @@ public class JournalArticleServiceUtil {
 	 */
 
 	/**
-	* Adds a web content article with additional parameters.
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
+	* current user's timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -152,7 +155,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Adds a web content article with additional parameters.
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
+	* current user's timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -258,7 +263,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Adds a web content article without any images.
+	* Adds a web content article without any images. All scheduling parameters
+	* (display date, expiration date, and review date) use the current user's
+	* timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -1880,7 +1887,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Updates the web content article with additional parameters.
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -1988,7 +1997,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Updates the web content article with additional parameters.
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder
@@ -2219,6 +2230,17 @@ public class JournalArticleServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<JournalArticleService, JournalArticleService> _serviceTracker =
-		ServiceTrackerFactory.open(JournalArticleService.class);
+	private static ServiceTracker<JournalArticleService, JournalArticleService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalArticleService.class);
+
+		ServiceTracker<JournalArticleService, JournalArticleService> serviceTracker =
+			new ServiceTracker<JournalArticleService, JournalArticleService>(bundle.getBundleContext(),
+				JournalArticleService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -19,8 +19,6 @@
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 FileShortcut fileShortcut = (FileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
@@ -57,7 +55,6 @@ if (toFileEntryId > 0) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
@@ -80,7 +77,6 @@ if (portletTitleBasedNavigation) {
 
 	<aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="fileShortcutId" type="hidden" value="<%= fileShortcutId %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
@@ -109,7 +105,7 @@ if (portletTitleBasedNavigation) {
 				String toGroupName = StringPool.BLANK;
 
 				if (toGroup != null) {
-					toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+					toGroupName = toGroup.getDescriptiveName(locale);
 				}
 				%>
 
@@ -124,7 +120,7 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<div class="form-group">
-					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
+					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= HtmlUtil.unescape(toFileEntryTitle) %>" />
 
 					<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
 				</div>
@@ -175,7 +171,7 @@ if (portletTitleBasedNavigation) {
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					document.getElementById('<portlet:namespace />toGroupName').value = _.escape(event.groupdescriptivename);
+					document.getElementById('<portlet:namespace />toGroupName').value = event.groupdescriptivename;
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />selectToFileEntryButton', false);
 				}

@@ -36,6 +36,66 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a checkbox designed specifically for Staging screens.</description>
+		<name>checkbox</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.CheckboxTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Whether the checkbox is checked. The default is unchecked.</description>
+			<name>checked</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's description text. It is displayed after the label.</description>
+			<name>description</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the checkbox is disabled. The default is enabled.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The HTML input's ID. It is added to the portlet ID when creating the DOM ID.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's label.</description>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The HTML input's name.</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key for the optional popover's text.</description>
+			<name>popover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's suggestion text. It is displayed after the label.</description>
+			<name>suggestion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the checkbox's warning text. It is displayed after the suggestion.</description>
+			<name>warning</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the UI section for an <![CDATA[<code>exportImportConfiguration</code>]]> object's basic information.</description>
 		<name>configuration-header</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ConfigurationHeaderTag</tag-class>
@@ -156,12 +216,6 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
-		<attribute>
-			<description>The task executor class name.</description>
-			<name>taskExecutorClassName</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 	</tag>
 	<tag>
 		<description>Renders a <![CDATA[<code>Navbar</code>]]> containing a staging menu with page versioning information, if available.</description>
@@ -245,6 +299,30 @@
 			<description>The CSS class used to format the Permissions section's label.</description>
 			<name>labelCSSClass</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Displays a popover.</description>
+		<name>popover</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.PopoverTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The popover's ID. It is added to the portlet ID when creating the DOM ID.</description>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the popover's body text. If it is empty, the popover is not displayed.</description>
+			<name>text</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the popover's title.</description>
+			<name>title</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -347,8 +425,22 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether DuplicateLockException should be displayed.</description>
+			<name>duplicateLockException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>Whether IllegalArgumentException should be displayed.</description>
 			<name>illegalArgumentException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether LayoutPrototypeException should be displayed.</description>
+			<name>layoutPrototypeException</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
@@ -370,6 +462,13 @@
 		<attribute>
 			<description>Whether RemoteOptionsException should be displayed.</description>
 			<name>remoteOptionsException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether SystemException should be displayed.</description>
+			<name>systemException</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
@@ -509,6 +608,19 @@
 			<name>linkClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders a link to the process' summary. It should be used within a <![CDATA[<code>process-list-menu</code>]]> tag.</description>
+		<name>process-summary-link</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessSummaryLinkTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background task's ID.</description>
+			<name>backgroundTaskId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
 		</attribute>
 	</tag>
 	<tag>

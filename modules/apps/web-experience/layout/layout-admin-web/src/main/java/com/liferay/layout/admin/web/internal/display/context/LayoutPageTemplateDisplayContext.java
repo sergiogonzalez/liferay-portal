@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -68,22 +70,6 @@ public class LayoutPageTemplateDisplayContext {
 			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", "icon");
 
 		return _displayStyle;
-	}
-
-	public String getEditLayoutPageTemplateEntryRedirect() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcPath", "/view_layout_page_template_entries.jsp");
-		portletURL.setParameter("tabs1", "page-templates");
-
-		if (getLayoutPageTemplateCollectionId() > 0) {
-			portletURL.setParameter(
-				"layoutPageTemplateCollectionId",
-				String.valueOf(getLayoutPageTemplateCollectionId()));
-		}
-
-		return portletURL.toString();
 	}
 
 	public String getKeywords() {
@@ -396,6 +382,20 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isDisplayPage() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			getLayoutPageTemplateEntry();
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearch() {

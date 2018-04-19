@@ -74,9 +74,9 @@ public class RepresentorTest {
 		).identifier(
 			dummy -> dummy.id
 		).addBinary(
-			"binary1", dummy -> dummy.inputStream1
+			"binary1", dummy -> dummy.binaryFile1
 		).addBinary(
-			"binary2", dummy -> dummy.inputStream2
+			"binary2", dummy -> dummy.binaryFile2
 		).addBidirectionalModel(
 			"bidirectional1", "dummy1", IntegerIdentifier.class,
 			dummy -> dummy.relatedModelId1
@@ -105,9 +105,9 @@ public class RepresentorTest {
 			"linked1", IntegerIdentifier.class, dummy -> dummy.relatedModelId3
 		).addLinkedModel(
 			"linked2", IntegerIdentifier.class, dummy -> dummy.relatedModelId4
-		).addLocalizedString(
+		).addLocalizedStringByLanguage(
 			"localized1", Dummy::getLocalizedString1
-		).addLocalizedString(
+		).addLocalizedStringByLocale(
 			"localized2", Dummy::getLocalizedString2
 		).addNumber(
 			"number1", dummy -> dummy.number1
@@ -148,8 +148,9 @@ public class RepresentorTest {
 	public void testBinaryFunctions() {
 		testFields(
 			_dummy, _representor.getBinaryFunctions(),
-			inputStream -> Try.fromFallibleWithResources(
-				() -> new BufferedReader(new InputStreamReader(inputStream)),
+			binaryFile -> Try.fromFallibleWithResources(
+				() -> new BufferedReader(new InputStreamReader(
+					binaryFile.getInputStream())),
 				BufferedReader::readLine).getUnchecked(),
 			asList("binary1", "binary2"),
 			asList("Input Stream 1", "Input Stream 2"));

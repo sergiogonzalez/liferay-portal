@@ -25,9 +25,9 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.sample.internal.auth.PermissionChecker;
 import com.liferay.apio.architect.sample.internal.form.BlogPostingForm;
-import com.liferay.apio.architect.sample.internal.identifier.BlogPostingCommentModelId;
-import com.liferay.apio.architect.sample.internal.identifier.BlogPostingModelId;
-import com.liferay.apio.architect.sample.internal.identifier.PersonModelId;
+import com.liferay.apio.architect.sample.internal.identifier.BlogPostingCommentId;
+import com.liferay.apio.architect.sample.internal.identifier.BlogPostingId;
+import com.liferay.apio.architect.sample.internal.identifier.PersonId;
 import com.liferay.apio.architect.sample.internal.model.BlogPostingModel;
 
 import java.util.List;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true)
 public class BlogPostingCollectionResource
-	implements CollectionResource<BlogPostingModel, Long, BlogPostingModelId> {
+	implements CollectionResource<BlogPostingModel, Long, BlogPostingId> {
 
 	@Override
 	public CollectionRoutes<BlogPostingModel> collectionRoutes(
@@ -57,7 +57,7 @@ public class BlogPostingCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogPosting, Credentials.class,
+			this::_addBlogPostingModel, Credentials.class,
 			PermissionChecker::hasPermission, BlogPostingForm::buildForm
 		).build();
 	}
@@ -72,13 +72,13 @@ public class BlogPostingCollectionResource
 		ItemRoutes.Builder<BlogPostingModel, Long> builder) {
 
 		return builder.addGetter(
-			this::_getBlogPosting
+			this::_getBlogPostingModel
 		).addRemover(
-			this::_deleteBlogPosting, Credentials.class,
-			(credentials, blogPostingId) -> hasPermission(credentials)
+			this::_deleteBlogPostingModel, Credentials.class,
+			(credentials, id) -> hasPermission(credentials)
 		).addUpdater(
-			this::_updateBlogPosting, Credentials.class,
-			(credentials, blogPostingId) -> hasPermission(credentials),
+			this::_updateBlogPostingModel, Credentials.class,
+			(credentials, id) -> hasPermission(credentials),
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -90,15 +90,15 @@ public class BlogPostingCollectionResource
 		return builder.types(
 			"BlogPosting"
 		).identifier(
-			BlogPostingModel::getBlogPostingId
+			BlogPostingModel::getId
 		).addDate(
 			"dateCreated", BlogPostingModel::getCreateDate
 		).addDate(
 			"dateModified", BlogPostingModel::getModifiedDate
 		).addLinkedModel(
-			"creator", PersonModelId.class, BlogPostingModel::getCreatorId
+			"creator", PersonId.class, BlogPostingModel::getCreatorId
 		).addRelatedCollection(
-			"comments", BlogPostingCommentModelId.class
+			"comment", BlogPostingCommentId.class
 		).addString(
 			"alternativeHeadline", BlogPostingModel::getSubtitle
 		).addString(
@@ -110,65 +110,56 @@ public class BlogPostingCollectionResource
 		).build();
 	}
 
-	private BlogPostingModel _addBlogPosting(
+	private BlogPostingModel _addBlogPostingModel(
 		BlogPostingForm blogPostingForm, Credentials credentials) {
 
 		if (!hasPermission(credentials)) {
 			throw new ForbiddenException();
 		}
 
-		return BlogPostingModel.addBlogPosting(
+		return BlogPostingModel.create(
 			blogPostingForm.getArticleBody(), blogPostingForm.getCreator(),
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getHeadline());
 	}
 
-	private void _deleteBlogPosting(
-		Long blogPostingId, Credentials credentials) {
-
+	private void _deleteBlogPostingModel(Long id, Credentials credentials) {
 		if (!hasPermission(credentials)) {
 			throw new ForbiddenException();
 		}
 
-		BlogPostingModel.deleteBlogPosting(blogPostingId);
+		BlogPostingModel.remove(id);
 	}
 
-	private BlogPostingModel _getBlogPosting(Long blogPostingId) {
-		Optional<BlogPostingModel> optional = BlogPostingModel.getBlogPosting(
-			blogPostingId);
+	private BlogPostingModel _getBlogPostingModel(Long id) {
+		Optional<BlogPostingModel> optional = BlogPostingModel.get(id);
 
 		return optional.orElseThrow(
-			() -> new NotFoundException(
-				"Unable to get blog posting " + blogPostingId));
+			() -> new NotFoundException("Unable to get blog posting " + id));
 	}
 
 	private PageItems<BlogPostingModel> _getPageItems(Pagination pagination) {
-		List<BlogPostingModel> blogPostingModels =
-			BlogPostingModel.getBlogPostings(
-				pagination.getStartPosition(), pagination.getEndPosition());
-		int count = BlogPostingModel.getBlogPostingCount();
+		List<BlogPostingModel> blogPostingModels = BlogPostingModel.getPage(
+			pagination.getStartPosition(), pagination.getEndPosition());
+		int count = BlogPostingModel.getCount();
 
 		return new PageItems<>(blogPostingModels, count);
 	}
 
-	private BlogPostingModel _updateBlogPosting(
-		Long blogPostingId, BlogPostingForm blogPostingForm,
-		Credentials credentials) {
+	private BlogPostingModel _updateBlogPostingModel(
+		Long id, BlogPostingForm blogPostingForm, Credentials credentials) {
 
 		if (!hasPermission(credentials)) {
 			throw new ForbiddenException();
 		}
 
-		Optional<BlogPostingModel> optional =
-			BlogPostingModel.updateBlogPosting(
-				blogPostingId, blogPostingForm.getArticleBody(),
-				blogPostingForm.getCreator(),
-				blogPostingForm.getAlternativeHeadline(),
-				blogPostingForm.getHeadline());
+		Optional<BlogPostingModel> optional = BlogPostingModel.update(
+			id, blogPostingForm.getArticleBody(), blogPostingForm.getCreator(),
+			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getHeadline());
 
 		return optional.orElseThrow(
-			() -> new NotFoundException(
-				"Unable to get blog posting " + blogPostingId));
+			() -> new NotFoundException("Unable to get blog posting " + id));
 	}
 
 }

@@ -25,7 +25,6 @@ import static org.hamcrest.core.Is.is;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
 import com.liferay.apio.architect.test.util.json.Conditions;
-import com.liferay.apio.architect.test.util.result.MockAPIError;
 import com.liferay.apio.architect.writer.ErrorWriter;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -41,7 +40,9 @@ public class JSONLDErrorMessageMapperTest {
 
 	@Test
 	public void testJSONLDErrorMessageMapper() {
-		APIError apiError = new MockAPIError();
+		APIError apiError = new APIError(
+			new IllegalArgumentException(), "A title", "A description",
+			"A type", 404);
 
 		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
 

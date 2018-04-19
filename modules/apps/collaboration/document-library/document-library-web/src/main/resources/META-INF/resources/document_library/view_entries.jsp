@@ -85,7 +85,7 @@ dlSearchContainer.setOrderByCol(orderByCol);
 dlSearchContainer.setOrderByComparator(orderByComparator);
 dlSearchContainer.setOrderByType(orderByType);
 
-List results = null;
+List results = new ArrayList();
 int total = 0;
 
 if (fileEntryTypeId >= 0) {
@@ -124,11 +124,7 @@ if (fileEntryTypeId >= 0) {
 
 	dlSearchContainer.setTotal(total);
 
-	Document[] docs = hits.getDocs();
-
-	results = new ArrayList(docs.length);
-
-	for (Document doc : docs) {
+	for (Document doc : hits.getDocs()) {
 		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
 		FileEntry fileEntry = null;
@@ -396,6 +392,14 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								</liferay-ui:search-container-column-text>
 							</c:if>
 
+							<c:if test='<%= ArrayUtil.contains(entryColumns, "description") %>'>
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-content"
+									name="description"
+									value="<%= StringUtil.shorten(fileEntry.getDescription(), 100) %>"
+								/>
+							</c:if>
+
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "document-type") %>'>
 								<c:choose>
 									<c:when test="<%= latestFileVersion.getModel() instanceof DLFileVersion %>">
@@ -556,6 +560,14 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									href="<%= rowURL %>"
 									name="title"
 									value="<%= curFolder.getName() %>"
+								/>
+							</c:if>
+
+							<c:if test='<%= ArrayUtil.contains(entryColumns, "description") %>'>
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-content"
+									name="description"
+									value="<%= StringUtil.shorten(curFolder.getDescription(), 100) %>"
 								/>
 							</c:if>
 

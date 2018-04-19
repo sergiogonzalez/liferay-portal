@@ -11,8 +11,20 @@
 		}
 	}
 
+	.field-type-editor {
+		padding: 0;
+
+		.alloy-editor {
+			padding-bottom: 0.5rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 0.5rem;
+		}
+	}
+
 	.alloy-editor {
 		padding-right: 4px;
+		width: 100%;
 	}
 
 	.form-inline .checkbox label {
@@ -108,6 +120,10 @@
 			height: 22px;
 			position: relative;
 		}
+
+		.key-value-input {
+			width: 140px;
+		}
 	}
 
 	.liferay-ddm-form-field-options {
@@ -135,6 +151,10 @@
 
 		.drag-placeholder {
 			opacity: 0.5;
+		}
+
+		.key-value-input {
+			width: 158px;
 		}
 
 		.last-option:not(:first-of-type) {

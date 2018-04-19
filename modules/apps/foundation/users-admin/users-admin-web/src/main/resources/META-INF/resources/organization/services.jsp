@@ -19,8 +19,6 @@
 <%
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
-
 List<OrgLabor> orgLabors = Collections.emptyList();
 
 int[] orgLaborsIndexes = null;
@@ -161,6 +159,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 							while (cal.get(Calendar.DATE) == today) {
 								String timeOfDayDisplay = timeFormat.format(cal.getTime());
+
 								int timeOfDayValue = GetterUtil.getInteger(StringUtil.replace(timeOfDayDisplay, CharPool.COLON, StringPool.BLANK));
 
 								cal.add(Calendar.MINUTE, 30);
@@ -187,6 +186,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 							while (cal.get(Calendar.DATE) == today) {
 								String timeOfDayDisplay = timeFormat.format(cal.getTime());
+
 								int timeOfDayValue = GetterUtil.getInteger(StringUtil.replace(timeOfDayDisplay, CharPool.COLON, StringPool.BLANK));
 
 								cal.add(Calendar.MINUTE, 30);

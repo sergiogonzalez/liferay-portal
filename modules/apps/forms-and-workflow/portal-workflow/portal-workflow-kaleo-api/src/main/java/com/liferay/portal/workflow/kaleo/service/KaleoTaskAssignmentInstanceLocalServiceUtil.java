@@ -16,7 +16,8 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -113,9 +114,9 @@ public class KaleoTaskAssignmentInstanceLocalServiceUtil {
 	}
 
 	public static void deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(
-		long kaleoDefintionId) {
+		long kaleoDefinitionId) {
 		getService()
-			.deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(kaleoDefintionId);
+			.deleteKaleoDefinitionVersionKaleoTaskAssignmentInstances(kaleoDefinitionId);
 	}
 
 	public static void deleteKaleoInstanceKaleoTaskAssignmentInstances(
@@ -346,6 +347,17 @@ public class KaleoTaskAssignmentInstanceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<KaleoTaskAssignmentInstanceLocalService, KaleoTaskAssignmentInstanceLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(KaleoTaskAssignmentInstanceLocalService.class);
+	private static ServiceTracker<KaleoTaskAssignmentInstanceLocalService, KaleoTaskAssignmentInstanceLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoTaskAssignmentInstanceLocalService.class);
+
+		ServiceTracker<KaleoTaskAssignmentInstanceLocalService, KaleoTaskAssignmentInstanceLocalService> serviceTracker =
+			new ServiceTracker<KaleoTaskAssignmentInstanceLocalService, KaleoTaskAssignmentInstanceLocalService>(bundle.getBundleContext(),
+				KaleoTaskAssignmentInstanceLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

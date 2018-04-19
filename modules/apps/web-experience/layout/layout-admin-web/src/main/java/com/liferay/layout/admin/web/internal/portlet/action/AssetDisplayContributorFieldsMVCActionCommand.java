@@ -71,9 +71,11 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+
 		for (AssetDisplayField assetDisplayField :
 				assetDisplayContributor.getAssetEntryFields(
-					themeDisplay.getLocale())) {
+					classTypeId, themeDisplay.getLocale())) {
 
 			jsonArray.put(assetDisplayField.toJSONObject());
 		}

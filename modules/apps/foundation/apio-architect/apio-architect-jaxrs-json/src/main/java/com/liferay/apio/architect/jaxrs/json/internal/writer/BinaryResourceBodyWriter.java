@@ -14,6 +14,10 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.writer;
 
+import static javax.ws.rs.core.HttpHeaders.CONTENT_LENGTH;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 
@@ -23,6 +27,8 @@ import java.io.OutputStream;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+
+import java.util.Collections;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -43,10 +49,10 @@ import org.osgi.service.component.annotations.Component;
 )
 @Provider
 public class BinaryResourceBodyWriter
-	implements MessageBodyWriter<Try.Success<InputStream>> {
+	implements MessageBodyWriter<Try.Success<BinaryFile>> {
 
 	public long getSize(
-		Try.Success<InputStream> singleModelSuccess, Class<?> aClass, Type type,
+		Try.Success<BinaryFile> singleModelSuccess, Class<?> aClass, Type type,
 		Annotation[] annotations, MediaType mediaType) {
 
 		return -1;
@@ -61,20 +67,29 @@ public class BinaryResourceBodyWriter
 				genericType, Try.class);
 
 		return classTry.filter(
-			InputStream.class::equals
+			BinaryFile.class::equals
 		).isSuccess();
 	}
 
 	@Override
 	public void writeTo(
-			Try.Success<InputStream> success, Class<?> aClass, Type type,
+			Try.Success<BinaryFile> success, Class<?> aClass, Type type,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> multivaluedMap,
 			OutputStream outputStream)
 		throws IOException, WebApplicationException {
 
+		BinaryFile binaryFile = success.getValue();
+
+		multivaluedMap.put(
+			CONTENT_TYPE, Collections.singletonList(binaryFile.getMimeType()));
+
+		multivaluedMap.put(
+			CONTENT_LENGTH, Collections.singletonList(binaryFile.getSize()));
+
 		byte[] bytes = new byte[1024];
-		InputStream inputStream = success.getValue();
+
+		InputStream inputStream = binaryFile.getInputStream();
 		int value = -1;
 
 		while ((value = inputStream.read(bytes)) != -1) {

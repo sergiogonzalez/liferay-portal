@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
@@ -39,15 +40,19 @@ public class ChainingCheck extends BaseCheck {
 	}
 
 	public void setAllowedClassNames(String allowedClassNames) {
-		_allowedClassNames = StringUtil.split(allowedClassNames);
+		_allowedClassNames = ArrayUtil.append(
+			_allowedClassNames, StringUtil.split(allowedClassNames));
 	}
 
 	public void setAllowedMethodNames(String allowedMethodNames) {
-		_allowedMethodNames = StringUtil.split(allowedMethodNames);
+		_allowedMethodNames = ArrayUtil.append(
+			_allowedMethodNames, StringUtil.split(allowedMethodNames));
 	}
 
 	public void setAllowedVariableTypeNames(String allowedVariableTypeNames) {
-		_allowedVariableTypeNames = StringUtil.split(allowedVariableTypeNames);
+		_allowedVariableTypeNames = ArrayUtil.append(
+			_allowedVariableTypeNames,
+			StringUtil.split(allowedVariableTypeNames));
 	}
 
 	@Override
@@ -74,10 +79,9 @@ public class ChainingCheck extends BaseCheck {
 				continue;
 			}
 
-			List<String> chainedMethodNames = _getChainedMethodNames(
-				methodCallAST);
+			List<String> chain = _getChain(methodCallAST);
 
-			int chainSize = chainedMethodNames.size();
+			int chainSize = chain.size();
 
 			if (chainSize == 1) {
 				continue;
@@ -88,24 +92,21 @@ public class ChainingCheck extends BaseCheck {
 					continue;
 				}
 
-				_checkMethodName(
-					chainedMethodNames, "getClass", methodCallAST, detailAST);
+				_checkMethodName(chain, "getClass", methodCallAST, detailAST);
 
-				String methodName1 = chainedMethodNames.get(0);
+				String name1 = chain.get(0);
 
-				if ((methodName1.equals("getParamValue") ||
-					 methodName1.equals("getValue")) &&
+				if ((name1.equals("getParamValue") ||
+					 name1.equals("getValue")) &&
 					DetailASTUtil.hasParentWithTokenType(
 						detailAST, TokenTypes.ENUM_DEF)) {
 
 					continue;
 				}
 
-				String methodName2 = chainedMethodNames.get(1);
+				String name2 = chain.get(1);
 
-				if (methodName1.equals("concat") ||
-					methodName2.equals("concat")) {
-
+				if (name1.equals("concat") || name2.equals("concat")) {
 					continue;
 				}
 
@@ -122,18 +123,15 @@ public class ChainingCheck extends BaseCheck {
 				}
 			}
 
-			if (_isAllowedChainingMethodCall(
-					detailAST, methodCallAST, chainedMethodNames)) {
-
+			if (_isAllowedChainingMethodCall(detailAST, methodCallAST, chain)) {
 				if (chainSize > 2) {
-					_checkStyling(methodCallAST);
+					_checkStyling(detailAST, methodCallAST);
 				}
 
 				continue;
 			}
 
-			int concatsCount = Collections.frequency(
-				chainedMethodNames, "concat");
+			int concatsCount = Collections.frequency(chain, "concat");
 
 			if (concatsCount > 2) {
 				log(methodCallAST.getLineNo(), _MSG_AVOID_TOO_MANY_CONCAT);
@@ -146,7 +144,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			log(
-				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING_MULTIPLE,
+				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING,
 				DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
@@ -166,7 +164,14 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkStyling(DetailAST methodCallAST) {
+	private void _checkStyling(DetailAST detailAST, DetailAST methodCallAST) {
+		if (_isInsideConstructorThisCall(methodCallAST, detailAST) ||
+			DetailASTUtil.hasParentWithTokenType(
+				methodCallAST, TokenTypes.SUPER_CTOR_CALL)) {
+
+			return;
+		}
+
 		for (int i = DetailASTUtil.getStartLine(methodCallAST) + 1;
 			 i <= DetailASTUtil.getEndLine(methodCallAST); i++) {
 
@@ -182,25 +187,33 @@ public class ChainingCheck extends BaseCheck {
 			DetailASTUtil.getMethodName(methodCallAST));
 	}
 
-	private List<String> _getChainedMethodNames(DetailAST methodCallAST) {
-		List<String> chainedMethodNames = new ArrayList<>();
+	private List<String> _getChain(DetailAST methodCallAST) {
+		List<String> chain = new ArrayList<>();
 
-		chainedMethodNames.add(DetailASTUtil.getMethodName(methodCallAST));
+		chain.add(DetailASTUtil.getMethodName(methodCallAST));
 
 		while (true) {
 			DetailAST parentAST = methodCallAST.getParent();
 
 			if (parentAST.getType() != TokenTypes.DOT) {
-				return chainedMethodNames;
+				return chain;
 			}
 
-			methodCallAST = parentAST.getParent();
+			DetailAST grandParentAST = parentAST.getParent();
 
-			if (methodCallAST.getType() != TokenTypes.METHOD_CALL) {
-				return chainedMethodNames;
+			if (grandParentAST.getType() != TokenTypes.METHOD_CALL) {
+				DetailAST siblingAST = methodCallAST.getNextSibling();
+
+				if (siblingAST.getType() == TokenTypes.IDENT) {
+					chain.add(siblingAST.getText());
+				}
+
+				return chain;
 			}
 
-			chainedMethodNames.add(DetailASTUtil.getMethodName(methodCallAST));
+			methodCallAST = grandParentAST;
+
+			chain.add(DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
 
@@ -305,6 +318,10 @@ public class ChainingCheck extends BaseCheck {
 		if (nameAST != null) {
 			String classOrVariableName = nameAST.getText();
 
+			if (_isLambdaVariable(methodCallAST, classOrVariableName)) {
+				return true;
+			}
+
 			for (String allowedClassName : _allowedClassNames) {
 				if (classOrVariableName.matches(allowedClassName)) {
 					return true;
@@ -312,7 +329,7 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				methodCallAST, classOrVariableName);
+				methodCallAST, classOrVariableName, false);
 
 			if (Validator.isNotNull(variableTypeName)) {
 				for (String allowedVariableTypeName :
@@ -329,8 +346,7 @@ public class ChainingCheck extends BaseCheck {
 
 		if (outerMethodCallAST != null) {
 			return _isAllowedChainingMethodCall(
-				detailAST, outerMethodCallAST,
-				_getChainedMethodNames(outerMethodCallAST));
+				detailAST, outerMethodCallAST, _getChain(outerMethodCallAST));
 		}
 
 		return false;
@@ -388,10 +404,31 @@ public class ChainingCheck extends BaseCheck {
 		return false;
 	}
 
-	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
+	private boolean _isLambdaVariable(
+		DetailAST methodCallAST, String variableName) {
 
-	private static final String _MSG_AVOID_CHAINING_MULTIPLE =
-		"chaining.avoid.multiple";
+		DetailAST parentAST = methodCallAST.getParent();
+
+		while (parentAST != null) {
+			if (parentAST.getType() != TokenTypes.LAMBDA) {
+				parentAST = parentAST.getParent();
+
+				continue;
+			}
+
+			DetailAST nameAST = parentAST.findFirstToken(TokenTypes.IDENT);
+
+			if ((nameAST != null) && variableName.equals(nameAST.getText())) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
+	}
+
+	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";

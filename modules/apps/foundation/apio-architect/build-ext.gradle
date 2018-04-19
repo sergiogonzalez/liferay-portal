@@ -201,7 +201,22 @@ task runDocker(type: Exec) {
 }
 
 def getClientDeployDir() {
-	return new File(rootDir, project.property("com.liferay.apio.architect.deploy.dir"))
+	if (project.hasProperty('liferay.home')) {
+		return new File(project.getProperty('liferay.home').toString() + '/osgi/modules')
+	}
+
+	Properties properties = new Properties()
+	def file = project.rootProject.file('local.properties')
+
+	if (file.exists()) {
+		properties.load(file.newDataInputStream())
+	}
+
+	def apioDeployProperty = 'com.liferay.apio.architect.deploy.dir'
+
+	def sdkDir = properties.getProperty(apioDeployProperty)
+
+	return new File(rootDir, (sdkDir ?: project.property(apioDeployProperty)).toString())
 }
 
 def getImageName() {

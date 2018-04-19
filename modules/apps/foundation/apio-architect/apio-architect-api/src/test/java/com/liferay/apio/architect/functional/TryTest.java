@@ -23,6 +23,7 @@ import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -478,6 +479,51 @@ public class TryTest {
 		assertThat(
 			stringTry.toOptional(),
 			is(optionalWithValue(equalTo("Live long"))));
+	}
+
+	@Parameters(method = FAIL)
+	@Test
+	public void testInvokingVoidFoldOnFailureExecutesFailureConsumer(
+		Try<String> stringTry) {
+
+		List<Integer> list = new ArrayList<>();
+
+		stringTry.voidFold(__ -> list.add(3), __ -> list.add(5));
+
+		assertThat(list, contains(3));
+	}
+
+	@Parameters(method = SUCCESS)
+	@Test
+	public void testInvokingVoidFoldOnSuccessExecutesSuccessConsumer(
+		Try<String> stringTry) {
+
+		List<Integer> list = new ArrayList<>();
+
+		stringTry.voidFold(__ -> list.add(3), __ -> list.add(5));
+
+		assertThat(list, contains(5));
+	}
+
+	@Parameters(method = SUCCESS)
+	@Test
+	public void testInvokingVoidFoldOnSuccessWithFailureExecutesBothConsumers(
+		Try<String> stringTry) {
+
+		List<Integer> list = new ArrayList<>();
+
+		stringTry.voidFold(
+			exception -> {
+				assertThat(
+					exception, is(instanceOf(IllegalArgumentException.class)));
+
+				list.add(3);
+			},
+			__ -> {
+				throw new IllegalArgumentException();
+			});
+
+		assertThat(list, contains(3));
 	}
 
 	@Parameters(method = FAIL)

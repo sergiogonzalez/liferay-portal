@@ -23,8 +23,6 @@ import static com.liferay.apio.architect.routes.RoutesTestUtil.getNestedCollecti
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
-import static java.util.Collections.singletonMap;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,6 +32,7 @@ import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
+import com.liferay.apio.architect.form.Body;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -217,7 +216,10 @@ public class NestedCollectionRoutesTest {
 		Long identifier, Map<String, Object> body) {
 
 		assertThat(identifier, is(42L));
-		assertThat(body, is(_body));
+
+		Optional<String> optional = _body.getValueOptional("key");
+
+		assertThat(body.get("key"), is(optional.get()));
 
 		return "Apio";
 	}
@@ -290,7 +292,7 @@ public class NestedCollectionRoutesTest {
 		Optional<NestedCollectionRoutes<String, Long>> optional = Optional.of(
 			nestedCollectionRoutes);
 
-		Map body = optional.flatMap(
+		Map map = optional.flatMap(
 			NestedCollectionRoutes::getFormOptional
 		).map(
 			form -> {
@@ -300,7 +302,9 @@ public class NestedCollectionRoutesTest {
 			}
 		).get();
 
-		assertThat(body, is(_body));
+		Optional<String> valueOptional = _body.getValueOptional("key");
+
+		assertThat(map.get("key"), is(valueOptional.get()));
 
 		SingleModel<String> singleModel = optional.flatMap(
 			NestedCollectionRoutes::getNestedCreateItemFunctionOptional
@@ -311,7 +315,7 @@ public class NestedCollectionRoutesTest {
 			42L
 		).apply(
 			_body
-		);
+		).getUnchecked();
 
 		assertThat(singleModel.getResourceName(), is("nested"));
 		assertThat(singleModel.getModel(), is("Apio"));
@@ -327,7 +331,7 @@ public class NestedCollectionRoutesTest {
 			path
 		).apply(
 			42L
-		);
+		).getUnchecked();
 
 		assertThat(page.getItems(), hasSize(1));
 		assertThat(page.getItems(), hasItem("Apio"));
@@ -345,6 +349,6 @@ public class NestedCollectionRoutesTest {
 		assertThat(secondOperation.name, is("name/nested/create"));
 	}
 
-	private final Map<String, Object> _body = singletonMap("key", "value");
+	private final Body _body = __ -> Optional.of("Apio");
 
 }

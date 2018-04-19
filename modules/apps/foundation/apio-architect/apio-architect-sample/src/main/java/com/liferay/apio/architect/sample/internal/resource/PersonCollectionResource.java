@@ -25,7 +25,7 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.sample.internal.auth.PermissionChecker;
 import com.liferay.apio.architect.sample.internal.form.PersonForm;
-import com.liferay.apio.architect.sample.internal.identifier.PersonModelId;
+import com.liferay.apio.architect.sample.internal.identifier.PersonId;
 import com.liferay.apio.architect.sample.internal.model.PersonModel;
 
 import java.util.List;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true)
 public class PersonCollectionResource
-	implements CollectionResource<PersonModel, Long, PersonModelId> {
+	implements CollectionResource<PersonModel, Long, PersonId> {
 
 	@Override
 	public CollectionRoutes<PersonModel> collectionRoutes(
@@ -72,10 +72,10 @@ public class PersonCollectionResource
 			this::_getPerson
 		).addRemover(
 			this::_deletePerson, Credentials.class,
-			(credentials, personId) -> hasPermission(credentials)
+			(credentials, id) -> hasPermission(credentials)
 		).addUpdater(
 			this::_updatePerson, Credentials.class,
-			(credentials, personId) -> hasPermission(credentials),
+			(credentials, id) -> hasPermission(credentials),
 			PersonForm::buildForm
 		).build();
 	}
@@ -87,7 +87,7 @@ public class PersonCollectionResource
 		return builder.types(
 			"Person"
 		).identifier(
-			PersonModel::getPersonId
+			PersonModel::getId
 		).addDate(
 			"birthDate", PersonModel::getBirthDate
 		).addString(
@@ -100,8 +100,8 @@ public class PersonCollectionResource
 			"givenName", PersonModel::getFirstName
 		).addString(
 			"image", PersonModel::getAvatar
-		).addString(
-			"jobTitle", PersonModel::getJobTitle
+		).addStringList(
+			"jobTitle", PersonModel::getJobTitles
 		).addString(
 			"name", PersonModel::getFullName
 		).build();
@@ -114,51 +114,51 @@ public class PersonCollectionResource
 			throw new ForbiddenException();
 		}
 
-		return PersonModel.addPerson(
+		return PersonModel.create(
 			personForm.getAddress(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
-			personForm.getGivenName(), personForm.getJobTitle(),
+			personForm.getGivenName(), personForm.getJobTitles(),
 			personForm.getFamilyName());
 	}
 
-	private void _deletePerson(Long personId, Credentials credentials) {
+	private void _deletePerson(Long id, Credentials credentials) {
 		if (!hasPermission(credentials)) {
 			throw new ForbiddenException();
 		}
 
-		PersonModel.deletePerson(personId);
+		PersonModel.remove(id);
 	}
 
 	private PageItems<PersonModel> _getPageItems(Pagination pagination) {
-		List<PersonModel> personModels = PersonModel.getPeople(
+		List<PersonModel> personModels = PersonModel.getPage(
 			pagination.getStartPosition(), pagination.getEndPosition());
-		int count = PersonModel.getPeopleCount();
+		int count = PersonModel.getCount();
 
 		return new PageItems<>(personModels, count);
 	}
 
-	private PersonModel _getPerson(Long personId) {
-		Optional<PersonModel> optional = PersonModel.getPerson(personId);
+	private PersonModel _getPerson(Long id) {
+		Optional<PersonModel> optional = PersonModel.get(id);
 
 		return optional.orElseThrow(
-			() -> new NotFoundException("Unable to get person " + personId));
+			() -> new NotFoundException("Unable to get person " + id));
 	}
 
 	private PersonModel _updatePerson(
-		Long personId, PersonForm personForm, Credentials credentials) {
+		Long id, PersonForm personForm, Credentials credentials) {
 
 		if (!hasPermission(credentials)) {
 			throw new ForbiddenException();
 		}
 
-		Optional<PersonModel> optional = PersonModel.updatePerson(
+		Optional<PersonModel> optional = PersonModel.update(
 			personForm.getAddress(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
-			personForm.getGivenName(), personForm.getJobTitle(),
-			personForm.getFamilyName(), personId);
+			personForm.getGivenName(), personForm.getJobTitles(),
+			personForm.getFamilyName(), id);
 
 		return optional.orElseThrow(
-			() -> new NotFoundException("Unable to get person " + personId));
+			() -> new NotFoundException("Unable to get person " + id));
 	}
 
 }

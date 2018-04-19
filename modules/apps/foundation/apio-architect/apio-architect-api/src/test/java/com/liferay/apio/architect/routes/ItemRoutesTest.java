@@ -23,8 +23,6 @@ import static com.liferay.apio.architect.routes.RoutesTestUtil.REQUEST_PROVIDE_F
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
-import static java.util.Collections.singletonMap;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
@@ -33,6 +31,7 @@ import static org.hamcrest.core.Is.is;
 import com.liferay.apio.architect.alias.routes.DeleteItemConsumer;
 import com.liferay.apio.architect.alias.routes.GetItemFunction;
 import com.liferay.apio.architect.alias.routes.UpdateItemFunction;
+import com.liferay.apio.architect.form.Body;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
 import com.liferay.apio.architect.single.model.SingleModel;
@@ -76,7 +75,9 @@ public class ItemRoutesTest {
 	}
 
 	@Test
-	public void testFiveParameterBuilderMethodsCreatesValidRoutes() {
+	public void testFiveParameterBuilderMethodsCreatesValidRoutes()
+		throws Exception {
+
 		Set<String> neededProviders = new TreeSet<>();
 
 		Builder<String, Long> builder = new Builder<>(
@@ -104,7 +105,9 @@ public class ItemRoutesTest {
 	}
 
 	@Test
-	public void testFourParameterBuilderMethodsCreatesValidRoutes() {
+	public void testFourParameterBuilderMethodsCreatesValidRoutes()
+		throws Exception {
+
 		Set<String> neededProviders = new TreeSet<>();
 
 		Builder<String, Long> builder = new Builder<>(
@@ -132,7 +135,9 @@ public class ItemRoutesTest {
 	}
 
 	@Test
-	public void testOneParameterBuilderMethodsCreatesValidRoutes() {
+	public void testOneParameterBuilderMethodsCreatesValidRoutes()
+		throws Exception {
+
 		Set<String> neededProviders = new TreeSet<>();
 
 		Builder<String, Long> builder = new Builder<>(
@@ -154,7 +159,9 @@ public class ItemRoutesTest {
 	}
 
 	@Test
-	public void testThreeParameterBuilderMethodsCreatesValidRoutes() {
+	public void testThreeParameterBuilderMethodsCreatesValidRoutes()
+		throws Exception {
+
 		Set<String> neededProviders = new TreeSet<>();
 
 		Builder<String, Long> builder = new Builder<>(
@@ -179,7 +186,9 @@ public class ItemRoutesTest {
 	}
 
 	@Test
-	public void testTwoParameterBuilderMethodsCreatesValidRoutes() {
+	public void testTwoParameterBuilderMethodsCreatesValidRoutes()
+		throws Exception {
+
 		Set<String> neededProviders = new TreeSet<>();
 
 		Builder<String, Long> builder = new Builder<>(
@@ -234,7 +243,10 @@ public class ItemRoutesTest {
 		Long identifier, Map<String, Object> body) {
 
 		assertThat(identifier, is(42L));
-		assertThat(body, is(_body));
+
+		Optional<String> optional = _body.getValueOptional("key");
+
+		assertThat(body.get("key"), is(optional.get()));
 
 		return "Updated";
 	}
@@ -298,10 +310,12 @@ public class ItemRoutesTest {
 		_testThreeParameterRemoverRoute(identifier, string, aLong, aBoolean);
 	}
 
-	private void _testItemRoutes(ItemRoutes<String, Long> itemRoutes) {
+	private void _testItemRoutes(ItemRoutes<String, Long> itemRoutes)
+		throws Exception {
+
 		Optional<ItemRoutes<String, Long>> optional = Optional.of(itemRoutes);
 
-		Map body = optional.flatMap(
+		Map map = optional.flatMap(
 			ItemRoutes::getFormOptional
 		).map(
 			form -> {
@@ -311,7 +325,21 @@ public class ItemRoutesTest {
 			}
 		).get();
 
-		assertThat(body, is(_body));
+		Optional<String> valueOptional = _body.getValueOptional("key");
+
+		assertThat(map.get("key"), is(valueOptional.get()));
+
+		SingleModel<String> singleModel = optional.flatMap(
+			ItemRoutes::getItemFunctionOptional
+		).get(
+		).apply(
+			null
+		).apply(
+			42L
+		).getUnchecked();
+
+		assertThat(singleModel.getResourceName(), is("name"));
+		assertThat(singleModel.getModel(), is("Apio"));
 
 		optional.flatMap(
 			ItemRoutes::getDeleteConsumerOptional
@@ -331,7 +359,7 @@ public class ItemRoutesTest {
 			42L
 		).apply(
 			_body
-		);
+		).getUnchecked();
 
 		assertThat(updatedSingleModel.getResourceName(), is("name"));
 		assertThat(updatedSingleModel.getModel(), is("Updated"));
@@ -375,6 +403,6 @@ public class ItemRoutesTest {
 		_testOneParameterRemoverRoute(identifier, string);
 	}
 
-	private final Map<String, Object> _body = singletonMap("key", "value");
+	private final Body _body = __ -> Optional.of("Apio");
 
 }

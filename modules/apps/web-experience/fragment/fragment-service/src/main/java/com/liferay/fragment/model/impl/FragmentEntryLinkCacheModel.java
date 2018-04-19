@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing FragmentEntryLink in entity cache.
  *
@@ -63,12 +65,24 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{fragmentEntryLinkId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", fragmentEntryLinkId=");
 		sb.append(fragmentEntryLinkId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", originalFragmentEntryLinkId=");
 		sb.append(originalFragmentEntryLinkId);
 		sb.append(", fragmentEntryId=");
@@ -87,6 +101,8 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		sb.append(editableValues);
 		sb.append(", position=");
 		sb.append(position);
+		sb.append(", lastPropagationDate=");
+		sb.append(lastPropagationDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,8 +112,39 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 	public FragmentEntryLink toEntityModel() {
 		FragmentEntryLinkImpl fragmentEntryLinkImpl = new FragmentEntryLinkImpl();
 
+		if (uuid == null) {
+			fragmentEntryLinkImpl.setUuid("");
+		}
+		else {
+			fragmentEntryLinkImpl.setUuid(uuid);
+		}
+
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLinkId);
 		fragmentEntryLinkImpl.setGroupId(groupId);
+		fragmentEntryLinkImpl.setCompanyId(companyId);
+		fragmentEntryLinkImpl.setUserId(userId);
+
+		if (userName == null) {
+			fragmentEntryLinkImpl.setUserName("");
+		}
+		else {
+			fragmentEntryLinkImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			fragmentEntryLinkImpl.setCreateDate(null);
+		}
+		else {
+			fragmentEntryLinkImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			fragmentEntryLinkImpl.setModifiedDate(null);
+		}
+		else {
+			fragmentEntryLinkImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
 		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryLinkImpl.setClassNameId(classNameId);
@@ -133,6 +180,14 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 		fragmentEntryLinkImpl.setPosition(position);
 
+		if (lastPropagationDate == Long.MIN_VALUE) {
+			fragmentEntryLinkImpl.setLastPropagationDate(null);
+		}
+		else {
+			fragmentEntryLinkImpl.setLastPropagationDate(new Date(
+					lastPropagationDate));
+		}
+
 		fragmentEntryLinkImpl.resetOriginalValues();
 
 		return fragmentEntryLinkImpl;
@@ -140,9 +195,18 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		fragmentEntryLinkId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		originalFragmentEntryLinkId = objectInput.readLong();
 
@@ -157,14 +221,36 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		editableValues = objectInput.readUTF();
 
 		position = objectInput.readInt();
+		lastPropagationDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(fragmentEntryLinkId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(originalFragmentEntryLinkId);
 
@@ -203,10 +289,17 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		}
 
 		objectOutput.writeInt(position);
+		objectOutput.writeLong(lastPropagationDate);
 	}
 
+	public String uuid;
 	public long fragmentEntryLinkId;
 	public long groupId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public long originalFragmentEntryLinkId;
 	public long fragmentEntryId;
 	public long classNameId;
@@ -216,4 +309,5 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 	public String js;
 	public String editableValues;
 	public int position;
+	public long lastPropagationDate;
 }

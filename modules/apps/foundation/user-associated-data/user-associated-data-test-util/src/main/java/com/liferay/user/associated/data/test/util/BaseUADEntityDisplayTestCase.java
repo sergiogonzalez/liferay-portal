@@ -20,9 +20,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
-import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
 
@@ -33,11 +32,11 @@ import org.junit.Test;
 /**
  * @author Noah Sherrill
  */
-public abstract class BaseUADEntityDisplayTestCase {
+public abstract class BaseUADEntityDisplayTestCase<T> {
 
 	@Before
 	public void setUp() throws Exception {
-		_uadEntityAggregator = getUADEntityAggregator();
+		_uadAggregator = getUADAggregator();
 		_uadEntityDisplay = getUADEntityDisplay();
 		_user = UserTestUtil.addUser();
 	}
@@ -49,44 +48,41 @@ public abstract class BaseUADEntityDisplayTestCase {
 	}
 
 	@Test
-	public void testGetUADEntityTypeDescription() {
+	public void testGetTypeDescription() {
 		Assert.assertEquals(
-			getUADEntityTypeDescription(),
-			_uadEntityDisplay.getUADEntityTypeDescription());
+			getTypeDescription(), _uadEntityDisplay.getTypeDescription());
 	}
 
 	@Test
-	public void testGetUADEntityTypeName() throws Exception {
+	public void testGetTypeName() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId());
 
 		String simpleClassName = StringUtil.extractLast(
 			baseModel.getModelClassName(), StringPool.PERIOD);
 
-		Assert.assertEquals(
-			simpleClassName, _uadEntityDisplay.getUADEntityTypeName());
+		Assert.assertEquals(simpleClassName, _uadEntityDisplay.getTypeName());
 	}
 
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
 
 	protected abstract String getApplicationName();
 
-	protected abstract UADEntityAggregator getUADEntityAggregator();
+	protected abstract String getTypeDescription();
 
-	protected abstract UADEntityDisplay getUADEntityDisplay();
+	protected abstract UADAggregator<T> getUADAggregator();
 
-	protected abstract String getUADEntityTypeDescription();
+	protected abstract UADEntityDisplay<T> getUADEntityDisplay();
 
-	private UADEntity _createUADEntity() throws Exception {
+	private T _createBaseModel() throws Exception {
 		addBaseModel(_user.getUserId());
 
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+		List<T> baseModels = _uadAggregator.getAll(_user.getUserId());
 
-		return uadEntities.get(0);
+		return baseModels.get(0);
 	}
 
-	private UADEntityAggregator _uadEntityAggregator;
-	private UADEntityDisplay _uadEntityDisplay;
+	private UADAggregator<T> _uadAggregator;
+	private UADEntityDisplay<T> _uadEntityDisplay;
 
 	@DeleteAfterTestRun
 	private User _user;

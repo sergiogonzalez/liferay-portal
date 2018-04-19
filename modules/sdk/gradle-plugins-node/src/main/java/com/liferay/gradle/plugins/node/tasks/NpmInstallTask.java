@@ -195,7 +195,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 					logger.info("Cache for {} is disabled", this);
 				}
 
-				if (_isCheckDigest() && !isUseNpmCI()) {
+				if (_isCheckDigest()) {
 					_npmInstallCheckDigest(reset);
 				}
 				else {
@@ -216,7 +216,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		if (isUseNpmCI()) {
+		if (isUseNpmCI() && (getPackageLockJsonFile() != null)) {
 			completeArgs.add("ci");
 		}
 		else {

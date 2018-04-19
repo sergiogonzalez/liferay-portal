@@ -58,6 +58,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
+
 <liferay-portlet:actionURL name="deployWorkflowDefinition" var="deployWorkflowDefinitionURL">
 	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
@@ -116,13 +118,13 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= workflowDefinition != null %>">
-		<div class="lfr-portal-workflow-sidenav">
-			<div class="sidebar sidebar-light">
+		<div class="lfr-portal-workflow-sidenav sidenav-menu-slider">
+			<div class="sidebar sidebar-light sidenav-menu">
 				<div class="sidebar-header">
 					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 
 					<h4>
-						<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>
+						<%= HtmlUtil.escape(workflowDefinition.getTitle(LanguageUtil.getLanguageId(request))) %>
 					</h4>
 				</div>
 
@@ -422,6 +424,17 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		'<portlet:namespace />duplicateDefinition',
 		function(event) {
 			Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(this, '<%= duplicateWorkflowDefinition %>', duplicateWorkflowTitle, '<%= randomNamespace %>', '<portlet:namespace />');
+		}
+	);
+
+	A.one('#<portlet:namespace />title').on(
+		'keypress',
+		function(event) {
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+
+			if (keycode == '13') {
+				event.preventDefault();
+			}
 		}
 	);
 </aui:script>

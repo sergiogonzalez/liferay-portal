@@ -39,8 +39,8 @@
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 
-		<execute macro="SystemSettings#enableSetting">
-			<var name="checkboxSetting" value="SHOW_INACTIVE_REQUEST_MESSAGE" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="show.inactive.request.message" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -517,6 +517,8 @@
 	<command name="EditSiteFriendlyURLInvalid" priority="3">
 		<property name="test.name.skip.portal.instance" value="CPSites#EditSiteFriendlyURLInvalid" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
@@ -565,7 +567,8 @@
 		</execute>
 
 		<execute macro="Page#viewFriendlyURL">
-			<var name="siteFriendlyURL" value="/site-name" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteFriendlyURL" value="${portalURL}/web/site-name" />
 		</execute>
 	</command>
 

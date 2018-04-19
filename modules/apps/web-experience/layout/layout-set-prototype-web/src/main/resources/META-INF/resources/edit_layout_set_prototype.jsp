@@ -70,61 +70,67 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 <portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
 
-<aui:form action="<%= updateLayoutSetPrototypeURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= updateLayoutSetPrototypeURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototypeId %>" />
 
 	<aui:model-context bean="<%= layoutSetPrototype %>" model="<%= LayoutSetPrototype.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
-			<aui:input name="description" placeholder="description" />
+				<aui:input name="description" placeholder="description" />
 
-			<aui:input name="active" type="toggle-switch" value="<%= layoutSetPrototype.isActive() %>" />
+				<aui:input name="active" type="toggle-switch" value="<%= layoutSetPrototype.isActive() %>" />
 
-			<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="toggle-switch" value="<%= layoutsUpdateable %>" />
+				<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="toggle-switch" value="<%= layoutsUpdateable %>" />
 
-			<%
-			Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
+				<%
+				Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
 
-			String customJspServletContextName = StringPool.BLANK;
+				String customJspServletContextName = StringPool.BLANK;
 
-			if (layoutSetPrototype != null) {
-				UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
+				if (layoutSetPrototype != null) {
+					UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
 
-				customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
-			}
-			%>
+					customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
+				}
+				%>
 
-			<c:if test="<%= !servletContextNames.isEmpty() %>">
-				<aui:select label="application-adapter" name="customJspServletContextName">
-					<aui:option label="none" />
+				<c:if test="<%= !servletContextNames.isEmpty() %>">
+					<aui:select label="application-adapter" name="customJspServletContextName">
+						<aui:option label="none" />
 
-					<%
-					for (String servletContextName : servletContextNames) {
-					%>
+						<%
+						for (String servletContextName : servletContextNames) {
+						%>
 
-						<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
+							<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</aui:select>
-			</c:if>
-		</aui:fieldset>
-	</aui:fieldset-group>
+					</aui:select>
+				</c:if>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
 		<c:if test="<%= layoutSetPrototype.isNew() %>">
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</c:if>
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <%
 if (!layoutSetPrototype.isNew()) {

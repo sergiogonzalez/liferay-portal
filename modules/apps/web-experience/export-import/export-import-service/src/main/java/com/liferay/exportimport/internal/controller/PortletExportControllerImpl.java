@@ -32,6 +32,7 @@ import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.internal.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.internal.lar.PermissionExporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
+import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -58,7 +59,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
@@ -127,7 +127,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portal.kernel.model.Portlet"},
+	property = "model.class.name=com.liferay.portal.kernel.model.Portlet",
 	service = {ExportImportController.class, PortletExportController.class}
 )
 @ProviderType
@@ -958,10 +958,13 @@ public class PortletExportControllerImpl implements PortletExportController {
 				"/manifest.xml", document.formattedString());
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to create the export LAR manifest file for portlet " +
-					portletDataContext.getPortletId(),
-				ioe);
+			ExportImportIOException eiioe = new ExportImportIOException(
+				PortletExportControllerImpl.class.getName(), ioe);
+
+			eiioe.setPortletId(portletDataContext.getPortletId());
+			eiioe.setType(ExportImportIOException.PORTLET_EXPORT);
+
+			throw eiioe;
 		}
 
 		ZipWriter zipWriter = portletDataContext.getZipWriter();
@@ -1166,7 +1169,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 		rootElement.addAttribute("owner-id", String.valueOf(ownerId));
 		rootElement.addAttribute("owner-type", String.valueOf(ownerType));
-		rootElement.addAttribute("default-user", String.valueOf(false));
+		rootElement.addAttribute("default-user", Boolean.FALSE.toString());
 		rootElement.addAttribute("service-name", serviceName);
 
 		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {

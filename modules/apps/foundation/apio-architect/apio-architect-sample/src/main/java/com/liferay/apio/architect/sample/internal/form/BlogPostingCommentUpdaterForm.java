@@ -18,21 +18,18 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 
 /**
- * Instances of this class represent the values extracted from a blog posting
- * comment updater form.
+ * Represents the values extracted from a blog posting comment updater form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class BlogPostingCommentUpdaterForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code
-	 * BlogPostingCommentUpdaterForm} depending on the HTTP body.
+	 * Builds and returns a {@link Form} that generates a {@code
+	 * BlogPostingCommentUpdaterForm} that depends on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a blog posting comment updater form
-	 * @review
+	 * @return the {@code BlogPostingCommentUpdaterForm}
 	 */
 	public static Form<BlogPostingCommentUpdaterForm> buildForm(
 		Builder<BlogPostingCommentUpdaterForm> formBuilder) {
@@ -49,10 +46,9 @@ public class BlogPostingCommentUpdaterForm {
 	}
 
 	/**
-	 * Returns the blog posting comment's text
+	 * Returns the blog posting comment's text.
 	 *
 	 * @return the blog posting comment's text
-	 * @review
 	 */
 	public String getText() {
 		return _text;

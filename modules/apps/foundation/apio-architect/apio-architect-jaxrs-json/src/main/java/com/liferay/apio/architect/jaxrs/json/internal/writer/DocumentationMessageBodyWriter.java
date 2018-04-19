@@ -14,11 +14,9 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.writer;
 
-import static org.osgi.service.component.annotations.ReferenceCardinality.AT_LEAST_ONE;
-import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 
 import com.liferay.apio.architect.documentation.Documentation;
-import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveDocumentationMessageMapper;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.request.RequestInfo;
@@ -26,6 +24,7 @@ import com.liferay.apio.architect.response.control.Embedded;
 import com.liferay.apio.architect.response.control.Fields;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
+import com.liferay.apio.architect.wiring.osgi.manager.message.json.DocumentationMessageMapperManager;
 import com.liferay.apio.architect.writer.DocumentationWriter;
 
 import java.io.IOException;
@@ -38,17 +37,19 @@ import java.lang.reflect.Type;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.Locale;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
@@ -88,7 +89,7 @@ public class DocumentationMessageBodyWriter
 	public void writeTo(
 			Documentation documentation, Class<?> aClass, Type type,
 			Annotation[] annotations, MediaType mediaType,
-			MultivaluedMap<String, Object> multivaluedMap,
+			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream outputStream)
 		throws IOException, WebApplicationException {
 
@@ -97,8 +98,12 @@ public class DocumentationMessageBodyWriter
 
 		PrintWriter printWriter = new PrintWriter(outputStreamWriter, true);
 
+		Optional<DocumentationMessageMapper> optional =
+			_documentationMessageMapperManager.
+				getDocumentationMessageMapperOptional(_request);
+
 		DocumentationMessageMapper documentationMessageMapper =
-			getDocumentationMessageMapper(mediaType, documentation);
+			optional.orElseThrow(NotSupportedException::new);
 
 		RequestInfo requestInfo = RequestInfo.create(
 			builder -> builder.httpHeaders(
@@ -137,41 +142,19 @@ public class DocumentationMessageBodyWriter
 				requestInfo
 			).build());
 
+		httpHeaders.put(
+			CONTENT_TYPE,
+			Collections.singletonList(
+				documentationMessageMapper.getMediaType()));
+
 		printWriter.println(documentationWriter.write());
 
 		printWriter.close();
 	}
 
-	/**
-	 * Returns the right {@link DocumentationMessageMapper} for the provided
-	 * {@code MediaType} that supports writing the provided {@link
-	 * Documentation}.
-	 *
-	 * @param  mediaType the request's {@code MediaType}
-	 * @param  documentation the {@code Documentation} to write
-	 * @return the {@code DocumentationMessageMapper} that writes the {@code
-	 *         Documentation} in the {@code MediaType}
-	 */
-	protected DocumentationMessageMapper getDocumentationMessageMapper(
-		MediaType mediaType, Documentation documentation) {
-
-		Stream<DocumentationMessageMapper> stream =
-			_documentationMessageMappers.stream();
-
-		String mediaTypeString = mediaType.toString();
-
-		return stream.filter(
-			bodyWriter ->
-				mediaTypeString.equals(bodyWriter.getMediaType()) &&
-				bodyWriter.supports(documentation, _httpHeaders)
-		).findFirst(
-		).orElseThrow(
-			() -> new MustHaveDocumentationMessageMapper(mediaTypeString)
-		);
-	}
-
-	@Reference(cardinality = AT_LEAST_ONE, policyOption = GREEDY)
-	private List<DocumentationMessageMapper> _documentationMessageMappers;
+	@Reference
+	private DocumentationMessageMapperManager
+		_documentationMessageMapperManager;
 
 	@Context
 	private HttpHeaders _httpHeaders;
@@ -181,5 +164,8 @@ public class DocumentationMessageBodyWriter
 
 	@Reference
 	private ProviderManager _providerManager;
+
+	@Context
+	private Request _request;
 
 }

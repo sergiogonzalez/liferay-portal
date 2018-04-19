@@ -97,7 +97,6 @@ page import="com.liferay.message.boards.service.MBThreadLocalServiceUtil" %><%@
 page import="com.liferay.message.boards.service.MBThreadServiceUtil" %><%@
 page import="com.liferay.message.boards.settings.MBGroupServiceSettings" %><%@
 page import="com.liferay.message.boards.util.comparator.CategoryTitleComparator" %><%@
-page import="com.liferay.message.boards.util.comparator.MessageCreateDateComparator" %><%@
 page import="com.liferay.message.boards.util.comparator.ThreadModifiedDateComparator" %><%@
 page import="com.liferay.message.boards.web.internal.dao.search.MBResultRowSplitter" %><%@
 page import="com.liferay.message.boards.web.internal.display.MBCategoryDisplay" %><%@
@@ -226,9 +225,6 @@ boolean enableRSS = mbGroupServiceSettings.isEnableRSS();
 int rssDelta = mbGroupServiceSettings.getRSSDelta();
 String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
-
-boolean childrenMessagesTaggable = true;
-boolean showSearch = true;
 
 MBWebComponentProvider mbWebComponentProvider = MBWebComponentProvider.getMBWebComponentProvider();
 

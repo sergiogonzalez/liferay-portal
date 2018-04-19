@@ -14,23 +14,25 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Carlos Lancha
  */
 public class DropdownRadioGroupItem extends DropdownGroupItem {
 
 	public DropdownRadioGroupItem() {
-		super("radiogroup");
+		this(null);
 	}
 
-	public String getInputName() {
-		return _inputName;
+	public DropdownRadioGroupItem(HttpServletRequest request) {
+		super(request);
+
+		put("type", "radiogroup");
 	}
 
 	public void setInputName(String inputName) {
-		_inputName = inputName;
+		put("inputName", inputName);
 	}
-
-	private String _inputName;
 
 }

@@ -83,16 +83,8 @@ if (ddmTemplate == null) {
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
-boolean changeableDefaultLanguage = journalWebConfiguration.changeableDefaultLanguage();
-
 if (article != null) {
-	String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
-
-	if (!Objects.equals(defaultLanguageId, articleDefaultLanguageId)) {
-		changeableDefaultLanguage = true;
-	}
-
-	defaultLanguageId = articleDefaultLanguageId;
+	defaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
@@ -107,11 +99,8 @@ request.setAttribute("edit_article.jsp-template", ddmTemplate);
 request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 
 request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
-%>
 
-<c:if test="<%= showHeader %>">
-
-	<%
+if (showHeader) {
 	portletDisplay.setShowBackIcon(true);
 
 	if (Validator.isNotNull(redirect)) {
@@ -139,9 +128,60 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	}
 
 	renderResponse.setTitle(title);
-	%>
+}
 
-</c:if>
+boolean approved = false;
+boolean pending = false;
+
+long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
+
+boolean hasInheritedWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalArticle.class.getName());
+
+if (inheritedWorkflowDDMStructuresFolderId > 0) {
+	JournalFolder inheritedWorkflowDDMStructuresFolder = JournalFolderLocalServiceUtil.getFolder(inheritedWorkflowDDMStructuresFolderId);
+
+	hasInheritedWorkflowDefinitionLink = false;
+
+	if (inheritedWorkflowDDMStructuresFolder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
+		hasInheritedWorkflowDefinitionLink = true;
+	}
+}
+
+boolean workflowEnabled = hasInheritedWorkflowDefinitionLink || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
+if ((article != null) && (version > 0)) {
+	approved = article.isApproved();
+
+	if (workflowEnabled) {
+		pending = article.isPending();
+	}
+}
+
+boolean hasSavePermission = false;
+
+if ((article != null) && !article.isNew()) {
+	hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
+}
+else {
+	hasSavePermission = JournalFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_ARTICLE);
+}
+
+String saveButtonLabel = "save";
+
+if ((article == null) || article.isApproved() || article.isDraft() || article.isExpired() || article.isScheduled()) {
+	saveButtonLabel = "save-as-draft";
+}
+
+String publishButtonLabel = "publish";
+
+if (workflowEnabled) {
+	publishButtonLabel = "submit-for-publication";
+}
+
+if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+	publishButtonLabel = "save";
+}
+%>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
@@ -154,7 +194,13 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<portlet:param name="mvcPath" value="/edit_article.jsp" />
 </portlet:renderURL>
 
-<aui:form action="<%= editArticleActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
+<liferay-frontend:edit-form
+	action="<%= editArticleActionURL %>"
+	enctype="multipart/form-data"
+	method="post"
+	name="fm1"
+	onSubmit="event.preventDefault();"
+>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= hideDefaultSuccessMessage || (classNameId == PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -175,22 +221,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<aui:input name="ddmTemplateId" type="hidden" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
-	<%
-	DDMFormValues ddmFormValues = journalDisplayContext.getDDMFormValues(ddmStructure);
-
-	Set<Locale> availableLocalesSet = new HashSet<>();
-
-	availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-	availableLocalesSet.addAll(journalDisplayContext.getAvailableArticleLocales());
-
-	if (ddmFormValues != null) {
-		availableLocalesSet.addAll(ddmFormValues.getAvailableLocales());
-	}
-
-	Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-	%>
-
-	<div class="lfr-form-content">
+	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
 		<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-default-language" />
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
@@ -214,35 +245,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 			</liferay-frontend:info-bar>
 		</c:if>
 
-		<%
-		boolean approved = false;
-		boolean pending = false;
-
-		long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
-
-		boolean hasInheritedWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalArticle.class.getName());
-
-		if (inheritedWorkflowDDMStructuresFolderId > 0) {
-			JournalFolder inheritedWorkflowDDMStructuresFolder = JournalFolderLocalServiceUtil.getFolder(inheritedWorkflowDDMStructuresFolderId);
-
-			hasInheritedWorkflowDefinitionLink = false;
-
-			if (inheritedWorkflowDDMStructuresFolder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
-				hasInheritedWorkflowDefinitionLink = true;
-			}
-		}
-
-		boolean workflowEnabled = hasInheritedWorkflowDefinitionLink || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
-
-		if ((article != null) && (version > 0)) {
-			approved = article.isApproved();
-
-			if (workflowEnabled) {
-				pending = article.isPending();
-			}
-		}
-		%>
-
 		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 			<c:if test="<%= approved %>">
 				<div class="alert alert-info">
@@ -257,55 +259,27 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 			</c:if>
 		</c:if>
 
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			formModelBean="<%= article %>"
-			formName="fm1"
 			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
-			markupView="lexicon"
 			showButtons="<%= false %>"
 		/>
-	</div>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row cssClass="journal-article-button-row">
+	<liferay-frontend:edit-form-footer>
+		<div class="journal-article-button-row">
+			<c:if test="<%= hasSavePermission %>">
+				<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
-		<%
-		boolean hasSavePermission = false;
-
-		if ((article != null) && !article.isNew()) {
-			hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
-		}
-		else {
-			hasSavePermission = JournalFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_ARTICLE);
-		}
-
-		String saveButtonLabel = "save";
-
-		if ((article == null) || article.isApproved() || article.isDraft() || article.isExpired() || article.isScheduled()) {
-			saveButtonLabel = "save-as-draft";
-		}
-
-		String publishButtonLabel = "publish";
-
-		if (workflowEnabled) {
-			publishButtonLabel = "submit-for-publication";
-		}
-
-		if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			publishButtonLabel = "save";
-		}
-		%>
-
-		<c:if test="<%= hasSavePermission %>">
-			<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-			<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-				<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+					<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				</c:if>
 			</c:if>
-		</c:if>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</div>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/preview_article_content.jsp" />

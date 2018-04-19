@@ -25,8 +25,7 @@ import java.util.function.Function;
 import org.hamcrest.Matcher;
 
 /**
- * Provides {@code Matcher} objects that can be used in testing
- * {@code Forms}.
+ * Provides {@code Matcher} objects that can be used in testing {@code Forms}.
  *
  * <p>
  * This class shouldn't be instantiated.

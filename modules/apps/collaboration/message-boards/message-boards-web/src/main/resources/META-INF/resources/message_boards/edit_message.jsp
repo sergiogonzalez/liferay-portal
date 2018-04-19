@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 long messageId = BeanParamUtil.getLong(message, request, "messageId");
@@ -116,15 +114,7 @@ if (portletTitleBasedNavigation) {
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> id='<%= renderResponse.getNamespace() + "mbEditPageContainer" %>'>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
-		<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-			<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
-		</c:if>
-
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= (message == null) %>"
-			title="<%= headerTitle %>"
-		/>
+		<h3><%= headerTitle %></h3>
 	</c:if>
 
 	<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL">
@@ -305,7 +295,7 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 			</c:if>
 
-			<c:if test="<%= (curParentMessage == null) || childrenMessagesTaggable %>">
+			<c:if test="<%= (curParentMessage == null) %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 					<aui:input name="tags" type="assetTags" />
 				</aui:fieldset>

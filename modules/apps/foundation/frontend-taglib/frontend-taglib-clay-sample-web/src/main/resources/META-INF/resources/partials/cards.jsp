@@ -144,7 +144,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 			href="#1"
 			imageAlt="thumbnail"
 			imageSrc="https://images.unsplash.com/photo-1503703294279-c83bdf7b4bf4"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			stickerLabel="JPG"
 			stickerStyle="danger"
 			subtitle="Author Action"
@@ -156,7 +156,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 		<clay:image-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			labelStylesMap="<%= cardsDisplayContext.getLabelStylesMap() %>"
 			stickerLabel="SVG"
 			stickerStyle="warning"
@@ -168,7 +168,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 	<div class="col-md-4" id="image-card-empty-block">
 		<clay:image-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			stickerLabel="PNG"
 			stickerStyle="info"
 			subtitle="Author Action"
@@ -186,7 +186,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 			href="#1"
 			imageAlt="thumbnail"
 			imageSrc="https://images.unsplash.com/photo-1506020647804-b04ee956dc04"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="JPG"
@@ -200,7 +200,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 		<clay:image-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			selectable="<%= true %>"
 			selected="<%= false %>"
 			stickerLabel="SVG"
@@ -213,7 +213,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 	<div class="col-md-4" id="image-card-empty-block">
 		<clay:image-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="PNG"
@@ -230,7 +230,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 	<div class="col-md-4" id="image-card-block">
 		<clay:file-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			stickerLabel="PDF"
 			stickerStyle="danger"
 			subtitle="Stevie Ray Vaughn"
@@ -241,7 +241,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 	<div class="col-md-4" id="image-card-icon-block">
 		<clay:file-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			labelStylesMap="<%= cardsDisplayContext.getLabelStylesMap() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
@@ -256,7 +256,7 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 		<clay:file-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="list"
-			labels="<%= cardsDisplayContext.getLabels() %>"
+			labels="<%= cardsDisplayContext.getLabelItems() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="DOC"

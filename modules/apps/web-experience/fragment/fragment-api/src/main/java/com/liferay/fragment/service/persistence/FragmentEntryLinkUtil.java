@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -109,6 +110,402 @@ public class FragmentEntryLinkUtil {
 	public static FragmentEntryLink update(
 		FragmentEntryLink fragmentEntryLink, ServiceContext serviceContext) {
 		return getPersistence().update(fragmentEntryLink, serviceContext);
+	}
+
+	/**
+	* Returns all the fragment entry links where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid(java.lang.String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	* Returns a range of all the fragment entry links where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @return the range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid(java.lang.String uuid,
+		int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the fragment entry links where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid(java.lang.String uuid,
+		int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the fragment entry links where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid(java.lang.String uuid,
+		int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first fragment entry link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByUuid_First(java.lang.String uuid,
+		OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the first fragment entry link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last fragment entry link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last fragment entry link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the fragment entry links before and after the current fragment entry link in the ordered set where uuid = &#63;.
+	*
+	* @param fragmentEntryLinkId the primary key of the current fragment entry link
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next fragment entry link
+	* @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
+	*/
+	public static FragmentEntryLink[] findByUuid_PrevAndNext(
+		long fragmentEntryLinkId, java.lang.String uuid,
+		OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByUuid_PrevAndNext(fragmentEntryLinkId, uuid,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the fragment entry links where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
+	public static void removeByUuid(java.lang.String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of fragment entry links where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching fragment entry links
+	*/
+	public static int countByUuid(java.lang.String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	* Returns the fragment entry link where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchEntryLinkException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the fragment entry link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByUUID_G(java.lang.String uuid,
+		long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the fragment entry link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the fragment entry link where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the fragment entry link that was removed
+	*/
+	public static FragmentEntryLink removeByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of fragment entry links where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching fragment entry links
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns all the fragment entry links where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid_C(java.lang.String uuid,
+		long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @return the range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first fragment entry link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first fragment entry link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last fragment entry link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last fragment entry link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the fragment entry links before and after the current fragment entry link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param fragmentEntryLinkId the primary key of the current fragment entry link
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next fragment entry link
+	* @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
+	*/
+	public static FragmentEntryLink[] findByUuid_C_PrevAndNext(
+		long fragmentEntryLinkId, java.lang.String uuid, long companyId,
+		OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByUuid_C_PrevAndNext(fragmentEntryLinkId, uuid,
+			companyId, orderByComparator);
+	}
+
+	/**
+	* Removes all the fragment entry links where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of fragment entry links where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching fragment entry links
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
 	/**
@@ -448,6 +845,207 @@ public class FragmentEntryLinkUtil {
 	*/
 	public static int countByG_F(long groupId, long fragmentEntryId) {
 		return getPersistence().countByG_F(groupId, fragmentEntryId);
+	}
+
+	/**
+	* Returns all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @return the matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByG_F_C(long groupId,
+		long fragmentEntryId, long classNameId) {
+		return getPersistence()
+				   .findByG_F_C(groupId, fragmentEntryId, classNameId);
+	}
+
+	/**
+	* Returns a range of all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @return the range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByG_F_C(long groupId,
+		long fragmentEntryId, long classNameId, int start, int end) {
+		return getPersistence()
+				   .findByG_F_C(groupId, fragmentEntryId, classNameId, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByG_F_C(long groupId,
+		long fragmentEntryId, long classNameId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence()
+				   .findByG_F_C(groupId, fragmentEntryId, classNameId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of fragment entry links
+	* @param end the upper bound of the range of fragment entry links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching fragment entry links
+	*/
+	public static List<FragmentEntryLink> findByG_F_C(long groupId,
+		long fragmentEntryId, long classNameId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_F_C(groupId, fragmentEntryId, classNameId, start,
+			end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first fragment entry link in the ordered set where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByG_F_C_First(long groupId,
+		long fragmentEntryId, long classNameId,
+		OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByG_F_C_First(groupId, fragmentEntryId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first fragment entry link in the ordered set where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByG_F_C_First(long groupId,
+		long fragmentEntryId, long classNameId,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_F_C_First(groupId, fragmentEntryId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last fragment entry link in the ordered set where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching fragment entry link
+	* @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink findByG_F_C_Last(long groupId,
+		long fragmentEntryId, long classNameId,
+		OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByG_F_C_Last(groupId, fragmentEntryId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last fragment entry link in the ordered set where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	*/
+	public static FragmentEntryLink fetchByG_F_C_Last(long groupId,
+		long fragmentEntryId, long classNameId,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_F_C_Last(groupId, fragmentEntryId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param fragmentEntryLinkId the primary key of the current fragment entry link
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next fragment entry link
+	* @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
+	*/
+	public static FragmentEntryLink[] findByG_F_C_PrevAndNext(
+		long fragmentEntryLinkId, long groupId, long fragmentEntryId,
+		long classNameId, OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+		return getPersistence()
+				   .findByG_F_C_PrevAndNext(fragmentEntryLinkId, groupId,
+			fragmentEntryId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Removes all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	*/
+	public static void removeByG_F_C(long groupId, long fragmentEntryId,
+		long classNameId) {
+		getPersistence().removeByG_F_C(groupId, fragmentEntryId, classNameId);
+	}
+
+	/**
+	* Returns the number of fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param classNameId the class name ID
+	* @return the number of matching fragment entry links
+	*/
+	public static int countByG_F_C(long groupId, long fragmentEntryId,
+		long classNameId) {
+		return getPersistence()
+				   .countByG_F_C(groupId, fragmentEntryId, classNameId);
 	}
 
 	/**
@@ -796,10 +1394,25 @@ public class FragmentEntryLinkUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static FragmentEntryLinkPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FragmentEntryLinkPersistence, FragmentEntryLinkPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(FragmentEntryLinkPersistence.class);
+	private static ServiceTracker<FragmentEntryLinkPersistence, FragmentEntryLinkPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FragmentEntryLinkPersistence.class);
+
+		ServiceTracker<FragmentEntryLinkPersistence, FragmentEntryLinkPersistence> serviceTracker =
+			new ServiceTracker<FragmentEntryLinkPersistence, FragmentEntryLinkPersistence>(bundle.getBundleContext(),
+				FragmentEntryLinkPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -43,7 +44,9 @@ public class JournalArticleLocalServiceUtil {
 	 */
 
 	/**
-	* Adds a web content article with additional parameters.
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
+	* current user's timezone.
 	*
 	* <p>
 	* The web content articles hold HTML content wrapped in XML. The XML lets
@@ -173,7 +176,9 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	* Adds a web content article with additional parameters.
+	* Adds a web content article with additional parameters. All scheduling
+	* parameters (display date, expiration date, and review date) use the
+	* current user's timezone.
 	*
 	* <p>
 	* The web content articles hold HTML content wrapped in XML. The XML lets
@@ -3575,7 +3580,9 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	* Updates the web content article with additional parameters.
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param userId the primary key of the user updating the web content
 	article
@@ -3736,7 +3743,9 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
-	* Updates the web content article with additional parameters.
+	* Updates the web content article with additional parameters. All
+	* scheduling parameters (display date, expiration date, and review date)
+	* use the current user's timezone.
 	*
 	* @param userId the primary key of the user updating the web content
 	article
@@ -4134,6 +4143,17 @@ public class JournalArticleLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<JournalArticleLocalService, JournalArticleLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(JournalArticleLocalService.class);
+	private static ServiceTracker<JournalArticleLocalService, JournalArticleLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalArticleLocalService.class);
+
+		ServiceTracker<JournalArticleLocalService, JournalArticleLocalService> serviceTracker =
+			new ServiceTracker<JournalArticleLocalService, JournalArticleLocalService>(bundle.getBundleContext(),
+				JournalArticleLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

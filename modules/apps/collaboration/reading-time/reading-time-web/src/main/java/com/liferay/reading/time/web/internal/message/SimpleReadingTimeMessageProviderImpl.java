@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, property = {"display.style=simple"})
+@Component(immediate = true, property = "display.style=simple")
 public class SimpleReadingTimeMessageProviderImpl
 	implements ReadingTimeMessageProvider {
 
@@ -46,7 +46,9 @@ public class SimpleReadingTimeMessageProviderImpl
 		}
 
 		return LanguageUtil.format(
-			resourceBundle, "x-min", readingTimeInMinutes);
+			resourceBundle,
+			(readingTimeInMinutes == 1) ? "x-minute" : "x-minutes",
+			readingTimeInMinutes);
 	}
 
 	@Override

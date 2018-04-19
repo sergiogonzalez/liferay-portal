@@ -37,17 +37,18 @@ if (ListUtil.isEmpty(groups)) {
 	}
 }
 
+List<NavigationItem> navigationItems = new JSPNavigationItemList(pageContext) {
+	{
+		add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(currentURL);
+				navigationItem.setLabel(LanguageUtil.get(request, "details"));
+			});
+	}
+};
+
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem navigationItem = new NavigationItem();
-
-navigationItem.setActive(true);
-navigationItem.setHref(currentURL);
-navigationItem.setLabel(LanguageUtil.get(request, "details"));
-
-navigationItems.add(navigationItem);
 %>
 
 <c:choose>

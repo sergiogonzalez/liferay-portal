@@ -33,8 +33,14 @@ create table FragmentEntry (
 );
 
 create table FragmentEntryLink (
+	uuid_ VARCHAR(75) null,
 	fragmentEntryLinkId LONG not null primary key,
 	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
 	originalFragmentEntryLinkId LONG,
 	fragmentEntryId LONG,
 	classNameId LONG,
@@ -43,5 +49,6 @@ create table FragmentEntryLink (
 	html STRING null,
 	js STRING null,
 	editableValues STRING null,
-	position INTEGER
+	position INTEGER,
+	lastPropagationDate DATE null
 );

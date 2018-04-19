@@ -19,22 +19,20 @@ import com.liferay.apio.architect.credentials.Credentials;
 import java.util.Objects;
 
 /**
- * This class stores the information about the "Authorization" HTTP request in a
- * {@code ThreadLocal}. And allows to check if the authorization, matches with
- * the fake one stored in the server.
+ * Stores information about the HTTP authorization request in a {@code
+ * ThreadLocal}. This lets you check if the authorization matches the fake
+ * authorization stored in the server.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class PermissionChecker {
 
 	/**
-	 * Checks if the "Authorization" HTTP header matches the system environment
-	 * variable {@code APIO_AUTH}.
+	 * Returns {@code true} if the HTTP authorization header matches the system
+	 * environment variable {@code LIFERAY_APIO_AUTH}.
 	 *
-	 * @return {@code true} if both the HTTP header and the env. var. are equal;
-	 *         {@code false} otherwise
-	 * @review
+	 * @return {@code true} if the HTTP authorization header equals {@code
+	 *         LIFERAY_APIO_AUTH}; {@code false} otherwise
 	 */
 	public static boolean hasPermission(Credentials credentials) {
 		String authorization = System.getenv("LIFERAY_APIO_AUTH");

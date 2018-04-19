@@ -7,8 +7,7 @@ create table LayoutPageTemplateCollection (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description STRING null,
-	type_ INTEGER
+	description STRING null
 );
 
 create table LayoutPageTemplateEntry (
@@ -21,7 +20,9 @@ create table LayoutPageTemplateEntry (
 	modifiedDate DATE null,
 	layoutPageTemplateCollectionId LONG,
 	classNameId LONG,
+	classTypeId LONG,
 	name VARCHAR(75) null,
+	type_ INTEGER,
 	htmlPreviewEntryId LONG,
 	defaultTemplate BOOLEAN
 );

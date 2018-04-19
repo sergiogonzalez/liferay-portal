@@ -64,7 +64,7 @@ public class GetFileSetTask extends Task {
 		List<Path> classPaths = new ArrayList<>();
 		List<Path> srcPaths = new ArrayList<>();
 
-		File baseDir = new File(_rootDir);
+		File baseDir = new File(_rootDirName);
 
 		Set<String> missingClassNames = _getMissingClassNames(
 			baseDir, classNames, classPaths, srcPaths);
@@ -88,7 +88,8 @@ public class GetFileSetTask extends Task {
 		for (Path classPath : classPaths) {
 			String classPathString = String.valueOf(classPath);
 
-			classPathString = classPathString.substring(_rootDir.length() + 1);
+			classPathString = classPathString.substring(
+				_rootDirName.length() + 1);
 
 			classFileSet.setIncludes(classPathString);
 		}
@@ -121,7 +122,7 @@ public class GetFileSetTask extends Task {
 			}
 
 			srcPathString = srcPathString.substring(
-				_rootDir.length() + 1, index);
+				_rootDirName.length() + 1, index);
 
 			srcDirSet.setIncludes(srcPathString);
 		}
@@ -135,8 +136,8 @@ public class GetFileSetTask extends Task {
 		_classNames = classNames;
 	}
 
-	public void setRootDir(String rootDir) {
-		_rootDir = rootDir;
+	public void setRootDir(String rootDirName) {
+		_rootDirName = rootDirName;
 	}
 
 	private Set<String> _getMissingClassNames(
@@ -165,7 +166,9 @@ public class GetFileSetTask extends Task {
 
 						String fileName = fileNamePath.toString();
 
-						if (_isSkip(fileName)) {
+						Path parentDir = path.getParent();
+
+						if (_isSkip(fileName, parentDir.toString())) {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 
@@ -251,8 +254,12 @@ public class GetFileSetTask extends Task {
 		return true;
 	}
 
-	private boolean _isSkip(String fileName) {
-		if (fileName.startsWith(".") || _skipFileNames.contains(fileName)) {
+	private boolean _isSkip(String fileName, String parentDirName) {
+		if (fileName.startsWith(".") ||
+			_skipModuleFileNames.contains(fileName) ||
+			(_skipFileNames.contains(fileName) &&
+			 parentDirName.equals(_rootDirName))) {
+
 			return true;
 		}
 
@@ -267,10 +274,11 @@ public class GetFileSetTask extends Task {
 
 	private static final List<String> _skipFileNames = Arrays.asList(
 		"benchmarks", "definitions", "gradle", "lib", "nbproject",
-		"node_modules", "oss-licenses", "portal-client", "readme", "sql",
-		"tools");
+		"oss-licenses", "portal-client", "readme", "sql", "tools");
+	private static final List<String> _skipModuleFileNames = Arrays.asList(
+		"node_modules");
 
 	private String _classNames;
-	private String _rootDir;
+	private String _rootDirName;
 
 }

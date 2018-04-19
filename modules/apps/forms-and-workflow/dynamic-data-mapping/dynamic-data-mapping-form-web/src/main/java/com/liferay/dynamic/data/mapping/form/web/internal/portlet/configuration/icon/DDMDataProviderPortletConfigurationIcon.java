@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN},
+	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 	service = PortletConfigurationIcon.class
 )
 public class DDMDataProviderPortletConfigurationIcon
@@ -74,7 +74,7 @@ public class DDMDataProviderPortletConfigurationIcon
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.NORMAL);
-			portletURL.setParameter("redirect", getRedirectURL(portletRequest));
+			portletURL.setParameter("backURL", getBackURL(portletRequest));
 		}
 		catch (WindowStateException wse) {
 			_log.error(wse);
@@ -103,16 +103,16 @@ public class DDMDataProviderPortletConfigurationIcon
 		return false;
 	}
 
-	protected String getMessageKey() {
-		return "data-providers";
-	}
-
-	protected String getRedirectURL(PortletRequest portletRequest) {
+	protected String getBackURL(PortletRequest portletRequest) {
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		return redirectURL.toString();
+	}
+
+	protected String getMessageKey() {
+		return "data-providers";
 	}
 
 	@Reference(

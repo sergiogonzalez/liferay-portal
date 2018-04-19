@@ -14,41 +14,33 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Carlos Lancha
  */
 public class DropdownCheckboxItem extends DropdownItem {
 
 	public DropdownCheckboxItem() {
-		super("checkbox");
+		this(null);
 	}
 
-	public String getInputName() {
-		return _inputName;
-	}
+	public DropdownCheckboxItem(HttpServletRequest request) {
+		super(request);
 
-	public String getInputValue() {
-		return _inputValue;
-	}
-
-	public boolean isChecked() {
-		return _checked;
+		put("type", "checkbox");
 	}
 
 	public void setChecked(boolean checked) {
-		_checked = checked;
+		put("checked", checked);
 	}
 
 	public void setInputName(String inputName) {
-		_inputName = inputName;
+		put("inputName", inputName);
 	}
 
 	public void setInputValue(String inputValue) {
-		_inputValue = inputValue;
+		put("inputValue", inputValue);
 	}
-
-	private boolean _checked;
-	private String _inputName;
-	private String _inputValue;
 
 }

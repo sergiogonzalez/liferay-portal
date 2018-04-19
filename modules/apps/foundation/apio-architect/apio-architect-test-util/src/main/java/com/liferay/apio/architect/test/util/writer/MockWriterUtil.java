@@ -104,9 +104,8 @@ public class MockWriterUtil {
 	}
 
 	/**
-	 * Returns a mock {@link
-	 * SingleModel} (with the provided
-	 * identifier as its ID) for an identifier class.
+	 * Returns a mock {@link SingleModel} (with the provided identifier as its
+	 * ID) for an identifier class.
 	 *
 	 * @param  identifier the single model's identifier
 	 * @param  identifierClass the identifier class

@@ -35,49 +35,56 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	<portlet:param name="mvcPath" value="/merge_tag.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= mergeURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
+<liferay-frontend:edit-form
+	action="<%= mergeURL %>"
+	method="post"
+	name="fm"
+	onSubmit="event.preventDefault();"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<label for="<portlet:namespace />assetTagsSelector">
-				<liferay-ui:message key="tags" />
-			</label>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<label for="<portlet:namespace />assetTagsSelector">
+					<liferay-ui:message key="tags" />
+				</label>
 
-			<div class="button-holder">
-				<liferay-asset:asset-tags-selector
-					addCallback="onAddTag"
-					allowAddEntry="<%= false %>"
-					hiddenInput="mergeTagNames"
-					id="assetTagsSelector"
-					removeCallback="onRemoveTag"
-					tagNames="<%= StringUtil.merge(assetTagsDisplayContext.getMergeTagNames()) %>"
-				/>
-			</div>
+				<div class="button-holder">
+					<liferay-asset:asset-tags-selector
+						addCallback="onAddTag"
+						allowAddEntry="<%= false %>"
+						hiddenInput="mergeTagNames"
+						id="assetTagsSelector"
+						removeCallback="onRemoveTag"
+						tagNames="<%= StringUtil.merge(assetTagsDisplayContext.getMergeTagNames()) %>"
+					/>
+				</div>
 
-			<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
+				<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
 
-				<%
-				for (String tagName : assetTagsDisplayContext.getMergeTagNames()) {
-				%>
+					<%
+					for (String tagName : assetTagsDisplayContext.getMergeTagNames()) {
+					%>
 
-					<aui:option label="<%= tagName %>" />
+						<aui:option label="<%= tagName %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+				</aui:select>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script sandbox="<%= true %>">
 	var form = $('#<portlet:namespace />fm');

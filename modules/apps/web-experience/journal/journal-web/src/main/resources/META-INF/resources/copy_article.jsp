@@ -34,36 +34,42 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 	<portlet:param name="mvcPath" value="/copy_article.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyArticleURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= copyArticleURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="oldArticleId" type="hidden" value="<%= oldArticleId %>" />
 	<aui:input name="version" type="hidden" value="<%= version %>" />
 
-	<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
-	<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
+	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
+		<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
 
-			<c:choose>
-				<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
-					<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
+				<c:choose>
+					<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
+						<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
 
-					<aui:input name="newArticleId" type="hidden" />
-					<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
-				</c:otherwise>
-			</c:choose>
-		</aui:fieldset>
-	</aui:fieldset-group>
+						<aui:input name="newArticleId" type="hidden" />
+						<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" value="copy" />
 
 		<aui:button href="<%= redirect %>" value="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

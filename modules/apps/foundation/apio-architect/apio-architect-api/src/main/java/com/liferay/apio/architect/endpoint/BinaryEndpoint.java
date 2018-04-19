@@ -16,11 +16,10 @@ package com.liferay.apio.architect.endpoint;
 
 import static com.liferay.apio.architect.endpoint.ExceptionSupplierUtil.notFound;
 
+import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.single.model.SingleModel;
-
-import java.io.InputStream;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -58,7 +57,7 @@ public class BinaryEndpoint {
 	 */
 	@GET
 	@Path("{name}/{id}/{binaryId}")
-	public Try<InputStream> getCollectionItemInputStreamTry(
+	public Try<BinaryFile> getCollectionItemBinaryFileTry(
 		@PathParam("name") String name, @PathParam("id") String id,
 		@PathParam("binaryId") String binaryId) {
 

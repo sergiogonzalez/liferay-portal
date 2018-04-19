@@ -1160,7 +1160,7 @@ public class PortalImpl implements Portal {
 	public long[] getAncestorSiteGroupIds(long groupId) {
 		int i = 0;
 
-		Set<Group> groups = doGetAncestorSiteGroups(groupId, false);
+		Set<Group> groups = getAncestorSiteGroups(groupId, false);
 
 		long[] groupIds = new long[groups.size()];
 
@@ -1859,14 +1859,14 @@ public class PortalImpl implements Portal {
 
 		Set<Group> groups = new LinkedHashSet<>();
 
-		Group siteGroup = doGetCurrentSiteGroup(groupId);
+		Group siteGroup = getCurrentSiteGroup(groupId);
 
 		if (siteGroup != null) {
 			groups.add(siteGroup);
 		}
 
 		groups.addAll(
-			doGetAncestorSiteGroups(
+			getAncestorSiteGroups(
 				groupId, checkContentSharingWithChildrenEnabled));
 
 		return new ArrayList<>(groups);
@@ -3211,16 +3211,17 @@ public class PortalImpl implements Portal {
 			return themeDisplay.getPathMain() + PATH_PORTAL_LAYOUT;
 		}
 
-		if (!layout.isTypeURL()) {
-			String layoutFriendlyURL = getLayoutFriendlyURL(
-				layout, themeDisplay);
+		if (layout.isTypeURL()) {
+			return getLayoutActualURL(layout);
+		}
 
-			if (Validator.isNotNull(layoutFriendlyURL)) {
-				layoutFriendlyURL = addPreservedParameters(
-					themeDisplay, layout, layoutFriendlyURL, doAsUser);
+		String layoutFriendlyURL = getLayoutFriendlyURL(layout, themeDisplay);
 
-				return layoutFriendlyURL;
-			}
+		if (Validator.isNotNull(layoutFriendlyURL)) {
+			layoutFriendlyURL = addPreservedParameters(
+				themeDisplay, layout, layoutFriendlyURL, doAsUser);
+
+			return layoutFriendlyURL;
 		}
 
 		String layoutURL = getLayoutActualURL(layout);
@@ -3570,7 +3571,9 @@ public class PortalImpl implements Portal {
 
 		String contextPath = getPathContext();
 
-		String requestURI = request.getRequestURI();
+		HttpServletRequest originalRequest = getOriginalServletRequest(request);
+
+		String requestURI = originalRequest.getRequestURI();
 
 		if (Validator.isNotNull(contextPath) &&
 			requestURI.contains(contextPath)) {
@@ -4072,7 +4075,12 @@ public class PortalImpl implements Portal {
 		}
 
 		if (inetSocketAddress == null) {
-			return -1;
+			if (secure) {
+				return PropsValues.WEB_SERVER_HTTPS_PORT;
+			}
+			else {
+				return PropsValues.WEB_SERVER_HTTP_PORT;
+			}
 		}
 
 		return inetSocketAddress.getPort();
@@ -4897,7 +4905,7 @@ public class PortalImpl implements Portal {
 
 		Set<Group> groups = new LinkedHashSet<>();
 
-		Group siteGroup = doGetCurrentSiteGroup(groupId);
+		Group siteGroup = getCurrentSiteGroup(groupId);
 
 		if (siteGroup != null) {
 
@@ -4935,7 +4943,7 @@ public class PortalImpl implements Portal {
 		if (sitesContentSharingWithChildrenEnabled !=
 				Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
 
-			groups.addAll(doGetAncestorSiteGroups(groupId, true));
+			groups.addAll(getAncestorSiteGroups(groupId, true));
 		}
 
 		Iterator<Group> iterator = groups.iterator();
@@ -7470,7 +7478,78 @@ public class PortalImpl implements Portal {
 		return _buildI18NPath(languageId, locale);
 	}
 
-	protected Set<Group> doGetAncestorSiteGroups(
+	protected long doGetPlidFromPortletId(
+		long groupId, boolean privateLayout, String portletId) {
+
+		long scopeGroupId = groupId;
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (group.isLayout()) {
+				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+					group.getClassPK());
+
+				groupId = scopeLayout.getGroupId();
+			}
+		}
+		catch (Exception e) {
+		}
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+
+		long plid = getPlidFromPortletId(layouts, portletId, scopeGroupId);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_FULL_PAGE_APPLICATION);
+
+		plid = getPlidFromPortletId(layouts, portletId, scopeGroupId);
+
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			return plid;
+		}
+
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.TYPE_PANEL);
+
+		return getPlidFromPortletId(layouts, portletId, scopeGroupId);
+	}
+
+	protected List<Portlet> filterControlPanelPortlets(
+		Set<Portlet> portlets, ThemeDisplay themeDisplay) {
+
+		List<Portlet> filteredPortlets = new ArrayList<>(portlets);
+
+		Iterator<Portlet> itr = filteredPortlets.iterator();
+
+		while (itr.hasNext()) {
+			Portlet portlet = itr.next();
+
+			try {
+				if (!portlet.isActive() || portlet.isInstanceable() ||
+					!PortletPermissionUtil.hasControlPanelAccessPermission(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(), portlet)) {
+
+					itr.remove();
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				itr.remove();
+			}
+		}
+
+		return filteredPortlets;
+	}
+
+	protected Set<Group> getAncestorSiteGroups(
 		long groupId, boolean checkContentSharingWithChildrenEnabled) {
 
 		Group siteGroup = _getSiteGroup(groupId);
@@ -7527,84 +7606,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return groups;
-	}
-
-	protected Group doGetCurrentSiteGroup(long groupId) throws PortalException {
-		Group siteGroup = _getSiteGroup(groupId);
-
-		if (!siteGroup.isLayoutPrototype()) {
-			return siteGroup;
-		}
-
-		return null;
-	}
-
-	protected long doGetPlidFromPortletId(
-		long groupId, boolean privateLayout, String portletId) {
-
-		long scopeGroupId = groupId;
-
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (group.isLayout()) {
-				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
-					group.getClassPK());
-
-				groupId = scopeLayout.getGroupId();
-			}
-		}
-		catch (Exception e) {
-		}
-
-		long plid = LayoutConstants.DEFAULT_PLID;
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
-
-		for (Layout layout : layouts) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			if (layoutTypePortlet.hasPortletId(portletId, true)) {
-				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
-					plid = layout.getPlid();
-
-					break;
-				}
-			}
-		}
-
-		return plid;
-	}
-
-	protected List<Portlet> filterControlPanelPortlets(
-		Set<Portlet> portlets, ThemeDisplay themeDisplay) {
-
-		List<Portlet> filteredPortlets = new ArrayList<>(portlets);
-
-		Iterator<Portlet> itr = filteredPortlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
-			try {
-				if (!portlet.isActive() || portlet.isInstanceable() ||
-					!PortletPermissionUtil.hasControlPanelAccessPermission(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(), portlet)) {
-
-					itr.remove();
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-
-				itr.remove();
-			}
-		}
-
-		return filteredPortlets;
 	}
 
 	protected Locale getAvailableLocale(long groupId, Locale locale) {
@@ -7730,6 +7731,16 @@ public class PortalImpl implements Portal {
 				companyId, GroupConstants.CONTROL_PANEL),
 			GroupLocalServiceUtil.fetchGroup(scopeGroupId), doAsGroupId,
 			portletId);
+	}
+
+	protected Group getCurrentSiteGroup(long groupId) throws PortalException {
+		Group siteGroup = _getSiteGroup(groupId);
+
+		if (!siteGroup.isLayoutPrototype()) {
+			return siteGroup;
+		}
+
+		return null;
 	}
 
 	protected long getDoAsUserId(
@@ -7869,6 +7880,23 @@ public class PortalImpl implements Portal {
 
 		return guestDefaultActions.toArray(
 			new String[guestDefaultActions.size()]);
+	}
+
+	protected long getPlidFromPortletId(
+		List<Layout> layouts, String portletId, long scopeGroupId) {
+
+		for (Layout layout : layouts) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (layoutTypePortlet.hasPortletId(portletId, true) &&
+				(getScopeGroupId(layout, portletId) == scopeGroupId)) {
+
+				return layout.getPlid();
+			}
+		}
+
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected String getPortletParam(HttpServletRequest request, String name) {

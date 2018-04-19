@@ -111,9 +111,8 @@ public class RepresentorTestUtil {
 	}
 
 	/**
-	 * Tests a {@code RelatedModel} with the provided {@link
-	 * Dummy}, key, identifier
-	 * class, and ID.
+	 * Tests a {@code RelatedModel} with the provided {@link Dummy}, key,
+	 * identifier class, and ID.
 	 *
 	 * @param relatedModel the related model
 	 * @param dummy the dummy instance

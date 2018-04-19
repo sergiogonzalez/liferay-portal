@@ -15,11 +15,10 @@
 package com.liferay.apio.architect.wiring.osgi.internal.alias;
 
 /**
- * Alias for a function that does not receive any parameter and does not return
- * anything.
+ * Provides an alias for a function that doesn't receive any parameters and
+ * doesn't return anything.
  *
  * @author Alejandro Hernández
- * @review
  */
 @FunctionalInterface
 public interface EmptyFunction {

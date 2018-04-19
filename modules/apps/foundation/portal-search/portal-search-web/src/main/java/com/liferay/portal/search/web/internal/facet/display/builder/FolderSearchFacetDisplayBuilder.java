@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
@@ -36,28 +37,25 @@ import java.util.stream.Stream;
 public class FolderSearchFacetDisplayBuilder {
 
 	public FolderSearchFacetDisplayContext build() {
-		boolean nothingSelected = isNothingSelected();
-
-		List<TermCollector> termCollectors = getTermsCollectors();
-
-		boolean renderNothing = false;
-
-		if (nothingSelected && termCollectors.isEmpty()) {
-			renderNothing = true;
-		}
-
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
 			new FolderSearchFacetDisplayContext();
 
-		folderSearchFacetDisplayContext.setNothingSelected(nothingSelected);
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				buildFolderSearchFacetTermDisplayContexts();
+
+		folderSearchFacetDisplayContext.setFolderSearchFacetTermDisplayContexts(
+			folderSearchFacetTermDisplayContexts);
+
+		folderSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
 		folderSearchFacetDisplayContext.setParameterName(_parameterName);
 		folderSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValueString());
 		folderSearchFacetDisplayContext.setParameterValues(
 			getParameterValueStrings());
-		folderSearchFacetDisplayContext.setRenderNothing(renderNothing);
-		folderSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts());
+		folderSearchFacetDisplayContext.setRenderNothing(
+			isRenderNothing(
+				getTermsCollectors(), folderSearchFacetTermDisplayContexts));
 
 		return folderSearchFacetDisplayContext;
 	}
@@ -93,18 +91,21 @@ public class FolderSearchFacetDisplayBuilder {
 	public void setParameterValues(String... parameterValues) {
 		Objects.requireNonNull(parameterValues);
 
-		Stream<String> parameterValuesStream = Stream.of(parameterValues);
-
-		Stream<Long> folderIdsStream = parameterValuesStream.map(
-			GetterUtil::getLong);
-
-		folderIdsStream = folderIdsStream.filter(folderId -> folderId > 0);
-
-		_selectedFolderIds = folderIdsStream.collect(Collectors.toList());
+		_selectedFolderIds = Stream.of(
+			parameterValues
+		).map(
+			GetterUtil::getLong
+		).filter(
+			folderId -> folderId > 0
+		).collect(
+			Collectors.toList()
+		);
 	}
 
-	protected FolderSearchFacetTermDisplayContext buildTermDisplayContext(
-		long folderId, String displayName, int frequency, boolean selected) {
+	protected FolderSearchFacetTermDisplayContext
+		buildFolderSearchFacetTermDisplayContext(
+			long folderId, String displayName, int frequency,
+			boolean selected) {
 
 		FolderSearchFacetTermDisplayContext
 			folderSearchFacetTermDisplayContext =
@@ -120,8 +121,8 @@ public class FolderSearchFacetDisplayBuilder {
 		return folderSearchFacetTermDisplayContext;
 	}
 
-	protected FolderSearchFacetTermDisplayContext buildTermDisplayContext(
-		TermCollector termCollector) {
+	protected FolderSearchFacetTermDisplayContext
+		buildFolderSearchFacetTermDisplayContext(TermCollector termCollector) {
 
 		long folderId = GetterUtil.getLong(termCollector.getTerm());
 
@@ -129,18 +130,18 @@ public class FolderSearchFacetDisplayBuilder {
 			return null;
 		}
 
-		return buildTermDisplayContext(
+		return buildFolderSearchFacetTermDisplayContext(
 			folderId, getDisplayName(folderId), termCollector.getFrequency(),
 			isSelected(folderId));
 	}
 
 	protected List<FolderSearchFacetTermDisplayContext>
-		buildTermDisplayContexts() {
+		buildFolderSearchFacetTermDisplayContexts() {
 
 		List<TermCollector> termCollectors = getTermsCollectors();
 
 		if (termCollectors.isEmpty()) {
-			return getEmptyTermDisplayContexts();
+			return getEmptyFolderSearchFacetTermDisplayContexts();
 		}
 
 		List<FolderSearchFacetTermDisplayContext>
@@ -161,8 +162,8 @@ public class FolderSearchFacetDisplayBuilder {
 			}
 
 			FolderSearchFacetTermDisplayContext
-				folderSearchFacetTermDisplayContext = buildTermDisplayContext(
-					termCollector);
+				folderSearchFacetTermDisplayContext =
+					buildFolderSearchFacetTermDisplayContext(termCollector);
 
 			if (folderSearchFacetTermDisplayContext != null) {
 				folderSearchFacetTermDisplayContexts.add(
@@ -183,21 +184,21 @@ public class FolderSearchFacetDisplayBuilder {
 		return StringPool.OPEN_BRACKET + folderId + StringPool.CLOSE_BRACKET;
 	}
 
-	protected FolderSearchFacetTermDisplayContext getEmptyTermDisplayContext(
-		long folderId) {
+	protected FolderSearchFacetTermDisplayContext
+		getEmptyFolderSearchFacetTermDisplayContext(long folderId) {
 
-		return buildTermDisplayContext(
+		return buildFolderSearchFacetTermDisplayContext(
 			folderId, getDisplayName(folderId), 0, true);
 	}
 
 	protected List<FolderSearchFacetTermDisplayContext>
-		getEmptyTermDisplayContexts() {
+		getEmptyFolderSearchFacetTermDisplayContexts() {
 
 		Stream<Long> folderIdsStream = _selectedFolderIds.stream();
 
 		Stream<FolderSearchFacetTermDisplayContext>
 			folderSearchFacetTermDisplayContextsStream = folderIdsStream.map(
-				this::getEmptyTermDisplayContext);
+				this::getEmptyFolderSearchFacetTermDisplayContext);
 
 		return folderSearchFacetTermDisplayContextsStream.collect(
 			Collectors.toList());
@@ -242,6 +243,21 @@ public class FolderSearchFacetDisplayBuilder {
 
 	protected boolean isNothingSelected() {
 		if (_selectedFolderIds.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isRenderNothing(
+		List<TermCollector> termCollectors,
+		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
+
+		if (isNothingSelected() && ListUtil.isEmpty(termCollectors)) {
+			return true;
+		}
+
+		if (ListUtil.isEmpty(termDisplayContexts)) {
 			return true;
 		}
 

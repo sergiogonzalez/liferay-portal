@@ -437,6 +437,14 @@ AUI.add(
 						instance.ratings = new A.ThumbRating(
 							{
 								boundingBox: '#' + namespace + 'ratingThumb',
+								cssClasses: {
+									down: '',
+									element: 'rating-off',
+									hover: 'rating-on',
+									off: 'rating-off',
+									on: 'rating-on',
+									up: ''
+								},
 								srcNode: '#' + namespace + 'ratingThumbContent'
 							}
 						).render();
@@ -551,7 +559,7 @@ AUI.add(
 
 								ratingThumbDown.attr('title', thumbDownMessage);
 
-								ratingThumbDown.html(thumbScore.negativeVotes);
+								ratingThumbDown.one('.votes').html(thumbScore.negativeVotes);
 							}
 
 							if (ratingThumbDown && ratingThumbUpCssClassOn) {
@@ -570,7 +578,7 @@ AUI.add(
 							if (ratingThumbUp) {
 								ratingThumbUp.attr('title', thumbUpMessage);
 
-								ratingThumbUp.html(thumbScore.positiveVotes);
+								ratingThumbUp.one('.votes').html(thumbScore.positiveVotes);
 							}
 						}
 					}
@@ -616,6 +624,14 @@ AUI.add(
 						instance.ratings = new LikeRatingImpl(
 							{
 								boundingBox: '#' + namespace + 'ratingLike',
+								cssClasses: {
+									down: '',
+									element: 'rating-off',
+									hover: 'rating-on',
+									off: 'rating-off',
+									on: 'rating-on',
+									up: ''
+								},
 								srcNode: '#' + namespace + 'ratingLikeContent'
 							}
 						).render();

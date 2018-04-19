@@ -16,7 +16,8 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,6 +42,35 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2ScopeGrantLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		getService()
+			.addOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	public static void addOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId,
+		com.liferay.oauth2.provider.model.OAuth2ScopeGrant oAuth2ScopeGrant) {
+		getService()
+			.addOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrant);
+	}
+
+	public static void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId,
+		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		getService()
+			.addOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrants);
+	}
+
+	public static void addOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		getService()
+			.addOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
+	}
 
 	/**
 	* Adds the o auth2 scope grant to the database. Also notifies the appropriate model listeners.
@@ -53,6 +83,12 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().addOAuth2ScopeGrant(oAuth2ScopeGrant);
 	}
 
+	public static void clearOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		getService()
+			.clearOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
 	/**
 	* Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
 	*
@@ -62,6 +98,47 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 	public static com.liferay.oauth2.provider.model.OAuth2ScopeGrant createOAuth2ScopeGrant(
 		long oAuth2ScopeGrantId) {
 		return getService().createOAuth2ScopeGrant(oAuth2ScopeGrantId);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2ScopeGrant createOAuth2ScopeGrant(
+		long companyId, long oAuth2ApplicationScopeAliasesId,
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.String scope)
+		throws com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException {
+		return getService()
+				   .createOAuth2ScopeGrant(companyId,
+			oAuth2ApplicationScopeAliasesId, applicationName,
+			bundleSymbolicName, scope);
+	}
+
+	public static void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		getService()
+			.deleteOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	public static void deleteOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId,
+		com.liferay.oauth2.provider.model.OAuth2ScopeGrant oAuth2ScopeGrant) {
+		getService()
+			.deleteOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrant);
+	}
+
+	public static void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId,
+		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		getService()
+			.deleteOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrants);
+	}
+
+	public static void deleteOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		getService()
+			.deleteOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
 	}
 
 	/**
@@ -188,6 +265,44 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return getService()
+				   .getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end) {
+		return getService()
+				   .getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			start, end);
+	}
+
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> orderByComparator) {
+		return getService()
+				   .getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			start, end, orderByComparator);
+	}
+
+	public static int getOAuth2AuthorizationOAuth2ScopeGrantsCount(
+		long oAuth2AuthorizationId) {
+		return getService()
+				   .getOAuth2AuthorizationOAuth2ScopeGrantsCount(oAuth2AuthorizationId);
+	}
+
+	/**
+	* Returns the oAuth2AuthorizationIds of the o auth2 authorizations associated with the o auth2 scope grant.
+	*
+	* @param oAuth2ScopeGrantId the oAuth2ScopeGrantId of the o auth2 scope grant
+	* @return long[] the oAuth2AuthorizationIds of o auth2 authorizations associated with the o auth2 scope grant
+	*/
+	public static long[] getOAuth2AuthorizationPrimaryKeys(
+		long oAuth2ScopeGrantId) {
+		return getService().getOAuth2AuthorizationPrimaryKeys(oAuth2ScopeGrantId);
+	}
+
 	/**
 	* Returns the o auth2 scope grant with the primary key.
 	*
@@ -217,6 +332,22 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().getOAuth2ScopeGrants(start, end);
 	}
 
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long oAuth2ApplicationScopeAliasesId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> orderByComparator) {
+		return getService()
+				   .getOAuth2ScopeGrants(oAuth2ApplicationScopeAliasesId,
+			start, end, orderByComparator);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> getOAuth2ScopeGrants(
+		long companyId, java.lang.String applicationName,
+		java.lang.String bundleSymbolicName, java.lang.String accessTokenContent) {
+		return getService()
+				   .getOAuth2ScopeGrants(companyId, applicationName,
+			bundleSymbolicName, accessTokenContent);
+	}
+
 	/**
 	* Returns the number of o auth2 scope grants.
 	*
@@ -241,6 +372,35 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> grantLiferayOAuth2Scopes(
+		long oAuth2AuthorizationId,
+		java.util.Collection<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope> liferayOAuth2Scopes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .grantLiferayOAuth2Scopes(oAuth2AuthorizationId,
+			liferayOAuth2Scopes);
+	}
+
+	public static boolean hasOAuth2AuthorizationOAuth2ScopeGrant(
+		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
+		return getService()
+				   .hasOAuth2AuthorizationOAuth2ScopeGrant(oAuth2AuthorizationId,
+			oAuth2ScopeGrantId);
+	}
+
+	public static boolean hasOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId) {
+		return getService()
+				   .hasOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
+	}
+
+	public static void setOAuth2AuthorizationOAuth2ScopeGrants(
+		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
+		getService()
+			.setOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId,
+			oAuth2ScopeGrantIds);
+	}
+
 	/**
 	* Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -256,6 +416,17 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<OAuth2ScopeGrantLocalService, OAuth2ScopeGrantLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(OAuth2ScopeGrantLocalService.class);
+	private static ServiceTracker<OAuth2ScopeGrantLocalService, OAuth2ScopeGrantLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(OAuth2ScopeGrantLocalService.class);
+
+		ServiceTracker<OAuth2ScopeGrantLocalService, OAuth2ScopeGrantLocalService> serviceTracker =
+			new ServiceTracker<OAuth2ScopeGrantLocalService, OAuth2ScopeGrantLocalService>(bundle.getBundleContext(),
+				OAuth2ScopeGrantLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

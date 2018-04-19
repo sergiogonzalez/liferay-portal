@@ -14,8 +14,9 @@
 
 package com.liferay.apio.architect.functional;
 
+import com.liferay.apio.architect.consumer.throwable.ThrowableConsumer;
 import com.liferay.apio.architect.exception.FalsePredicateException;
-import com.liferay.apio.architect.function.ThrowableFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.supplier.ThrowableSupplier;
 
 import java.io.Closeable;
@@ -188,7 +189,7 @@ public abstract class Try<T> {
 	 *
 	 * <p>
 	 * If {@code successFunction} throws an {@code Exception}, this method
-	 * returns the result of applying {@code successFunction} to the new {@code
+	 * returns the result of applying {@code failureFunction} to the new {@code
 	 * Exception}.
 	 * </p>
 	 *
@@ -434,6 +435,26 @@ public abstract class Try<T> {
 	public abstract Optional<T> toOptional();
 
 	/**
+	 * Applies {@code failureConsumer} if this is a {@code Failure}, or {@code
+	 * successConsumer} if this is a {@code Success}.
+	 *
+	 * <p>
+	 * If {@code successConsumer} throws an {@code Exception}, this method
+	 * returns the result of applying {@code failureConsumer} to the new {@code
+	 * Exception}.
+	 * </p>
+	 *
+	 * @param  failureConsumer the consumer to apply when this {@code Try} is a
+	 *         {@code Failure}
+	 * @param  successConsumer the consumer to apply when this {@code Try} is a
+	 *         {@code Success}
+	 * @review
+	 */
+	public abstract void voidFold(
+		Consumer<Exception> failureConsumer,
+		ThrowableConsumer<T> successConsumer);
+
+	/**
 	 * The implementation of {@code Try}'S failure case. Don't try to
 	 * instantiate this class directly. To instantiate this class when you don't
 	 * know if the operation will fail, use {@link
@@ -586,6 +607,16 @@ public abstract class Try<T> {
 			return Optional.empty();
 		}
 
+		@Override
+		public void voidFold(
+			Consumer<Exception> failureConsumer,
+			ThrowableConsumer<T> successConsumer) {
+
+			Objects.requireNonNull(failureConsumer);
+
+			failureConsumer.accept(_exception);
+		}
+
 		private Failure(Exception exception) {
 			_exception = exception;
 		}
@@ -607,10 +638,15 @@ public abstract class Try<T> {
 		public Try<T> filter(Predicate<T> predicate) {
 			Objects.requireNonNull(predicate);
 
-			if (predicate.test(_value)) {
-				return this;
+			try {
+				if (predicate.test(_value)) {
+					return this;
+				}
+				else {
+					return Try.fail(new FalsePredicateException(_value));
+				}
 			}
-			else {
+			catch (Exception e) {
 				return Try.fail(new FalsePredicateException(_value));
 			}
 		}
@@ -635,6 +671,7 @@ public abstract class Try<T> {
 			ThrowableFunction<T, S> successFunction) {
 
 			Objects.requireNonNull(successFunction);
+			Objects.requireNonNull(failureFunction);
 
 			try {
 				return successFunction.apply(_value);
@@ -753,6 +790,22 @@ public abstract class Try<T> {
 		@Override
 		public Optional<T> toOptional() {
 			return Optional.ofNullable(_value);
+		}
+
+		@Override
+		public void voidFold(
+			Consumer<Exception> failureConsumer,
+			ThrowableConsumer<T> successConsumer) {
+
+			Objects.requireNonNull(successConsumer);
+			Objects.requireNonNull(failureConsumer);
+
+			try {
+				successConsumer.accept(_value);
+			}
+			catch (Exception e) {
+				failureConsumer.accept(e);
+			}
 		}
 
 		private Success(T value) {

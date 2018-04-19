@@ -19,9 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -53,7 +51,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		String cleanUpMethodContent = _getCleanUpMethodContent(javaClass);
 
 		if (cleanUpMethodContent != null) {
-			_checkVariableValues(fileName, cleanUpMethodContent, javaClass);
+			_checkVariables(fileName, cleanUpMethodContent, javaClass);
 		}
 
 		return javaTerm.getContent();
@@ -64,11 +62,34 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private void _checkVariableValues(
+	private void _checkMissingVariable(
+		String fileName, String variableName, JavaClass javaClass) {
+
+		String setterMethodName = "set" + variableName.substring(1);
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!javaTerm.isJavaMethod()) {
+				continue;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					javaTerm.getName(), setterMethodName)) {
+
+				addMessage(
+					fileName,
+					"Variable '" + variableName +
+						"' is missing in method 'cleanUp'");
+
+				return;
+			}
+		}
+	}
+
+	private void _checkVariables(
 		String fileName, String cleanUpMethodContent, JavaClass javaClass) {
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaVariable)) {
+			if (!javaTerm.isJavaVariable()) {
 				continue;
 			}
 
@@ -81,6 +102,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 			String variableName = javaTerm.getName();
 
 			if (!cleanUpMethodContent.contains(variableName + " =")) {
+				_checkMissingVariable(fileName, variableName, javaClass);
+
 				continue;
 			}
 
@@ -156,7 +179,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 	private String _getCleanUpMethodContent(JavaClass javaClass) {
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!(javaTerm instanceof JavaMethod)) {
+			if (!javaTerm.isJavaMethod()) {
 				continue;
 			}
 

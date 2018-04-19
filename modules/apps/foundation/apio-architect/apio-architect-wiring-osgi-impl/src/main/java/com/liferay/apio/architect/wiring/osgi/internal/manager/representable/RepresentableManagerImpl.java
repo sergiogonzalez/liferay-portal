@@ -20,6 +20,9 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.cache.Mana
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
+import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
+
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.logger.ApioLogger;
 import com.liferay.apio.architect.related.RelatedCollection;
@@ -117,18 +120,20 @@ public class RepresentableManagerImpl
 					Map::entrySet
 				).map(
 					Collection::stream
-				).flatMap(
-					stream -> stream.filter(
-						entry -> Objects.equals(entry.getValue(), name)
-					).map(
-						Entry::getKey
-					).findFirst()
-				);
+				).orElseGet(
+					Stream::empty
+				).filter(
+					entry -> Objects.equals(entry.getValue(), name)
+				).map(
+					Entry::getKey
+				).findFirst();
 
-				if (optional.isPresent()) {
-					_apioLogger.warning(
-						_getDuplicateErrorMessage(
-							clazz, name, classNameOptional.get()));
+				if (classNameOptional.isPresent()) {
+					if (_apioLogger != null) {
+						_apioLogger.warning(
+							_getDuplicateErrorMessage(
+								clazz, name, classNameOptional.get()));
+					}
 
 					return;
 				}
@@ -187,7 +192,7 @@ public class RepresentableManagerImpl
 		return representable.representor(builder);
 	}
 
-	@Reference
+	@Reference(cardinality = OPTIONAL, policyOption = GREEDY)
 	private ApioLogger _apioLogger;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.fragment.display.web.internal.display.context;
 
 import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayWebKeys;
+import com.liferay.fragment.display.web.internal.util.SoyContextFactoryUtil;
 import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -23,8 +24,13 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
@@ -65,6 +71,9 @@ public class FragmentEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
+
+		_itemSelector = (ItemSelector)renderRequest.getAttribute(
+			FragmentEntryDisplayWebKeys.ITEM_SELECTOR);
 	}
 
 	public String getEventName() {
@@ -143,7 +152,7 @@ public class FragmentEntryDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		SoyContext soyContext = new SoyContext();
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		PortletURL editFragmentEntryLinkURL = _renderResponse.createActionURL();
 
@@ -163,8 +172,15 @@ public class FragmentEntryDisplayContext {
 
 		soyContext.put(
 			"editFragmentEntryLinkURL", editFragmentEntryLinkURL.toString());
-
 		soyContext.put("fragmentEntryLink", _getSoyContextFragmentEntryLink());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_renderRequest),
+			_renderResponse.getNamespace() + "selectImage",
+			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
+
+		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
+
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"spritemap",
@@ -207,10 +223,26 @@ public class FragmentEntryDisplayContext {
 			portletDisplay.getId(), ActionKeys.CONFIGURATION);
 	}
 
+	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		return imageItemSelectorCriterion;
+	}
+
 	private SoyContext _getSoyContextFragmentEntryLink()
 		throws PortalException {
 
-		SoyContext soyContext = new SoyContext();
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 
@@ -237,8 +269,24 @@ public class FragmentEntryDisplayContext {
 		return soyContext;
 	}
 
+	private ItemSelectorCriterion _getURLItemSelectorCriterion() {
+		ItemSelectorCriterion urlItemSelectorCriterion =
+			new URLItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		return urlItemSelectorCriterion;
+	}
+
 	private Long _fragmentEntryId;
 	private Long _fragmentEntryLinkId;
+	private final ItemSelector _itemSelector;
 	private final PortletPreferences _portletPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

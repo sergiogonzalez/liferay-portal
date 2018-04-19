@@ -16,7 +16,7 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -43,14 +43,10 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String uadRegistryKey = ParamUtil.getString(
-			actionRequest, "uadRegistryKey");
+		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		UADEntityAnonymizer uadEntityAnonymizer =
-			uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
-
-		uadEntityAnonymizer.autoAnonymize(
-			getUADEntity(actionRequest, uadRegistryKey));
+		uadAnonymizer.autoAnonymize(
+			getEntity(actionRequest), getSelectedUserId(actionRequest));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
