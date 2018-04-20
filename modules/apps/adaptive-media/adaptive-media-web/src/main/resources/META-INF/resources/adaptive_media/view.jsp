@@ -270,7 +270,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	function <portlet:namespace />deleteImageConfigurationEntries() {
 		var form = document.querySelector('#<portlet:namespace />fm');
 
-		if (form && confirm('<liferay-message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+		if (form && confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
 			submitForm(form);
 		}
 	}
