@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -77,7 +78,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public InputStream getContentStream() throws PortalException {
-		return getContentStream(getVersion());
+		return DLFileEntryLocalServiceUtil.getFileAsStream(
+			getFileEntryId(), getVersion());
 	}
 
 	@Override
