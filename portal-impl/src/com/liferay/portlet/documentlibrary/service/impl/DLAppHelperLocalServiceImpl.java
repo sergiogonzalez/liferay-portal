@@ -1103,9 +1103,11 @@ public class DLAppHelperLocalServiceImpl
 					fileEntry.getFileEntryId());
 
 				if (assetEntry != null) {
-					assetEntryLocalService.updateVisible(
+					assetEntryLocalService.updateEntry(
 						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId(), true);
+						assetEntry.getClassPK(), fileEntry.getCreateDate(),
+						assetEntry.getExpirationDate(),
+						assetEntry.getListable(), true);
 				}
 			}
 
