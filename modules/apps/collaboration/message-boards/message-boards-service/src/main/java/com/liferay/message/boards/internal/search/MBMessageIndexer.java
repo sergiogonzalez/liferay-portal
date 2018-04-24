@@ -14,15 +14,6 @@
 
 package com.liferay.message.boards.internal.search;
 
-import java.util.List;
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
@@ -42,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
@@ -49,6 +41,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
@@ -66,13 +59,20 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.List;
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,13 +93,12 @@ public class MBMessageIndexer
 	public MBMessageIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.ASSET_TAG_NAMES, Field.CLASS_NAME_ID, Field.CLASS_PK,
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, Field.UID);
-		
-		setDefaultSelectedLocalizedFieldNames(
-				Field.CONTENT, Field.TITLE);
-		
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
+			Field.UID);
+
+		setDefaultSelectedLocalizedFieldNames(Field.CONTENT, Field.TITLE);
+
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -258,9 +257,9 @@ public class MBMessageIndexer
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.CONTENT, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
-
 	}
 
 	@Override
@@ -282,22 +281,21 @@ public class MBMessageIndexer
 		Document document = getBaseModelDocument(CLASS_NAME, mbMessage);
 
 		document.addKeyword(Field.CATEGORY_ID, mbMessage.getCategoryId());
-		
+
 		for (Locale locale :
 				LanguageUtil.getAvailableLocales(mbMessage.getGroupId())) {
-			
+
 			String languageId = LocaleUtil.toLanguageId(locale);
-			
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					Field.CONTENT, languageId), processContent(mbMessage));			
 
 			document.addText(
-					LocalizationUtil.getLocalizedName(
-						Field.TITLE, languageId), mbMessage.getSubject());	
-			
+				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
+				processContent(mbMessage));
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				mbMessage.getSubject());
 		}
-		
+
 		document.addKeyword(
 			Field.ROOT_ENTRY_CLASS_PK, mbMessage.getRootMessageId());
 
