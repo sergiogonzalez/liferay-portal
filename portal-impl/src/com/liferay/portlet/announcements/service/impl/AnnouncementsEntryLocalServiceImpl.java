@@ -186,12 +186,15 @@ public class AnnouncementsEntryLocalServiceImpl
 	public void deleteEntries(long classNameId, long classPK)
 		throws PortalException {
 
-		List<AnnouncementsEntry> entries =
-			announcementsEntryPersistence.findByC_C(classNameId, classPK);
+		announcementsEntryPersistence.removeByC_C(classNameId, classPK);
+	}
 
-		for (AnnouncementsEntry entry : entries) {
-			deleteEntry(entry);
-		}
+	@Override
+	public void deleteEntries(long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		announcementsEntryPersistence.removeByC_C_C(
+			companyId, classNameId, classPK);
 	}
 
 	@Override
