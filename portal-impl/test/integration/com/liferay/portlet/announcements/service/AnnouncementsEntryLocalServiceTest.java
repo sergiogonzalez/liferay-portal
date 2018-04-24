@@ -200,7 +200,7 @@ public class AnnouncementsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetEntriesInDifferentCompanyWhenGeneralScope()
+	public void testGetEntriesInDifferentCompany()
 		throws Exception {
 
 		addEntry(0, 0);
@@ -216,21 +216,17 @@ public class AnnouncementsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetEntriesInSameCompanyWhenGeneralScope() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
+	public void testGetEntriesInSameCompany() throws Exception {
 		AnnouncementsEntry entry = addEntry(0, 0);
 
 		List<AnnouncementsEntry> entries =
 			AnnouncementsEntryLocalServiceUtil.getEntries(
-				group.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
+				TestPropsValues.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(entries.toString(), 1, entries.size());
 
-		AnnouncementsEntry finalEntry = entries.get(0);
-
-		Assert.assertEquals(entry.getEntryId(), finalEntry.getEntryId());
+		Assert.assertEquals(entry, entries.get(0));
 	}
 
 	protected AnnouncementsEntry addEntry(long classNameId, long classPK)
