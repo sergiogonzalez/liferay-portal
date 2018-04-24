@@ -200,9 +200,29 @@ public class AnnouncementsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetEntriesInDifferentCompany()
-		throws Exception {
+	public void testGetEntriesCountInDifferentCompany() throws Exception {
+		addEntry(0, 0);
 
+		Company company = CompanyTestUtil.addCompany();
+
+		int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(
+			company.getCompanyId(), 0, 0, false);
+
+		Assert.assertEquals(0, entriesCount);
+	}
+
+	@Test
+	public void testGetEntriesCountInSameCompany() throws Exception {
+		addEntry(0, 0);
+
+		int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(
+			TestPropsValues.getCompanyId(), 0, 0, false);
+
+		Assert.assertEquals(0, entriesCount);
+	}
+
+	@Test
+	public void testGetEntriesInDifferentCompany() throws Exception {
 		addEntry(0, 0);
 
 		Company company = CompanyTestUtil.addCompany();
