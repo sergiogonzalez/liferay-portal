@@ -78,13 +78,12 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public InputStream getContentStream() throws PortalException {
-		return DLFileEntryLocalServiceUtil.getFileAsStream(
-			getFileEntryId(), getVersion());
+		return getContentStream(getVersion());
 	}
 
 	@Override
 	public InputStream getContentStream(String version) throws PortalException {
-		return DLFileEntryServiceUtil.getFileAsStream(
+		return DLFileEntryLocalServiceUtil.getFileAsStream(
 			getFileEntryId(), version);
 	}
 
