@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.message.boards.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -73,15 +87,9 @@ public class MBMessageIndexerLocalizedTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Boolean approved = true;
-
-		String subject = "平家物語";
-		String body = "諸行無常";
-
 		MBTestUtil.addMessageWithWorkflow(
-				_group.getGroupId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, subject, body,
-				approved, serviceContext);
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			"平家物語", "諸行無常", true, serviceContext);
 
 		String searchTerm = "諸行";
 
@@ -103,23 +111,13 @@ public class MBMessageIndexerLocalizedTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Boolean approved = true;
-
-		String subject = "東京都";
-		String body = "渋谷";
+		MBTestUtil.addMessageWithWorkflow(
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			"東京都", "渋谷", true, serviceContext);
 
 		MBTestUtil.addMessageWithWorkflow(
-				_group.getGroupId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, subject, body,
-				approved, serviceContext);
-
-		String subject2 = "京都";
-		String body2 = "三年坂";
-
-		MBTestUtil.addMessageWithWorkflow(
-				_group.getGroupId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, subject2, body2,
-				approved, serviceContext);
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			"京都", "三年坂", true, serviceContext);
 
 		String searchTerm = "東京";
 
