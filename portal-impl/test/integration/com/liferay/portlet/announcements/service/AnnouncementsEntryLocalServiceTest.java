@@ -21,6 +21,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -213,12 +214,25 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInSameCompany() throws Exception {
+		resetCompanyEntries();
+
 		addEntry(0, 0);
 
 		int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(
 			TestPropsValues.getCompanyId(), 0, 0, false);
 
 		Assert.assertEquals(0, entriesCount);
+	}
+
+	protected void resetCompanyEntries() throws PortalException {
+		List<AnnouncementsEntry> entries =
+			AnnouncementsEntryLocalServiceUtil.getEntries(
+				TestPropsValues.getCompanyId(), 0, 0, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (AnnouncementsEntry entry : entries) {
+			AnnouncementsEntryLocalServiceUtil.deleteEntry(entry.getEntryId());
+		}
 	}
 
 	@Test
@@ -237,6 +251,8 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesInSameCompany() throws Exception {
+		resetCompanyEntries();
+
 		AnnouncementsEntry entry = addEntry(0, 0);
 
 		List<AnnouncementsEntry> entries =
