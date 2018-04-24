@@ -246,7 +246,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		}
 
 		return announcementsEntryFinder.findByScopes(
-			user.getCompanyId(),userId, scopes, displayDateMonth,
+			user.getCompanyId(), userId, scopes, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, alert, flagValue, start,
