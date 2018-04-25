@@ -127,6 +127,10 @@ if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || 
 	orderableHeaders.put("date", "modifiedDate");
 }
 
+if (navigation.equals("recent-changes")) {
+	orderByCol = "modifiedDate";
+}
+
 searchContainer.setOrderableHeaders(orderableHeaders);
 searchContainer.setOrderByCol(orderByCol);
 searchContainer.setOrderByType(orderByType);
