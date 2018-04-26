@@ -37,14 +37,12 @@
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
-			<div class="container-fluid-1280">
-				<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="emailFileEntryUpdatedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailFileEntryUpdatedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-				<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-			</div>
+			<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="emailFileEntryUpdatedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailFileEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
@@ -114,5 +112,7 @@
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
+
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
