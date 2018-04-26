@@ -117,5 +117,7 @@ boolean nodeInGroup = false;
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button disabled="<%= nodes.isEmpty() %>" type="submit" />
+
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
