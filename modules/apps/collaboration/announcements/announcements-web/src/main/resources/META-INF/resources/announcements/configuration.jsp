@@ -318,7 +318,7 @@ if (!roles.isEmpty()) {
 	pageDeltaInput.on(
 		'change',
 		function(event) {
-			modified(A.one('#<portlet:namespace />displaySettingsPanel'));
+			modified(A.one('#displaySettingsPanel'));
 		}
 	);
 </aui:script>
