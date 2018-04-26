@@ -38,6 +38,7 @@
 
 		<liferay-frontend:edit-form
 			action="<%= updateUserNotificationDeliveryURL %>"
+			fluid="<%= true %>"
 			name="fm"
 		>
 
