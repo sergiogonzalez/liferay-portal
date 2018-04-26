@@ -54,15 +54,13 @@ catch (NoSuchFolderException nsfe) {
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
-			<div class="container-fluid-1280">
-				<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-				<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-				<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
-			</div>
+			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+			<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
 			<liferay-ui:section>
 				<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
@@ -259,6 +257,8 @@ catch (NoSuchFolderException nsfe) {
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
+
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
