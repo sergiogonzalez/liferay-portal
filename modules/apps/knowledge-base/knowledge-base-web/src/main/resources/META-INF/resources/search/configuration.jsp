@@ -86,5 +86,6 @@ kbSearchPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSearch
 
 	<aui:button-row>
 		<aui:button type="submit" />
+		<aui:button type="cancel" />
 	</aui:button-row>
 </aui:form>

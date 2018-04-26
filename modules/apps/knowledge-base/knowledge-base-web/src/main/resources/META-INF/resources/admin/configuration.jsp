@@ -235,6 +235,7 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 
 	<aui:button-row>
 		<aui:button onClick='<%= renderResponse.getNamespace() + "save();" %>' value="save" />
+		<aui:button type="cancel" />
 	</aui:button-row>
 </aui:form>
 
