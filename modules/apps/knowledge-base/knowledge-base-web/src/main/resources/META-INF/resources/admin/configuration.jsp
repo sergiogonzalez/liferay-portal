@@ -227,6 +227,8 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button onClick='<%= renderResponse.getNamespace() + "save();" %>' value="save" />
+
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
