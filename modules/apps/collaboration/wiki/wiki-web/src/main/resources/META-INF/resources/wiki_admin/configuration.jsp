@@ -49,14 +49,12 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
-			<div class="container-fluid-1280">
-				<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-				<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-				<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
-			</div>
+			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+			<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
