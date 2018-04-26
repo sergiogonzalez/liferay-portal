@@ -38,14 +38,12 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<div class="container-fluid-1280">
-		<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-	</div>
+	<liferay-ui:error key="emailKBArticleAddedBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
