@@ -36,6 +36,7 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
+	fluid="<%= true %>"
 	method="post"
 	name="fm"
 >
