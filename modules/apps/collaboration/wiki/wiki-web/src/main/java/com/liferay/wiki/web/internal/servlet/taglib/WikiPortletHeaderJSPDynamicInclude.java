@@ -81,7 +81,7 @@ public class WikiPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/wiki/dynamic_include/portlet_header.jsp";
+		return "/dynamic_include/portlet_header.jsp";
 	}
 
 	@Override

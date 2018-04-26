@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/wiki/dynamic_include/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
