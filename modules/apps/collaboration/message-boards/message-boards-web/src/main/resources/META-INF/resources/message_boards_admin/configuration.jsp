@@ -52,15 +52,13 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
-			<div class="container-fluid-1280">
-				<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-				<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-				<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
-				<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
-				<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
-			</div>
+			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+			<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
+			<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
@@ -531,6 +529,8 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
+
+		<aui:button type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
