@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -93,6 +95,16 @@ public class BlogImagesDisplayContext {
 			searchContext.setFolderIds(
 				new long[] {attachmentsFolder.getFolderId()});
 			searchContext.setStart(searchContainer.getStart());
+
+			String orderByCol = ParamUtil.getString(
+				_request, "orderByCol", "title");
+			String orderByType = ParamUtil.getString(
+				_request, "orderByType", "asc");
+
+			Sort sort = new Sort(
+				orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
+
+			searchContext.setSorts(sort);
 
 			Folder folder = DLAppLocalServiceUtil.getFolder(
 				attachmentsFolder.getFolderId());

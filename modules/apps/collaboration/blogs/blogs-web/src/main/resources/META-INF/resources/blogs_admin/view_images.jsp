@@ -44,8 +44,6 @@ if (delta > 0) {
 	portletURL.setParameter("delta", String.valueOf(delta));
 }
 
-PortletURL sortURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
@@ -57,8 +55,6 @@ if (cur > 0) {
 	displayStyleURL.setParameter("cur", String.valueOf(cur));
 }
 
-String keywords = ParamUtil.getString(request, "keywords");
-
 SearchContainer blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
 
 blogImagesSearchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType));
@@ -68,39 +64,25 @@ blogImagesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderRespons
 BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
 
 blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
+
+BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
+	filterItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="images"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"title", "size"} %>'
-				portletURL="<%= sortURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-	</c:if>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteImages();" %>'
-			icon="times"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= false %>"
+	showInfoButton="<%= false %>"
+	sortingOrder="<%= blogImagesManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(blogImagesManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= blogImagesSearchContainer.getTotal() %>"
+	viewTypes="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <div class="container-fluid-1280 main-content-body">
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
@@ -146,5 +128,4 @@ blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 			submitForm(form);
 		}
 	}
-
 </aui:script>

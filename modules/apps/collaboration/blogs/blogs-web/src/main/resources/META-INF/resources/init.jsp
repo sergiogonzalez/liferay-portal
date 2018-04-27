@@ -66,6 +66,7 @@ page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesDisplayContext" %><%@
+page import="com.liferay.blogs.web.internal.display.context.BlogImagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
