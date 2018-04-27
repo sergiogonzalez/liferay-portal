@@ -61,6 +61,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 SearchContainer blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
 
+blogImagesSearchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType));
+
+blogImagesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
 BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
 
 blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
@@ -108,8 +112,6 @@ blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 
 		<liferay-ui:search-container
 			id="images"
-			orderByComparator="<%= DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType) %>"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= blogImagesSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
@@ -146,6 +148,3 @@ blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 	}
 
 </aui:script>
-
-<%!
-%>
