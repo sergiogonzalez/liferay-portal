@@ -17,8 +17,6 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-Folder attachmentsFolder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -63,57 +61,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 SearchContainer blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
 
-int blogEntryImagesTotal = 0;
-List blogEntryImagesResults = null;
+BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
 
-if (Validator.isNull(keywords)) {
-	blogEntryImagesTotal = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, attachmentsFolder.getFolderId());
-
-	blogImagesSearchContainer.setTotal(blogEntryImagesTotal);
-
-	blogEntryImagesResults = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, attachmentsFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, blogImagesSearchContainer.getStart(), blogImagesSearchContainer.getEnd(), blogImagesSearchContainer.getOrderByComparator());
-
-	blogImagesSearchContainer.setResults(blogEntryImagesResults);
-}
-else {
-	SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-	searchContext.setEnd(blogImagesSearchContainer.getEnd());
-	searchContext.setFolderIds(new long[] {attachmentsFolder.getFolderId()});
-	searchContext.setStart(blogImagesSearchContainer.getStart());
-
-	Folder folder = DLAppLocalServiceUtil.getFolder(attachmentsFolder.getFolderId());
-
-	Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
-
-	blogEntryImagesTotal = hits.getLength();
-
-	Document[] docs = hits.getDocs();
-
-	blogEntryImagesResults = new ArrayList<FileEntry>();
-
-	for (Document doc : docs) {
-		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-
-			blogEntryImagesResults.add(fileEntry);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
-			}
-
-			continue;
-		}
-	}
-
-	blogImagesSearchContainer.setTotal(blogEntryImagesTotal);
-	blogImagesSearchContainer.setResults(blogEntryImagesResults);
-}
+blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 %>
 
 <liferay-frontend:management-bar
@@ -194,8 +144,8 @@ else {
 			submitForm(form);
 		}
 	}
+
 </aui:script>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_blogs_web.blogs_admin.view_images_jsp");
 %>
