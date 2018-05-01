@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -113,7 +114,8 @@ public class WikiAttachmentsHelper {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
-		String attachment = ParamUtil.getString(actionRequest, "fileName");
+		String attachment = HtmlUtil.unescape(
+			ParamUtil.getString(actionRequest, "fileName"));
 
 		TrashedModel trashedModel = null;
 
@@ -142,7 +144,8 @@ public class WikiAttachmentsHelper {
 	public void restoreEntries(ActionRequest actionRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
+		String fileName = HtmlUtil.unescape(
+			ParamUtil.getString(actionRequest, "fileName"));
 
 		_wikiPageService.restorePageAttachmentFromTrash(
 			nodeId, title, fileName);
