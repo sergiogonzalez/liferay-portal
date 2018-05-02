@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,7 +72,8 @@ public class EditMessageAttachmentsMVCActionCommand
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
+		String fileName = HtmlUtil.unescape(
+			ParamUtil.getString(actionRequest, "fileName"));
 
 		if (moveToTrash) {
 			_mbMessageService.moveMessageAttachmentToTrash(messageId, fileName);
@@ -169,7 +171,8 @@ public class EditMessageAttachmentsMVCActionCommand
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
+		String fileName = HtmlUtil.unescape(
+			ParamUtil.getString(actionRequest, "fileName"));
 
 		_mbMessageService.restoreMessageAttachmentFromTrash(
 			messageId, fileName);
