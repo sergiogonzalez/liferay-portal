@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -130,6 +133,30 @@ public class DefaultMBAdminListDisplayContext
 			String keywords = ParamUtil.getString(_request, "keywords");
 
 			searchContext.setKeywords(keywords);
+
+			String orderByCol = searchContainer.getOrderByCol();
+			String orderByType = searchContainer.getOrderByType();
+
+			Sort sort = null;
+
+			boolean orderByAsc = true;
+
+			if (Objects.equals(orderByType, "asc")) {
+				orderByAsc = false;
+			}
+
+			if (Objects.equals(orderByCol, "modified-date")) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(orderByCol, "title")) {
+				String sortFieldName = Field.getSortableFieldName(
+					"localized_title_".concat(themeDisplay.getLanguageId()));
+
+				sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
+			}
+
+			searchContext.setSorts(sort);
 
 			searchContext.setStart(searchContainer.getStart());
 

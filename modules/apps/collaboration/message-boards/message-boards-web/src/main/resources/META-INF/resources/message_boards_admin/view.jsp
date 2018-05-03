@@ -21,33 +21,10 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContext = new MBEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, trashHelper);
 
-if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-}
-else {
-	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
-	portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
-}
-
-String keywords = ParamUtil.getString(request, "keywords");
-
-if (Validator.isNotNull(keywords)) {
-	portletURL.setParameter("keywords", keywords);
-}
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-col", orderByCol);
-	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", orderByType);
-}
-else {
-	orderByCol = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-col", "modified-date");
-	orderByType = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", "desc");
-}
+String orderByCol = mbEntriesManagementToolbarDisplayContext.getOrderByCol();
+String orderByType = mbEntriesManagementToolbarDisplayContext.getOrderByType();
 
 boolean orderByAsc = false;
 
@@ -67,7 +44,6 @@ else if (orderByCol.equals("title")) {
 
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBSubscriptionUtil.getCategorySubscriptionClassPKs(user.getUserId()));
-request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBSubscriptionUtil.getThreadSubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 %>
@@ -88,6 +64,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
 
 int entriesDelta = mbAdminListDisplayContext.getEntriesDelta();
+
+PortletURL portletURL = mbEntriesManagementToolbarDisplayContext.getPortletURL();
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, entriesDelta, portletURL, null, "there-are-no-threads-or-categories");
 
@@ -112,86 +90,21 @@ else {
 mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
 %>
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= mbEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= searchContainer.getTotal() == 0 %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="mbEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= searchContainer.getIteratorURL() %>"
-			selectedDisplayStyle="descriptive"
-		/>
-
-		<c:if test="<%= !mbAdminListDisplayContext.isShowSearch() %>">
-			<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<portlet:renderURL var="viewEntriesHomeURL">
-		<portlet:param name="categoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:management-bar-filters>
-
-		<%
-		PortletURL navigationPortletURL = renderResponse.createRenderURL();
-
-		navigationPortletURL.setParameter("categoryId", String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
-		%>
-
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "recent"} %>'
-			navigationParam="entriesNavigation"
-			portletURL="<%= navigationPortletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"modified-date", "title"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards_admin/search" />
-		</liferay-portlet:renderURL>
-
-		<li>
-			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "lockEntries();" %>'
-			icon="lock"
-			label="lock"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "unlockEntries();" %>'
-			icon="unlock"
-			label="unlock"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showInfoButton="<%= false %>"
+	sortingOrder="<%= mbEntriesManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(mbEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= searchContainer.getTotal() %>"
+	viewTypes="<%= mbEntriesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <%
 request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
