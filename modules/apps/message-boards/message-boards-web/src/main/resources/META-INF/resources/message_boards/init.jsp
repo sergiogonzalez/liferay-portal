@@ -101,6 +101,7 @@ page import="com.liferay.message.boards.util.comparator.MBObjectsTitleComparator
 page import="com.liferay.message.boards.util.comparator.ThreadModifiedDateComparator" %><%@
 page import="com.liferay.message.boards.web.internal.dao.search.MBResultRowSplitter" %><%@
 page import="com.liferay.message.boards.web.internal.display.MBCategoryDisplay" %><%@
+page import="com.liferay.message.boards.web.internal.display.context.MBBannedUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBDisplayContextProvider" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.util.MBRequestHelper" %><%@
 page import="com.liferay.message.boards.web.internal.search.EntriesChecker" %><%@
