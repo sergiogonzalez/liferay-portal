@@ -17,18 +17,6 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", "icon");
-}
-else {
-	portalPreferences.setValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -49,12 +37,6 @@ portletURL.setParameter("orderByType", orderByType);
 
 request.setAttribute("view_images.jsp-portletURL", portletURL);
 
-PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-if (cur > 0) {
-	displayStyleURL.setParameter("cur", String.valueOf(cur));
-}
-
 SearchContainer blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
 
 blogImagesSearchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType));
@@ -66,6 +48,8 @@ BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext
 blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 
 BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+
+String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar

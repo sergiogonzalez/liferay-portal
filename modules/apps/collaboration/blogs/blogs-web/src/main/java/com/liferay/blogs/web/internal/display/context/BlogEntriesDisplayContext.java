@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -128,6 +130,35 @@ public class BlogEntriesDisplayContext {
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setKeywords(keywords);
 			searchContext.setStart(searchContainer.getStart());
+
+			String entriesNavigation = ParamUtil.getString(
+				_request, "entriesNavigation");
+
+			if (entriesNavigation.equals("mine")) {
+				searchContext.setOwnerUserId(themeDisplay.getUserId());
+			}
+
+			String orderByCol = ParamUtil.getString(
+				_request, "orderByCol", "title");
+			String orderByType = ParamUtil.getString(
+				_request, "orderByType", "asc");
+
+			Sort sort = null;
+
+			boolean orderByAsc = true;
+
+			if (Objects.equals(orderByType, "asc")) {
+				orderByAsc = false;
+			}
+
+			if ("display-date".equals(orderByCol)) {
+				sort = new Sort(Field.DISPLAY_DATE, Sort.LONG_TYPE, orderByAsc);
+			}
+			else {
+				sort = new Sort(orderByCol, orderByAsc);
+			}
+
+			searchContext.setSorts(sort);
 
 			Hits hits = indexer.search(searchContext);
 

@@ -66,6 +66,7 @@ page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext" %><%@
+page import="com.liferay.blogs.web.internal.display.context.BlogEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
@@ -96,8 +97,6 @@ page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
@@ -169,8 +168,6 @@ page import="javax.portlet.WindowState" %>
 
 <%
 AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
-
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

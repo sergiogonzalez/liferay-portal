@@ -19,48 +19,22 @@
 <%
 String entriesNavigation = ParamUtil.getString(request, "entriesNavigation");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", "icon");
-}
-else {
-	portalPreferences.setValue(BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-PortletURL navigationPortletURL = renderResponse.createRenderURL();
+PortletURL portletURL = renderResponse.createRenderURL();
 
-navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs/view");
+portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 if (delta > 0) {
-	navigationPortletURL.setParameter("delta", String.valueOf(delta));
+	portletURL.setParameter("delta", String.valueOf(delta));
 }
 
-PortletURL sortURL = PortletURLUtil.clone(navigationPortletURL, liferayPortletResponse);
-
-sortURL.setParameter("entriesNavigation", entriesNavigation);
-
-navigationPortletURL.setParameter("orderBycol", orderByCol);
-navigationPortletURL.setParameter("orderByType", orderByType);
-
-PortletURL portletURL = PortletURLUtil.clone(navigationPortletURL, liferayPortletResponse);
+portletURL.setParameter("orderBycol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
 
 portletURL.setParameter("entriesNavigation", entriesNavigation);
-
-PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-if (cur > 0) {
-	displayStyleURL.setParameter("cur", String.valueOf(cur));
-}
-
-String keywords = ParamUtil.getString(request, "keywords");
 
 SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found");
 
@@ -69,82 +43,27 @@ entriesSearchContainer.setOrderByComparator(BlogsUtil.getOrderByComparator(order
 BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayContext(liferayPortletRequest);
 
 blogEntriesDisplayContext.populateResults(entriesSearchContainer);
+
+BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, trashHelper);
+
+String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= blogEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= blogEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	creationMenu="<%= blogEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= entriesSearchContainer.getTotal() <= 0 %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= blogEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= blogEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="blogEntries"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-
-			<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
-				<portlet:renderURL var="addEntryURL">
-					<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:renderURL>
-
-				<liferay-frontend:add-menu
-					inline="<%= true %>"
-				>
-					<liferay-frontend:add-menu-item
-						title='<%= LanguageUtil.get(request, "add-blog-entry") %>'
-						url="<%= addEntryURL %>"
-					/>
-				</liferay-frontend:add-menu>
-			</c:if>
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
-
-	<liferay-frontend:management-bar-filters>
-		<c:if test="<%= Validator.isNull(keywords) %>">
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all", "mine"} %>'
-				navigationParam="entriesNavigation"
-				portletURL="<%= navigationPortletURL %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"title", "display-date"} %>'
-				portletURL="<%= sortURL %>"
-			/>
-		</c:if>
-
-		<%
-		String navigation = ParamUtil.getString(request, "navigation", "entries");
-
-		PortletURL searchURL = renderResponse.createRenderURL();
-
-		searchURL.setParameter("mvcRenderCommandName", "/blogs/view");
-		searchURL.setParameter("navigation", navigation);
-		%>
-
-		<li>
-			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search
-					markupView="lexicon"
-					placeholder='<%= LanguageUtil.get(request, "search") %>'
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showInfoButton="<%= false %>"
+	sortingOrder="<%= blogEntriesManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(blogEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= entriesSearchContainer.getTotal() %>"
+	viewTypes="<%= blogEntriesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
@@ -205,8 +124,4 @@ blogEntriesDisplayContext.populateResults(entriesSearchContainer);
 			submitForm(form, '<portlet:actionURL name="/blogs/edit_entry" />');
 		}
 	}
-
 </aui:script>
-
-<%!
-%>
