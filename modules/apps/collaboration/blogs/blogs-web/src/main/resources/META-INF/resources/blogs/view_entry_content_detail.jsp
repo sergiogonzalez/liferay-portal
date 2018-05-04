@@ -165,6 +165,21 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 			<div class="row">
 				<div class="col-md-8 mx-auto widget-mode-detail">
+					<liferay-expando:custom-attributes-available
+						className="<%= BlogsEntry.class.getName() %>"
+					>
+						<liferay-expando:custom-attribute-list
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entry.getEntryId() %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-expando:custom-attributes-available>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8 mx-auto widget-mode-detail">
 					<liferay-asset:asset-tags-available
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entry.getEntryId() %>"
