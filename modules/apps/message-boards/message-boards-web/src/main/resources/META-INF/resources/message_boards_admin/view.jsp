@@ -88,13 +88,15 @@ else {
 }
 
 mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
+
+String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
 %>
 
 <clay:management-toolbar
 	actionItems="<%= mbEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= searchContainer.getTotal() == 0 %>"
+	disabled='<%= (searchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
 	filterItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="mbEntries"
