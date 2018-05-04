@@ -63,7 +63,7 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
