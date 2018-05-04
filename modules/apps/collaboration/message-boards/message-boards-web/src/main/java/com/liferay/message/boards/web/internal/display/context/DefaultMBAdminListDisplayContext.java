@@ -17,7 +17,9 @@ package com.liferay.message.boards.web.internal.display.context;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.display.context.MBAdminListDisplayContext;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.service.MBThreadServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -169,31 +171,90 @@ public class DefaultMBAdminListDisplayContext
 			searchContainer.setTotal(hits.getLength());
 		}
 		else {
-			int status = WorkflowConstants.STATUS_APPROVED;
+			String entriesNavigation = ParamUtil.getString(
+				_request, "entriesNavigation", "all");
 
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
+			if ("all".equals(entriesNavigation)) {
+				int status = WorkflowConstants.STATUS_APPROVED;
 
-			if (permissionChecker.isContentReviewer(
-					themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId())) {
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
 
-				status = WorkflowConstants.STATUS_ANY;
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+					status, themeDisplay.getUserId(), true,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
+
+				searchContainer.setTotal(
+					MBCategoryServiceUtil.getCategoriesAndThreadsCount(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setResults(
+					MBCategoryServiceUtil.getCategoriesAndThreads(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
 			}
+			else if ("threads".equals(entriesNavigation)) {
+				int status = WorkflowConstants.STATUS_APPROVED;
 
-			QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-				status, themeDisplay.getUserId(), true,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
 
-			searchContainer.setTotal(
-				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
-					themeDisplay.getScopeGroupId(), _categoryId,
-					queryDefinition));
-			searchContainer.setResults(
-				MBCategoryServiceUtil.getCategoriesAndThreads(
-					themeDisplay.getScopeGroupId(), _categoryId,
-					queryDefinition));
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				QueryDefinition<MBThread> queryDefinition =
+					new QueryDefinition<>(
+						status, themeDisplay.getUserId(), true,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator());
+
+				searchContainer.setTotal(
+					MBThreadServiceUtil.getThreadsCount(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setResults(
+					MBThreadServiceUtil.getThreads(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+			}
+			else if ("categories".equals(entriesNavigation)) {
+				int status = WorkflowConstants.STATUS_APPROVED;
+
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
+
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+					status, themeDisplay.getUserId(), true,
+					searchContainer.getStart(), searchContainer.getEnd(), null);
+
+				searchContainer.setTotal(
+					MBCategoryServiceUtil.getCategoriesCount(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setResults(
+					MBCategoryServiceUtil.getCategories(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+			}
 		}
 	}
 
