@@ -93,7 +93,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<c:if test="<%= !siteGroup.isStagingGroup() && themeDisplay.isSignedIn() %>">
+						<c:if test="<%= !siteGroup.isStagingGroup() && themeDisplay.isSignedIn() && discussionPermission.hasSubscribePermission(company.getCompanyId(), siteGroup.getGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK()) %>">
 							<c:choose>
 								<c:when test="<%= subscribed %>">
 									<liferay-ui:icon
