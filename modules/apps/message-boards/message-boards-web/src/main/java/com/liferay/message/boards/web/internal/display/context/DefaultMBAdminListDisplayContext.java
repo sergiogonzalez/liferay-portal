@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.display.context.MBAdminListDisplayContext;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
@@ -242,9 +243,11 @@ public class DefaultMBAdminListDisplayContext
 					status = WorkflowConstants.STATUS_ANY;
 				}
 
-				QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-					status, themeDisplay.getUserId(), true,
-					searchContainer.getStart(), searchContainer.getEnd(), null);
+				QueryDefinition<MBCategory> queryDefinition =
+					new QueryDefinition<>(
+						status, themeDisplay.getUserId(), true,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator());
 
 				searchContainer.setTotal(
 					MBCategoryServiceUtil.getCategoriesCount(
