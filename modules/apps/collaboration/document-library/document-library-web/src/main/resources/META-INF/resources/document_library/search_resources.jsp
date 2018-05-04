@@ -110,6 +110,7 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, p
 
 			<portlet:renderURL var="closeSearchURL">
 				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon
