@@ -72,7 +72,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
 			<clay:navigation-bar
-				items="<%=
+				navigationItems="<%=
 					new JSPNavigationItemList(pageContext) {
 						{
 							add(

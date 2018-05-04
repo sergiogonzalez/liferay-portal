@@ -44,7 +44,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= editSiteTeamAssignmentsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= editSiteTeamAssignmentsDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar
