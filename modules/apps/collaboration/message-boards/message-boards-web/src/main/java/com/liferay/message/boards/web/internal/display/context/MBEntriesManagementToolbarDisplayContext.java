@@ -26,13 +26,14 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission;
 import com.liferay.message.boards.web.internal.util.MBUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -216,41 +217,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 		};
 	}
 
-	public PortletURL getNavigationPortletURL() {
-		MBCategory category = (MBCategory)_request.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_request, category);
-
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view");
-		}
-		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view_category");
-			portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
-		}
-
-		portletURL.setParameter("keywords", StringPool.BLANK);
-
-		String orderByCol = getOrderByCol();
-
-		if (Validator.isNotNull(orderByCol)) {
-			portletURL.setParameter("orderByCol", orderByCol);
-		}
-
-		String orderByType = getOrderByType();
-
-		if (Validator.isNotNull(orderByType)) {
-			portletURL.setParameter("orderByType", orderByType);
-		}
-
-		return portletURL;
-	}
-
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -354,17 +320,35 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = getPortletURL();
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
 
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+		MBCategory category = (MBCategory)_request.getAttribute(
+			WebKeys.MESSAGE_BOARDS_CATEGORY);
+
+		long categoryId = MBUtil.getCategoryId(_request, category);
+
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			sortingURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
+		}
+		else {
+			sortingURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view_category");
+			sortingURL.setParameter("mbCategoryId", String.valueOf(categoryId));
+		}
+
+		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		String keywords = ParamUtil.getString(_request, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			sortingURL.setParameter("keywords", keywords);
 		}
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL;
 	}
@@ -392,11 +376,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 		final String entriesNavigation = ParamUtil.getString(
 			_request, "entriesNavigation", "all");
 
-		MBCategory category = (MBCategory)_request.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_request, category);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -405,9 +384,13 @@ public class MBEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								entriesNavigation.equals("all"));
 
+							PortletURL navigationPortletURL =
+								PortletURLUtil.clone(
+									_currentURLObj, _liferayPortletResponse);
+
 							dropdownItem.setHref(
-								getNavigationPortletURL(), "categoryId",
-								categoryId, "entriesNavigation", "all");
+								navigationPortletURL, "entriesNavigation",
+								"all");
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "all"));
@@ -418,9 +401,13 @@ public class MBEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								entriesNavigation.equals("threads"));
 
+							PortletURL navigationPortletURL =
+								PortletURLUtil.clone(
+									_currentURLObj, _liferayPortletResponse);
+
 							dropdownItem.setHref(
-								getNavigationPortletURL(), "categoryId",
-								categoryId, "entriesNavigation", "threads");
+								navigationPortletURL, "entriesNavigation",
+								"threads");
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "threads"));
@@ -431,9 +418,13 @@ public class MBEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								entriesNavigation.equals("categories"));
 
+							PortletURL navigationPortletURL =
+								PortletURLUtil.clone(
+									_currentURLObj, _liferayPortletResponse);
+
 							dropdownItem.setHref(
-								getNavigationPortletURL(), "categoryId",
-								categoryId, "entriesNavigation", "categories");
+								navigationPortletURL, "entriesNavigation",
+								"categories");
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "categories"));
