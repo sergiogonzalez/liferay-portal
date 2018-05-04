@@ -128,7 +128,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 		<div class="sidenav-content">
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+				<c:if test='<%= !mvcRenderCommandName.equals("/document_library/search") && !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
 					<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>
