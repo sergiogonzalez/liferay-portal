@@ -23,6 +23,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.util.comparator.CategoryModifiedDateComparator;
+import com.liferay.message.boards.util.comparator.CategoryTitleComparator;
+import com.liferay.message.boards.util.comparator.MBObjectsModifiedDateComparator;
+import com.liferay.message.boards.util.comparator.MBObjectsTitleComparator;
+import com.liferay.message.boards.util.comparator.ThreadModifiedDateComparator;
+import com.liferay.message.boards.util.comparator.ThreadTitleComparator;
 import com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission;
 import com.liferay.message.boards.web.internal.util.MBUtil;
 import com.liferay.petra.string.StringBundler;
@@ -36,6 +42,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -370,6 +377,55 @@ public class MBEntriesManagementToolbarDisplayContext {
 			}
 
 		};
+	}
+
+	public void populateOrder(SearchContainer searchContainer) {
+		OrderByComparator orderByComparator = null;
+
+		String orderByCol = getOrderByCol();
+
+		boolean orderByAsc = false;
+
+		String orderByType = getOrderByType();
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		String entriesNavigation = ParamUtil.getString(
+			_request, "entriesNavigation", "all");
+
+		if (entriesNavigation.equals("all")) {
+			if (orderByCol.equals("modified-date")) {
+				orderByComparator = new MBObjectsModifiedDateComparator(
+					orderByAsc);
+			}
+			else if (orderByCol.equals("title")) {
+				orderByComparator = new MBObjectsTitleComparator(orderByAsc);
+			}
+		}
+		else if (entriesNavigation.equals("threads")) {
+			if (orderByCol.equals("modified-date")) {
+				orderByComparator = new ThreadModifiedDateComparator(
+					orderByAsc);
+			}
+			else if (orderByCol.equals("title")) {
+				orderByComparator = new ThreadTitleComparator<>(orderByAsc);
+			}
+		}
+		else if (entriesNavigation.equals("categories")) {
+			if (orderByCol.equals("modified-date")) {
+				orderByComparator = new CategoryModifiedDateComparator(
+					orderByAsc);
+			}
+			else if (orderByCol.equals("title")) {
+				orderByComparator = new CategoryTitleComparator<>(orderByAsc);
+			}
+		}
+
+		searchContainer.setOrderByCol(orderByCol);
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(orderByType);
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

@@ -23,25 +23,6 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContext = new MBEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, trashHelper);
 
-String orderByCol = mbEntriesManagementToolbarDisplayContext.getOrderByCol();
-String orderByType = mbEntriesManagementToolbarDisplayContext.getOrderByType();
-
-boolean orderByAsc = false;
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator orderByComparator = null;
-
-if (orderByCol.equals("modified-date")) {
-	orderByComparator = new MBObjectsModifiedDateComparator(orderByAsc);
-
-}
-else if (orderByCol.equals("title")) {
-	orderByComparator = new MBObjectsTitleComparator(orderByAsc);
-}
-
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBSubscriptionUtil.getCategorySubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBSubscriptionUtil.getThreadSubscriptionClassPKs(user.getUserId()));
@@ -72,9 +53,8 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 mbAdminListDisplayContext.setEntriesDelta(searchContainer);
 
 searchContainer.setId("mbEntries");
-searchContainer.setOrderByCol(orderByCol);
-searchContainer.setOrderByComparator(orderByComparator);
-searchContainer.setOrderByType(orderByType);
+
+mbEntriesManagementToolbarDisplayContext.populateOrder(searchContainer);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
