@@ -163,27 +163,27 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-md-8 mx-auto widget-mode-detail">
-					<liferay-expando:custom-attributes-available
-						className="<%= BlogsEntry.class.getName() %>"
-					>
+			<liferay-expando:custom-attributes-available
+				className="<%= BlogsEntry.class.getName() %>"
+			>
+				<div class="row">
+					<div class="col-md-8 mx-auto widget-mode-detail">
 						<liferay-expando:custom-attribute-list
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"
 							editable="<%= false %>"
 							label="<%= true %>"
 						/>
-					</liferay-expando:custom-attributes-available>
+					</div>
 				</div>
-			</div>
+			</liferay-expando:custom-attributes-available>
 
-			<div class="row">
-				<div class="col-md-8 mx-auto widget-mode-detail">
-					<liferay-asset:asset-tags-available
-						className="<%= BlogsEntry.class.getName() %>"
-						classPK="<%= entry.getEntryId() %>"
-					>
+			<liferay-asset:asset-tags-available
+				className="<%= BlogsEntry.class.getName() %>"
+				classPK="<%= entry.getEntryId() %>"
+			>
+				<div class="row">
+					<div class="col-md-8 mx-auto widget-mode-detail">
 						<div class="entry-tags">
 							<liferay-asset:asset-tags-summary
 								className="<%= BlogsEntry.class.getName() %>"
@@ -191,9 +191,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 								portletURL="<%= renderResponse.createRenderURL() %>"
 							/>
 						</div>
-					</liferay-asset:asset-tags-available>
+					</div>
 				</div>
-			</div>
+			</liferay-asset:asset-tags-available>
 		</div>
 
 		<div class="row">
