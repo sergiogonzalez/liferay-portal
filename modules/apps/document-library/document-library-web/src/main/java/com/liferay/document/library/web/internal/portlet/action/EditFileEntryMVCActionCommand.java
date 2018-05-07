@@ -34,6 +34,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.RequiredFileException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -60,6 +61,8 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -890,7 +893,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "majorVersion");
 
 		if (folderId > 0) {
-			Folder folder = _dlAppService.getFolder(folderId);
+			Folder folder = _dlAppLocalService.getFolder(folderId);
+
+			_folderModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), folder, ActionKeys.ACCESS);
 
 			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
 				throw new NoSuchFolderException("{folderId=" + folderId + "}");
@@ -985,12 +991,20 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryMVCActionCommand.class);
 
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
 	private DLAppService _dlAppService;
 	private volatile DLConfiguration _dlConfiguration;
 	private DLTrashService _dlTrashService;
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private Http _http;
