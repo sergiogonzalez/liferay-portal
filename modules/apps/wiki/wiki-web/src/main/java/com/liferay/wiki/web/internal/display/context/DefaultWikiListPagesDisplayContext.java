@@ -422,13 +422,6 @@ public class DefaultWikiListPagesDisplayContext
 			results = WikiPageServiceUtil.getRecentChanges(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
 				searchContainer.getStart(), searchContainer.getEnd());
-
-			OrderByComparator<WikiPage> obc =
-				WikiPortletUtil.getPageOrderByComparator(
-					searchContainer.getOrderByCol(),
-					searchContainer.getOrderByType());
-
-			results = ListUtil.sort(results, obc);
 		}
 
 		searchContainer.setResults(results);

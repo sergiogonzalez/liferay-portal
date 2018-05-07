@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,7 +61,6 @@ import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.util.comparator.PageModifiedDateComparator;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.io.Serializable;
@@ -670,10 +668,6 @@ public class WikiPageLocalServiceTest {
 		List<WikiPage> recentPages = WikiPageLocalServiceUtil.getRecentChanges(
 			_group.getGroupId(), _node.getNodeId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
-
-		OrderByComparator<WikiPage> obc = new PageModifiedDateComparator(false);
-
-		recentPages = ListUtil.sort(recentPages, obc);
 
 		WikiPage recentPage1 = recentPages.get(0);
 		WikiPage recentPage2 = recentPages.get(1);

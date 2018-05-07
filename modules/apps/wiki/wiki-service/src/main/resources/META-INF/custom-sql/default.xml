@@ -82,7 +82,7 @@
 				(head = ?) AND
 				(status = ?)
 			ORDER BY
-				createDate DESC
+				modifiedDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByNoAssets">
