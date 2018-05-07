@@ -1417,7 +1417,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (dlFileEntry != null) {
 			throw new DuplicateFileEntryException(
-				"A file entry already exists with name " + name);
+				"A file entry already exists with title " + name);
 		}
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(

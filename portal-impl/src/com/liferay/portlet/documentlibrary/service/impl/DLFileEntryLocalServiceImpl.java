@@ -2046,7 +2046,8 @@ public class DLFileEntryLocalServiceImpl
 				StringBundler.concat(
 					"Unable to update small image with smallImageId ",
 					String.valueOf(smallImageId), ", largeImageId ",
-					String.valueOf(largeImageId)), ioe);
+					String.valueOf(largeImageId)),
+				ioe);
 		}
 	}
 
@@ -2199,7 +2200,7 @@ public class DLFileEntryLocalServiceImpl
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
 			throw new DuplicateFileEntryException(
-				"A file already exists with name " + title);
+				"A file entry already exists with title " + title);
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
@@ -2209,7 +2210,7 @@ public class DLFileEntryLocalServiceImpl
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
 			throw new DuplicateFileEntryException(
-				"A file already exists with name " + title);
+				"A file entry already exists with file name " + title);
 		}
 	}
 
@@ -2870,24 +2871,8 @@ public class DLFileEntryLocalServiceImpl
 				" for folder ", String.valueOf(folderId)));
 	}
 
-	protected void validateFileExtension(String fileName, String extension)
-		throws PortalException {
-
-		if (Validator.isNotNull(extension)) {
-			int maxLength = ModelHintsUtil.getMaxLength(
-				DLFileEntry.class.getName(), "extension");
-
-			if (extension.length() > maxLength) {
-				throw new FileExtensionException(
-					StringBundler.concat(
-						extension, " of file ", fileName,
-						" exceeds max length of ", String.valueOf(maxLength)));
-			}
-		}
-	}
-
 	/**
-	 * @deprecated As of 7.1.0, replaced by {@link
+	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #validateFileExtension(String, String)}
 	 */
 	@Deprecated
@@ -2901,6 +2886,22 @@ public class DLFileEntryLocalServiceImpl
 			if (extension.length() > maxLength) {
 				throw new FileExtensionException(
 					extension + " exceeds max length of " + maxLength);
+			}
+		}
+	}
+
+	protected void validateFileExtension(String fileName, String extension)
+		throws PortalException {
+
+		if (Validator.isNotNull(extension)) {
+			int maxLength = ModelHintsUtil.getMaxLength(
+				DLFileEntry.class.getName(), "extension");
+
+			if (extension.length() > maxLength) {
+				throw new FileExtensionException(
+					StringBundler.concat(
+						extension, " of file ", fileName,
+						" exceeds max length of ", String.valueOf(maxLength)));
 			}
 		}
 	}
