@@ -51,6 +51,10 @@ entriesChecker.setCssClass("entry-selector");
 entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
 %>
 
+<c:if test='<%= dlAdminDisplayContext.isSearch() && ParamUtil.getBoolean(request, "showSearchInfo") %>'>
+	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
+</c:if>
+
 <aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 <aui:input name="searchRepositoryId" type="hidden" value="<%= searchRepositoryId %>" />
 
