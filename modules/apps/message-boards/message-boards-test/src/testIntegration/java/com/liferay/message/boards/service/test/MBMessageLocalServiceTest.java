@@ -265,6 +265,27 @@ public class MBMessageLocalServiceTest {
 			dateFormat.format(firstReplyMessage.getModifiedDate()));
 	}
 
+	@Test
+	public void testUpdateThreadAndMessage() throws Exception {
+		Date date = new Date();
+
+		MBMessage message = addMessage(null, false, date);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessageLocalServiceUtil.updateMessage(
+			message.getUserId(), message.getMessageId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			Collections.<String>emptyList(), 0, false, serviceContext);
+
+		MBThread mbThread = message.getThread();
+
+		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
+	}
+
 	protected MBMessage addMessage(
 			MBMessage parentMessage, boolean addAttachments)
 		throws Exception {
