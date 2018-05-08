@@ -559,7 +559,9 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testGetRecentChangesWithANonRecentCreatedPage() throws Exception {
+	public void testGetRecentChangesWithANonRecentCreatedPage()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 

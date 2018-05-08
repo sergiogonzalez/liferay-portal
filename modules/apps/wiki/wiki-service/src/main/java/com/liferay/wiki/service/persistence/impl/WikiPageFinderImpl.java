@@ -122,8 +122,7 @@ public class WikiPageFinderImpl
 	public int filterCountByCreateDate(
 		long groupId, long nodeId, Timestamp modifiedDate, boolean before) {
 
-		return doCountByCreateDate(
-			groupId, nodeId, modifiedDate, before, true);
+		return doCountByCreateDate(groupId, nodeId, modifiedDate, before, true);
 	}
 
 	@Override
