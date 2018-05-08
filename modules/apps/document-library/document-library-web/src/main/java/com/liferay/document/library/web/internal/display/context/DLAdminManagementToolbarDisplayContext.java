@@ -407,14 +407,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _dlPortletInstanceSettingsHelper.isShowSearch();
 	}
 
-	public boolean isShowSearchInfo() {
-		if (_isSearch() && ParamUtil.getBoolean(_request, "showSearchInfo")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private PortletURL _getCurrentSortingURL() {
 		int deltaEntry = ParamUtil.getInteger(_request, "deltaEntry");
 
