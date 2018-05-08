@@ -1695,17 +1695,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		// Attachments
-
-		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
-			Folder folder = message.addAttachmentsFolder();
-
-			PortletFileRepositoryUtil.addPortletFileEntries(
-				message.getGroupId(), userId, MBMessage.class.getName(),
-				message.getMessageId(), MBConstants.SERVICE_NAME,
-				folder.getFolderId(), inputStreamOVPs);
-		}
-
 		message.setExpandoBridgeAttributes(serviceContext);
 
 		mbMessagePersistence.update(message);
@@ -1742,6 +1731,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Workflow
 
 		startWorkflowInstance(userId, message, serviceContext);
+
+		// Attachments
+
+		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
+			Folder folder = message.addAttachmentsFolder();
+
+			PortletFileRepositoryUtil.addPortletFileEntries(
+				message.getGroupId(), userId, MBMessage.class.getName(),
+				message.getMessageId(), MBConstants.SERVICE_NAME,
+				folder.getFolderId(), inputStreamOVPs);
+		}
 
 		return message;
 	}
@@ -1826,6 +1826,49 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
+		message.setExpandoBridgeAttributes(serviceContext);
+
+		mbMessagePersistence.update(message);
+
+		// Statistics
+
+		if ((serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			!message.isDiscussion()) {
+
+			mbStatsUserLocalService.updateStatsUser(
+				message.getGroupId(), userId, message.getModifiedDate());
+		}
+
+		// Thread
+
+		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
+			(thread.getPriority() != priority)) {
+
+			thread.setPriority(priority);
+
+			mbThreadLocalService.updateMBThread(thread);
+
+			updatePriorities(thread.getThreadId(), priority);
+		}
+
+		if (message.isRoot() && !Objects.equals(subject, oldSubject)) {
+			thread.setTitle(subject);
+
+			mbThreadLocalService.updateMBThread(thread);
+		}
+
+		// Asset
+
+		updateAsset(
+			userId, message, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		// Workflow
+
+		startWorkflowInstance(userId, message, serviceContext);
+
 		// Attachments
 
 		if ((inputStreamOVPs != null) || (existingFiles != null)) {
@@ -1875,49 +1918,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 		}
-
-		message.setExpandoBridgeAttributes(serviceContext);
-
-		mbMessagePersistence.update(message);
-
-		// Statistics
-
-		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			!message.isDiscussion()) {
-
-			mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId, message.getModifiedDate());
-		}
-
-		// Thread
-
-		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
-			(thread.getPriority() != priority)) {
-
-			thread.setPriority(priority);
-
-			mbThreadLocalService.updateMBThread(thread);
-
-			updatePriorities(thread.getThreadId(), priority);
-		}
-
-		if (message.isRoot() && !Objects.equals(subject, oldSubject)) {
-			thread.setTitle(subject);
-
-			mbThreadLocalService.updateMBThread(thread);
-		}
-
-		// Asset
-
-		updateAsset(
-			userId, message, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		// Workflow
-
-		startWorkflowInstance(userId, message, serviceContext);
 
 		return message;
 	}
