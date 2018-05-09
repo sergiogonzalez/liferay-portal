@@ -1,6 +1,8 @@
 import AnalyticsClient from '../../src/analytics';
 import {assert, expect} from 'chai';
 
+const applicationId = 'Forms';
+
 let Analytics;
 
 describe('Forms Plugin', () => {
@@ -41,13 +43,13 @@ describe('Forms Plugin', () => {
 			expect(events.length).to.equal(2);
 
 			events[1].should.deep.include({
-				applicationId: 'forms',
+				applicationId,
 				eventId: 'formViewed'
 			});
 			expect(events[1].properties.formId).to.equal('formId');
 
 			events[0].should.deep.include({
-				applicationId: 'forms',
+				applicationId,
 				eventId: 'formViewed'
 			});
 			expect(events[0].properties.formId).to.equal('assetId');
@@ -77,7 +79,7 @@ describe('Forms Plugin', () => {
 			expect(events.length).to.equal(1);
 
 			events[0].should.deep.include({
-				applicationId: 'forms',
+				applicationId,
 				eventId: 'formSubmitted',
 				properties: {
 					formId: 'formId'
@@ -106,7 +108,7 @@ describe('Forms Plugin', () => {
 			expect(events.length).to.equal(1);
 
 			events[0].should.deep.include({
-				applicationId: 'forms',
+				applicationId,
 				eventId: 'fieldFocused',
 				properties: {
 					formId: 'formId',
