@@ -270,9 +270,13 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		long repositoryId = _getRepositoryId();
 
+		long searchRepositoryId = ParamUtil.getLong(
+			_request, "searchRepositoryId", repositoryId);
+
 		searchURL.setParameter("repositoryId", String.valueOf(repositoryId));
+
 		searchURL.setParameter(
-			"searchRepositoryId", String.valueOf(repositoryId));
+			"searchRepositoryId", String.valueOf(searchRepositoryId));
 
 		long folderId = _getFolderId();
 
