@@ -1,9 +1,14 @@
 import AnalyticsClient from '../../src/analytics';
 import {assert, expect} from 'chai';
 
-let Analytics = AnalyticsClient.create();
+let Analytics;
 
 describe('Forms Plugin', () => {
+	afterEach(() => {
+		Analytics.reset();
+		Analytics.dispose();
+	});
+
 	beforeEach(() => {
 		// Force attaching DOM Content Loaded event
 		Object.defineProperty(document, 'readyState', {
@@ -11,11 +16,7 @@ describe('Forms Plugin', () => {
 			writable: false
 		});
 
-		Analytics.create();
-	});
-
-	afterEach(() => {
-		Analytics.dispose();
+		Analytics = AnalyticsClient.create();
 	});
 
 	describe('formViewed event', () => {
@@ -37,7 +38,7 @@ describe('Forms Plugin', () => {
 				({eventId, properties}) => eventId === 'formViewed'
 			);
 
-			expect(events.length).to.be.at.least(2);
+			expect(events.length).to.equal(2);
 
 			events[1].should.deep.include({
 				applicationId: 'forms',
@@ -73,7 +74,7 @@ describe('Forms Plugin', () => {
 				({eventId}) => eventId === 'formSubmitted'
 			);
 
-			expect(events.length).to.be.at.least(1);
+			expect(events.length).to.equal(1);
 
 			events[0].should.deep.include({
 				applicationId: 'forms',
@@ -102,7 +103,7 @@ describe('Forms Plugin', () => {
 				({eventId}) => eventId === 'fieldFocused'
 			);
 
-			expect(events.length).to.be.at.least(1);
+			expect(events.length).to.equal(1);
 
 			events[0].should.deep.include({
 				applicationId: 'forms',
@@ -135,9 +136,9 @@ describe('Forms Plugin', () => {
 					({eventId}) => eventId === 'fieldBlurred'
 				);
 
-				expect(events.length).to.be.at.least(1);
+				expect(events.length).to.equal(1);
 
-				events[0].applicationId.should.equal('forms');
+				events[0].applicationId.should.equal(applicationId);
 				events[0].eventId.should.equal('fieldBlurred');
 				events[0].properties.formId.should.equal('formId');
 				events[0].properties.fieldName.should.equal('myField');
