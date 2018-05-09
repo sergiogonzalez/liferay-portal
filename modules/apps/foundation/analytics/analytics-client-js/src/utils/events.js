@@ -6,7 +6,7 @@ const onReady = fn => {
 	) {
 		fn();
 	} else {
-		document.addEventListener('DOMContentLoaded', () => fn());
+		document.addEventListener('DOMContentLoaded', fn);
 	}
 
 	return () => document.removeEventListener('DOMContentLoaded', fn);
