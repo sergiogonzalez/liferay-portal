@@ -100,13 +100,16 @@ public class BlogsEntryServiceTest {
 
 		Assert.assertEquals(
 			"The previous entry relative to entry " + entry2.getEntryId() +
-			" should be " + entry1.getEntryId(), entry1, prevAndNext[0]);
+				" should be " + entry1.getEntryId(),
+			entry1, prevAndNext[0]);
 		Assert.assertEquals(
 			"The current entry relative to entry " + entry2.getEntryId() +
-			" should be " + entry2.getEntryId(), entry2, prevAndNext[1]);
+				" should be " + entry2.getEntryId(),
+			entry2, prevAndNext[1]);
 		Assert.assertEquals(
 			"The next entry relative to entry " + entry2.getEntryId() +
-			" should be " + entry3.getEntryId(), entry3, prevAndNext[2]);
+				" should be " + entry3.getEntryId(),
+			entry3, prevAndNext[2]);
 	}
 
 	@Test
@@ -133,13 +136,16 @@ public class BlogsEntryServiceTest {
 
 		Assert.assertNull(
 			"The previous entry relative to entry " + entry1.getEntryId() +
-			" should be null", prevAndNext[0]);
+				" should be null",
+			prevAndNext[0]);
 		Assert.assertEquals(
 			"The current entry relative to entry " + entry1.getEntryId() +
-			" should be " + entry1.getEntryId(), entry1, prevAndNext[1]);
+				" should be " + entry1.getEntryId(),
+			entry1, prevAndNext[1]);
 		Assert.assertEquals(
 			"The next entry relative to entry " + entry1.getEntryId() +
-			" should be " + entry2.getEntryId(), entry2, prevAndNext[2]);
+				" should be " + entry2.getEntryId(),
+			entry2, prevAndNext[2]);
 	}
 
 	@Test
@@ -166,13 +172,16 @@ public class BlogsEntryServiceTest {
 
 		Assert.assertEquals(
 			"The previous entry relative to entry " + entry2.getEntryId() +
-			" should be " + entry1.getEntryId(), entry1, prevAndNext[0]);
+				" should be " + entry1.getEntryId(),
+			entry1, prevAndNext[0]);
 		Assert.assertEquals(
 			"The current entry relative to entry " + entry2.getEntryId() +
-			" should be " + entry2.getEntryId(), entry2, prevAndNext[1]);
+				" should be " + entry2.getEntryId(),
+			entry2, prevAndNext[1]);
 		Assert.assertNull(
 			"The next entry relative to entry " + entry1.getEntryId() +
-			" should be null", prevAndNext[2]);
+				" should be null",
+			prevAndNext[2]);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -257,13 +266,16 @@ public class BlogsEntryServiceTest {
 
 			Assert.assertEquals(
 				"The previous entry relative to entry " + entry2.getEntryId() +
-				" should be " + entry1.getEntryId(), entry1, prevAndNext[0]);
+					" should be " + entry1.getEntryId(),
+				entry1, prevAndNext[0]);
 			Assert.assertEquals(
 				"The current entry relative to entry " + entry2.getEntryId() +
-				" should be " + entry2.getEntryId(), entry2, prevAndNext[1]);
+					" should be " + entry2.getEntryId(),
+				entry2, prevAndNext[1]);
 			Assert.assertNull(
 				"The next entry relative to entry " + entry2.getEntryId() +
-				" should be null", prevAndNext[2]);
+					" should be null",
+				prevAndNext[2]);
 		}
 	}
 
@@ -312,13 +324,16 @@ public class BlogsEntryServiceTest {
 
 			Assert.assertNull(
 				"The previous entry relative to entry " + entry2.getEntryId() +
-				" should be null", prevAndNext[0]);
+					" should be null",
+				prevAndNext[0]);
 			Assert.assertEquals(
 				"The current entry relative to entry " + entry2.getEntryId() +
-				" should be " + entry2.getEntryId(), entry2, prevAndNext[1]);
+					" should be " + entry2.getEntryId(),
+				entry2, prevAndNext[1]);
 			Assert.assertEquals(
 				"The next entry relative to entry " + entry2.getEntryId() +
-				" should be " + entry3.getEntryId(), entry3, prevAndNext[2]);
+					" should be " + entry3.getEntryId(),
+				entry3, prevAndNext[2]);
 		}
 	}
 
