@@ -1,3 +1,5 @@
+import {onReady} from '../utils/events.js';
+
 /**
  * Returns an identifier for a form element.
  * @param {object} form The form DOM element
@@ -128,7 +130,7 @@ function trackFormSubmitted(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFormViewed(analytics) {
-	const onLoad = () => {
+	return onReady(() => {
 		Array.prototype.slice
 			.call(document.querySelectorAll('form'))
 			.filter(form => isTrackableForm(form))
@@ -142,19 +144,7 @@ function trackFormViewed(analytics) {
 
 				analytics.send('formViewed', 'forms', payload);
 			});
-	};
-
-	if (
-		document.readyState === 'interactive' ||
-		document.readyState === 'complete' ||
-		document.readyState === 'loaded'
-	) {
-		onLoad();
-	} else {
-		document.addEventListener('DOMContentLoaded', () => onLoad());
-	}
-
-	return () => document.removeEventListener('DOMContentLoaded', onLoad);
+	});
 }
 
 /**
