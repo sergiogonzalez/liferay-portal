@@ -2,7 +2,7 @@ import debounce from 'metal-debounce';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = 'blogs';
+const applicationId = 'Blogs';
 
 /**
  * Returns analytics payload with Blog information.
