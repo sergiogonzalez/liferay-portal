@@ -128,11 +128,11 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 			</c:if>
 		</liferay-util:whitespace-remover>
-
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				Liferay.Util.focusFormField(document.getElementsByName('<portlet:namespace />keywords')[0]);
-			</aui:script>
-		</c:if>
 	</div>
+</c:if>
+
+<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+	<aui:script>
+		Liferay.Util.focusFormField(document.getElementsByName('<portlet:namespace />keywords')[0]);
+	</aui:script>
 </c:if>
