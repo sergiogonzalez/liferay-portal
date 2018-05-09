@@ -288,9 +288,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		searchURL.setParameter(
 			"searchFolderId", String.valueOf(searchFolderId));
 
-		searchURL.setParameter(
-			"showRepositoryTabs", Boolean.toString(folderId == 0));
-
 		searchURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
 
 		return searchURL;
