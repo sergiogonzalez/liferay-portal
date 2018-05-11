@@ -555,8 +555,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage retrievedPage = WikiPageLocalServiceUtil.getPage(
 			page.getResourcePrimKey());
 
-		Assert.assertEquals(
-			retrievedPage.getResourcePrimKey(), page.getResourcePrimKey());
+		Assert.assertEquals(retrievedPage.getPageId(), page.getPageId());
 	}
 
 	@Test
