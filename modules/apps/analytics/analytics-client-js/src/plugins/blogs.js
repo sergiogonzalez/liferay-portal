@@ -34,7 +34,7 @@ function trackBlogsScroll(analytics, blogElements) {
 	const onScroll = debounce(() => {
 		blogElements.forEach(element => {
 			scrollTracker.onDepthReached(depth => {
-				analytics.send('depthReached', applicationId, {
+				analytics.send('blogDepthReached', applicationId, {
 					...getBlogPayload(element),
 					depth,
 					sessionId: scrollSessionId,
