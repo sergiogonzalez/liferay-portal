@@ -118,11 +118,6 @@ WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProv
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-if (navigation.equals("recent-changes")) {
-	orderByCol = "modifiedDate";
-	orderByType = "desc";
-}
-
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, wikiListPagesDisplayContext.getEmptyResultsMessage());
 
 Map orderableHeaders = new HashMap();
