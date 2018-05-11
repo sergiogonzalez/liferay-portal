@@ -116,6 +116,11 @@ if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || 
 WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
+
+if (navigation.equals("recent-changes")) {
+	orderByCol = "modifiedDate";
+}
+
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, wikiListPagesDisplayContext.getEmptyResultsMessage());
@@ -125,10 +130,6 @@ Map orderableHeaders = new HashMap();
 if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || navigation.equals("tagged-pages")) {
 	orderableHeaders.put("page", "title");
 	orderableHeaders.put("date", "modifiedDate");
-}
-
-if (navigation.equals("recent-changes")) {
-	orderByCol = "modifiedDate";
 }
 
 searchContainer.setOrderableHeaders(orderableHeaders);
