@@ -109,10 +109,11 @@ public class SocialActivityCounterLocalServiceTest
 	}
 
 	@Test
-	public void testAddThenRevokeVote() throws Exception {
+	public void testAddVote() throws Exception {
 		SocialActivityTestUtil.addActivity(creatorUser, group, assetEntry, 1);
 
-		SocialActivityTestUtil.addActivity(actorUser, group, assetEntry,
+		SocialActivityTestUtil.addActivity(
+			actorUser, group, assetEntry,
 			SocialActivityConstants.TYPE_ADD_VOTE);
 
 		SocialActivityCounter contribution =
@@ -120,16 +121,26 @@ public class SocialActivityCounterLocalServiceTest
 				group.getGroupId(),
 				SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
-		Assert.assertNotNull(contribution);
+		Assert.assertEquals(5, contribution.getCurrentValue());
+	}
 
-		SocialActivityTestUtil.addActivity(actorUser, group, assetEntry,
+	@Test
+	public void testRevokeVote() throws Exception {
+		SocialActivityTestUtil.addActivity(creatorUser, group, assetEntry, 1);
+
+		SocialActivityTestUtil.addActivity(
+			actorUser, group, assetEntry,
+			SocialActivityConstants.TYPE_ADD_VOTE);
+
+		SocialActivityTestUtil.addActivity(
+			actorUser, group, assetEntry,
 			SocialActivityConstants.TYPE_REVOKE_VOTE);
 
-		contribution = SocialActivityTestUtil.getActivityCounter(
-			group.getGroupId(),
-			SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
+		SocialActivityCounter contribution =
+			SocialActivityTestUtil.getActivityCounter(
+				group.getGroupId(),
+				SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
-		Assert.assertNotNull(contribution);
 		Assert.assertEquals(0, contribution.getCurrentValue());
 	}
 
