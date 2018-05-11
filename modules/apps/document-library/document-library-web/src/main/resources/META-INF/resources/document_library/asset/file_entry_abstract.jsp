@@ -67,10 +67,18 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				</p>
 
 				<%
+				Map<String, Object> analyticsData = new HashMap<>();
+
+				analyticsData.put("analytics-asset-action", "download");
+				analyticsData.put("analytics-asset-id", fileVersion.getFileEntryId());
+				analyticsData.put("analytics-asset-type", "document");
+				analyticsData.put("analytics-asset-version", fileVersion.getFileVersionId());
+
 				String taglibFileEntryTitle = "<span class='hide-accessible'>" + fileEntry.getTitle() + "</span>";
 				%>
 
 				<liferay-ui:icon
+					data="<%= analyticsData %>"
 					iconCssClass="icon-download"
 					label="<%= true %>"
 					message='<%= LanguageUtil.format(request, "download-x", taglibFileEntryTitle, false) + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
