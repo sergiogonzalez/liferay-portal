@@ -46,7 +46,7 @@
 			<owner-type>actor</owner-type>
 		</counter>
 	</activity>
-		<activity>
+	<activity>
 		<model-name>test-model</model-name>
 		<activity-type>10011</activity-type>
 		<language-key>REVOKE_VOTE</language-key>
