@@ -15,7 +15,6 @@
 package com.liferay.friendly.url.internal.exportimport.staged.model.repository;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -131,8 +130,7 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public void restoreStagedModel(
-			PortletDataContext portletDataContext,
-			FriendlyURLEntry stagedModel) {
+		PortletDataContext portletDataContext, FriendlyURLEntry stagedModel) {
 	}
 
 	@Override
@@ -161,8 +159,8 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public FriendlyURLEntry updateStagedModel(
-			PortletDataContext portletDataContext,
-			FriendlyURLEntry friendlyURLEntry) {
+		PortletDataContext portletDataContext,
+		FriendlyURLEntry friendlyURLEntry) {
 
 		return saveStagedModel(friendlyURLEntry);
 	}
