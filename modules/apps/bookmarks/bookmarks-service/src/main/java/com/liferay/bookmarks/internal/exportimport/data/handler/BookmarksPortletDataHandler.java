@@ -121,27 +121,27 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
-			return getExportDataRootElementString(rootElement);
-		}
-
 		portletDataContext.addPortletPermissions(
 			BookmarksConstants.RESOURCE_NAME);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ExportActionableDynamicQuery folderActionableDynamicQuery =
-			_bookmarksFolderStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+			ExportActionableDynamicQuery folderActionableDynamicQuery =
+				_bookmarksFolderStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
 
-		folderActionableDynamicQuery.performActions();
+			folderActionableDynamicQuery.performActions();
+		}
 
-		ActionableDynamicQuery entryActionableDynamicQuery =
-			_bookmarksEntryStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			ActionableDynamicQuery entryActionableDynamicQuery =
+				_bookmarksEntryStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
 
-		entryActionableDynamicQuery.performActions();
+			entryActionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -152,31 +152,33 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
-			return null;
-		}
-
 		portletDataContext.importPortletPermissions(
 			BookmarksConstants.RESOURCE_NAME);
 
-		Element foldersElement = portletDataContext.getImportDataGroupElement(
-			BookmarksFolder.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+			Element foldersElement =
+				portletDataContext.getImportDataGroupElement(
+					BookmarksFolder.class);
 
-		List<Element> folderElements = foldersElement.elements();
+			List<Element> folderElements = foldersElement.elements();
 
-		for (Element folderElement : folderElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folderElement);
+			for (Element folderElement : folderElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, folderElement);
+			}
 		}
 
-		Element entriesElement = portletDataContext.getImportDataGroupElement(
-			BookmarksEntry.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			Element entriesElement =
+				portletDataContext.getImportDataGroupElement(
+					BookmarksEntry.class);
 
-		List<Element> entryElements = entriesElement.elements();
+			List<Element> entryElements = entriesElement.elements();
 
-		for (Element entryElement : entryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, entryElement);
+			for (Element entryElement : entryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, entryElement);
+			}
 		}
 
 		return null;
