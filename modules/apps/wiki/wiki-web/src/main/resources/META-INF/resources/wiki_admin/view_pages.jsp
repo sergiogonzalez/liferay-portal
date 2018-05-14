@@ -53,8 +53,6 @@ wikiPagesSearchContainer.setRowChecker(new PagesChecker(liferayPortletRequest, l
 
 wikiListPagesDisplayContext.populateResultsAndTotal(wikiPagesSearchContainer);
 
-List<WikiPage> pages = wikiPagesSearchContainer.getResults();
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
@@ -78,12 +76,32 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
+
+WikiAdminPagesManagementToolbarDisplayContext wikiAdminPagesManagementToolbarDisplayContext = new WikiAdminPagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiPagesSearchContainer, trashHelper, wikiURLHelper);
 %>
 
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
+<clay:management-toolbar
+	actionDropdownItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= String.valueOf(wikiAdminPagesManagementToolbarDisplayContext.getClearResultsURL()) %>"
+	creationMenu="<%= wikiAdminPagesManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= wikiAdminPagesManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	itemsTotal="<%= wikiAdminPagesManagementToolbarDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= String.valueOf(wikiAdminPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
+	searchContainerId="wikiPages"
+	selectable="<%= wikiAdminPagesManagementToolbarDisplayContext.isSelectable() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= wikiAdminPagesManagementToolbarDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= wikiAdminPagesManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(wikiAdminPagesManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
+
 <liferay-frontend:management-bar
-	disabled="<%= pages.isEmpty() %>"
+	disabled="<%= !wikiPagesSearchContainer.hasResults() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="wikiPages"
 >
