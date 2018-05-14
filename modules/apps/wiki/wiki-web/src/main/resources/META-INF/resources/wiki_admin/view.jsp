@@ -82,23 +82,23 @@ wikiNodesSearchContainer.setOrderByType(orderByType);
 wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()));
 wikiNodesSearchContainer.setTotal(WikiNodeServiceUtil.getNodesCount(scopeGroupId));
 
-WikiAdminManagementToolbarDisplayContext wikiAdminManagementToolbarDisplayContext = new WikiAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
+WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= wikiAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	creationMenu="<%= wikiAdminManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= wikiAdminManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= wikiAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	actionDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	creationMenu="<%= wikiNodesManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= wikiNodesManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
-	itemsTotal="<%= wikiAdminManagementToolbarDisplayContext.getTotalItems() %>"
+	itemsTotal="<%= wikiNodesManagementToolbarDisplayContext.getTotalItems() %>"
 	searchContainerId="wikiNodes"
-	selectable="<%= wikiAdminManagementToolbarDisplayContext.isSelectable() %>"
+	selectable="<%= wikiNodesManagementToolbarDisplayContext.isSelectable() %>"
 	showInfoButton="<%= true %>"
-	showSearch="<%= wikiAdminManagementToolbarDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= wikiAdminManagementToolbarDisplayContext.getSortingOrder() %>"
-	sortingURL="<%= String.valueOf(wikiAdminManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= wikiAdminManagementToolbarDisplayContext.getViewTypes() %>"
+	showSearch="<%= wikiNodesManagementToolbarDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= wikiNodesManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(wikiNodesManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= wikiNodesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

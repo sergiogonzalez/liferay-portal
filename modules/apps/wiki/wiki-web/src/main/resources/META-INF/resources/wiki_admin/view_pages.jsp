@@ -77,27 +77,27 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-WikiAdminPagesManagementToolbarDisplayContext wikiAdminPagesManagementToolbarDisplayContext = new WikiAdminPagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiPagesSearchContainer, trashHelper, wikiURLHelper);
+WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContext = new WikiPagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiPagesSearchContainer, trashHelper, wikiURLHelper);
 %>
 
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= String.valueOf(wikiAdminPagesManagementToolbarDisplayContext.getClearResultsURL()) %>"
-	creationMenu="<%= wikiAdminPagesManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= wikiAdminPagesManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	actionDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getClearResultsURL()) %>"
+	creationMenu="<%= wikiPagesManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= wikiPagesManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
-	itemsTotal="<%= wikiAdminPagesManagementToolbarDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= String.valueOf(wikiAdminPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
+	itemsTotal="<%= wikiPagesManagementToolbarDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="wikiPages"
-	selectable="<%= wikiAdminPagesManagementToolbarDisplayContext.isSelectable() %>"
+	selectable="<%= wikiPagesManagementToolbarDisplayContext.isSelectable() %>"
 	showInfoButton="<%= true %>"
-	showSearch="<%= wikiAdminPagesManagementToolbarDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= wikiAdminPagesManagementToolbarDisplayContext.getSortingOrder() %>"
-	sortingURL="<%= String.valueOf(wikiAdminPagesManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getViewTypes() %>"
+	showSearch="<%= wikiPagesManagementToolbarDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= wikiPagesManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= wikiPagesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
