@@ -197,7 +197,7 @@ public class WikiAdminManagementToolbarDisplayContext {
 			{
 				final Map<String, String> orderColumns = new HashMap<>();
 
-				orderColumns.put("modifiedDate", "last-post-date");
+				orderColumns.put("lastPostDate", "last-post-date");
 				orderColumns.put("name", "name");
 
 				for (Map.Entry<String, String> orderByColEntry :
