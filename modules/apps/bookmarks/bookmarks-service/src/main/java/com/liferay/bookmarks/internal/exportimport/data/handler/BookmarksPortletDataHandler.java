@@ -203,37 +203,20 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		folderExportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
-		unbind = "-"
-	)
-	protected void setBookmarksEntryStagedModelRepository(
-		StagedModelRepository<BookmarksEntry>
-			bookmarksEntryStagedModelRepository) {
-
-		_bookmarksEntryStagedModelRepository =
-			bookmarksEntryStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
-		unbind = "-"
-	)
-	protected void setBookmarksFolderStagedModelRepository(
-		StagedModelRepository<BookmarksFolder>
-			bookmarksFolderStagedModelRepository) {
-
-		_bookmarksFolderStagedModelRepository =
-			bookmarksFolderStagedModelRepository;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
 	private StagedModelRepository<BookmarksEntry>
 		_bookmarksEntryStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
 	private StagedModelRepository<BookmarksFolder>
 		_bookmarksFolderStagedModelRepository;
 
