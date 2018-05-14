@@ -142,8 +142,6 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 						url: url
 					}
 				);
-
-				return false;
 			}
 		</aui:script>
 	</liferay-util:html-bottom>
