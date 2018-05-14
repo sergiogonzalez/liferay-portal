@@ -449,8 +449,6 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 		})('https://analytics.liferay.com/analytics-all-min.js', function() {
 			var config = {analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'};
 
-			Analytics.create(config);
-
 			Analytics.registerMiddleware(
 				function(request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
@@ -459,6 +457,7 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 				}
 			);
 
+			Analytics.create(config);
 			Analytics.send('view', 'Layout');
 
 			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
@@ -468,7 +467,6 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 						Analytics.dispose();
 
 						Analytics.create(config);
-
 						Analytics.send('view', 'Layout', {'page': event.path});
 					}
 				);
