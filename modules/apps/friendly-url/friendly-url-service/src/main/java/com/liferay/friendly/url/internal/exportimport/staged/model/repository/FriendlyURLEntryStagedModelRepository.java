@@ -61,9 +61,7 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	@Override
-	public void deleteStagedModel(FriendlyURLEntry friendlyURLEntry)
-		throws PortalException {
-
+	public void deleteStagedModel(FriendlyURLEntry friendlyURLEntry) {
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(friendlyURLEntry);
 	}
 
@@ -81,9 +79,7 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	@Override
-	public void deleteStagedModels(PortletDataContext portletDataContext)
-		throws PortalException {
-
+	public void deleteStagedModels(PortletDataContext portletDataContext) {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
@@ -135,14 +131,12 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public void restoreStagedModel(
-			PortletDataContext portletDataContext, FriendlyURLEntry stagedModel)
-		throws PortletDataException {
+			PortletDataContext portletDataContext,
+			FriendlyURLEntry stagedModel) {
 	}
 
 	@Override
-	public FriendlyURLEntry saveStagedModel(FriendlyURLEntry friendlyURLEntry)
-		throws PortalException {
-
+	public FriendlyURLEntry saveStagedModel(FriendlyURLEntry friendlyURLEntry) {
 		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
 				friendlyURLEntry.getFriendlyURLEntryId());
@@ -168,8 +162,7 @@ public class FriendlyURLEntryStagedModelRepository
 	@Override
 	public FriendlyURLEntry updateStagedModel(
 			PortletDataContext portletDataContext,
-			FriendlyURLEntry friendlyURLEntry)
-		throws PortalException {
+			FriendlyURLEntry friendlyURLEntry) {
 
 		return saveStagedModel(friendlyURLEntry);
 	}
