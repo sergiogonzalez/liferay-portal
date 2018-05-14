@@ -26,7 +26,7 @@ FileVersion fileVersion = fileEntry.getFileVersion();
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
-<div class="view">
+<div class="view" data-analytics-asset-id="<%= fileEntry.getFileEntryId() %>" data-analytics-asset-type="Document">
 	<div class="body-row">
 		<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
