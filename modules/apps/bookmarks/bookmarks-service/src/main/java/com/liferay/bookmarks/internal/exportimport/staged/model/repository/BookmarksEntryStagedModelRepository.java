@@ -120,7 +120,7 @@ public class BookmarksEntryStagedModelRepository
 		return _bookmarksEntryLocalService.
 			getBookmarksEntriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<BookmarksEntry>());
+				new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override
