@@ -60,6 +60,8 @@ catch (NoSuchFolderException nsfe) {
 			<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
+			<liferay-ui:error key="entriesPerPage" message="please-enter-a-valid-entries-per-page" />
+			<liferay-ui:error key="foldersPerPage" message="please-enter-a-valid-folders-per-page" />
 			<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
 			<liferay-ui:section>
@@ -89,7 +91,7 @@ catch (NoSuchFolderException nsfe) {
 
 						<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showSubfolders() %>" />
 
-						<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceOverriddenConfiguration.foldersPerPage() %>" />
+						<aui:input name="preferences--foldersPerPage--" size="2" type="number" value="<%= bookmarksGroupServiceOverriddenConfiguration.foldersPerPage() %>" />
 
 						<aui:field-wrapper label="show-columns">
 
@@ -138,7 +140,7 @@ catch (NoSuchFolderException nsfe) {
 					>
 						<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>" />
 
-						<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceOverriddenConfiguration.entriesPerPage() %>" />
+						<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="number" value="<%= bookmarksGroupServiceOverriddenConfiguration.entriesPerPage() %>" />
 
 						<aui:field-wrapper label="show-columns">
 

@@ -57,9 +57,11 @@ public class BookmarksAdminConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
+		validateDocumentsPerPage(actionRequest);
 		validateEmail(actionRequest, "emailMessageAdded");
 		validateEmail(actionRequest, "emailMessageUpdated");
 		validateEmailFrom(actionRequest);
+		validateFoldersPerPage(actionRequest);
 		validateRootFolder(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
@@ -79,6 +81,14 @@ public class BookmarksAdminConfigurationAction
 		BookmarksFolderLocalService bookmarksFolderLocalService) {
 
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
+	}
+
+	protected void validateDocumentsPerPage(ActionRequest actionRequest) {
+		_validateInteger(actionRequest, "entriesPerPage", "entriesPerPage");
+	}
+
+	protected void validateFoldersPerPage(ActionRequest actionRequest) {
+		_validateInteger(actionRequest, "foldersPerPage", "foldersPerPage");
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)
@@ -101,6 +111,17 @@ public class BookmarksAdminConfigurationAction
 
 				SessionErrors.add(actionRequest, "rootFolderIdInvalid");
 			}
+		}
+	}
+
+	private void _validateInteger(
+		ActionRequest actionRequest, String parameterName, String key) {
+
+		try {
+			Integer.parseInt(getParameter(actionRequest, parameterName));
+		}
+		catch (NumberFormatException nfe) {
+			SessionErrors.add(actionRequest, key);
 		}
 	}
 
