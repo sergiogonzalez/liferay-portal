@@ -71,8 +71,38 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 />
 
 <%
+SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
+
+NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
+
+wikiNodesSearchContainer.setRowChecker(nodesChecker);
+wikiNodesSearchContainer.setOrderByCol(orderByCol);
+wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
+wikiNodesSearchContainer.setOrderByType(orderByType);
+wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()));
+
 int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
+
+wikiNodesSearchContainer.setTotal(nodesCount);
+
+WikiAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = new WikiAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	creationMenu="<%= dlAdminManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	itemsTotal="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
+	searchContainerId="wikiNodes"
+	selectable="<%= dlAdminManagementToolbarDisplayContext.isSelectable() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= dlAdminManagementToolbarDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= dlAdminManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= nodesCount == 0 %>"
@@ -172,26 +202,11 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<%
-			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
-
-			NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
-
-			wikiNodesSearchContainer.setRowChecker(nodesChecker);
-			wikiNodesSearchContainer.setOrderByCol(orderByCol);
-			wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
-			wikiNodesSearchContainer.setOrderByType(orderByType);
-			%>
-
 			<liferay-ui:search-container
 				id="wikiNodes"
 				searchContainer="<%= wikiNodesSearchContainer %>"
 				total="<%= nodesCount %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-				/>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.wiki.model.WikiNode"
 					keyProperty="nodeId"
