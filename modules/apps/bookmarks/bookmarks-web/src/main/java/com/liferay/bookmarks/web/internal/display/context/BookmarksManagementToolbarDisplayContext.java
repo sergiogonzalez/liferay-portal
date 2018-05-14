@@ -58,18 +58,18 @@ public class BookmarksManagementToolbarDisplayContext {
 	public BookmarksManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request,
 		BookmarksGroupServiceOverriddenConfiguration
 			bookmarksGroupServiceOverriddenConfiguration,
 		PortalPreferences portalPreferences, TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
 		_bookmarksGroupServiceOverriddenConfiguration =
 			bookmarksGroupServiceOverriddenConfiguration;
 		_portalPreferences = portalPreferences;
 		_trashHelper = trashHelper;
-
-		_request = liferayPortletRequest.getHttpServletRequest();
 
 		_folderId = GetterUtil.getLong(
 			(String)_request.getAttribute("view.jsp-folderId"));
