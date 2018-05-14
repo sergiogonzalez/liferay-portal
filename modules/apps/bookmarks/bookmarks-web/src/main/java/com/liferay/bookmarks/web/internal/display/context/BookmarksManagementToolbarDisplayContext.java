@@ -176,6 +176,10 @@ public class BookmarksManagementToolbarDisplayContext {
 		return searchActionURL.toString();
 	}
 
+	public String getSearchContainerId() {
+		return ParamUtil.getString(_request, "searchContainerId");
+	}
+
 	public int getTotalItems() {
 		return _searchContainer.getTotal();
 	}
