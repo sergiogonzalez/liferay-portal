@@ -25,17 +25,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
-import com.liferay.wiki.constants.WikiWebKeys;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.web.internal.display.context.util.WikiURLHelper;
-import com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor;
+import com.liferay.wiki.web.internal.security.permission.resource.WikiResourcePermission;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,20 +44,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class WikiAdminPagesManagementToolbarDisplayContext {
+public class WikiNodesManagementToolbarDisplayContext {
 
-	public WikiAdminPagesManagementToolbarDisplayContext(
+	public WikiNodesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, String displayStyle,
-		SearchContainer searchContainer, TrashHelper trashHelper,
-		WikiURLHelper wikiURLHelper) {
+		SearchContainer searchContainer, TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_displayStyle = displayStyle;
 		_searchContainer = searchContainer;
 		_trashHelper = trashHelper;
-		_wikiURLHelper = wikiURLHelper;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
@@ -84,7 +76,7 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 								StringBundler.concat(
 									"javascript:",
 									_liferayPortletResponse.getNamespace(),
-									"deletePages();"));
+									"deleteNodes();"));
 
 							if (_trashHelper.isTrashEnabled(
 									_themeDisplay.getScopeGroupId())) {
@@ -105,53 +97,38 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 		};
 	}
 
-	public PortletURL getClearResultsURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		portletURL.setParameter("redirect", _currentURLObj.toString());
-
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
-
-		portletURL.setParameter("navigation", navigation);
-
-		WikiNode node = (WikiNode)_request.getAttribute(WikiWebKeys.WIKI_NODE);
-
-		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-
-		return portletURL;
-	}
-
 	public CreationMenu getCreationMenu() {
-		String keywords = ParamUtil.getString(_request, "keywords");
+		boolean showAddNodeButton = WikiResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), ActionKeys.ADD_NODE);
 
-		if (Validator.isNotNull(keywords)) {
+		if (!showAddNodeButton) {
 			return null;
 		}
 
 		return new CreationMenu() {
 			{
-				WikiPortletToolbarContributor wikiPortletToolbarContributor =
-					(WikiPortletToolbarContributor)_request.getAttribute(
-						WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR);
+				addDropdownItem(
+					dropdownItem -> {
+						PortletURL viewNodesURL =
+							_liferayPortletResponse.createRenderURL();
 
-				List<Menu> menus =
-					wikiPortletToolbarContributor.getPortletTitleMenus(
-						_liferayPortletRequest, _liferayPortletResponse);
+						viewNodesURL.setParameter(
+							"mvcRenderCommandName", "/wiki_admin/view");
 
-				for (Menu menu : menus) {
-					List<URLMenuItem> urlMenuItems =
-						(List<URLMenuItem>)(List<?>)menu.getMenuItems();
+						PortletURL addNodeURL =
+							_liferayPortletResponse.createRenderURL();
 
-					for (URLMenuItem urlMenuItem : urlMenuItems) {
-						addDropdownItem(
-							dropdownItem -> {
-								dropdownItem.setHref(urlMenuItem.getURL());
-								dropdownItem.setLabel(urlMenuItem.getLabel());
-							});
-					}
-				}
+						addNodeURL.setParameter(
+							"mvcRenderCommandName", "/wiki/edit_node");
+						addNodeURL.setParameter(
+							"redirect", viewNodesURL.toString());
+
+						dropdownItem.setHref(addNodeURL);
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-wiki"));
+					});
 			}
 		};
 	}
@@ -160,42 +137,14 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 		return new DropdownItemList() {
 			{
 				addGroup(
-					SafeConsumer.ignore(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								_getFilterNavigationDropdownItems());
-							dropdownGroupItem.setLabel(
-								LanguageUtil.get(
-									_request, "filter-by-navigation"));
-						}));
-
-				String keywords = ParamUtil.getString(_request, "keywords");
-
-				if (Validator.isNull(keywords)) {
-					addGroup(
-						SafeConsumer.ignore(
-							dropdownGroupItem -> {
-								dropdownGroupItem.setDropdownItems(
-									_getOrderByDropdownItems());
-								dropdownGroupItem.setLabel(
-									LanguageUtil.get(_request, "order-by"));
-							}));
-				}
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
 			}
 		};
-	}
-
-	public PortletURL getSearchActionURL() {
-		PortletURL searchActionURL = _wikiURLHelper.getSearchURL();
-
-		searchActionURL.setParameter("redirect", _currentURLObj.toString());
-
-		WikiNode node = (WikiNode)_request.getAttribute(WikiWebKeys.WIKI_NODE);
-
-		searchActionURL.setParameter(
-			"nodeId", String.valueOf(node.getNodeId()));
-
-		return searchActionURL;
 	}
 
 	public String getSortingOrder() {
@@ -218,8 +167,8 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 		return _searchContainer.getTotal();
 	}
 
-	public ViewTypeItemList getViewTypes() {
-		return new ViewTypeItemList(_currentURLObj, _displayStyle) {
+	public ViewTypeItemList getViewTypes() throws PortletException {
+		return new ViewTypeItemList(_getPortletURL(), _displayStyle) {
 			{
 				addListViewTypeItem();
 				addTableViewTypeItem();
@@ -228,15 +177,7 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 	}
 
 	public boolean isDisabled() {
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
-
-		if (navigation.equals("all-pages") && !_searchContainer.hasResults()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return !_searchContainer.hasResults();
 	}
 
 	public boolean isSelectable() {
@@ -244,68 +185,20 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 	}
 
 	public boolean isShowSearch() {
-		return true;
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems()
-		throws PortletException {
-
-		String keywords = ParamUtil.getString(_request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			return null;
-		}
-
-		return new DropdownItemList() {
-			{
-				String navigation = ParamUtil.getString(
-					_request, "navigation", "all-pages");
-
-				String[] navigationKeys = {
-					"all-pages", "draft-pages", "frontpage", "orphan-pages",
-					"recent-changes"
-				};
-
-				PortletURL portletURL = _getPortletURL();
-
-				for (String navigationKey : navigationKeys) {
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.setActive(
-									navigation.equals(navigationKey));
-
-								PortletURL navigationPortletURL =
-									PortletURLUtil.clone(
-										portletURL, _liferayPortletResponse);
-
-								dropdownItem.setHref(
-									navigationPortletURL, "navigation",
-									navigationKey);
-
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, navigationKey));
-							}));
-				}
-			}
-		};
+		return false;
 	}
 
 	private String _getOrderByCol() {
 		return _searchContainer.getOrderByCol();
 	}
 
-	private List<DropdownItem> _getOrderByDropdownItems()
-		throws PortletException {
-
+	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
-				Map<String, String> orderColumns = new HashMap<>();
+				final Map<String, String> orderColumns = new HashMap<>();
 
-				orderColumns.put("modifiedDate", "modified-date");
-				orderColumns.put("title", "title");
-
-				PortletURL portletURL = _getPortletURL();
+				orderColumns.put("lastPostDate", "last-post-date");
+				orderColumns.put("name", "name");
 
 				for (Map.Entry<String, String> orderByColEntry :
 						orderColumns.entrySet()) {
@@ -317,15 +210,8 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 							dropdownItem -> {
 								dropdownItem.setActive(
 									orderByCol.equals(_getOrderByCol()));
-
-								PortletURL orderByPortletURL =
-									PortletURLUtil.clone(
-										portletURL, _liferayPortletResponse);
-
 								dropdownItem.setHref(
-									orderByPortletURL, "orderByCol",
-									orderByCol);
-
+									_getPortletURL(), "orderByCol", orderByCol);
 								dropdownItem.setLabel(
 									LanguageUtil.get(
 										_request, orderByColEntry.getValue()));
@@ -343,8 +229,7 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_currentURLObj, _liferayPortletResponse);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		portletURL.setParameter("redirect", _currentURLObj.toString());
+		portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
 
 		return portletURL;
 	}
@@ -357,6 +242,5 @@ public class WikiAdminPagesManagementToolbarDisplayContext {
 	private final SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
-	private final WikiURLHelper _wikiURLHelper;
 
 }
