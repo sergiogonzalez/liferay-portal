@@ -100,47 +100,6 @@ WikiAdminPagesManagementToolbarDisplayContext wikiAdminPagesManagementToolbarDis
 	viewTypeItems="<%= wikiAdminPagesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<liferay-frontend:management-bar
-	disabled="<%= !wikiPagesSearchContainer.hasResults() %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="wikiPages"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				cssClass="infoPanelToggler"
-				icon="info-circle"
-				label="info"
-			/>
-
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive", "list"} %>'
-				portletURL="<%= currentURLObj %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-
-			<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deletePages();" %>'
-			iconCssClass='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
-
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/page_info_panel" var="sidebarPanelURL">
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
