@@ -37,16 +37,15 @@ public class WikiPortletUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<WikiNode> orderByComparator = null;
-
 		if (orderByCol.equals("name")) {
-			orderByComparator = new NodeNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new NodeModifiedDateComparator(orderByAsc);
+			return new NodeNameComparator(orderByAsc);
 		}
 
-		return orderByComparator;
+		if (orderByCol.equals("modifiedDate")) {
+			return new NodeModifiedDateComparator(orderByAsc);
+		}
+
+		return null;
 	}
 
 	public static OrderByComparator<WikiPage> getPageOrderByComparator(
@@ -58,19 +57,19 @@ public class WikiPortletUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<WikiPage> orderByComparator = null;
-
 		if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new PageCreateDateComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("title")) {
-			orderByComparator = new PageTitleComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("version")) {
-			orderByComparator = new PageVersionComparator(orderByAsc);
+			return new PageCreateDateComparator(orderByAsc);
 		}
 
-		return orderByComparator;
+		if (orderByCol.equals("title")) {
+			return new PageTitleComparator(orderByAsc);
+		}
+
+		if (orderByCol.equals("version")) {
+			return new PageVersionComparator(orderByAsc);
+		}
+
+		return null;
 	}
 
 }
