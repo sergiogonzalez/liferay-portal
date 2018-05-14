@@ -169,9 +169,7 @@ public class BookmarksFolderStagedModelRepository
 	}
 
 	@Override
-	public BookmarksFolder saveStagedModel(BookmarksFolder bookmarksFolder)
-		throws PortalException {
-
+	public BookmarksFolder saveStagedModel(BookmarksFolder bookmarksFolder) {
 		return _bookmarksFolderLocalService.updateBookmarksFolder(
 			bookmarksFolder);
 	}
