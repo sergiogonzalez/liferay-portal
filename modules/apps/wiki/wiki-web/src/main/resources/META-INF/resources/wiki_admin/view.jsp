@@ -80,10 +80,7 @@ wikiNodesSearchContainer.setOrderByCol(orderByCol);
 wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
 wikiNodesSearchContainer.setOrderByType(orderByType);
 wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()));
-
-int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
-
-wikiNodesSearchContainer.setTotal(nodesCount);
+wikiNodesSearchContainer.setTotal(WikiNodeServiceUtil.getNodesCount(scopeGroupId));
 
 WikiAdminManagementToolbarDisplayContext wikiAdminManagementToolbarDisplayContext = new WikiAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>
@@ -103,66 +100,6 @@ WikiAdminManagementToolbarDisplayContext wikiAdminManagementToolbarDisplayContex
 	sortingURL="<%= String.valueOf(wikiAdminManagementToolbarDisplayContext.getSortingURL()) %>"
 	viewTypeItems="<%= wikiAdminManagementToolbarDisplayContext.getViewTypes() %>"
 />
-
-<liferay-frontend:management-bar
-	disabled="<%= nodesCount == 0 %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="wikiNodes"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<%
-		boolean showAddNodeButton = WikiResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
-		%>
-
-		<c:if test="<%= showAddNodeButton %>">
-			<portlet:renderURL var="viewNodesURL">
-				<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
-			</portlet:renderURL>
-
-			<portlet:renderURL var="addNodeURL">
-				<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
-				<portlet:param name="redirect" value="<%= viewNodesURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-wiki") %>'
-					url="<%= addNodeURL %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/wiki_admin/sort_nodes_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteNodes();" %>'
-			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/node_info_panel" var="sidebarPanelURL" />
@@ -205,7 +142,7 @@ WikiAdminManagementToolbarDisplayContext wikiAdminManagementToolbarDisplayContex
 			<liferay-ui:search-container
 				id="wikiNodes"
 				searchContainer="<%= wikiNodesSearchContainer %>"
-				total="<%= nodesCount %>"
+				total="<%= wikiNodesSearchContainer.getTotal() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.wiki.model.WikiNode"
