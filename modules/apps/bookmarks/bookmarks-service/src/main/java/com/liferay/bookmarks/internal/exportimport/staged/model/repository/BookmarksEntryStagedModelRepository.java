@@ -196,16 +196,7 @@ public class BookmarksEntryStagedModelRepository
 			serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BookmarksEntryStagedModelRepository.class);
-
+	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Reference
