@@ -101,9 +101,8 @@ public class BookmarksEntryStagedModelRepository
 
 	@Override
 	public BookmarksEntry fetchMissingReference(String uuid, long groupId) {
-		return
-			(BookmarksEntry)_stagedModelRepositoryHelper.fetchMissingReference(
-				uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override

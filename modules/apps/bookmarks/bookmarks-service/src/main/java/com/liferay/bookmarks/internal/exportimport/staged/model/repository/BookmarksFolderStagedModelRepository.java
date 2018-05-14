@@ -98,9 +98,8 @@ public class BookmarksFolderStagedModelRepository
 
 	@Override
 	public BookmarksFolder fetchMissingReference(String uuid, long groupId) {
-		return
-			(BookmarksFolder)_stagedModelRepositoryHelper.fetchMissingReference(
-				uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override
