@@ -140,7 +140,7 @@ catch (NoSuchFolderException nsfe) {
 					>
 						<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>" />
 
-						<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="number" value="<%= bookmarksGroupServiceOverriddenConfiguration.entriesPerPage() %>" />
+						<aui:input label="entries-per-page" name="preferences--entriesPerPage--" size="2" type="number" value="<%= bookmarksGroupServiceOverriddenConfiguration.entriesPerPage() %>" />
 
 						<aui:field-wrapper label="show-columns">
 
