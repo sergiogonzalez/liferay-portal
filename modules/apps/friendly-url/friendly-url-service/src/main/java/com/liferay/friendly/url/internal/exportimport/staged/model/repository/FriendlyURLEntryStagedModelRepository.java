@@ -96,8 +96,8 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public FriendlyURLEntry fetchMissingReference(String uuid, long groupId) {
-		return (FriendlyURLEntry)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override
