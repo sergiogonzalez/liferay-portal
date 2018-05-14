@@ -266,10 +266,40 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateThreadAndMessage() throws Exception {
+	public void testUpdateThreadAndMessageWhenBodyChanges() throws Exception {
 		Date date = new Date();
 
 		MBMessage message = addMessage(null, false, date);
+
+		MBThread mbThread = message.getThread();
+
+		Assert.assertEquals(mbThread.getModifiedDate(), date);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessageLocalServiceUtil.updateMessage(
+			message.getUserId(), message.getMessageId(), message.getSubject(),
+			RandomTestUtil.randomString(), Collections.emptyList(), 0, false,
+			serviceContext);
+
+		mbThread = message.getThread();
+
+		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
+	}
+
+	@Test
+	public void testUpdateThreadAndMessageWhenSubjectChanges()
+		throws Exception {
+
+		Date date = new Date();
+
+		MBMessage message = addMessage(null, false, date);
+
+		MBThread mbThread = message.getThread();
+
+		Assert.assertEquals(mbThread.getModifiedDate(), date);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -277,11 +307,10 @@ public class MBMessageLocalServiceTest {
 
 		MBMessageLocalServiceUtil.updateMessage(
 			message.getUserId(), message.getMessageId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), 0, false, serviceContext);
+			RandomTestUtil.randomString(), message.getBody(),
+			Collections.emptyList(), 0, false, serviceContext);
 
-		MBThread mbThread = message.getThread();
+		mbThread = message.getThread();
 
 		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
 	}
