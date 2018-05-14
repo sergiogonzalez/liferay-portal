@@ -31,7 +31,25 @@ if (deltaEntry > 0) {
 
 portletURL.setParameter("categoryId", StringPool.BLANK);
 portletURL.setParameter("tag", StringPool.BLANK);
+
+BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContext = new BookmarksManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, bookmarksGroupServiceOverriddenConfiguration, portalPreferences, trashHelper);
 %>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= bookmarksManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= bookmarksManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= bookmarksManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	itemsTotal="<%= bookmarksManagementToolbarDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= String.valueOf(bookmarksManagementToolbarDisplayContext.getSearchActionURL()) %>"
+	searchContainerId="<%= searchContainerId %>"
+	selectable="<%= bookmarksManagementToolbarDisplayContext.isSelectable() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= bookmarksManagementToolbarDisplayContext.isShowSearch() %>"
+	viewTypeItems="<%= bookmarksManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId) <= 0 %>"
