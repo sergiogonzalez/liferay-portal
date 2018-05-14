@@ -2488,10 +2488,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			thread.setStatusDate(modifiedDate);
 		}
 
-		if (status == oldStatus) {
-			return;
-		}
-
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			if (message.isAnonymous()) {
 				thread.setLastPostByUserId(0);
