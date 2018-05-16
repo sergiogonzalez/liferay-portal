@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.util.comparator.NodeLastPostDateComparator;
-import com.liferay.wiki.util.comparator.NodeModifiedDateComparator;
 import com.liferay.wiki.util.comparator.NodeNameComparator;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageTitleComparator;
@@ -40,10 +39,6 @@ public class WikiPortletUtil {
 
 		if (orderByCol.equals("lastPostDate")) {
 			return new NodeLastPostDateComparator(orderByAsc);
-		}
-
-		if (orderByCol.equals("modifiedDate")) {
-			return new NodeModifiedDateComparator(orderByAsc);
 		}
 
 		if (orderByCol.equals("name")) {
