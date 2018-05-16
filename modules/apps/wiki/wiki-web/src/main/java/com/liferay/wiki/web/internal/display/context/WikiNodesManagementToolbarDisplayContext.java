@@ -99,11 +99,10 @@ public class WikiNodesManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		boolean showAddNodeButton = WikiResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(),
-			_themeDisplay.getScopeGroupId(), ActionKeys.ADD_NODE);
+		if (!WikiResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_NODE)) {
 
-		if (!showAddNodeButton) {
 			return null;
 		}
 
@@ -117,15 +116,10 @@ public class WikiNodesManagementToolbarDisplayContext {
 						viewNodesURL.setParameter(
 							"mvcRenderCommandName", "/wiki_admin/view");
 
-						PortletURL addNodeURL =
-							_liferayPortletResponse.createRenderURL();
-
-						addNodeURL.setParameter(
-							"mvcRenderCommandName", "/wiki/edit_node");
-						addNodeURL.setParameter(
+						dropdownItem.setHref(
+							_liferayPortletResponse.createRenderURL(),
+							"mvcRenderCommandName", "/wiki/edit_node",
 							"redirect", viewNodesURL.toString());
-
-						dropdownItem.setHref(addNodeURL);
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "add-wiki"));
