@@ -68,10 +68,13 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
 			RatingsType ratingsType = ratingsTypeMapEntry.getValue();
+
+			if (ratingsType == null) {
+				ratingsType = companyPortletRatingsDefinitionDisplayContext.getRatingsType(portletId, className);
+			}
 		%>
 
 			<aui:select label="<%= (ratingsTypeMapEntries.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
-				<aui:option label='<%= LanguageUtil.format(request, "default-value-x", companyPortletRatingsDefinitionDisplayContext.getRatingsType(portletId, className)) %>' selected="<%= ratingsType == null %>" value="<%= StringPool.BLANK %>" />
 
 				<%
 				for (RatingsType curRatingsType : RatingsType.values()) {
