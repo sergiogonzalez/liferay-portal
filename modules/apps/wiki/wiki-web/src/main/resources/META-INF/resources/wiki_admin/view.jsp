@@ -37,12 +37,17 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+if (Validator.isNotNull(orderByCol)) {
 	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", orderByCol);
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", orderByType);
 }
 else {
 	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", "lastPostDate");
+}
+
+if (Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", orderByType);
+}
+else {
 	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", "desc");
 }
 
