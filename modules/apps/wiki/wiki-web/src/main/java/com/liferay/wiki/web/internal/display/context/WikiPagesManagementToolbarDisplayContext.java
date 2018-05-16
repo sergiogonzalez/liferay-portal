@@ -91,7 +91,8 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 								dropdownItem.setIcon("trash");
 								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "recycle-bin"));
+									LanguageUtil.get(
+										_request, "move-to-the-recycle-bin"));
 							}
 							else {
 								dropdownItem.setIcon("times");
