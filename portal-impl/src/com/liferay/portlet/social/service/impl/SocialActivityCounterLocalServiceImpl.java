@@ -296,14 +296,14 @@ public class SocialActivityCounterLocalServiceImpl
 				activityDefinition.getActivityCounterDefinition(
 					activityCounter.getName());
 
-			if (activity.getType() == 
+			if (activity.getType() ==
 					SocialActivityConstants.TYPE_REVOKE_VOTE) {
 
 				decrementActivityCounter(
 					activityCounter, activityCounterDefinition);
 			}
 			else if (checkActivityLimit(
-				user, activity, activityCounterDefinition)) {
+						user, activity, activityCounterDefinition)) {
 
 				incrementActivityCounter(
 					activityCounter, activityCounterDefinition);
