@@ -439,11 +439,7 @@ if (portletTitleBasedNavigation) {
 
 							<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
 
-							<aui:model-context />
-
-							<aui:input label="version-notes" name="changeLog" type="textarea" />
-
-							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+							<aui:input label="version-notes" name="changeLog" />
 						</div>
 					</aui:fieldset>
 				</c:if>
