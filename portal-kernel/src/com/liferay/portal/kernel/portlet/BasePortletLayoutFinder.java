@@ -93,7 +93,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		if ((plidAndPortletId == null) &&
 			(scopeGroup.isSite() ||
 			 SitesUtil.isUserGroupLayoutSetViewable(
-				themeDisplay.getPermissionChecker(), scopeGroup))) {
+				 themeDisplay.getPermissionChecker(), scopeGroup))) {
 
 			plidAndPortletId = fetchPlidAndPortletId(
 				themeDisplay.getPermissionChecker(),
