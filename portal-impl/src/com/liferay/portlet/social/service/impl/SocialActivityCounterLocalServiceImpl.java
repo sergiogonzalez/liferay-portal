@@ -235,6 +235,13 @@ public class SocialActivityCounterLocalServiceImpl
 				activity.getGroupId(), activity.getClassName(),
 				activity.getType());
 
+		if (activity.getType() == SocialActivityConstants.TYPE_REVOKE_VOTE) {
+			activityDefinition =
+				socialActivitySettingLocalService.getActivityDefinition(
+					activity.getGroupId(), activity.getClassName(),
+					SocialActivityConstants.TYPE_ADD_VOTE);
+		}
+
 		if ((activityDefinition == null) ||
 			!activityDefinition.isCountersEnabled()) {
 
@@ -289,7 +296,15 @@ public class SocialActivityCounterLocalServiceImpl
 				activityDefinition.getActivityCounterDefinition(
 					activityCounter.getName());
 
-			if (checkActivityLimit(user, activity, activityCounterDefinition)) {
+			if (activity.getType() ==
+					SocialActivityConstants.TYPE_REVOKE_VOTE) {
+
+				decrementActivityCounter(
+					activityCounter, activityCounterDefinition);
+			}
+			else if (checkActivityLimit(
+						user, activity, activityCounterDefinition)) {
+
 				incrementActivityCounter(
 					activityCounter, activityCounterDefinition);
 			}
@@ -994,6 +1009,34 @@ public class SocialActivityCounterLocalServiceImpl
 				SocialActivityCounterFinder.class.getName());
 
 		portalCache.removeAll();
+	}
+
+	protected void decrementActivityCounter(
+		SocialActivityCounter activityCounter,
+		SocialActivityCounterDefinition activityCounterDefinition) {
+
+		int currentValue =
+			activityCounter.getCurrentValue() -
+				activityCounterDefinition.getIncrement();
+
+		if (currentValue < 0) {
+			currentValue = 0;
+		}
+
+		int totalValue =
+			activityCounter.getTotalValue() -
+				activityCounterDefinition.getIncrement();
+
+		if (totalValue < 0) {
+			totalValue = 0;
+		}
+
+		activityCounter.setCurrentValue(currentValue);
+		activityCounter.setTotalValue(totalValue);
+
+		socialActivityCounterPersistence.update(activityCounter);
+
+		socialActivityCounterPersistence.clearCache(activityCounter);
 	}
 
 	protected long getClassNameId(AssetEntry assetEntry, int ownerType) {
