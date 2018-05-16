@@ -644,8 +644,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String name = StringPool.BLANK;
-		String description = StringPool.BLANK;
+		Group group = groupLocalService.getGroup(
+			themeDisplay.getScopeGroupId());
+
+		String name = group.getDescriptiveName();
+		String description = group.getDescription(
+			LocaleUtil.getMostRelevantLocale());
 
 		List<MBMessage> messages = new ArrayList<>();
 
@@ -672,13 +676,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 					messages.add(message);
 				}
-			}
-
-			if (!messages.isEmpty()) {
-				MBMessage message = messages.get(messages.size() - 1);
-
-				name = message.getSubject();
-				description = message.getSubject();
 			}
 		}
 
