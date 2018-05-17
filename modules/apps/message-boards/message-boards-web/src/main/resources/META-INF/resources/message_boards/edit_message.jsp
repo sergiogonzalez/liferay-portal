@@ -99,7 +99,7 @@ if (curParentMessage != null) {
 	headerTitle = LanguageUtil.format(request, "reply-to-x", curParentMessage.getSubject(), false);
 }
 else if (message != null) {
-	headerTitle = LanguageUtil.format(request, "edit-x", message.getSubject(), false);
+	headerTitle = LanguageUtil.format(request, "edit-x", HtmlUtil.escape(message.getSubject()), false);
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
