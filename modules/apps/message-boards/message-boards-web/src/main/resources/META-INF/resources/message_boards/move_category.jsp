@@ -30,9 +30,6 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 String headerTitle = LanguageUtil.format(request, "move-x", category.getName(), false);
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
