@@ -40,8 +40,6 @@ if (enableKBArticleRatings && kbArticle.isDraft()) {
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
 	renderResponse.setTitle(kbArticle.getTitle());
 }
 %>
@@ -77,9 +75,7 @@ if (portletTitleBasedNavigation) {
 
 	<div class="sidenav-content">
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				title="<%= kbArticle.getTitle() %>"
-			/>
+			<h3><%= HtmlUtil.escape(kbArticle.getTitle()) %></h3>
 		</c:if>
 
 		<div class="kb-tools">

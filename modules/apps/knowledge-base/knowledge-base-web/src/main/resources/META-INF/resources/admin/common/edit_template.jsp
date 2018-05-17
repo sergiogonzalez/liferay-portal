@@ -24,9 +24,6 @@ long kbTemplateId = BeanParamUtil.getLong(kbTemplate, request, "kbTemplateId");
 String title = BeanParamUtil.getString(kbTemplate, request, "title");
 String content = BeanParamUtil.getString(kbTemplate, request, "content");
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
 renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-template") : kbTemplate.getTitle());
 %>
 
