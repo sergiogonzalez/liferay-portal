@@ -29,9 +29,6 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL.toString());
-
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "compare-versions"));
 }
 %>
@@ -45,10 +42,7 @@ if (portletTitleBasedNavigation) {
 
 	<liferay-util:include page="/wiki/page_tabs_history.jsp" servletContext="<%= application %>" />
 
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title="compare-versions"
-	/>
+	<h3><liferay-ui:message key="compare-versions" /></h3>
 </c:if>
 
 <liferay-portlet:renderURL varImpl="portletURL">
