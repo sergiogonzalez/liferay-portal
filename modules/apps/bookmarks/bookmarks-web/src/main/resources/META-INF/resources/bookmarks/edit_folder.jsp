@@ -52,9 +52,6 @@ String headerTitle = (folder == null) ? ((parentFolderId > 0) ? LanguageUtil.get
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -71,11 +68,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				localizeTitle="<%= (folder == null) %>"
-				title="<%= headerTitle %>"
-			/>
+			<h3><%= headerTitle %></h3>
 		</c:if>
 
 		<liferay-ui:error exception="<%= FolderNameException.class %>">

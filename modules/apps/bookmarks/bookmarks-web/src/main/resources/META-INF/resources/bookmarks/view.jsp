@@ -28,15 +28,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (Validator.isNotNull(keywords) && portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	portletDisplay.setURLBack(redirect);
-
-	String headerTitle = LanguageUtil.get(resourceBundle, "search");
-
-	renderResponse.setTitle(headerTitle);
+	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "search"));
 }
 
 boolean defaultFolderView = false;
