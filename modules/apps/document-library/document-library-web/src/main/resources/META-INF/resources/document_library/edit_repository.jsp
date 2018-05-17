@@ -30,9 +30,6 @@ String headerTitle = (repository == null) ? LanguageUtil.get(request, "new-repos
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -49,11 +46,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				localizeTitle="<%= false %>"
-				title="<%= headerTitle %>"
-			/>
+			<h3><%= headerTitle %></h3>
 		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-repository-name" />

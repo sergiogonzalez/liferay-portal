@@ -83,9 +83,6 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(LanguageUtil.get(request, "move-files"));
 }
 %>
@@ -101,10 +98,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="move-files"
-			/>
+			<h3><liferay-ui:message key="move-files" /></h3>
 		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />

@@ -60,9 +60,6 @@ String headerTitle = (folder == null) ? (rootFolder ? LanguageUtil.get(request, 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -90,11 +87,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				localizeTitle="<%= false %>"
-				title="<%= headerTitle %>"
-			/>
+			<h3><%= headerTitle %><h3 />
 		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-folder-name" />
