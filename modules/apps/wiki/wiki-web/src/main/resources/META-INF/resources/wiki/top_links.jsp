@@ -41,12 +41,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 <%
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
-
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backToNodeURL.toString());
-
 	renderResponse.setTitle(node.getName());
 }
 %>

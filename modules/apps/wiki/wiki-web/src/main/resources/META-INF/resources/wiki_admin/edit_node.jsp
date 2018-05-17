@@ -23,9 +23,6 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
 renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-node") : node.getName());
 %>
 

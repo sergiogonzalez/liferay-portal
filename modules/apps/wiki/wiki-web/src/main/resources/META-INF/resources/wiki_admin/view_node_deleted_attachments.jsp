@@ -33,13 +33,6 @@ portletURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachm
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments-recycle-bin"), portletURL.toString());
 
-WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-
-PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backToNodeURL.toString());
-
 renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 %>
 
