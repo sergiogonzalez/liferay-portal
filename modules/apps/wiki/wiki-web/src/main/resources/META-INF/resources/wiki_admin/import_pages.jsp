@@ -44,12 +44,6 @@ portletURL.setParameter("nodeId", String.valueOf(nodeId));
 
 portletDisplay.setShowBackIcon(true);
 
-WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-
-PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
-
-portletDisplay.setURLBack(backToNodeURL.toString());
-
 renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 %>
 

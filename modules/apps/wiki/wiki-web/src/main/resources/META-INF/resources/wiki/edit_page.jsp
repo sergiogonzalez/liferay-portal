@@ -110,9 +110,6 @@ String headerTitle = ((wikiPage == null) || wikiPage.isNew()) ? LanguageUtil.get
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backToViewPagesURL.toString());
-
 	renderResponse.setTitle(headerTitle);
 }
 %>

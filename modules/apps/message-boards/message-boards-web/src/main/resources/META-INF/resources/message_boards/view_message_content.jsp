@@ -28,27 +28,6 @@ MBThread thread = messageDisplay.getThread();
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	String backURL = redirect;
-
-	if (Validator.isNull(redirect)) {
-		PortletURL backPortletURL = renderResponse.createRenderURL();
-
-		if ((category == null) || (category.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {
-			backPortletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-		}
-		else {
-			backPortletURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
-			backPortletURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-		}
-
-		backURL = backPortletURL.toString();
-	}
-
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-
 	renderResponse.setTitle(message.getSubject());
 }
 %>

@@ -34,9 +34,6 @@ if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(entry.getTitle());
 }
 %>
