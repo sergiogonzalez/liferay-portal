@@ -63,9 +63,6 @@ String headerTitle = (fileShortcut != null) ? LanguageUtil.format(request, "shor
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -85,11 +82,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="toFileEntryId" type="hidden" value="<%= toFileEntryId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				localizeTitle="<%= false %>"
-				title="<%= headerTitle %>"
-			/>
+			<h3><%= headerTitle %></h3>
 		</c:if>
 
 		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />

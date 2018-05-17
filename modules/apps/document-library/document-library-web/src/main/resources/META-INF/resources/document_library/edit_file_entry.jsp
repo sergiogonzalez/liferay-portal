@@ -133,9 +133,6 @@ else if ((dlFileEntryType != null) && (fileEntryTypeId != 0)) {
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -179,11 +176,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<c:if test="<%= !portletTitleBasedNavigation && showHeader %>">
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= false %>"
-			title="<%= headerTitle %>"
-		/>
+		<h3><%= headerTitle %></h3>
 	</c:if>
 
 	<liferay-portlet:actionURL name="/document_library/edit_file_entry" varImpl="editFileEntryURL">
