@@ -30,9 +30,6 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 
 if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	String headerTitle = StringPool.BLANK;
 
 	if (kbFolderView) {

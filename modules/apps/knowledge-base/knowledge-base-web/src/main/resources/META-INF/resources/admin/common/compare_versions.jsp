@@ -29,19 +29,12 @@ double targetVersion = ParamUtil.getDouble(request, "targetVersion");
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL.toString());
-
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "compare-versions"));
 }
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		localizeTitle="<%= false %>"
-		title="<%= kbArticle.getTitle() %>"
-	/>
+	<h3><%= HtmlUtil.escape(kbArticle.getTitle()) %></h3>
 </c:if>
 
 <liferay-portlet:renderURL varImpl="portletURL">
