@@ -451,8 +451,6 @@ String liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_S
 		})('https://analytics.liferay.com/analytics-all-min.js', function() {
 			var config = {analyticsKey: '<%= HtmlUtil.escapeJS(liferayAnalyticsKey) %>'};
 
-			Analytics.create(config);
-
 			Analytics.registerMiddleware(
 				function(request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
@@ -461,6 +459,7 @@ String liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_S
 				}
 			);
 
+			Analytics.create(config);
 			Analytics.send('view', 'Layout');
 
 			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
@@ -470,7 +469,6 @@ String liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_S
 						Analytics.dispose();
 
 						Analytics.create(config);
-
 						Analytics.send('view', 'Layout', {'page': event.path});
 					}
 				);
