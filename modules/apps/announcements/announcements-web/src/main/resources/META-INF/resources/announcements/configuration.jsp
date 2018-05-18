@@ -331,7 +331,7 @@ if (!roles.isEmpty()) {
 		var pageDeltaInput = <portlet:namespace />form.querySelector('select[name=<portlet:namespace />preferences--pageDelta--]');
 
 		if (pageDeltaInput) {
-			pageDeltaInput.on(
+			pageDeltaInput.addEventListener(
 				'change',
 				function(event) {
 					var displaySettingsPanel = document.querySelector('#<portlet:namespace />displaySettingsPanel');
