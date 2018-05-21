@@ -51,9 +51,6 @@ else {
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -66,10 +63,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="alert" type="hidden" value="<%= alert %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="entry"
-			/>
+			<h3><liferay-ui:message key="entry" /></h3>
 		</c:if>
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />

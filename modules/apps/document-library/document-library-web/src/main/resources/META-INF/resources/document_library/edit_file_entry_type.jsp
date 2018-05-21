@@ -37,16 +37,13 @@ if (fileEntryType != null) {
 	ddmStructures = fileEntryType.getDDMStructures();
 
 	if (ddmStructure != null) {
-		ddmStructures = new ArrayList<DDMStructure>(ddmStructures);
+		ddmStructures = new ArrayList<>(ddmStructures);
 
 		ddmStructures.remove(ddmStructure);
 	}
 }
 
 DDMDisplay ddmDisplay = new DLDDMDisplay();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale));
 %>

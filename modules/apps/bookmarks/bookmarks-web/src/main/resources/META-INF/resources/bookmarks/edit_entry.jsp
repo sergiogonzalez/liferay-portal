@@ -51,9 +51,6 @@ String headerTitle = (entry == null) ? LanguageUtil.get(request, "add-bookmark")
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -73,11 +70,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="showFolderSelector" type="hidden" value="<%= showFolderSelector %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation && showHeader %>">
-			<liferay-ui:header
-				backURL="<%= backURL %>"
-				localizeTitle="<%= (entry == null) %>"
-				title="<%= headerTitle %>"
-			/>
+			<h3><%= headerTitle %></h3>
 		</c:if>
 
 		<div class="lfr-form-content">

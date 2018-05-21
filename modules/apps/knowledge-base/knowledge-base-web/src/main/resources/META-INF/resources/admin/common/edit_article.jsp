@@ -38,15 +38,12 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 String headerTitle = LanguageUtil.get(request, "new-article");
 
 if (kbArticle != null) {
-	headerTitle = kbArticle.getTitle();
+	headerTitle = HtmlUtil.escape(kbArticle.getTitle());
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -66,11 +63,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= false %>"
-		title="<%= headerTitle %>"
-	/>
+	<h3><%= headerTitle %></h3>
 </c:if>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>

@@ -92,9 +92,6 @@ final DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDispla
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(fileVersion.getTitle());
 }
 %>
@@ -122,11 +119,7 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 
 	<c:if test="<%= !portletTitleBasedNavigation && showHeader && (folder != null) %>">
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= false %>"
-			title="<%= fileVersion.getTitle() %>"
-		/>
+		<h3><%= fileVersion.getTitle() %></h3>
 	</c:if>
 
 	<c:if test="<%= !portletTitleBasedNavigation %>">

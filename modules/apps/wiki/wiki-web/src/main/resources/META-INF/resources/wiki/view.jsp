@@ -108,13 +108,6 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-
-	PortletURL backToViewPagesURL = wikiURLHelper.getBackToViewPagesURL(node);
-
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack((viewParentPageURL != null) ? viewParentPageURL.toString() : backToViewPagesURL.toString());
-
 	renderResponse.setTitle(wikiPage.getTitle());
 }
 %>
@@ -215,12 +208,7 @@ if (portletTitleBasedNavigation) {
 					<div class="main-content-body">
 						<c:choose>
 							<c:when test="<%= !portletTitleBasedNavigation %>">
-								<liferay-ui:header
-									backLabel="<%= parentTitle %>"
-									backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
-									localizeTitle="<%= false %>"
-									title="<%= title %>"
-								/>
+								<h3><%= HtmlUtil.escape(title) %></h3>
 							</c:when>
 							<c:otherwise>
 								<h2><%= title %></h2>

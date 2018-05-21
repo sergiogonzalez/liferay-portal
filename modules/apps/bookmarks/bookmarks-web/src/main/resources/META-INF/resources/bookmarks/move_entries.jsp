@@ -67,9 +67,6 @@ for (BookmarksEntry curEntry : entries) {
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(LanguageUtil.get(request, "move-entries"));
 }
 %>
@@ -85,10 +82,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="move-entries"
-			/>
+			<h3><liferay-ui:message key="move-entries" /></h3>
 		</c:if>
 
 		<aui:fieldset-group markupView="lexicon">

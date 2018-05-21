@@ -28,31 +28,6 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 	<c:if test="<%= category != null %>">
 
 		<%
-		long parentCategoryId = category.getParentCategoryId();
-
-		if (!category.isRoot()) {
-			MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
-
-			parentCategoryId = parentCategory.getCategoryId();
-		}
-		%>
-
-		<portlet:renderURL var="backURL">
-			<c:choose>
-				<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
-					<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-				</c:when>
-				<c:otherwise>
-					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
-					<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-				</c:otherwise>
-			</c:choose>
-		</portlet:renderURL>
-
-		<%
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(backURL.toString());
-
 		renderResponse.setTitle(category.getName());
 		%>
 

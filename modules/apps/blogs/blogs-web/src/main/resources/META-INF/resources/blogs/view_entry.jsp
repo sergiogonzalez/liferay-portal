@@ -60,9 +60,6 @@ request.setAttribute("view_entry_content.jsp-ratingsStats", ratingsStats);
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(entryTitle);
 }
 %>

@@ -23,9 +23,6 @@ String kbCommentTitle = StringUtil.shorten(kbComment.getContent(), 100);
 
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(request, templatePath, scopeGroupId);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
 renderResponse.setTitle(kbCommentTitle);
 %>
 

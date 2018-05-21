@@ -30,19 +30,12 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
 	renderResponse.setTitle(kbArticle.getTitle());
 }
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= false %>"
-		title="<%= kbArticle.getTitle() %>"
-	/>
+	<h3><%= HtmlUtil.escape(kbArticle.getTitle()) %></h3>
 </c:if>
 
 <aui:fieldset cssClass='<%= portletTitleBasedNavigation ? "container-fluid-1280 main-content-card panel" : StringPool.BLANK %>' markupView="lexicon">
