@@ -230,7 +230,7 @@ if (message.isAnonymous()) {
 								</c:choose>
 							</c:if>
 
-							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">
+							<c:if test="<%= hasReplyPermission && !thread.isLocked() && !thread.isDraft() %>">
 
 								<%
 								String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', '');";
