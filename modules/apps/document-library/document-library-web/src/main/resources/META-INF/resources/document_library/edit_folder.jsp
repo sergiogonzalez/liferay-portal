@@ -296,7 +296,7 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 			</c:if>
 
-			<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
+			<c:if test="<%= !rootFolder && ((parentFolder == null) || parentFolder.isSupportsMetadata()) %>">
 				<liferay-expando:custom-attributes-available
 					className="<%= DLFolderConstants.getClassName() %>"
 				>
