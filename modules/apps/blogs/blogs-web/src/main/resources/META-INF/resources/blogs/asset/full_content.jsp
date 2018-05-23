@@ -19,8 +19,6 @@
 <liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/asset/full_content.jsp#pre" />
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-asset:asset-display:assetEntry");
-
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), BlogsPortletKeys.BLOGS));
@@ -80,7 +78,12 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 							</c:if>
 
 							<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
-								- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
+
+								<%
+								AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
+								%>
+
+									- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
 							</c:if>
 						</div>
 					</div>
