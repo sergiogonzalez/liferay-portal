@@ -274,31 +274,22 @@ else {
 				</liferay-asset:asset-categories-available>
 			</dl>
 
+			<%
+			AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
+			%>
+
+			<c:if test="<%= (layoutAssetEntry != null) && dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
+				<liferay-asset:asset-links
+					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
+				/>
+			</c:if>
+
 			<liferay-ui:panel-container
 				cssClass="metadata-panel-container"
 				extended="<%= true %>"
 				markupView="lexicon"
 				persistState="<%= true %>"
 			>
-
-				<%
-				AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
-				%>
-
-				<c:if test="<%= (layoutAssetEntry != null) && dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						id="documentLibraryRelatedAssetsPanel"
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="related-assets"
-					>
-						<liferay-asset:asset-links
-							assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
-						/>
-					</liferay-ui:panel>
-				</c:if>
-
 				<c:if test="<%= dlViewFileVersionDisplayContext.getDDMStructuresCount() > 0 %>">
 
 					<%
