@@ -125,34 +125,37 @@ else {
 							title='<%= LanguageUtil.get(resourceBundle, "download") %>'
 						/>
 
-						<span class="conversions">
+						<c:if test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
 
 							<%
-							String[] conversions = new String[0];
-
-							if (PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled()) {
-								conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
-							}
+							final String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
 							%>
 
-							<%
-							for (int i = 0; i < conversions.length; i++) {
-								String conversion = conversions[i];
-							%>
+							<c:if test="<%= conversions.length > 0 %>">
+								<div class="d-inline-block">
+									<clay:dropdown-menu
+										dropdownItems="<%=
+											new JSPDropdownItemList(pageContext) {
+												{
+													ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 
-								<liferay-ui:icon
-									iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
-									label="<%= true %>"
-									message="<%= StringUtil.toUpperCase(conversion) %>"
-									method="get"
-									url='<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
-								/>
-
-							<%
-							}
-							%>
-
-						</span>
+													for (String conversion : conversions) {
+														add(
+															dropdownItem -> {
+																dropdownItem.setHref(DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+															});
+													}
+												}
+											}
+										%>"
+										style="secondary"
+										triggerCssClasses="btn-outline-borderless btn-sm"
+										label="<%= LanguageUtil.get(request, "download-as") %>"
+									/>
+								</div>
+							</c:if>
+						</c:if>
 					</aui:button-row>
 
 					<div class="sidebar-block">
