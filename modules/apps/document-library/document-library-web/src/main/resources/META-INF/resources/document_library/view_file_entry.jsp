@@ -59,12 +59,6 @@ else {
 
 com.liferay.portal.kernel.lock.Lock lock = fileEntry.getLock();
 
-String[] conversions = new String[0];
-
-if (PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled()) {
-	conversions = (String[])DocumentConversionUtil.getConversions(fileVersion.getExtension());
-}
-
 long assetClassPK = 0;
 
 if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !fileEntry.isInTrash()) {
@@ -72,12 +66,6 @@ if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryCon
 }
 else {
 	assetClassPK = fileEntry.getFileEntryId();
-}
-
-String webDavURL = StringPool.BLANK;
-
-if (portletDisplay.isWebDAVEnabled()) {
-	webDavURL = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
 }
 
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
@@ -392,20 +380,6 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	$('.show-url-file').on(
-		'click',
-		function(event) {
-			$('.url-file-container').toggleClass('hide');
-		}
-	);
-
-	$('.show-webdav-url-file').on(
-		'click',
-		function(event) {
-			$('.webdav-url-file-container').toggleClass('hide');
-		}
-	);
-
 	<portlet:namespace />initRowsChecked();
 
 	$('input[name=<portlet:namespace />rowIds]').on(
