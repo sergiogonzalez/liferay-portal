@@ -60,19 +60,21 @@ else {
 >
 	<liferay-ui:section>
 		<div class="sidebar-body">
-			<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
-				<clay:label
-					label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
-					style="info"
-				/>
-			</c:if>
+			<div style="margin-bottom:1.5rem;">
+				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+					<clay:label
+						label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
+						style="info"
+					/>
+				</c:if>
 
-			<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+				<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
-			<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+				<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+			</div>
 
 			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel" style="margin-top:1.5rem;">
+				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 
 					<div class="sticker sticker-bottom-left sticker-danger"><%= HtmlUtil.escape(StringUtil.toUpperCase(fileEntry.getExtension())) %></div>
