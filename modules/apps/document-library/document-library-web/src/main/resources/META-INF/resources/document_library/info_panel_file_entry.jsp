@@ -156,9 +156,14 @@ else {
 					</aui:button-row>
 
 					<div class="sidebar-block">
-						<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
 
-						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && fileVersion.equals(fileEntry.getLatestFileVersion()) %>">
+						<%
+						boolean isLatestVersion = fileVersion.equals(fileEntry.getLatestFileVersion());
+						%>
+
+						<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
+
+						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
 
 							<%
 							String webDavHelpMessage = null;
