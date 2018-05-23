@@ -16,6 +16,7 @@ package com.liferay.document.library.item.selector.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -24,6 +25,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,6 +34,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -107,6 +111,26 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			"selectedTab", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
+	}
+
+	public long getStagingAwareGroupId(long scopeGroupId) {
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		long groupId = scopeGroupId;
+
+		if (stagingGroupHelper.isStagingGroup(scopeGroupId) &&
+			!stagingGroupHelper.isStagedPortlet(
+				scopeGroupId, DLPortletKeys.DOCUMENT_LIBRARY)) {
+
+			Group group = stagingGroupHelper.fetchLiveGroup(scopeGroupId);
+
+			if (group != null) {
+				groupId = group.getGroupId();
+			}
+		}
+
+		return groupId;
 	}
 
 	public String getTitle(Locale locale) {
