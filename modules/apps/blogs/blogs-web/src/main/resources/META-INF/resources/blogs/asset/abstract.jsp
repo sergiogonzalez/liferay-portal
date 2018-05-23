@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
-
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), BlogsPortletKeys.BLOGS));
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
@@ -82,6 +80,11 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 			</c:if>
 
 			<p>
+
+				<%
+				AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
+				%>
+
 				<%= assetRenderer.getSummary(renderRequest, renderResponse) %>
 			</p>
 		</div>
