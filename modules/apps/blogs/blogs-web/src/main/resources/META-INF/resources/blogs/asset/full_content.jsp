@@ -110,42 +110,6 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 				label="<%= true %>"
 			/>
 		</liferay-expando:custom-attributes-available>
-
-		<liferay-asset:asset-tags-available
-			className="<%= BlogsEntry.class.getName() %>"
-			classPK="<%= entry.getEntryId() %>"
-		>
-			<div class="entry-tags">
-				<liferay-asset:asset-tags-summary
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-					portletURL="<%= renderResponse.createRenderURL() %>"
-				/>
-			</div>
-		</liferay-asset:asset-tags-available>
-
-		<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
-			<div class="entry-links">
-				<liferay-asset:asset-links
-					assetEntryId="<%= (assetEntry != null) ? assetEntry.getEntryId() : 0 %>"
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-				/>
-			</div>
-		</c:if>
-
-		<liferay-asset:asset-categories-available
-			className="<%= BlogsEntry.class.getName() %>"
-			classPK="<%= entry.getEntryId() %>"
-		>
-			<div class="entry-categories">
-				<liferay-asset:asset-categories-summary
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entry.getEntryId() %>"
-					portletURL="<%= renderResponse.createRenderURL() %>"
-				/>
-			</div>
-		</liferay-asset:asset-categories-available>
 	</div>
 </div>
 
