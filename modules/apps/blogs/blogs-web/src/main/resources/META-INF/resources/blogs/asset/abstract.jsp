@@ -24,8 +24,6 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), BlogsPortletKeys.BLOGS));
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
-
-String coverImageURL = entry.getCoverImageURL(themeDisplay);
 %>
 
 <div class="widget-mode-simple">
@@ -71,6 +69,11 @@ String coverImageURL = entry.getCoverImageURL(themeDisplay);
 		</div>
 
 		<div class="widget-content" id="<portlet:namespace /><%= entry.getEntryId() %>">
+
+			<%
+			String coverImageURL = entry.getCoverImageURL(themeDisplay);
+			%>
+
 			<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
 				<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= coverImageURL %>)"></div>
 			</c:if>

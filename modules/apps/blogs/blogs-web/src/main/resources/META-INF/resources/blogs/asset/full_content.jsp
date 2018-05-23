@@ -27,8 +27,6 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = Configurat
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
-String coverImageURL = entry.getCoverImageURL(themeDisplay);
-
 String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
 
 String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowState.MAXIMIZED);
@@ -91,6 +89,11 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 		</div>
 
 		<div class="widget-content" id="<portlet:namespace /><%= entry.getEntryId() %>">
+
+			<%
+			String coverImageURL = entry.getCoverImageURL(themeDisplay);
+			%>
+
 			<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
 				<a href="<%= viewEntryURL %>">
 					<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= coverImageURL %>)"></div>
