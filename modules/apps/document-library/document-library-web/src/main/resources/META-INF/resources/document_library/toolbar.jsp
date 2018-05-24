@@ -144,9 +144,9 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 
 					if (itemData && itemData.action && ACTIONS[itemData.action]) {
 						ACTIONS[itemData.action]();
-					}
 
-					event.preventDefault();
+						event.preventDefault();
+					}
 				}
 			);
 		}
