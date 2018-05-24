@@ -344,9 +344,19 @@
 		}
 	}
 
-	.sidebar-body {
+	.sidebar-header {
 		.label-info, .workflow-status .label {
 			text-transform: uppercase;
+		}
+	}
+
+	.sidebar-body {
+		.thumbnail {
+			margin-bottom: 1.5rem;
+		}
+
+		.username.component-title {
+			margin: 0;
 		}
 	}
 }

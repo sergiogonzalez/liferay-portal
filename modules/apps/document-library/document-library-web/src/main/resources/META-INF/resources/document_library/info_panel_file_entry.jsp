@@ -19,19 +19,7 @@
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 FileVersion fileVersion = (FileVersion)request.getAttribute("info_panel.jsp-fileVersion");
-%>
 
-<div class="sidebar-header">
-	<ul class="sidebar-header-actions">
-		<li>
-			<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
-		</li>
-	</ul>
-
-	<h4><%= HtmlUtil.escape(fileEntry.getTitle()) %></h4>
-</div>
-
-<%
 String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
@@ -52,6 +40,27 @@ else {
 }
 %>
 
+<div class="sidebar-header">
+	<ul class="sidebar-header-actions">
+		<li>
+			<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
+		</li>
+	</ul>
+
+	<h4><%= HtmlUtil.escape(fileEntry.getTitle()) %></h4>
+
+	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+		<clay:label
+			label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
+			style="info"
+		/>
+	</c:if>
+
+	<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+
+	<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+</div>
+
 <liferay-ui:tabs
 	cssClass="navbar-no-collapse"
 	names="<%= tabsNames %>"
@@ -60,26 +69,13 @@ else {
 >
 	<liferay-ui:section>
 		<div class="sidebar-body">
-			<div style="margin-bottom:1.5rem;">
-				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
-					<clay:label
-						label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
-						style="info"
-					/>
-				</c:if>
-
-				<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-
-				<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
-			</div>
-
 			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel">
+				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel thumbnail">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 				</div>
 			</c:if>
 
-			<div class="autofit-row widget-metadata">
+			<div class="autofit-row sidebar-panel widget-metadata">
 				<div class="autofit-col inline-item-before">
 
 					<%
@@ -93,6 +89,7 @@ else {
 					%>
 
 					<liferay-ui:user-portrait
+						cssClass="user-icon-lg"
 						user="<%= owner %>"
 					/>
 				</div>
@@ -100,28 +97,30 @@ else {
 				<div class="autofit-col autofit-col-expand">
 					<div class="autofit-row">
 						<div class="autofit-col autofit-col-expand">
-							<a class="username" href="<%= ownerURL %>"><%= owner.getFullName() %></a>
-
-							<div>
-								<small>
-									<liferay-ui:message key="owner" />
-								</small>
+							<div class="component-title h4 username">
+								<a href="<%= ownerURL %>"><%= owner.getFullName() %></a>
 							</div>
+
+							<small class="text-muted">
+								<liferay-ui:message key="owner" />
+							</small>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
-				<div class="sidebar-block">
-					<aui:button-row>
-						<clay:link
-							buttonStyle="primary"
-							elementClasses='<%= "btn-sm" %>'
-							href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
-							label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-							title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
-						/>
+				<div class="sidebar-section">
+					<div class="btn-group sidebar-panel">
+						<div class="btn-group-item">
+							<clay:link
+								buttonStyle="primary"
+								elementClasses='<%= "btn-sm" %>'
+								href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+								label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+								title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+							/>
+						</div>
 
 						<c:if test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
 
@@ -130,33 +129,35 @@ else {
 							%>
 
 							<c:if test="<%= conversions.length > 0 %>">
-								<div class="d-inline-block">
-									<clay:dropdown-menu
-										dropdownItems="<%=
-											new JSPDropdownItemList(pageContext) {
-												{
-													ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+								<div class="btn-group-item">
+									<div class="d-inline-block">
+										<clay:dropdown-menu
+											dropdownItems="<%=
+												new JSPDropdownItemList(pageContext) {
+													{
+														ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 
-													for (String conversion : conversions) {
-														add(
-															dropdownItem -> {
-																dropdownItem.setHref(DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
-																dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
-															});
+														for (String conversion : conversions) {
+															add(
+																dropdownItem -> {
+																	dropdownItem.setHref(DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																	dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																});
+														}
 													}
 												}
-											}
-										%>"
-										style="secondary"
-										triggerCssClasses="btn-outline-borderless btn-sm"
-										label="<%= LanguageUtil.get(request, "download-as") %>"
-									/>
+											%>"
+											style="secondary"
+											triggerCssClasses="btn-outline-borderless btn-sm"
+											label="<%= LanguageUtil.get(request, "download-as") %>"
+										/>
+									</div>
 								</div>
 							</c:if>
 						</c:if>
-					</aui:button-row>
+					</div>
 
-					<div class="sidebar-block">
+					<div class="sidebar-panel">
 
 						<%
 						boolean isLatestVersion = fileVersion.equals(fileEntry.getLatestFileVersion());
