@@ -21,46 +21,46 @@ options {
  package com.liferay.wiki.engine.creole.internal.parser.parser;
 }
 
-T41 : ':' ;
-T42 : 'C' ;
-T43 : '2' ;
-T44 : 'D' ;
-T45 : 'o' ;
-T46 : 'k' ;
-T47 : 'u' ;
-T48 : 'W' ;
-T49 : 'i' ;
-T50 : 'F' ;
-T51 : 'l' ;
-T52 : 'c' ;
-T53 : 'r' ;
-T54 : 'G' ;
-T55 : 'g' ;
-T56 : 'e' ;
-T57 : 'J' ;
-T58 : 'S' ;
-T59 : 'P' ;
-T60 : 'M' ;
-T61 : 'a' ;
-T62 : 't' ;
-T63 : 'b' ;
-T64 : 'd' ;
-T65 : 'n' ;
-T66 : 'O' ;
-T67 : 'm' ;
-T68 : 's' ;
-T69 : 'h' ;
-T70 : 'p' ;
-T71 : 'R' ;
-T72 : 'x' ;
-T73 : 'T' ;
-T74 : 'y' ;
-T75 : 'U' ;
-T76 : 'X' ;
-T77 : '<<TableOfContents>>' ;
-T78 : '<<TableOfContents title=' ;
-T79 : '\"' ;
-T80 : '>>' ;
+T42 : ':' ;
+T43 : 'C' ;
+T44 : '2' ;
+T45 : 'D' ;
+T46 : 'o' ;
+T47 : 'k' ;
+T48 : 'u' ;
+T49 : 'W' ;
+T50 : 'i' ;
+T51 : 'F' ;
+T52 : 'l' ;
+T53 : 'c' ;
+T54 : 'r' ;
+T55 : 'G' ;
+T56 : 'g' ;
+T57 : 'e' ;
+T58 : 'J' ;
+T59 : 'S' ;
+T60 : 'P' ;
+T61 : 'M' ;
+T62 : 'a' ;
+T63 : 't' ;
+T64 : 'b' ;
+T65 : 'd' ;
+T66 : 'n' ;
+T67 : 'O' ;
+T68 : 'm' ;
+T69 : 's' ;
+T70 : 'h' ;
+T71 : 'p' ;
+T72 : 'R' ;
+T73 : 'x' ;
+T74 : 'T' ;
+T75 : 'y' ;
+T76 : 'U' ;
+T77 : 'X' ;
+T78 : '<<TableOfContents>>' ;
+T79 : '<<TableOfContents title=' ;
+T80 : '\"' ;
+T81 : '>>' ;
 
 // $ANTLR src "Creole10.g" 1148
 ESCAPE					: '~';
@@ -92,29 +92,31 @@ NOWIKI_OPEN				: '{{{';
 // $ANTLR src "Creole10.g" 1163
 NOWIKI_CLOSE			: '}}}';
 // $ANTLR src "Creole10.g" 1164
-LINK_OPEN				: '[[';
+ESCAPED_BRACKET			: ESCAPE ']' {setText("]");};
 // $ANTLR src "Creole10.g" 1165
-LINK_CLOSE				: ']]';
+LINK_OPEN				: '[[';
 // $ANTLR src "Creole10.g" 1166
-IMAGE_OPEN				: '{{';
+LINK_CLOSE				: ']]';
 // $ANTLR src "Creole10.g" 1167
-IMAGE_CLOSE				: '}}';
+IMAGE_OPEN				: '{{';
 // $ANTLR src "Creole10.g" 1168
-FORCED_LINEBREAK		: '\\\\';
+IMAGE_CLOSE				: '}}';
 // $ANTLR src "Creole10.g" 1169
-EQUAL					: '=';
+FORCED_LINEBREAK		: '\\\\';
 // $ANTLR src "Creole10.g" 1170
-PIPE					: '|';
+EQUAL					: '=';
 // $ANTLR src "Creole10.g" 1171
-POUND					: '#';
+PIPE					: '|';
 // $ANTLR src "Creole10.g" 1172
-DASH					: '-';
+POUND					: '#';
 // $ANTLR src "Creole10.g" 1173
-STAR					: '*';
+DASH					: '-';
 // $ANTLR src "Creole10.g" 1174
-SLASH					: '/';
+STAR					: '*';
 // $ANTLR src "Creole10.g" 1175
+SLASH					: '/';
+// $ANTLR src "Creole10.g" 1176
 EXTENSION				: '@@';
 
-// $ANTLR src "Creole10.g" 1177
+// $ANTLR src "Creole10.g" 1178
 INSIGNIFICANT_CHAR		: .;
