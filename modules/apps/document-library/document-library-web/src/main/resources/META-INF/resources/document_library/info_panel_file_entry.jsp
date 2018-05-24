@@ -20,15 +20,7 @@
 FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 FileVersion fileVersion = (FileVersion)request.getAttribute("info_panel.jsp-fileVersion");
 
-String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
-
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
-
-String tabsNames = "details";
-
-if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
-	tabsNames += ",versions";
-}
 
 long assetClassPK = 0;
 
@@ -61,6 +53,14 @@ else {
 	<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
 </div>
 
+<%
+String tabsNames = "details";
+
+if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
+	tabsNames += ",versions";
+}
+%>
+
 <liferay-ui:tabs
 	cssClass="navbar-no-collapse"
 	names="<%= tabsNames %>"
@@ -69,6 +69,11 @@ else {
 >
 	<liferay-ui:section>
 		<div class="sidebar-body">
+
+			<%
+			String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
+			%>
+
 			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel thumbnail">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
