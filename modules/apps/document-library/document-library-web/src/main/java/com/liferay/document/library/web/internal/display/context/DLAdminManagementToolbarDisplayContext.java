@@ -534,6 +534,7 @@ public class DLAdminManagementToolbarDisplayContext {
 
 							dropdownItem.putData(
 								"action", "openDocumentTypesSelector");
+							dropdownItem.setHref("#");
 
 							String label = LanguageUtil.get(
 								_request, "document-types");
