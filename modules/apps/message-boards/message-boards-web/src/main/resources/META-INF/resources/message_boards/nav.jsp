@@ -19,6 +19,8 @@
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/message_boards/view");
 
+boolean groupAdmin = permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId());
+
 boolean signedIn = themeDisplay.isSignedIn();
 %>
 
@@ -75,16 +77,18 @@ boolean signedIn = themeDisplay.isSignedIn();
 					}
 				}
 
-				PortletURL viewStatisticsURL = renderResponse.createRenderURL();
+				if (groupAdmin) {
+					PortletURL viewStatisticsURL = renderResponse.createRenderURL();
 
-				viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
+					viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_statistics"));
-						navigationItem.setHref(viewStatisticsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
-					});
+					add(
+						navigationItem -> {
+							navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/view_statistics"));
+							navigationItem.setHref(viewStatisticsURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
+						});
+				}
 			}
 		}
 	%>'

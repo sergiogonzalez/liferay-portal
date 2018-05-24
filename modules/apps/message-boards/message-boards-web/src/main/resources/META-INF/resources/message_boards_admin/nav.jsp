@@ -19,6 +19,8 @@
 <%
 String navItemSelected = ParamUtil.getString(request, "navItemSelected");
 
+boolean groupAdmin = permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId());
+
 PortletURL messageBoardsHomeURL = renderResponse.createRenderURL();
 
 messageBoardsHomeURL.setParameter("mvcRenderCommandName", "/message_boards/view");
@@ -45,19 +47,21 @@ bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned
 						navigationItem.setLabel(LanguageUtil.get(request, "content"));
 					});
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(navItemSelected.equals("statistics"));
-						navigationItem.setHref(viewStatisticsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
-					});
+				if (groupAdmin) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(navItemSelected.equals("statistics"));
+							navigationItem.setHref(viewStatisticsURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
+						});
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(navItemSelected.equals("banned-users"));
-						navigationItem.setHref(bannedUsersURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "banned-users"));
-					});
+					add(
+						navigationItem -> {
+							navigationItem.setActive(navItemSelected.equals("banned-users"));
+							navigationItem.setHref(bannedUsersURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "banned-users"));
+						});
+				}
 			}
 		}
 	%>'
