@@ -76,8 +76,6 @@ else {
 			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel">
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
-
-					<div class="sticker sticker-bottom-left sticker-danger"><%= HtmlUtil.escape(StringUtil.toUpperCase(fileEntry.getExtension())) %></div>
 				</div>
 			</c:if>
 
