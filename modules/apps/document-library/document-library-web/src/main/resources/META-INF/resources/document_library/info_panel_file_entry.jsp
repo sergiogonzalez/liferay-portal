@@ -122,7 +122,7 @@ else {
 							elementClasses='<%= "btn-sm" %>'
 							href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 							label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-							title='<%= LanguageUtil.get(resourceBundle, "download") %>'
+							title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 						/>
 
 						<c:if test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
