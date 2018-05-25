@@ -29,6 +29,7 @@
 	<liferay-ui:message arguments="<%= pe.resourceName %>" key="x-is-not-enabled" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= PrincipalException.MustBeGroupAdmin.class %>" message="you-do-not-have-the-required-permissions" />
 <liferay-ui:error exception="<%= PrincipalException.MustBeInvokedUsingPost.class %>" message="an-unexpected-error-occurred-while-connecting-to-the-specified-url" />
 <liferay-ui:error exception="<%= PrincipalException.MustBeOmniadmin.class %>" message="you-do-not-have-the-required-permissions" />
 <liferay-ui:error exception="<%= PrincipalException.MustBePortletStrutsPath.class %>" message="the-portlet-is-not-configured-correctly" />
