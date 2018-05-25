@@ -21,18 +21,7 @@ String navItemSelected = ParamUtil.getString(request, "navItemSelected");
 
 boolean groupAdmin = permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId());
 
-PortletURL messageBoardsHomeURL = renderResponse.createRenderURL();
-
-messageBoardsHomeURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
-
-PortletURL viewStatisticsURL = renderResponse.createRenderURL();
-
-viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
-
-PortletURL bannedUsersURL = renderResponse.createRenderURL();
-
-bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.BAN_USER);
 %>
 
 <clay:navigation-bar
@@ -40,6 +29,11 @@ bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
+				PortletURL messageBoardsHomeURL = renderResponse.createRenderURL();
+
+				messageBoardsHomeURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+				messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
+
 				add(
 					navigationItem -> {
 						navigationItem.setActive(navItemSelected.equals("threads"));
@@ -48,12 +42,22 @@ bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned
 					});
 
 				if (groupAdmin) {
+					PortletURL viewStatisticsURL = renderResponse.createRenderURL();
+
+					viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
+
 					add(
 						navigationItem -> {
 							navigationItem.setActive(navItemSelected.equals("statistics"));
 							navigationItem.setHref(viewStatisticsURL);
 							navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
 						});
+				}
+
+				if (hasBanUserPermission) {
+					PortletURL bannedUsersURL = renderResponse.createRenderURL();
+
+					bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
 
 					add(
 						navigationItem -> {
