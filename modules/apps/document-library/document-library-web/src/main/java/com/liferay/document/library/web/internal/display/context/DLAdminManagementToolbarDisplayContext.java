@@ -91,9 +91,16 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
+		User user = _themeDisplay.getUser();
+
+		if (!_dlPortletInstanceSettingsHelper.isShowActions() ||
+			user.isDefaultUser()) {
+
+			return null;
+		}
+
 		return new DropdownItemList() {
 			{
-				User user = _themeDisplay.getUser();
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
 				boolean stagedActions = false;
@@ -105,74 +112,71 @@ public class DLAdminManagementToolbarDisplayContext {
 					stagedActions = true;
 				}
 
-				if (!user.isDefaultUser()) {
-					if (stagedActions) {
-						add(
-							SafeConsumer.ignore(
-								dropdownItem -> {
-									dropdownItem.putData("action", "download");
-									dropdownItem.setIcon("download");
-									dropdownItem.setLabel(
-										LanguageUtil.get(_request, "download"));
-									dropdownItem.setQuickAction(true);
-								}));
-						add(
-							SafeConsumer.ignore(
-								dropdownItem -> {
-									dropdownItem.putData("action", "move");
-									dropdownItem.setIcon("change");
-									dropdownItem.setLabel(
-										LanguageUtil.get(_request, "move"));
-									dropdownItem.setQuickAction(true);
-								}));
-					}
+				if (stagedActions) {
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.putData("action", "download");
+								dropdownItem.setIcon("download");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "download"));
+								dropdownItem.setQuickAction(true);
+							}));
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.putData("action", "move");
+								dropdownItem.setIcon("change");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "move"));
+								dropdownItem.setQuickAction(true);
+							}));
+				}
+
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteEntries");
+
+							if (_dlTrashUtil.isTrashEnabled(
+									scopeGroup.getGroupId(),
+									_getRepositoryId())) {
+
+								dropdownItem.setIcon("trash");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_request, "move-to-the-recycle-bin"));
+							}
+							else {
+								dropdownItem.setIcon("times");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "delete"));
+							}
+
+							dropdownItem.setQuickAction(true);
+						}));
+
+				if (stagedActions) {
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.putData("action", "checkin");
+								dropdownItem.setIcon("unlock");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "checkin"));
+								dropdownItem.setQuickAction(false);
+							}));
 
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.putData("action", "deleteEntries");
-
-								if (_dlTrashUtil.isTrashEnabled(
-										scopeGroup.getGroupId(),
-										_getRepositoryId())) {
-
-									dropdownItem.setIcon("trash");
-									dropdownItem.setLabel(
-										LanguageUtil.get(
-											_request,
-											"move-to-the-recycle-bin"));
-								}
-								else {
-									dropdownItem.setIcon("times");
-									dropdownItem.setLabel(
-										LanguageUtil.get(_request, "delete"));
-								}
-
-								dropdownItem.setQuickAction(true);
+								dropdownItem.putData("action", "checkout");
+								dropdownItem.setIcon("lock");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										_request, "checkout[document]"));
+								dropdownItem.setQuickAction(false);
 							}));
-
-					if (stagedActions) {
-						add(
-							SafeConsumer.ignore(
-								dropdownItem -> {
-									dropdownItem.putData("action", "checkin");
-									dropdownItem.setIcon("unlock");
-									dropdownItem.setLabel(
-										LanguageUtil.get(_request, "checkin"));
-									dropdownItem.setQuickAction(false);
-								}));
-
-						add(
-							SafeConsumer.ignore(
-								dropdownItem -> {
-									dropdownItem.putData("action", "checkout");
-									dropdownItem.setIcon("lock");
-									dropdownItem.setLabel(
-										LanguageUtil.get(
-											_request, "checkout[document]"));
-									dropdownItem.setQuickAction(false);
-								}));
-					}
 				}
 			}
 		};
@@ -402,7 +406,7 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	public boolean isSelectable() {
-		return _dlPortletInstanceSettingsHelper.isShowActions();
+		return true;
 	}
 
 	public boolean isShowSearch() {
