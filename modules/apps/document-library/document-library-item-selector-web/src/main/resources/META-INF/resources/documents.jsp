@@ -39,6 +39,7 @@ long groupId = dlItemSelectorViewDisplayContext.getStagingAwareGroupId(themeDisp
 if (dlItemSelectorViewDisplayContext.isSearch()) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
+	searchContext.setGroupIds(new long[] {groupId});
 	searchContext.setAttribute("mimeTypes", mimeTypes);
 	searchContext.setEnd(end);
 	searchContext.setFolderIds(new long[] {dlItemSelectorViewDisplayContext.getFolderId(request)});
