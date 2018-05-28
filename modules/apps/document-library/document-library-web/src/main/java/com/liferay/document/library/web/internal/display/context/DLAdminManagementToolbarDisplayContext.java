@@ -96,32 +96,37 @@ public class DLAdminManagementToolbarDisplayContext {
 				User user = _themeDisplay.getUser();
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				if (!user.isDefaultUser() &&
-					(!scopeGroup.isStaged() || scopeGroup.isStagingGroup() ||
-					 !scopeGroup.isStagedPortlet(
-						 DLPortletKeys.DOCUMENT_LIBRARY))) {
+				boolean stagedActions = false;
 
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.putData("action", "download");
-								dropdownItem.setIcon("download");
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "download"));
-								dropdownItem.setQuickAction(true);
-							}));
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.putData("action", "move");
-								dropdownItem.setIcon("change");
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "move"));
-								dropdownItem.setQuickAction(true);
-							}));
+				if (!scopeGroup.isStaged() || scopeGroup.isStagingGroup() ||
+					!scopeGroup.isStagedPortlet(
+						DLPortletKeys.DOCUMENT_LIBRARY)) {
+
+					stagedActions = true;
 				}
 
 				if (!user.isDefaultUser()) {
+					if (stagedActions) {
+						add(
+							SafeConsumer.ignore(
+								dropdownItem -> {
+									dropdownItem.putData("action", "download");
+									dropdownItem.setIcon("download");
+									dropdownItem.setLabel(
+										LanguageUtil.get(_request, "download"));
+									dropdownItem.setQuickAction(true);
+								}));
+						add(
+							SafeConsumer.ignore(
+								dropdownItem -> {
+									dropdownItem.putData("action", "move");
+									dropdownItem.setIcon("change");
+									dropdownItem.setLabel(
+										LanguageUtil.get(_request, "move"));
+									dropdownItem.setQuickAction(true);
+								}));
+					}
+
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
@@ -145,28 +150,30 @@ public class DLAdminManagementToolbarDisplayContext {
 
 								dropdownItem.setQuickAction(true);
 							}));
+
+					if (stagedActions) {
+						add(
+							SafeConsumer.ignore(
+								dropdownItem -> {
+									dropdownItem.putData("action", "checkin");
+									dropdownItem.setIcon("unlock");
+									dropdownItem.setLabel(
+										LanguageUtil.get(_request, "checkin"));
+									dropdownItem.setQuickAction(false);
+								}));
+
+						add(
+							SafeConsumer.ignore(
+								dropdownItem -> {
+									dropdownItem.putData("action", "checkout");
+									dropdownItem.setIcon("lock");
+									dropdownItem.setLabel(
+										LanguageUtil.get(
+											_request, "checkout[document]"));
+									dropdownItem.setQuickAction(false);
+								}));
+					}
 				}
-
-				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.putData("action", "checkin");
-							dropdownItem.setIcon("unlock");
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "checkin"));
-							dropdownItem.setQuickAction(false);
-						}));
-
-				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.putData("action", "checkout");
-							dropdownItem.setIcon("lock");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_request, "checkout[document]"));
-							dropdownItem.setQuickAction(false);
-						}));
 			}
 		};
 	}
