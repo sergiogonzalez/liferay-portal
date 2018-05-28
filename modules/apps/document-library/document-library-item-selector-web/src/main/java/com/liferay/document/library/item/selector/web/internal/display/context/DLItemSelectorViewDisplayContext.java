@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -57,7 +56,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL,
 		AssetVocabularyService assetVocabularyService,
-		ClassNameLocalService classNameLocalService) {
+		ClassNameLocalService classNameLocalService,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_dlItemSelectorView = dlItemSelectorView;
@@ -68,6 +68,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_portletURL = portletURL;
 		_assetVocabularyService = assetVocabularyService;
 		_classNameLocalService = classNameLocalService;
+		_stagingGroupHelper = stagingGroupHelper;
 	}
 
 	public String[] getExtensions() {
@@ -114,16 +115,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public long getStagingAwareGroupId(long scopeGroupId) {
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
 		long groupId = scopeGroupId;
 
-		if (stagingGroupHelper.isStagingGroup(scopeGroupId) &&
-			!stagingGroupHelper.isStagedPortlet(
+		if (_stagingGroupHelper.isStagingGroup(scopeGroupId) &&
+			!_stagingGroupHelper.isStagedPortlet(
 				scopeGroupId, DLPortletKeys.DOCUMENT_LIBRARY)) {
 
-			Group group = stagingGroupHelper.fetchLiveGroup(scopeGroupId);
+			Group group = _stagingGroupHelper.fetchLiveGroup(scopeGroupId);
 
 			if (group != null) {
 				groupId = group.getGroupId();
@@ -188,5 +186,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
+	private final StagingGroupHelper _stagingGroupHelper;
 
 }
