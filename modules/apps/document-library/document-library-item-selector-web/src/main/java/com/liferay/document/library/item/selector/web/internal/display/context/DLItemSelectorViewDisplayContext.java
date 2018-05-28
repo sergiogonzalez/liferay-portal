@@ -145,7 +145,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
-				themeDisplay.getScopeGroupId());
+				getStagingAwareGroupId(themeDisplay.getScopeGroupId()));
 
 		if (!assetVocabularies.isEmpty()) {
 			long classNameId = _classNameLocalService.getClassNameId(
