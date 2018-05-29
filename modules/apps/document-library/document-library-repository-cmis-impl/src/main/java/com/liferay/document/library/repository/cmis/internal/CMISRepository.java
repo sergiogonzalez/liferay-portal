@@ -1546,7 +1546,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			operationContext.setFilter(
 				_toSet(
-					"cmis:isPrivateWorkingCopy",
+					"cmis:contentStreamLength", "cmis:isPrivateWorkingCopy",
 					"cmis:isVersionSeriesCheckedOut",
 					"cmis:lastModificationDate", "cmis:name",
 					"cmis:versionLabel", "cmis:versionSeriesId"));
