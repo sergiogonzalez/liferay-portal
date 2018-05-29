@@ -1548,8 +1548,8 @@ public class CMISRepository extends BaseCmisRepository {
 				_toSet(
 					"cmis:contentStreamLength", "cmis:isPrivateWorkingCopy",
 					"cmis:isVersionSeriesCheckedOut",
-					"cmis:lastModificationDate", "cmis:name",
-					"cmis:versionLabel", "cmis:versionSeriesId"));
+					"cmis:lastModificationDate", "cmis:lastModifiedBy",
+					"cmis:name", "cmis:versionLabel", "cmis:versionSeriesId"));
 
 			ItemIterable<CmisObject> cmisObjects = cmisParentFolder.getChildren(
 				operationContext);
