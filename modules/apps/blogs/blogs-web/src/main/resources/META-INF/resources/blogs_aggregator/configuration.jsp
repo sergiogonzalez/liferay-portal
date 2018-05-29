@@ -72,6 +72,7 @@ if (organizationId > 0) {
 									{
 										dialog: {
 											constrain: true,
+											destroyOnHide: true,
 											modal: true
 										},
 
