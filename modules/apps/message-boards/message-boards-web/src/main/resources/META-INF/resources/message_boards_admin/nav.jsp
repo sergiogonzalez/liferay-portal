@@ -19,18 +19,9 @@
 <%
 String navItemSelected = ParamUtil.getString(request, "navItemSelected");
 
-PortletURL messageBoardsHomeURL = renderResponse.createRenderURL();
+boolean groupAdmin = permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId());
 
-messageBoardsHomeURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
-
-PortletURL viewStatisticsURL = renderResponse.createRenderURL();
-
-viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
-
-PortletURL bannedUsersURL = renderResponse.createRenderURL();
-
-bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+boolean hasBanUserPermission = MBResourcePermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.BAN_USER);
 %>
 
 <clay:navigation-bar
@@ -38,6 +29,11 @@ bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
+				PortletURL messageBoardsHomeURL = renderResponse.createRenderURL();
+
+				messageBoardsHomeURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+				messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
+
 				add(
 					navigationItem -> {
 						navigationItem.setActive(navItemSelected.equals("threads"));
@@ -45,19 +41,31 @@ bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned
 						navigationItem.setLabel(LanguageUtil.get(request, "content"));
 					});
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(navItemSelected.equals("statistics"));
-						navigationItem.setHref(viewStatisticsURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
-					});
+				if (groupAdmin) {
+					PortletURL viewStatisticsURL = renderResponse.createRenderURL();
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(navItemSelected.equals("banned-users"));
-						navigationItem.setHref(bannedUsersURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "banned-users"));
-					});
+					viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
+
+					add(
+						navigationItem -> {
+							navigationItem.setActive(navItemSelected.equals("statistics"));
+							navigationItem.setHref(viewStatisticsURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "statistics"));
+						});
+				}
+
+				if (hasBanUserPermission) {
+					PortletURL bannedUsersURL = renderResponse.createRenderURL();
+
+					bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+
+					add(
+						navigationItem -> {
+							navigationItem.setActive(navItemSelected.equals("banned-users"));
+							navigationItem.setHref(bannedUsersURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "banned-users"));
+						});
+				}
 			}
 		}
 	%>'

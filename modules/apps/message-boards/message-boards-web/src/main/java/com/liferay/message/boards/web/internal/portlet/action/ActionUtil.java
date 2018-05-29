@@ -55,6 +55,12 @@ public class ActionUtil {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
+		if (mvcRenderCommandName.equals("/message_boards/view_statistics") &&
+			!permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
+
+			throw new PrincipalException.MustBeGroupAdmin(permissionChecker);
+		}
+
 		if (mvcRenderCommandName.equals("/message_boards/view_banned_users") &&
 			!MBResourcePermission.contains(
 				permissionChecker, themeDisplay.getScopeGroupId(),
