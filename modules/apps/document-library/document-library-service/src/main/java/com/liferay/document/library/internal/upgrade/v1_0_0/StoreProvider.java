@@ -63,7 +63,9 @@ public class StoreProvider {
 			String storeType = (String)serviceReference.getProperty(
 				"store.type");
 
-			if (!storeType.equals(PropsValues.DL_STORE_IMPL)) {
+			if ((storeType == null) ||
+				!storeType.equals(PropsValues.DL_STORE_IMPL)) {
+
 				return store;
 			}
 
