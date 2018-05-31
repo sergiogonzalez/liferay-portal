@@ -93,7 +93,12 @@ public class StoreProvider {
 
 			_bundleContext.ungetService(serviceReference);
 
-			_serviceRegistration.unregister();
+			try {
+				_serviceRegistration.unregister();
+			}
+			catch (IllegalStateException ise) {
+				return;
+			}
 		}
 
 	}
