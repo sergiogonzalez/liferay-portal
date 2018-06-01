@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RepositoryEntry;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
@@ -320,14 +321,16 @@ public class FolderStagedModelDataHandler
 			folder.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFolder == null) ||
-			!(existingFolder.getModel() instanceof DLFolder)) {
+			!existingFolder.isRepositoryCapabilityProvided(
+				TrashCapability.class)) {
 
 			return;
 		}
 
-		DLFolder dlFolder = (DLFolder)existingFolder.getModel();
+		TrashCapability trashCapability = folder.getRepositoryCapability(
+			TrashCapability.class);
 
-		if (!dlFolder.isInTrash()) {
+		if (!trashCapability.isInTrash(existingFolder)) {
 			return;
 		}
 
