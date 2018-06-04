@@ -6222,6 +6222,14 @@ public class PortalImpl implements Portal {
 			ActionResponse actionResponse)
 		throws Exception {
 
+		if (_editDiscussionStrutsAction == null) {
+			_log.error(
+				"Unable to find a StrutsAction component with property " +
+					"path=/portal/comment/discussion/edit");
+
+			return;
+		}
+
 		_editDiscussionStrutsAction.execute(
 			getHttpServletRequest(actionRequest),
 			getHttpServletResponse(actionResponse));
@@ -6236,6 +6244,14 @@ public class PortalImpl implements Portal {
 			PortletConfig portletConfig, ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse)
 		throws IOException, PortletException {
+
+		if (_getCommentsStrutsAction == null) {
+			_log.error(
+				"Unable to find a StrutsAction component with property " +
+					"path=/portal/comment/discussion/get_comments");
+
+			return;
+		}
 
 		try {
 			_getCommentsStrutsAction.execute(
