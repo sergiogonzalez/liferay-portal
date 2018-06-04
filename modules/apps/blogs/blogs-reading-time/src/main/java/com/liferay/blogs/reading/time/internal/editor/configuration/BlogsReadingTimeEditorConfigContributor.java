@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -69,6 +70,13 @@ public class BlogsReadingTimeEditorConfigContributor
 		if (readingTimeJSONObject != null) {
 			readingTimeJSONObject.put("elementId", namespace + "readingTime");
 		}
+
+		_readingTimeConfigContributor.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			requestBackedPortletURLFactory);
 	}
+
+	@Reference(target = "(editor.config.key=reading-time-editor-config-key)")
+	private EditorConfigContributor _readingTimeConfigContributor;
 
 }
