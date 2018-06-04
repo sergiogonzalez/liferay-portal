@@ -98,10 +98,10 @@ public class BlogsReadingTimeEditorConfigContributor
 			requestBackedPortletURLFactory);
 	}
 
-	@Reference(target = "(editor.config.key=reading-time-editor-config-key)")
-	private EditorConfigContributor _readingTimeConfigContributor;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsReadingTimeEditorConfigContributor.class);
+
+	@Reference(target = "(editor.config.key=reading-time-editor-config-key)")
+	private EditorConfigContributor _readingTimeConfigContributor;
 
 }
