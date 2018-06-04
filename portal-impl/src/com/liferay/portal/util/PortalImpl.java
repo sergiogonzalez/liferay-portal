@@ -6224,8 +6224,8 @@ public class PortalImpl implements Portal {
 
 		if (_editDiscussionStrutsAction == null) {
 			_log.error(
-				"Unable to find a StrutsAction component with property " +
-					"path=/portal/comment/discussion/edit");
+				"Unable to find a Struts action component with property " +
+					"\"path=/portal/comment/discussion/edit\"");
 
 			return;
 		}
@@ -6247,8 +6247,8 @@ public class PortalImpl implements Portal {
 
 		if (_getCommentsStrutsAction == null) {
 			_log.error(
-				"Unable to find a StrutsAction component with property " +
-					"path=/portal/comment/discussion/get_comments");
+				"Unable to find a Struts Action component with property " +
+					"\"path=/portal/comment/discussion/get_comments\"");
 
 			return;
 		}
