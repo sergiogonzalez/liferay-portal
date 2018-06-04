@@ -41,7 +41,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("0.0.1", "1.0.0", new UpgradeDocumentLibrary(_store));
 
 		registry.register(
-			"1.0.0",  "1.0.1",
+			"1.0.0", "1.0.1",
 			new UpgradeDLConfiguration(
 				_configurationAdmin, _prefsProps,
 				_prefsPropsToConfigurationUpgrade),

@@ -61,8 +61,7 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 		String dirName = "knowledgebase/kbarticles/" + resourcePrimKey;
 
-		return _store.getFileNames(
-			companyId, CompanyConstants.SYSTEM, dirName);
+		return _store.getFileNames(companyId, CompanyConstants.SYSTEM, dirName);
 	}
 
 	/**

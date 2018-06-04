@@ -1614,10 +1614,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final ResourceLocalService _resourceLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
+	private final Store _store;
 	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();
 	private final Map<Long, Map<String, String>>
 		_structureInvalidDDMFormFieldNamesMap = new HashMap<>();
-	private final Store _store;
 	private final Map<String, String> _structureModelResourceNames =
 		new HashMap<>();
 	private final Map<String, String> _templateModelResourceNames =
