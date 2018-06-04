@@ -25,14 +25,14 @@ List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRA
 List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
 List<FileShortcut> fileShortcuts = (List<FileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
 
-Map<String, Object> infoPanelToggleData = new HashMap<String, Object>();
+Map<String, Object> infoPanelToggleData = new HashMap<>();
 
 infoPanelToggleData.put("toggle", liferayPortletResponse.getNamespace() + "infoPanelId");
 
 if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmpty(fileShortcuts)) {
 	long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"), ParamUtil.getLong(request, "folderId"));
 
-	folders = new ArrayList<Folder>();
+	folders = new ArrayList<>();
 
 	Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
@@ -255,7 +255,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-are-selected" /></h4>
+			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<liferay-ui:tabs
@@ -267,7 +267,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<h5>
-						<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-are-selected" />
+						<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" />
 					</h5>
 				</div>
 			</liferay-ui:section>
