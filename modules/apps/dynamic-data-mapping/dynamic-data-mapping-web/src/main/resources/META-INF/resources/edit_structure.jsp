@@ -72,7 +72,6 @@ if (fieldsJSONArray != null) {
 }
 
 boolean saveAndContinue = ParamUtil.getBoolean(request, "saveAndContinue");
-boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 %>
 
 <portlet:actionURL name="addStructure" var="addStructureURL">
@@ -89,6 +88,15 @@ String requestUpdateStructureURL = ParamUtil.getString(request, "updateStructure
 if (Validator.isNotNull(requestUpdateStructureURL)) {
 	updateStructureURL = requestUpdateStructureURL;
 }
+%>
+
+<%
+if (ddmDisplay.isShowBackURLInTitleBar()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)));
+}
+
+renderResponse.setTitle(ddmDisplay.getEditStructureTitle(structure, locale));
 %>
 
 <div class="container-fluid-1280">
@@ -159,43 +167,6 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
 		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
-
-		<c:if test="<%= showBackURL %>">
-
-			<%
-			boolean localizeTitle = true;
-			String title = "new-structure";
-
-			if (structure != null) {
-				localizeTitle = false;
-				title = structure.getName(locale);
-			}
-			else {
-				title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
-			}
-			%>
-
-			<c:choose>
-				<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
-
-					<%
-					portletDisplay.setShowBackIcon(true);
-					portletDisplay.setURLBack(PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)));
-
-					renderResponse.setTitle(title);
-					%>
-
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:header
-						backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>"
-						localizeTitle="<%= localizeTitle %>"
-						showBackURL="<%= showBackURL %>"
-						title="<%= title %>"
-					/>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
 
 		<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
