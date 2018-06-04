@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
@@ -151,7 +149,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 					}
 
 				}),
-			null, null, (Store) DLStoreUtil.getStore());
+			null, null, null);
 	}
 
 	@Test(expected = UpgradeException.class)
