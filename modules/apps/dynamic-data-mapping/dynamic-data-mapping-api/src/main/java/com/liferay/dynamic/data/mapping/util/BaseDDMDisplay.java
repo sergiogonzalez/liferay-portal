@@ -128,6 +128,19 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getEditStructureTitle(DDMStructure structure, Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		if (structure != null) {
+			return LanguageUtil.format(
+				resourceBundle, "edit-x", structure.getName(locale), false);
+		}
+
+		return LanguageUtil.format(
+			resourceBundle, "new-x", getStructureName(locale), false);
+	}
+
+	@Override
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
