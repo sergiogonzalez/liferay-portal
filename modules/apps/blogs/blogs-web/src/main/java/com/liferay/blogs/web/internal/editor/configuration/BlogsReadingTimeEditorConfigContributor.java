@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.reading.time.internal.editor.configuration;
+package com.liferay.blogs.web.internal.editor.configuration;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
