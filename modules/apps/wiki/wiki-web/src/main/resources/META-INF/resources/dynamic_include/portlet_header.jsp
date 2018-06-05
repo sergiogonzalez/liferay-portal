@@ -21,6 +21,12 @@ PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaCons
 
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
+long nodeId = 0;
+
+if (node != null) {
+	nodeId = node.getNodeId();
+}
+
 WikiWebComponentProvider wikiWebComponentProvider = WikiWebComponentProvider.getWikiWebComponentProvider();
 
 WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentProvider.getWikiGroupServiceConfiguration();
@@ -35,7 +41,7 @@ PortletURL searchURL = wikiURLHelper.getSearchURL();
 <aui:form action="<%= searchURL %>" method="get" name="searchFm">
 	<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
+	<aui:input name="nodeId" type="hidden" value="<%= String.valueOf(nodeId) %>" />
 
 	<liferay-ui:input-search
 		id='<%= portletResponse.getNamespace() + "keywords1" %>'
