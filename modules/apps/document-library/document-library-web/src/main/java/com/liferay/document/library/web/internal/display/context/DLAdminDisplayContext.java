@@ -158,6 +158,13 @@ public class DLAdminDisplayContext {
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(_request, "orderByCol");
 
+		long fileEntryTypeID = ParamUtil.getLong(
+			_request, "fileEntryTypeId", -1);
+
+		if (orderByCol.equals("downloads") && (fileEntryTypeID >= 0)) {
+			orderByCol = "modifiedDate";
+		}
+
 		if (Validator.isNotNull(orderByCol)) {
 			_portalPreferences.setValue(
 				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
