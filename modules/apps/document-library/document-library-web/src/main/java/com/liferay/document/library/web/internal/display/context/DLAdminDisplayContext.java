@@ -438,6 +438,9 @@ public class DLAdminDisplayContext {
 				fieldName = Field.MODIFIED_DATE;
 				type = Sort.LONG_TYPE;
 			}
+			else if (orderByCol.equals("size")) {
+				type = Sort.LONG_TYPE;
+			}
 
 			Sort sort = new Sort(
 				fieldName, type,
