@@ -427,18 +427,21 @@ public class DLAdminDisplayContext {
 			searchContext.setAttribute("paginationType", "none");
 			searchContext.setEnd(dlSearchContainer.getEnd());
 
+			int type = Sort.STRING_TYPE;
+			String fieldName = orderByCol;
+
 			if (orderByCol.equals("creationDate")) {
-				orderByCol = "createDate";
-			}
-			else if (orderByCol.equals("readCount")) {
-				orderByCol = "downloads";
+				fieldName = Field.CREATE_DATE;
+				type = Sort.LONG_TYPE;
 			}
 			else if (orderByCol.equals("modifiedDate")) {
-				orderByCol = "modified";
+				fieldName = Field.MODIFIED_DATE;
+				type = Sort.LONG_TYPE;
 			}
 
 			Sort sort = new Sort(
-				orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
+				fieldName, type,
+				!StringUtil.equalsIgnoreCase(orderByType, "asc"));
 
 			searchContext.setSorts(sort);
 
