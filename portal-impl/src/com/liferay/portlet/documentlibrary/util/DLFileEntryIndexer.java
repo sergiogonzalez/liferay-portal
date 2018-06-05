@@ -99,7 +99,10 @@ import javax.portlet.PortletResponse;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Alexander Chow
+ *
+ * @deprecated As of 7.0.0, in favor of com.liferay.document.library.internal.search.DLFileEntryIndexer
  */
+@Deprecated
 @OSGiBeanProperties(
 	property = "related.entry.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = {Indexer.class, RelatedEntryIndexer.class}
