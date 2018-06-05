@@ -17,7 +17,6 @@ package com.liferay.blogs.internal.exportimport.data.handler;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -40,23 +39,17 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
-
-import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.List;
@@ -108,7 +101,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<BlogsEntry>());
+			new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override
@@ -208,9 +201,8 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Override
 	protected void doImportMissingReference(
-			PortletDataContext portletDataContext, String uuid, long groupId,
-			long entryId)
-		throws Exception {
+		PortletDataContext portletDataContext, String uuid, long groupId,
+		long entryId) {
 
 		BlogsEntry existingEntry = fetchMissingReference(uuid, groupId);
 
@@ -259,12 +251,22 @@ public class BlogsEntryStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);
 
+		BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
+			entry.getUuid(), portletDataContext.getScopeGroupId());
+
+		long existingCoverImageFileEntryId = 0;
+		long existingSmallImageFileEntryId = 0;
+
+		if (existingEntry != null) {
+			existingCoverImageFileEntryId =
+				existingEntry.getCoverImageFileEntryId();
+			existingSmallImageFileEntryId =
+				existingEntry.getSmallImageFileEntryId();
+		}
+
 		BlogsEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
-				entry.getUuid(), portletDataContext.getScopeGroupId());
-
 			if (existingEntry == null) {
 				serviceContext.setUuid(entry.getUuid());
 
@@ -301,26 +303,41 @@ public class BlogsEntryStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				FileEntry.class);
 
-		if (entry.getCoverImageFileEntryId() != 0) {
-			long coverImageFileEntryId = MapUtil.getLong(
-				fileEntryIds, entry.getCoverImageFileEntryId(), 0);
+		long coverImageFileEntryId = MapUtil.getLong(
+			fileEntryIds, entry.getCoverImageFileEntryId(), 0);
 
-			importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+		importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
 
-			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
-				importedEntry);
+		importedEntry = _blogsEntryLocalService.updateBlogsEntry(importedEntry);
+
+		if ((existingCoverImageFileEntryId != 0) &&
+			(entry.getCoverImageFileEntryId() == 0)) {
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				existingCoverImageFileEntryId);
 		}
 
 		// Small image
 
-		if (entry.isSmallImage() && (entry.getSmallImageFileEntryId() != 0)) {
+		if (entry.isSmallImage()) {
 			long smallImageFileEntryId = MapUtil.getLong(
 				fileEntryIds, entry.getSmallImageFileEntryId(), 0);
 
 			importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
 
+			if (smallImageFileEntryId == 0) {
+				importedEntry.setSmallImage(false);
+			}
+
 			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
 				importedEntry);
+
+			if ((existingSmallImageFileEntryId != 0) &&
+				(entry.getSmallImageFileEntryId() == 0)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					existingSmallImageFileEntryId);
+			}
 		}
 
 		Map<Long, Long> newPrimaryKeysMap =
@@ -354,42 +371,6 @@ public class BlogsEntryStagedModelDataHandler
 		if (trashHandler.isRestorable(existingEntry.getEntryId())) {
 			trashHandler.restoreTrashEntry(userId, existingEntry.getEntryId());
 		}
-	}
-
-	protected InputStream getSmallImageInputStream(
-		PortletDataContext portletDataContext, Element attachmentElement) {
-
-		InputStream inputStream = null;
-
-		String path = attachmentElement.attributeValue("path");
-
-		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
-			path);
-
-		String binPath = attachmentElement.attributeValue("bin-path");
-
-		if (Validator.isNull(binPath) &&
-			portletDataContext.isPerformDirectBinaryImport()) {
-
-			try {
-				inputStream = FileEntryUtil.getContentStream(fileEntry);
-			}
-			catch (Exception e) {
-			}
-		}
-		else {
-			inputStream = portletDataContext.getZipEntryAsInputStream(binPath);
-		}
-
-		if (inputStream == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to import small image file entry " +
-						fileEntry.getFileEntryId());
-			}
-		}
-
-		return inputStream;
 	}
 
 	@Override
@@ -436,25 +417,6 @@ public class BlogsEntryStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFriendlyURLEntryLocalService(
-		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
-
-		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
 	private void _exportFriendlyURLEntries(
 			PortletDataContext portletDataContext, BlogsEntry blogsEntry)
 		throws PortletDataException {
@@ -470,69 +432,6 @@ public class BlogsEntryStagedModelDataHandler
 				portletDataContext, blogsEntry, friendlyURLEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
-	}
-
-	private ImageSelector _getImageSelector(
-			PortletDataContext portletDataContext, long fileEntryId,
-			List<Element> attachmentElements)
-		throws Exception {
-
-		for (Element attachmentElement : attachmentElements) {
-			String path = attachmentElement.attributeValue("path");
-
-			FileEntry fileEntry =
-				(FileEntry)portletDataContext.getZipEntryAsObject(path);
-
-			if (fileEntryId == fileEntry.getFileEntryId()) {
-				String binPath = attachmentElement.attributeValue("bin-path");
-
-				try (InputStream inputStream = _getImageSelectorInputStream(
-						binPath, portletDataContext, fileEntry)) {
-
-					if (inputStream == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to import attachment for file entry " +
-									fileEntry.getFileEntryId());
-						}
-
-						continue;
-					}
-
-					return new ImageSelector(
-						FileUtil.getBytes(inputStream), fileEntry.getFileName(),
-						fileEntry.getMimeType(), null);
-				}
-			}
-		}
-
-		return null;
-	}
-
-	private InputStream _getImageSelectorInputStream(
-			String binPath, PortletDataContext portletDataContext,
-			FileEntry fileEntry)
-		throws Exception {
-
-		if (Validator.isNull(binPath) &&
-			portletDataContext.isPerformDirectBinaryImport()) {
-
-			try {
-				return FileEntryUtil.getContentStream(fileEntry);
-			}
-			catch (NoSuchFileException nsfe) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsfe, nsfe);
-				}
-
-				return null;
-			}
-		}
-
-		return portletDataContext.getZipEntryAsInputStream(binPath);
 	}
 
 	private void _importFriendlyURLEntries(
@@ -569,6 +468,7 @@ public class BlogsEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
 
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
@@ -582,7 +482,10 @@ public class BlogsEntryStagedModelDataHandler
 	private volatile ExportImportContentProcessor<String>
 		_exportImportContentProcessor;
 
+	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
 	private ImageLocalService _imageLocalService;
 
 	@Reference
