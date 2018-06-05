@@ -108,7 +108,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		return _blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<BlogsEntry>());
+			new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override
