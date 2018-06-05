@@ -53,6 +53,8 @@ public interface DDMDisplay {
 			DDMStructure structure, String redirectURL)
 		throws Exception;
 
+	public String getEditStructureTitle(DDMStructure structure, Locale locale);
+
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
