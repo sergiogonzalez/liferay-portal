@@ -595,7 +595,14 @@ public class DLAdminManagementToolbarDisplayContext {
 		final Map<String, String> orderColumns = new HashMap<>();
 
 		orderColumns.put("creationDate", "create-date");
-		orderColumns.put("downloads", "downloads");
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			_request, "fileEntryTypeId", -1);
+
+		if (fileEntryTypeId == -1) {
+			orderColumns.put("downloads", "downloads");
+		}
+
 		orderColumns.put("modifiedDate", "modified-date");
 		orderColumns.put("size", "size");
 		orderColumns.put("title", "title");
