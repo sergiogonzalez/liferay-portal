@@ -41,14 +41,6 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 		return _store;
 	}
 
-	@Override
-	protected String getStoreType() {
-		return _STORE_TYPE;
-	}
-
-	private static final String _STORE_TYPE =
-		"com.liferay.portal.store.file.system.FileSystemStore";
-
 	@Inject(
 		filter = "store.type=com.liferay.portal.store.file.system.FileSystemStore",
 		type = Store.class

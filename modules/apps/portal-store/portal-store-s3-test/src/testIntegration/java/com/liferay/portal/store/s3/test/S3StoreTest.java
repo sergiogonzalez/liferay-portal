@@ -77,11 +77,6 @@ public class S3StoreTest extends BaseStoreTestCase {
 		return _store;
 	}
 
-	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.s3.S3Store";
-	}
-
 	protected void updateFileShouldNotUpdateFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
