@@ -42,11 +42,6 @@ public class JCRStoreTest extends BaseStoreTestCase {
 		return _store;
 	}
 
-	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.jcr.JCRStore";
-	}
-
 	@Inject(
 		filter = "store.type=com.liferay.portal.store.jcr.JCRStore",
 		type = Store.class
