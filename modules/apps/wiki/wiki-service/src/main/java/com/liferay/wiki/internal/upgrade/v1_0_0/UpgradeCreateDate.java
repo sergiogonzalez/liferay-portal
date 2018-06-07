@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.wiki.model.WikiPage;
 
 /**
  * @author Norbert Kocsis
@@ -31,17 +32,15 @@ public class UpgradeCreateDate extends UpgradeProcess {
 	protected void upgradeCreateDate() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long wikiPageClassNameId = PortalUtil.getClassNameId(
-				"com.liferay.wiki.model.WikiPage");
+				WikiPage.class.getName());
 
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("update WikiPage set createDate = ");
-			sb.append("(select createDate from AssetEntry where ");
-			sb.append("AssetEntry.classNameId = ");
-			sb.append(wikiPageClassNameId);
-			sb.append(" AND AssetEntry.classPK = resourcePrimKey)");
-
-			runSQL(sb.toString());
+			runSQL(
+				StringBundler.concat(
+					"update WikiPage set createDate = (select createDate from ",
+					"AssetEntry where AssetEntry.classNameId = ",
+					String.valueOf(wikiPageClassNameId),
+					" and AssetEntry.classPK = WikiPage.resourcePrimKey)"));
 		}
 	}
+
 }
