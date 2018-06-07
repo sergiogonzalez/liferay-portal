@@ -158,10 +158,10 @@ public class DLAdminDisplayContext {
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(_request, "orderByCol");
 
-		long fileEntryTypeID = ParamUtil.getLong(
+		long fileEntryTypeId = ParamUtil.getLong(
 			_request, "fileEntryTypeId", -1);
 
-		if (orderByCol.equals("downloads") && (fileEntryTypeID >= 0)) {
+		if (orderByCol.equals("downloads") && (fileEntryTypeId >= 0)) {
 			orderByCol = "modifiedDate";
 		}
 
