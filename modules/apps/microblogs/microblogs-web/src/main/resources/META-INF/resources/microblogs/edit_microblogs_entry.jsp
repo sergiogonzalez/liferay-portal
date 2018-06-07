@@ -59,7 +59,7 @@ if ((microblogsEntry != null) && !edit) {
 
 String formId = String.valueOf(microblogsEntryId);
 
-if (edit) {
+if (!repost) {
 	formId = "Edit" + formId;
 }
 
