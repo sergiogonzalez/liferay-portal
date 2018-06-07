@@ -43,11 +43,6 @@ public class DBStoreTest extends BaseStoreTestCase {
 		return _store;
 	}
 
-	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.db.DBStore";
-	}
-
 	@Inject(
 		filter = "store.type=com.liferay.portal.store.db.DBStore",
 		type = Store.class
