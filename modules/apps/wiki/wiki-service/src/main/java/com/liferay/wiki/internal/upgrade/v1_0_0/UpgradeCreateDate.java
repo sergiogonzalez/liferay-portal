@@ -35,7 +35,7 @@ public class UpgradeCreateDate extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("update WikiPages set createDate = ");
+			sb.append("update WikiPage set createDate = ");
 			sb.append("(select createDate from AssetEntry where ");
 			sb.append("AssetEntry.classNameId = ");
 			sb.append(wikiPageClassNameId);
