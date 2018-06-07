@@ -28,7 +28,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Preston Crary
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class FileSystemStoreTest extends BaseStoreTestCase {
 
