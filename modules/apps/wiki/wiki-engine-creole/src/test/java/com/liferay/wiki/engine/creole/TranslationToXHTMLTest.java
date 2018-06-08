@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.wiki.engine.creole.internal.parser.ast.LineNode;
+import com.liferay.wiki.engine.creole.internal.parser.ast.ParagraphNode;
+import com.liferay.wiki.engine.creole.internal.parser.ast.ScapedNode;
+import com.liferay.wiki.engine.creole.internal.parser.ast.UnformattedTextNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Lexer;
 import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Parser;
@@ -437,6 +441,13 @@ public class TranslationToXHTMLTest {
 	public void testParseEmpyImageTag() throws Exception {
 		Assert.assertEquals(
 			"<p><img src=\"\" /> </p>", translate("image-4.creole"));
+	}
+
+	@Test
+	public void testParseEscapedBracket() throws Exception {
+		Assert.assertEquals(
+			"<p>link:<a href=\"http://liferay.com\">[1]</a> </p>",
+			translate("link-in-bracket.creole"));
 	}
 
 	@Test
