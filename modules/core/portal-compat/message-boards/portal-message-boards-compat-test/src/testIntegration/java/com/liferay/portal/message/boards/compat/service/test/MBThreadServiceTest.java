@@ -16,14 +16,14 @@ package com.liferay.portal.message.boards.compat.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadServiceUtil;
-import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.message.boards.compat.test.util.MBTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -99,14 +100,11 @@ public class MBThreadServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), true,
 			serviceContext);
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY);
-
 		Assert.assertEquals(
 			2,
 			MBThreadServiceUtil.getThreadsCount(
 				_group.getGroupId(), _category.getCategoryId(),
-				queryDefinition));
+				WorkflowConstants.STATUS_ANY));
 	}
 
 	@Test
@@ -125,78 +123,11 @@ public class MBThreadServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), true,
 			serviceContext);
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_APPROVED);
-
 		Assert.assertEquals(
 			1,
 			MBThreadServiceUtil.getThreadsCount(
 				_group.getGroupId(), _category.getCategoryId(),
-				queryDefinition));
-	}
-
-	@Test
-	public void testGetThreadsCountWithApprovedStatusAndOwnerReturnsDraft()
-		throws Exception {
-
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		MBTestUtil.addMessageWithWorkflow(
-			_group.getGroupId(), _category.getCategoryId(),
-			StringUtil.randomString(), StringUtil.randomString(), false,
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
-
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				WorkflowConstants.STATUS_APPROVED, user.getUserId(), true);
-
-			Assert.assertEquals(
-				1,
-				MBThreadServiceUtil.getThreadsCount(
-					_group.getGroupId(), _category.getCategoryId(),
-					queryDefinition));
-		}
-	}
-
-	@Test
-	public void testGetThreadsCountWithApprovedStatusAndWithoutOwnerDoesNotReturnDraft()
-		throws Exception {
-
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		MBTestUtil.addMessageWithWorkflow(
-			_group.getGroupId(), _category.getCategoryId(),
-			StringUtil.randomString(), StringUtil.randomString(), false,
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
-
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				WorkflowConstants.STATUS_APPROVED, user.getUserId(), false);
-
-			Assert.assertEquals(
-				0,
-				MBThreadServiceUtil.getThreadsCount(
-					_group.getGroupId(), _category.getCategoryId(),
-					queryDefinition));
-		}
+				WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Test
@@ -215,14 +146,11 @@ public class MBThreadServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), true,
 			serviceContext);
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_DRAFT);
-
 		Assert.assertEquals(
 			1,
 			MBThreadServiceUtil.getThreadsCount(
 				_group.getGroupId(), _category.getCategoryId(),
-				queryDefinition));
+				WorkflowConstants.STATUS_DRAFT));
 	}
 
 	@Test
@@ -247,14 +175,11 @@ public class MBThreadServiceTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(user, permissionChecker)) {
 
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				WorkflowConstants.STATUS_ANY);
-
 			Assert.assertEquals(
 				0,
 				MBThreadServiceUtil.getThreadsCount(
 					_group.getGroupId(), _category.getCategoryId(),
-					queryDefinition));
+					WorkflowConstants.STATUS_ANY));
 		}
 	}
 
@@ -274,16 +199,20 @@ public class MBThreadServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), true,
 			serviceContext);
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY);
-
 		List<MBThread> threads = MBThreadServiceUtil.getThreads(
-			_group.getGroupId(), _category.getCategoryId(), queryDefinition);
+			_group.getGroupId(), _category.getCategoryId(),
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(threads.toString(), 2, threads.size());
 
-		Assert.assertTrue(threads.contains(draftMessage.getThread()));
-		Assert.assertTrue(threads.contains(approvedMessage.getThread()));
+		Assert.assertTrue(
+			threads.contains(
+				MBThreadLocalServiceUtil.getThread(
+					draftMessage.getThreadId())));
+		Assert.assertTrue(
+			threads.contains(
+				MBThreadLocalServiceUtil.getThread(
+					approvedMessage.getThreadId())));
 	}
 
 	@Test
@@ -302,80 +231,16 @@ public class MBThreadServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), true,
 			serviceContext);
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_APPROVED);
-
 		List<MBThread> threads = MBThreadServiceUtil.getThreads(
-			_group.getGroupId(), _category.getCategoryId(), queryDefinition);
+			_group.getGroupId(), _category.getCategoryId(),
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(threads.toString(), 1, threads.size());
 
-		Assert.assertEquals(approvedMessage.getThread(), threads.get(0));
-	}
-
-	@Test
-	public void testGetThreadsWithApprovedStatusAndOwnerReturnsDraft()
-		throws Exception {
-
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		MBMessage draftMessage = MBTestUtil.addMessageWithWorkflow(
-			_group.getGroupId(), _category.getCategoryId(),
-			StringUtil.randomString(), StringUtil.randomString(), false,
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
-
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				WorkflowConstants.STATUS_APPROVED, user.getUserId(), true);
-
-			List<MBThread> threads = MBThreadServiceUtil.getThreads(
-				_group.getGroupId(), _category.getCategoryId(),
-				queryDefinition);
-
-			Assert.assertEquals(threads.toString(), 1, threads.size());
-			Assert.assertEquals(draftMessage.getThread(), threads.get(0));
-		}
-	}
-
-	@Test
-	public void testGetThreadsWithApprovedStatusAndWithoutOwnerDoesNotReturnDraft()
-		throws Exception {
-
-		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		MBTestUtil.addMessageWithWorkflow(
-			_group.getGroupId(), _category.getCategoryId(),
-			StringUtil.randomString(), StringUtil.randomString(), false,
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		try (ContextUserReplace contextUserReplace =
-				new ContextUserReplace(user, permissionChecker)) {
-
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-				WorkflowConstants.STATUS_APPROVED, user.getUserId(), false);
-
-			List<MBThread> threads = MBThreadServiceUtil.getThreads(
-				_group.getGroupId(), _category.getCategoryId(),
-				queryDefinition);
-
-			Assert.assertEquals(threads.toString(), 0, threads.size());
-		}
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(approvedMessage.getThreadId()),
+			threads.get(0));
 	}
 
 	@Test
@@ -394,15 +259,16 @@ public class MBThreadServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(), true,
 			serviceContext);
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_DRAFT);
-
 		List<MBThread> threads = MBThreadServiceUtil.getThreads(
-			_group.getGroupId(), _category.getCategoryId(), queryDefinition);
+			_group.getGroupId(), _category.getCategoryId(),
+			WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(threads.toString(), 1, threads.size());
 
-		Assert.assertEquals(draftMessage.getThread(), threads.get(0));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(draftMessage.getThreadId()),
+			threads.get(0));
 	}
 
 	private MBCategory _category;

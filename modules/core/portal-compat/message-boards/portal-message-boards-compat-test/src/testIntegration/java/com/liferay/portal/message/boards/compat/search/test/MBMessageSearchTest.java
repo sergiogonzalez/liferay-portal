@@ -16,13 +16,12 @@ package com.liferay.portal.message.boards.compat.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadServiceUtil;
-import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.message.boards.compat.test.util.MBTestUtil;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -172,7 +172,7 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return MBMessage.class;
+		return com.liferay.message.boards.model.MBMessage.class;
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected String getParentBaseModelClassName() {
-		return MBCategory.class.getName();
+		return com.liferay.message.boards.model.MBCategory.class.getName();
 	}
 
 	@Override

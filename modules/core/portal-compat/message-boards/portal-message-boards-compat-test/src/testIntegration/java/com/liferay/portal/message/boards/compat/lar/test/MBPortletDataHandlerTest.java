@@ -20,14 +20,15 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBBanLocalServiceUtil;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -136,7 +137,9 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			serviceContext);
 
 		MBThreadFlagLocalServiceUtil.addThreadFlag(
-			TestPropsValues.getUserId(), message.getThread(), serviceContext);
+			TestPropsValues.getUserId(),
+			MBThreadLocalServiceUtil.getThread(message.getThreadId()),
+			serviceContext);
 
 		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
 

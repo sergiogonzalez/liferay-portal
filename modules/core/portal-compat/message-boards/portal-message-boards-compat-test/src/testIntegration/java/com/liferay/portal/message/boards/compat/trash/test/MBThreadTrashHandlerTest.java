@@ -18,15 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadServiceUtil;
-import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.message.boards.compat.test.util.MBTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.trash.exception.RestoreEntryException;
@@ -101,9 +101,7 @@ public class MBThreadTrashHandlerTest
 
 	@Override
 	public String getParentBaseModelClassName() {
-		Class<MBCategory> mbCategoryClass = MBCategory.class;
-
-		return mbCategoryClass.getName();
+		return com.liferay.message.boards.model.MBCategory.class.getName();
 	}
 
 	@Override
@@ -158,7 +156,7 @@ public class MBThreadTrashHandlerTest
 		throws Exception {
 
 		return _whenIsIndexableBaseModel.searchBaseModelsCount(
-			MBMessage.class, groupId);
+			com.liferay.message.boards.model.MBMessage.class, groupId);
 	}
 
 	@Override
@@ -265,7 +263,7 @@ public class MBThreadTrashHandlerTest
 			category.getGroupId(), category.getCategoryId(),
 			getSearchKeywords(), getSearchKeywords(), true, serviceContext);
 
-		return message.getThread();
+		return MBThreadLocalServiceUtil.getThread(message.getThreadId());
 	}
 
 	@Override
@@ -280,7 +278,7 @@ public class MBThreadTrashHandlerTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		return message.getThread();
+		return MBThreadLocalServiceUtil.getThread(message.getThreadId());
 	}
 
 	@Override
@@ -300,7 +298,7 @@ public class MBThreadTrashHandlerTest
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return MBThread.class;
+		return com.liferay.message.boards.model.MBThread.class;
 	}
 
 	protected int getMessageCount(long categoryId) throws Exception {

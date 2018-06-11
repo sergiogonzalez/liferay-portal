@@ -17,9 +17,9 @@ package com.liferay.portal.message.boards.compat.social.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -89,7 +89,7 @@ public class MBMessageActivityInterpreterTest
 
 	@Override
 	protected String getClassName() {
-		return MBMessage.class.getName();
+		return com.liferay.message.boards.model.MBMessage.class.getName();
 	}
 
 	@Override

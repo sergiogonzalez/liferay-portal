@@ -16,8 +16,7 @@ package com.liferay.portal.message.boards.compat.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.message.boards.compat.test.util.MBTestUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -68,7 +68,8 @@ public class MBMessageIndexerLocalizedTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_indexer = _indexerRegistry.getIndexer(MBMessage.class);
+		_indexer = _indexerRegistry.getIndexer(
+			com.liferay.message.boards.model.MBMessage.class.getName());
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 

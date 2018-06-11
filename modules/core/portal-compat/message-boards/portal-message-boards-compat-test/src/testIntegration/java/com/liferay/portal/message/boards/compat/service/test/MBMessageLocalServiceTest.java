@@ -17,10 +17,10 @@ package com.liferay.portal.message.boards.compat.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.message.boards.compat.test.util.MBTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -249,7 +250,8 @@ public class MBMessageLocalServiceTest {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
-		MBThread mbThread = parentMessage.getThread();
+		MBThread mbThread = MBThreadLocalServiceUtil.getThread(
+			parentMessage.getThreadId());
 
 		Assert.assertEquals(
 			dateFormat.format(mbThread.getLastPostDate()),
@@ -258,7 +260,8 @@ public class MBMessageLocalServiceTest {
 		MBMessageLocalServiceUtil.deleteMessage(
 			secondReplyMessage.getMessageId());
 
-		mbThread = parentMessage.getThread();
+		mbThread = MBThreadLocalServiceUtil.getThread(
+			parentMessage.getThreadId());
 
 		Assert.assertEquals(
 			dateFormat.format(mbThread.getLastPostDate()),
@@ -271,7 +274,8 @@ public class MBMessageLocalServiceTest {
 
 		MBMessage message = addMessage(null, false, date);
 
-		MBThread mbThread = message.getThread();
+		MBThread mbThread = MBThreadLocalServiceUtil.getThread(
+			message.getThreadId());
 
 		Assert.assertEquals(mbThread.getModifiedDate(), date);
 
@@ -281,10 +285,10 @@ public class MBMessageLocalServiceTest {
 
 		MBMessageLocalServiceUtil.updateMessage(
 			message.getUserId(), message.getMessageId(), message.getSubject(),
-			RandomTestUtil.randomString(), Collections.emptyList(), 0, false,
-			serviceContext);
+			RandomTestUtil.randomString(), Collections.emptyList(),
+			Collections.emptyList(), 0, false, serviceContext);
 
-		mbThread = message.getThread();
+		mbThread = MBThreadLocalServiceUtil.getThread(message.getThreadId());
 
 		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
 	}
@@ -297,7 +301,8 @@ public class MBMessageLocalServiceTest {
 
 		MBMessage message = addMessage(null, false, date);
 
-		MBThread mbThread = message.getThread();
+		MBThread mbThread = MBThreadLocalServiceUtil.getThread(
+			message.getThreadId());
 
 		Assert.assertEquals(mbThread.getModifiedDate(), date);
 
@@ -308,9 +313,10 @@ public class MBMessageLocalServiceTest {
 		MBMessageLocalServiceUtil.updateMessage(
 			message.getUserId(), message.getMessageId(),
 			RandomTestUtil.randomString(), message.getBody(),
-			Collections.emptyList(), 0, false, serviceContext);
+			Collections.emptyList(), Collections.emptyList(), 0, false,
+			serviceContext);
 
-		mbThread = message.getThread();
+		mbThread = MBThreadLocalServiceUtil.getThread(message.getThreadId());
 
 		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
 	}

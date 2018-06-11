@@ -16,8 +16,8 @@ package com.liferay.portal.message.boards.compat.trash.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -172,7 +172,7 @@ public class MBCategoryTrashHandlerTest
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return MBCategory.class;
+		return com.liferay.message.boards.model.MBCategory.class;
 	}
 
 	@Override

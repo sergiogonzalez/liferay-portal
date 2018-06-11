@@ -18,11 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -177,8 +178,12 @@ public class MBCategoryLocalServiceTest {
 			categoriesAndThreads.toString(), 4, categoriesAndThreads.size());
 		Assert.assertEquals(category1, categoriesAndThreads.get(0));
 		Assert.assertEquals(category2, categoriesAndThreads.get(1));
-		Assert.assertEquals(message1.getThread(), categoriesAndThreads.get(2));
-		Assert.assertEquals(message2.getThread(), categoriesAndThreads.get(3));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(message1.getThreadId()),
+			categoriesAndThreads.get(2));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(message2.getThreadId()),
+			categoriesAndThreads.get(3));
 	}
 
 	@Test
@@ -221,8 +226,12 @@ public class MBCategoryLocalServiceTest {
 
 		Assert.assertEquals(
 			categoriesAndThreads.toString(), 2, categoriesAndThreads.size());
-		Assert.assertEquals(message1.getThread(), categoriesAndThreads.get(0));
-		Assert.assertEquals(message2.getThread(), categoriesAndThreads.get(1));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(message1.getThreadId()),
+			categoriesAndThreads.get(0));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(message2.getThreadId()),
+			categoriesAndThreads.get(1));
 	}
 
 	@Test
@@ -272,9 +281,14 @@ public class MBCategoryLocalServiceTest {
 			categoriesAndThreads.toString(), 4, categoriesAndThreads.size());
 		Assert.assertEquals(category1, categoriesAndThreads.get(0));
 		Assert.assertEquals(
-			priorityMessage.getThread(), categoriesAndThreads.get(1));
-		Assert.assertEquals(message1.getThread(), categoriesAndThreads.get(2));
-		Assert.assertEquals(message2.getThread(), categoriesAndThreads.get(3));
+			MBThreadLocalServiceUtil.getThread(priorityMessage.getThreadId()),
+			categoriesAndThreads.get(1));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(message1.getThreadId()),
+			categoriesAndThreads.get(2));
+		Assert.assertEquals(
+			MBThreadLocalServiceUtil.getThread(message2.getThreadId()),
+			categoriesAndThreads.get(3));
 	}
 
 	@Test
@@ -528,9 +542,13 @@ public class MBCategoryLocalServiceTest {
 
 		MBCategory category = addCategory(parentCategory.getCategoryId());
 
-		Assert.assertNotNull(category.getParentCategory());
+		Assert.assertNotNull(
+			MBCategoryLocalServiceUtil.getCategory(
+				category.getParentCategoryId()));
 
-		Assert.assertNull(parentCategory.getParentCategory());
+		Assert.assertEquals(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			parentCategory.getParentCategoryId());
 	}
 
 	@Test

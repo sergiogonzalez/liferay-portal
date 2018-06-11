@@ -17,8 +17,8 @@ package com.liferay.portal.message.boards.compat.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -71,7 +71,8 @@ public class MBMessageIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+		_indexer = IndexerRegistryUtil.getIndexer(
+			com.liferay.message.boards.model.MBMessage.class.getName());
 
 		_company1 = CompanyTestUtil.addCompany();
 
