@@ -638,10 +638,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public BlogsEntry deleteEntry(BlogsEntry entry) throws PortalException {
 
-		// Entry
-
-		blogsEntryPersistence.remove(entry);
-
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -712,6 +708,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId());
+
+		// Entry
+
+		blogsEntryPersistence.remove(entry);
 
 		return entry;
 	}
