@@ -60,20 +60,19 @@ public class RatingsEntryModelListener extends BaseModelListener<RatingsEntry> {
 					blogsEntry.getGroupId(), blogsEntry.getUserId());
 
 			if (blogsStatsUser != null) {
-				int ratingsTotalEntries =
-					blogsStatsUser.getRatingsTotalEntries();
-
 				double ratingsAverageScore = 0;
 				double ratingsTotalScore = 0;
 
-				int totalEntries = --ratingsTotalEntries;
+				int ratingsTotalEntries =
+					blogsStatsUser.getRatingsTotalEntries() - 1;
 
-				if (totalEntries > 0) {
+				if (ratingsTotalEntries > 0) {
 					ratingsTotalScore =
 						blogsStatsUser.getRatingsTotalScore() -
 							ratingsEntry.getScore();
 
-					ratingsAverageScore = ratingsTotalScore / totalEntries;
+					ratingsAverageScore =
+						ratingsTotalScore / ratingsTotalEntries;
 				}
 
 				_blogsStatsUserLocalService.updateStatsUser(
