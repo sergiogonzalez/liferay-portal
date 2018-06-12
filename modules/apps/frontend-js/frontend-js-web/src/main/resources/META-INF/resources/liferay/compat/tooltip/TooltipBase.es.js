@@ -87,7 +87,7 @@ class TooltipBase extends Component {
 			if (interactingWithDifferentTarget) {
 				this.currentAlignElement = delegateTarget;
 			}
- else {
+			else {
 				this.visible = false;
 				this.syncVisible(false);
 			}
@@ -119,7 +119,7 @@ class TooltipBase extends Component {
 		if (this.visible) {
 			this.handleHide(event);
 		}
- else {
+		else {
 			this.handleShow(event);
 		}
 	}
@@ -213,7 +213,7 @@ class TooltipBase extends Component {
 			this.eventHandler_.add(
 				dom.delegate(document, triggerEvents[0], selector, this.handleToggle.bind(this)));
 		}
- else {
+		else {
 			this.eventHandler_.add(
 				dom.delegate(document, triggerEvents[0], selector, this.handleShow.bind(this)),
 				dom.delegate(document, triggerEvents[1], selector, this.handleHide.bind(this)));

@@ -87,7 +87,7 @@ class Treeview extends Component {
 			obj.expanded = false;
 			this.nodes = this.nodes;
 		}
- else if (path.length > 1) {
+		else if (path.length > 1) {
 			path.pop();
 			return Treeview.NODE_REF_PREFIX + path.join('-');
 		}
@@ -112,7 +112,7 @@ class Treeview extends Component {
 			return this.handleRightArrow_(path, obj);
 		default:
 
-				// Use default behavior for other keys (like up/down arrows).
+			// Use default behavior for other keys (like up/down arrows).
 
 			return true;
 		}
@@ -157,7 +157,7 @@ class Treeview extends Component {
 			path.push(0);
 			return Treeview.NODE_REF_PREFIX + path.join('-');
 		}
- else if (obj.children) {
+		else if (obj.children) {
 			obj.expanded = true;
 			this.nodes = this.nodes;
 		}

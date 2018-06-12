@@ -32,7 +32,7 @@ class Tooltip extends TooltipBase {
 			dom.once(this.element, 'animationend', this.hideCompletely_.bind(this));
 			dom.once(this.element, 'transitionend', this.hideCompletely_.bind(this));
 		}
- else {
+		else {
 			this.element.style.display = '';
 		}
 

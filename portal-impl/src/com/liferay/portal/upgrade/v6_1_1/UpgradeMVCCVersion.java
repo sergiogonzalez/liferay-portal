@@ -12,42 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import java.io.Serializable;
-
-import javax.portlet.Event;
-
-import javax.xml.namespace.QName;
+package com.liferay.portal.upgrade.v6_1_1;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tina Tian
  */
-public class EventImpl implements Event, Serializable {
-
-	public EventImpl(String name, QName qName, Serializable value) {
-		_name = name;
-		_qName = qName;
-		_value = value;
-	}
+public class UpgradeMVCCVersion
+	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
 
 	@Override
-	public String getName() {
-		return _name;
+	protected String[] getExcludedTableNames() {
+		return new String[] {
+			"BackgroundTask", "ExportImportConfiguration", "LayoutFriendlyURL",
+			"RecentLayoutBranch", "RecentLayoutRevision",
+			"RecentLayoutSetBranch", "SystemEvent", "UserNotificationDelivery"
+		};
 	}
-
-	@Override
-	public QName getQName() {
-		return _qName;
-	}
-
-	@Override
-	public Serializable getValue() {
-		return _value;
-	}
-
-	private final String _name;
-	private final QName _qName;
-	private final Serializable _value;
 
 }

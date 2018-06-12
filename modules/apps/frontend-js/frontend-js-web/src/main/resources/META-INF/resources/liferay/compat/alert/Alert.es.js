@@ -102,7 +102,7 @@ class Alert extends Component {
 		if (dismissible) {
 			this.eventHandler_.add(dom.on(document, 'click', this.handleDocClick_.bind(this)));
 		}
- else {
+		else {
 			this.eventHandler_.removeAllListeners();
 		}
 	}
@@ -132,7 +132,7 @@ class Alert extends Component {
 			dom.once(this.element, 'animationend', this.hideCompletely_.bind(this));
 			dom.once(this.element, 'transitionend', this.hideCompletely_.bind(this));
 		}
- else if (core.isDef(prevVisible)) {
+		else if (core.isDef(prevVisible)) {
 			shouldAsync = true;
 			super.syncVisible(true);
 		}
@@ -163,7 +163,7 @@ class Alert extends Component {
 
 			setTimeout(showOrHide, 0);
 		}
- else {
+		else {
 			showOrHide();
 		}
 	}

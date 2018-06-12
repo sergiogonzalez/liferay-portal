@@ -18,7 +18,7 @@ class Slider extends Component {
 	 */
 
 	attached() {
-	this.drag_ = new Drag({
+		this.drag_ = new Drag({
 			axis: 'x',
 			constrain: this.constrainToRail_.bind(this),
 			container: this.element,
@@ -54,7 +54,7 @@ class Slider extends Component {
 		if (region.left < constrain.left) {
 			region.left = constrain.left;
 		}
- else if (region.left > constrain.right) {
+		else if (region.left > constrain.right) {
 			region.left -= region.left - constrain.right;
 		}
 		region.right = region.left + region.width;
@@ -106,7 +106,7 @@ class Slider extends Component {
 				if (event.offsetX < handleRegion.left) {
 					this.value -= 1;
 				}
- else {
+				else {
 					this.value += 1;
 				}
 			}
