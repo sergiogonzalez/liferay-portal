@@ -106,11 +106,11 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 		long smallImageId = getSmallImageId();
 
-		if (smallImageId != 0) {
+		if ((smallImageId != 0) && isSmallImage()) {
 			return StringBundler.concat(
 				themeDisplay.getPathImage(), "/blogs/entry?img_id=",
-				String.valueOf(getSmallImageId()), "&t=",
-				WebServerServletTokenUtil.getToken(getSmallImageId()));
+				String.valueOf(smallImageId), "&t=",
+				WebServerServletTokenUtil.getToken(smallImageId));
 		}
 
 		return getCoverImageURL(themeDisplay);
