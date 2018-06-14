@@ -73,6 +73,10 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 			WebServerServletTokenUtil.getToken(getSmallImageId()));
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getSmallImageType() throws PortalException {
 		if ((_smallImageType == null) && isSmallImage()) {
