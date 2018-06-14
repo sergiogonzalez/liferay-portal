@@ -1415,6 +1415,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (deletePreviousSmallImageId != 0) {
 			imageLocalService.deleteImage(deletePreviousSmallImageId);
+
+			if (entry.getSmallImageFileEntryId() == 0) {
+				entry.setSmallImage(false);
+			}
 		}
 
 		return entry;
