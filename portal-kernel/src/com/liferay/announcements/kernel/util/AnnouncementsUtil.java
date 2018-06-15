@@ -225,9 +225,8 @@ public class AnnouncementsUtil {
 						themeDisplay.getPermissionChecker(), team.getGroupId(),
 						ActionKeys.MANAGE_ANNOUNCEMENTS) &&
 					RolePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						team.getGroupId(), role.getRoleId(),
-						ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+						themeDisplay.getPermissionChecker(), team.getGroupId(),
+						role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 					filteredRoles.add(role);
 				}
