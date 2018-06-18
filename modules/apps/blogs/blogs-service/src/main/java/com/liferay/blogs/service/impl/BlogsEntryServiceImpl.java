@@ -605,9 +605,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.UPDATE);
+		_blogsEntryModelResourcePermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
