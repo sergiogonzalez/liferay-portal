@@ -299,12 +299,38 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getChildDiscussionMessages(long parentMessageId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getChildDiscussionMessages(long parentMessageId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getChildDiscussionMessagesCount(long parentMessageId, int status);
+
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
+	long, int)}
+	*/
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getChildMessages(long parentMessageId, int status);
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
+	long, int, int, int)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getChildMessages(long parentMessageId, int status,
 		int start, int end);
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#getChildDiscussionMessagesCount(long, int)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getChildMessagesCount(long parentMessageId, int status);
 
@@ -489,13 +515,40 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public int getPositionInThread(long messageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootDiscussionMessages(String className,
+		long classPK, int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getRootDiscussionMessages(String className,
+		long classPK, int status, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRootDiscussionMessagesCount(String className, long classPK,
+		int status);
+
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	String, long, int)}
+	*/
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getRootMessages(String className, long classPK,
 		int status) throws PortalException;
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	String, long, int, int, int)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getRootMessages(String className, long classPK,
 		int status, int start, int end) throws PortalException;
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#getRootDiscussionMessagesCount(String, long, int)}
+	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRootMessagesCount(String className, long classPK, int status);
 
