@@ -204,7 +204,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		long parentCommentId, int status, int start, int end) {
 
 		return Stream.of(
-			_mbMessageLocalService.getChildMessages(
+			_mbMessageLocalService.getChildDiscussionMessages(
 				parentCommentId, status, start, end)
 		).flatMap(
 			List::stream
@@ -217,7 +217,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public int getChildCommentsCount(long parentCommentId, int status) {
-		return _mbMessageLocalService.getChildMessagesCount(
+		return _mbMessageLocalService.getChildDiscussionMessagesCount(
 			parentCommentId, status);
 	}
 
@@ -270,7 +270,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		return Stream.of(
-			_mbMessageLocalService.getRootMessages(
+			_mbMessageLocalService.getRootDiscussionMessages(
 				className, classPK, status, start, end)
 		).flatMap(
 			List::stream
@@ -285,7 +285,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	public int getRootCommentsCount(
 		String className, long classPK, int status) {
 
-		return _mbMessageLocalService.getRootMessagesCount(
+		return _mbMessageLocalService.getRootDiscussionMessagesCount(
 			className, classPK, status);
 	}
 
