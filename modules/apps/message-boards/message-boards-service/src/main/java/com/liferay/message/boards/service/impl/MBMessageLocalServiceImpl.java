@@ -1373,7 +1373,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getRootDiscussionMessagesCount(
-			String className, long classPK, int status) {
+		String className, long classPK, int status) {
 
 		int count = 0;
 
@@ -1382,8 +1382,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				_getThreadDiscussionCommentId(className, classPK), status);
 		}
 		catch (PortalException pe) {
-			_log.info("There is no discussion associated to the className: " +
-					  className + " and classPK: " + classPK);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"There is no discussion associated to the className: ",
+						className, " and classPK: ", String.valueOf(classPK)),
+					pe);
+			}
 		}
 
 		return count;
