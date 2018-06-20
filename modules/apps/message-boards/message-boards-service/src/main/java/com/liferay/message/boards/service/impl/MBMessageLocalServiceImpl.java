@@ -960,12 +960,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<MBMessage> getChildMessages(long parentMessageId, int status) {
+	public List<MBMessage> getChildDiscussionMessages(
+		long parentMessageId, int status) {
+
 		return mbMessagePersistence.findByP_S(parentMessageId, status);
 	}
 
 	@Override
-	public List<MBMessage> getChildMessages(
+	public List<MBMessage> getChildDiscussionMessages(
 		long parentMessageId, int status, int start, int end) {
 
 		return mbMessagePersistence.findByP_S(
@@ -973,8 +975,42 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getChildMessagesCount(long parentMessageId, int status) {
+	public int getChildDiscussionMessagesCount(
+		long parentMessageId, int status) {
+
 		return mbMessagePersistence.countByP_S(parentMessageId, status);
+	}
+
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
+	 * long, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<MBMessage> getChildMessages(long parentMessageId, int status) {
+		return getChildDiscussionMessages(parentMessageId, status);
+	}
+
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
+	 * long, int, int, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<MBMessage> getChildMessages(
+		long parentMessageId, int status, int start, int end) {
+
+		return getChildDiscussionMessages(parentMessageId, status, start, end);
+	}
+
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link
+	 * #getChildDiscussionMessagesCount(long, int)}
+	 */
+	@Deprecated
+	@Override
+	public int getChildMessagesCount(long parentMessageId, int status) {
+		return getChildDiscussionMessagesCount(parentMessageId, status);
 	}
 
 	@Override
@@ -1317,31 +1353,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<MBMessage> getRootMessages(
+	public List<MBMessage> getRootDiscussionMessages(
 			String className, long classPK, int status)
 		throws PortalException {
 
-		return getRootMessages(
+		return getRootDiscussionMessages(
 			className, classPK, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<MBMessage> getRootMessages(
+	public List<MBMessage> getRootDiscussionMessages(
 			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		MBMessage rootMbMessage = mbMessagePersistence.findByC_C_First(
-			classNameId, classPK, new MessageCreateDateComparator(true));
-
-		return getChildMessages(
-			rootMbMessage.getMessageId(), status, start, end);
+		return getChildDiscussionMessages(
+			_getThreadDiscussionCommentId(className, classPK), status, start,
+			end);
 	}
 
 	@Override
-	public int getRootMessagesCount(
-		String className, long classPK, int status) {
+	public int getRootDiscussionMessagesCount(
+			String className, long classPK, int status) {
 
 		int count = 0;
 
@@ -1355,6 +1387,45 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return count;
+	}
+
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	 * String, long, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<MBMessage> getRootMessages(
+			String className, long classPK, int status)
+		throws PortalException {
+
+		return getRootDiscussionMessages(className, classPK, status);
+	}
+
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	 * String, long, int, int, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<MBMessage> getRootMessages(
+			String className, long classPK, int status, int start, int end)
+		throws PortalException {
+
+		return getRootDiscussionMessages(
+			className, classPK, status, start, end);
+	}
+
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link
+	 * #getRootDiscussionMessagesCount(String, long, int)}
+	 */
+	@Deprecated
+	@Override
+	public int getRootMessagesCount(
+		String className, long classPK, int status) {
+
+		return getRootDiscussionMessagesCount(className, classPK, status);
 	}
 
 	@Override
