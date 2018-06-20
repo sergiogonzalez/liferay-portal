@@ -1343,9 +1343,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getRootMessagesCount(
 		String className, long classPK, int status) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		int count = 0;
 
-		return mbMessagePersistence.countByC_C_S(classNameId, classPK, status);
+		try {
+			count = getChildDiscussionMessagesCount(
+				_getThreadDiscussionCommentId(className, classPK), status);
+		}
+		catch (PortalException pe) {
+			_log.info("There is no discussion associated to the className: " +
+					  className + " and classPK: " + classPK);
+		}
+
+		return count;
 	}
 
 	@Override
@@ -2663,6 +2672,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			fileEntry.getFolderId());
 
 		return GetterUtil.getLong(folder.getName());
+	}
+
+	private long _getThreadDiscussionCommentId(String className, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		MBMessage message = mbMessagePersistence.findByC_C_First(
+			classNameId, classPK, new MessageCreateDateComparator(true));
+
+		return message.getMessageId();
 	}
 
 	private MBMessage _updateMessage(
