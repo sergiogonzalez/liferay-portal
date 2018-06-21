@@ -75,6 +75,12 @@ public class DefaultStoreWrapper implements StoreWrapper {
 		}
 
 		@Override
+		public void copyFileToStore(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, Store targetStore) {
+		}
+
+		@Override
 		public void copyFileVersion(
 				long companyId, long repositoryId, String fileName,
 				String fromVersionLabel, String toVersionLabel)
@@ -206,6 +212,12 @@ public class DefaultStoreWrapper implements StoreWrapper {
 		@Override
 		public void move(String srcDir, String destDir) {
 			_store.move(srcDir, destDir);
+		}
+
+		@Override
+		public void moveFileToStore(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, Store targetStore) {
 		}
 
 		@Override
