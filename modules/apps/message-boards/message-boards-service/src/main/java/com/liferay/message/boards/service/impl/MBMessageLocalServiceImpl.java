@@ -1330,9 +1330,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
-		return getChildMessages(
-			_getThreadDiscussionCommentId(className, classPK), status, start,
-			end);
+		long rootDiscussionMessageId = _getRootDiscussionMessageId(
+			className, classPK);
+
+		return getChildMessages(rootDiscussionMessageId, status, start, end);
 	}
 
 	@Override
@@ -1342,15 +1343,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int count = 0;
 
 		try {
-			count = getChildMessagesCount(
-				_getThreadDiscussionCommentId(className, classPK), status);
+			long rootDiscussionMessageId = _getRootDiscussionMessageId(
+				className, classPK);
+
+			count = getChildMessagesCount(rootDiscussionMessageId, status);
 		}
 		catch (PortalException pe) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
+			if (_log.isWarnEnabled()) {
+				_log.warn(
 					StringBundler.concat(
-						"There is no discussion associated to the className: ",
-						className, " and classPK: ", String.valueOf(classPK)),
+						"Unable to obtain root discussion message id for ",
+						"class name ", className, " and class PK ",
+						String.valueOf(classPK)),
 					pe);
 			}
 		}
@@ -2714,7 +2718,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return GetterUtil.getLong(folder.getName());
 	}
 
-	private long _getThreadDiscussionCommentId(String className, long classPK)
+	private long _getRootDiscussionMessageId(String className, long classPK)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
