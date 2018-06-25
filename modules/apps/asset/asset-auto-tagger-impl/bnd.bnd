@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Asset Auto Tagger Implementation
+Bundle-SymbolicName: com.liferay.asset.auto.tagger.impl
+Bundle-Version: 1.0.0
