@@ -960,14 +960,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<MBMessage> getChildDiscussionMessages(
-		long parentMessageId, int status) {
-
+	public List<MBMessage> getChildMessages(long parentMessageId, int status) {
 		return mbMessagePersistence.findByP_S(parentMessageId, status);
 	}
 
 	@Override
-	public List<MBMessage> getChildDiscussionMessages(
+	public List<MBMessage> getChildMessages(
 		long parentMessageId, int status, int start, int end) {
 
 		return mbMessagePersistence.findByP_S(
@@ -975,42 +973,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getChildDiscussionMessagesCount(
-		long parentMessageId, int status) {
-
-		return mbMessagePersistence.countByP_S(parentMessageId, status);
-	}
-
-	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
-	 * long, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<MBMessage> getChildMessages(long parentMessageId, int status) {
-		return getChildDiscussionMessages(parentMessageId, status);
-	}
-
-	/**
-	 * @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
-	 * long, int, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<MBMessage> getChildMessages(
-		long parentMessageId, int status, int start, int end) {
-
-		return getChildDiscussionMessages(parentMessageId, status, start, end);
-	}
-
-	/**
-	 * @deprecated As of 3.0.0, replaced by {@link
-	 * #getChildDiscussionMessagesCount(long, int)}
-	 */
-	@Deprecated
-	@Override
 	public int getChildMessagesCount(long parentMessageId, int status) {
-		return getChildDiscussionMessagesCount(parentMessageId, status);
+		return mbMessagePersistence.countByP_S(parentMessageId, status);
 	}
 
 	@Override
@@ -1366,7 +1330,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
-		return getChildDiscussionMessages(
+		return getChildMessages(
 			_getThreadDiscussionCommentId(className, classPK), status, start,
 			end);
 	}
@@ -1378,7 +1342,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int count = 0;
 
 		try {
-			count = getChildDiscussionMessagesCount(
+			count = getChildMessagesCount(
 				_getThreadDiscussionCommentId(className, classPK), status);
 		}
 		catch (PortalException pe) {
