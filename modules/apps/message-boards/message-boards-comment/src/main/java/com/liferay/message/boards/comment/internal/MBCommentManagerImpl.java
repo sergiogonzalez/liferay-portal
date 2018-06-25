@@ -204,7 +204,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		long parentCommentId, int status, int start, int end) {
 
 		return Stream.of(
-			_mbMessageLocalService.getChildDiscussionMessages(
+			_mbMessageLocalService.getChildMessages(
 				parentCommentId, status, start, end)
 		).flatMap(
 			List::stream
@@ -217,7 +217,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public int getChildCommentsCount(long parentCommentId, int status) {
-		return _mbMessageLocalService.getChildDiscussionMessagesCount(
+		return _mbMessageLocalService.getChildMessagesCount(
 			parentCommentId, status);
 	}
 
