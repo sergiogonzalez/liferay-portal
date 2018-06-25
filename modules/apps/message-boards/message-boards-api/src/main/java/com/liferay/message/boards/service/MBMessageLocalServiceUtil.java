@@ -393,16 +393,49 @@ public class MBMessageLocalServiceUtil {
 		return getService().getCategoryMessagesCount(groupId, categoryId, status);
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildDiscussionMessages(
+		long parentMessageId, int status) {
+		return getService().getChildDiscussionMessages(parentMessageId, status);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildDiscussionMessages(
+		long parentMessageId, int status, int start, int end) {
+		return getService()
+				   .getChildDiscussionMessages(parentMessageId, status, start,
+			end);
+	}
+
+	public static int getChildDiscussionMessagesCount(long parentMessageId,
+		int status) {
+		return getService()
+				   .getChildDiscussionMessagesCount(parentMessageId, status);
+	}
+
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
+	long, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
 		long parentMessageId, int status) {
 		return getService().getChildMessages(parentMessageId, status);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
+	long, int, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
 		long parentMessageId, int status, int start, int end) {
 		return getService().getChildMessages(parentMessageId, status, start, end);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#getChildDiscussionMessagesCount(long, int)}
+	*/
+	@Deprecated
 	public static int getChildMessagesCount(long parentMessageId, int status) {
 		return getService().getChildMessagesCount(parentMessageId, status);
 	}
@@ -652,12 +685,42 @@ public class MBMessageLocalServiceUtil {
 		return getService().getPositionInThread(messageId);
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootDiscussionMessages(
+		String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRootDiscussionMessages(className, classPK, status);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootDiscussionMessages(
+		String className, long classPK, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRootDiscussionMessages(className, classPK, status,
+			start, end);
+	}
+
+	public static int getRootDiscussionMessagesCount(String className,
+		long classPK, int status) {
+		return getService()
+				   .getRootDiscussionMessagesCount(className, classPK, status);
+	}
+
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	String, long, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
 		String className, long classPK, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRootMessages(className, classPK, status);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	String, long, int, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
 		String className, long classPK, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -665,6 +728,11 @@ public class MBMessageLocalServiceUtil {
 				   .getRootMessages(className, classPK, status, start, end);
 	}
 
+	/**
+	* @deprecated As of 3.0.0, replaced by {@link
+	#getRootDiscussionMessagesCount(String, long, int)}
+	*/
+	@Deprecated
 	public static int getRootMessagesCount(String className, long classPK,
 		int status) {
 		return getService().getRootMessagesCount(className, classPK, status);
