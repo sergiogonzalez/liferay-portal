@@ -419,41 +419,11 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.model.MBMessage> getChildDiscussionMessages(
-		long parentMessageId, int status) {
-		return _mbMessageLocalService.getChildDiscussionMessages(parentMessageId,
-			status);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.model.MBMessage> getChildDiscussionMessages(
-		long parentMessageId, int status, int start, int end) {
-		return _mbMessageLocalService.getChildDiscussionMessages(parentMessageId,
-			status, start, end);
-	}
-
-	@Override
-	public int getChildDiscussionMessagesCount(long parentMessageId, int status) {
-		return _mbMessageLocalService.getChildDiscussionMessagesCount(parentMessageId,
-			status);
-	}
-
-	/**
-	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
-	long, int)}
-	*/
-	@Deprecated
-	@Override
 	public java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
 		long parentMessageId, int status) {
 		return _mbMessageLocalService.getChildMessages(parentMessageId, status);
 	}
 
-	/**
-	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
-	long, int, int, int)}
-	*/
-	@Deprecated
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
 		long parentMessageId, int status, int start, int end) {
@@ -461,11 +431,6 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			start, end);
 	}
 
-	/**
-	* @deprecated As of 3.0.0, replaced by {@link
-	#getChildDiscussionMessagesCount(long, int)}
-	*/
-	@Deprecated
 	@Override
 	public int getChildMessagesCount(long parentMessageId, int status) {
 		return _mbMessageLocalService.getChildMessagesCount(parentMessageId,

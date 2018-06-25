@@ -393,49 +393,16 @@ public class MBMessageLocalServiceUtil {
 		return getService().getCategoryMessagesCount(groupId, categoryId, status);
 	}
 
-	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildDiscussionMessages(
-		long parentMessageId, int status) {
-		return getService().getChildDiscussionMessages(parentMessageId, status);
-	}
-
-	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildDiscussionMessages(
-		long parentMessageId, int status, int start, int end) {
-		return getService()
-				   .getChildDiscussionMessages(parentMessageId, status, start,
-			end);
-	}
-
-	public static int getChildDiscussionMessagesCount(long parentMessageId,
-		int status) {
-		return getService()
-				   .getChildDiscussionMessagesCount(parentMessageId, status);
-	}
-
-	/**
-	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
-	long, int)}
-	*/
-	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
 		long parentMessageId, int status) {
 		return getService().getChildMessages(parentMessageId, status);
 	}
 
-	/**
-	* @deprecated As of 3.0.0, replaced by {@link #getChildDiscussionMessages(
-	long, int, int, int)}
-	*/
-	@Deprecated
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
 		long parentMessageId, int status, int start, int end) {
 		return getService().getChildMessages(parentMessageId, status, start, end);
 	}
 
-	/**
-	* @deprecated As of 3.0.0, replaced by {@link
-	#getChildDiscussionMessagesCount(long, int)}
-	*/
-	@Deprecated
 	public static int getChildMessagesCount(long parentMessageId, int status) {
 		return getService().getChildMessagesCount(parentMessageId, status);
 	}
