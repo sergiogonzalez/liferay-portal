@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1791,9 +1792,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		@ServiceReference(type = FinderCache.class)
 		protected FinderCache finderCache;
+
+		@ServiceReference(type = InlineSQLHelper.class)
+		protected InlineSQLHelper inlineSQLHelper;
 	<#else>
 		protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 		protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+		protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	</#if>
 
 	<#list entity.entityColumns as entityColumn>
