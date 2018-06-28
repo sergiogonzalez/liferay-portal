@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -583,7 +584,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	@Override
 	public List<LayoutSetBranch> filterFindByGroupId(long groupId, int start,
 		int end, OrderByComparator<LayoutSetBranch> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -629,7 +630,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -676,7 +677,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		long layoutSetBranchId, long groupId,
 		OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(layoutSetBranchId, groupId,
 				orderByComparator);
 		}
@@ -811,7 +812,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -921,7 +922,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -931,7 +932,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -1488,7 +1489,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	public List<LayoutSetBranch> filterFindByG_P(long groupId,
 		boolean privateLayout, int start, int end,
 		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P(groupId, privateLayout, start, end,
 				orderByComparator);
 		}
@@ -1537,7 +1538,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -1587,7 +1588,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		long layoutSetBranchId, long groupId, boolean privateLayout,
 		OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(layoutSetBranchId, groupId,
 				privateLayout, orderByComparator);
 		}
@@ -1724,7 +1725,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -1843,7 +1844,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	 */
 	@Override
 	public int filterCountByG_P(long groupId, boolean privateLayout) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P(groupId, privateLayout);
 		}
 
@@ -1855,7 +1856,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2733,7 +2734,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	public List<LayoutSetBranch> filterFindByG_P_M(long groupId,
 		boolean privateLayout, boolean master, int start, int end,
 		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_M(groupId, privateLayout, master, start, end,
 				orderByComparator);
 		}
@@ -2784,7 +2785,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2837,7 +2838,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		long layoutSetBranchId, long groupId, boolean privateLayout,
 		boolean master, OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_M_PrevAndNext(layoutSetBranchId, groupId,
 				privateLayout, master, orderByComparator);
 		}
@@ -2977,7 +2978,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3108,7 +3109,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	@Override
 	public int filterCountByG_P_M(long groupId, boolean privateLayout,
 		boolean master) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_M(groupId, privateLayout, master);
 		}
 
@@ -3122,7 +3123,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 		query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3997,6 +3998,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_LAYOUTSETBRANCH = "SELECT layoutSetBranch FROM LayoutSetBranch layoutSetBranch";
 	private static final String _SQL_SELECT_LAYOUTSETBRANCH_WHERE_PKS_IN = "SELECT layoutSetBranch FROM LayoutSetBranch layoutSetBranch WHERE layoutSetBranchId IN (";
 	private static final String _SQL_SELECT_LAYOUTSETBRANCH_WHERE = "SELECT layoutSetBranch FROM LayoutSetBranch layoutSetBranch WHERE ";

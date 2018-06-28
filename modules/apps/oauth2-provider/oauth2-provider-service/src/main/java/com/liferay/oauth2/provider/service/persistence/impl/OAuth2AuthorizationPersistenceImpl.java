@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -3303,6 +3304,8 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	@BeanReference(type = OAuth2ScopeGrantPersistence.class)
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
 	protected TableMapper<OAuth2Authorization, com.liferay.oauth2.provider.model.OAuth2ScopeGrant> oAuth2AuthorizationToOAuth2ScopeGrantTableMapper;

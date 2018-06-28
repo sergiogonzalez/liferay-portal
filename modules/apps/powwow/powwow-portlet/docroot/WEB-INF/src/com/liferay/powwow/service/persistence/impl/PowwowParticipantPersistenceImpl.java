@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2495,6 +2497,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_POWWOWPARTICIPANT = "SELECT powwowParticipant FROM PowwowParticipant powwowParticipant";
 	private static final String _SQL_SELECT_POWWOWPARTICIPANT_WHERE_PKS_IN = "SELECT powwowParticipant FROM PowwowParticipant powwowParticipant WHERE powwowParticipantId IN (";
 	private static final String _SQL_SELECT_POWWOWPARTICIPANT_WHERE = "SELECT powwowParticipant FROM PowwowParticipant powwowParticipant WHERE ";

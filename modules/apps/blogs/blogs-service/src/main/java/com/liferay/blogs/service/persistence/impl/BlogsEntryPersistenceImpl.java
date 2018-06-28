@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1968,7 +1968,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public List<BlogsEntry> filterFindByGroupId(long groupId, int start,
 		int end, OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2014,7 +2014,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2059,7 +2059,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public BlogsEntry[] filterFindByGroupId_PrevAndNext(long entryId,
 		long groupId, OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(entryId, groupId, orderByComparator);
 		}
 
@@ -2193,7 +2193,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2303,7 +2303,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2313,7 +2313,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3625,7 +3625,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public List<BlogsEntry> filterFindByG_LtD(long groupId, Date displayDate,
 		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LtD(groupId, displayDate, start, end,
 				orderByComparator);
 		}
@@ -3683,7 +3683,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3734,7 +3734,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LtD_PrevAndNext(entryId, groupId, displayDate,
 				orderByComparator);
 		}
@@ -3880,7 +3880,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4012,7 +4012,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_LtD(long groupId, Date displayDate) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_LtD(groupId, displayDate);
 		}
 
@@ -4033,7 +4033,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FINDER_COLUMN_G_LTD_DISPLAYDATE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4589,7 +4589,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public List<BlogsEntry> filterFindByG_S(long groupId, int status,
 		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S(groupId, status, start, end, orderByComparator);
 		}
 
@@ -4637,7 +4637,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4685,7 +4685,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public BlogsEntry[] filterFindByG_S_PrevAndNext(long entryId, long groupId,
 		int status, OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_PrevAndNext(entryId, groupId, status,
 				orderByComparator);
 		}
@@ -4822,7 +4822,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4941,7 +4941,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_S(long groupId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S(groupId, status);
 		}
 
@@ -4953,7 +4953,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5486,7 +5486,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public List<BlogsEntry> filterFindByG_NotS(long groupId, int status,
 		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotS(groupId, status, start, end, orderByComparator);
 		}
 
@@ -5534,7 +5534,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5583,7 +5583,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotS_PrevAndNext(entryId, groupId, status,
 				orderByComparator);
 		}
@@ -5720,7 +5720,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5839,7 +5839,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_NotS(long groupId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_NotS(groupId, status);
 		}
 
@@ -5851,7 +5851,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_NOTS_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9183,7 +9183,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_U_LtD(long groupId, long userId,
 		Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_LtD(groupId, userId, displayDate, start, end,
 				orderByComparator);
 		}
@@ -9243,7 +9243,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9297,7 +9297,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, long userId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_LtD_PrevAndNext(entryId, groupId, userId,
 				displayDate, orderByComparator);
 		}
@@ -9445,7 +9445,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9588,7 +9588,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_U_LtD(long groupId, long userId, Date displayDate) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_LtD(groupId, userId, displayDate);
 		}
 
@@ -9611,7 +9611,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			query.append(_FINDER_COLUMN_G_U_LTD_DISPLAYDATE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10215,7 +10215,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_U_S(long groupId, long userId,
 		int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_S(groupId, userId, status, start, end,
 				orderByComparator);
 		}
@@ -10266,7 +10266,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10318,7 +10318,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, long userId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_S_PrevAndNext(entryId, groupId, userId, status,
 				orderByComparator);
 		}
@@ -10457,7 +10457,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10553,7 +10553,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_U_S(long groupId, long userId,
 		int[] statuses, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_S(groupId, userId, statuses, start, end,
 				orderByComparator);
 		}
@@ -10618,7 +10618,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11036,7 +11036,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_U_S(long groupId, long userId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_S(groupId, userId, status);
 		}
 
@@ -11050,7 +11050,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_U_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11094,7 +11094,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_U_S(long groupId, long userId, int[] statuses) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_S(groupId, userId, statuses);
 		}
 
@@ -11130,7 +11130,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11706,7 +11706,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_U_NotS(long groupId, long userId,
 		int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_NotS(groupId, userId, status, start, end,
 				orderByComparator);
 		}
@@ -11757,7 +11757,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11809,7 +11809,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, long userId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_NotS_PrevAndNext(entryId, groupId, userId, status,
 				orderByComparator);
 		}
@@ -11948,7 +11948,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12076,7 +12076,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_U_NotS(long groupId, long userId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_NotS(groupId, userId, status);
 		}
 
@@ -12090,7 +12090,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_U_NOTS_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12710,7 +12710,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_D_S(long groupId, Date displayDate,
 		int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_D_S(groupId, displayDate, status, start, end,
 				orderByComparator);
 		}
@@ -12770,7 +12770,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12824,7 +12824,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_D_S_PrevAndNext(entryId, groupId, displayDate,
 				status, orderByComparator);
 		}
@@ -12972,7 +12972,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13115,7 +13115,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_D_S(long groupId, Date displayDate, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_D_S(groupId, displayDate, status);
 		}
 
@@ -13138,7 +13138,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_D_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13743,7 +13743,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_GtD_S(long groupId, Date displayDate,
 		int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_GtD_S(groupId, displayDate, status, start, end,
 				orderByComparator);
 		}
@@ -13803,7 +13803,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13857,7 +13857,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_GtD_S_PrevAndNext(entryId, groupId, displayDate,
 				status, orderByComparator);
 		}
@@ -14005,7 +14005,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14148,7 +14148,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_GtD_S(long groupId, Date displayDate, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_GtD_S(groupId, displayDate, status);
 		}
 
@@ -14171,7 +14171,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_GTD_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14776,7 +14776,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_LtD_S(long groupId, Date displayDate,
 		int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LtD_S(groupId, displayDate, status, start, end,
 				orderByComparator);
 		}
@@ -14836,7 +14836,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14890,7 +14890,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LtD_S_PrevAndNext(entryId, groupId, displayDate,
 				status, orderByComparator);
 		}
@@ -15038,7 +15038,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15181,7 +15181,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public int filterCountByG_LtD_S(long groupId, Date displayDate, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_LtD_S(groupId, displayDate, status);
 		}
 
@@ -15204,7 +15204,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_LTD_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15811,7 +15811,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_LtD_NotS(long groupId,
 		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LtD_NotS(groupId, displayDate, status, start, end,
 				orderByComparator);
 		}
@@ -15871,7 +15871,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15925,7 +15925,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LtD_NotS_PrevAndNext(entryId, groupId, displayDate,
 				status, orderByComparator);
 		}
@@ -16073,7 +16073,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16217,7 +16217,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public int filterCountByG_LtD_NotS(long groupId, Date displayDate,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_LtD_NotS(groupId, displayDate, status);
 		}
 
@@ -16240,7 +16240,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_LTD_NOTS_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -19239,7 +19239,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_U_LtD_S(long groupId, long userId,
 		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_LtD_S(groupId, userId, displayDate, status, start,
 				end, orderByComparator);
 		}
@@ -19301,7 +19301,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -19358,7 +19358,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_LtD_S_PrevAndNext(entryId, groupId, userId,
 				displayDate, status, orderByComparator);
 		}
@@ -19511,7 +19511,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -19666,7 +19666,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public int filterCountByG_U_LtD_S(long groupId, long userId,
 		Date displayDate, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_LtD_S(groupId, userId, displayDate, status);
 		}
 
@@ -19691,7 +19691,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_U_LTD_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -20336,7 +20336,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public List<BlogsEntry> filterFindByG_U_LtD_NotS(long groupId, long userId,
 		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_LtD_NotS(groupId, userId, displayDate, status,
 				start, end, orderByComparator);
 		}
@@ -20398,7 +20398,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -20455,7 +20455,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_LtD_NotS_PrevAndNext(entryId, groupId, userId,
 				displayDate, status, orderByComparator);
 		}
@@ -20608,7 +20608,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -20763,7 +20763,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	public int filterCountByG_U_LtD_NotS(long groupId, long userId,
 		Date displayDate, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_LtD_NotS(groupId, userId, displayDate, status);
 		}
 
@@ -20788,7 +20788,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		query.append(_FINDER_COLUMN_G_U_LTD_NOTS_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				BlogsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21940,6 +21940,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 
 	private Long _getTime(Date date) {
 		if (date == null) {

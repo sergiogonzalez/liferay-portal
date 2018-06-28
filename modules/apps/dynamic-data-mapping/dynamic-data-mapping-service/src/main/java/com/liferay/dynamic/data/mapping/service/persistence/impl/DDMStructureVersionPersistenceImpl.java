@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2191,6 +2192,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion";
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE_PKS_IN = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE structureVersionId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE ";

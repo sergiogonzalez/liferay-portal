@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1961,7 +1961,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	@Override
 	public List<KBTemplate> filterFindByGroupId(long groupId, int start,
 		int end, OrderByComparator<KBTemplate> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2007,7 +2007,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBTemplate.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2052,7 +2052,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	public KBTemplate[] filterFindByGroupId_PrevAndNext(long kbTemplateId,
 		long groupId, OrderByComparator<KBTemplate> orderByComparator)
 		throws NoSuchTemplateException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(kbTemplateId, groupId,
 				orderByComparator);
 		}
@@ -2187,7 +2187,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBTemplate.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2297,7 +2297,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2307,7 +2307,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBTemplate.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3190,6 +3190,8 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_KBTEMPLATE = "SELECT kbTemplate FROM KBTemplate kbTemplate";
 	private static final String _SQL_SELECT_KBTEMPLATE_WHERE_PKS_IN = "SELECT kbTemplate FROM KBTemplate kbTemplate WHERE kbTemplateId IN (";
 	private static final String _SQL_SELECT_KBTEMPLATE_WHERE = "SELECT kbTemplate FROM KBTemplate kbTemplate WHERE ";

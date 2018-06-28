@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -606,7 +607,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByUuid(String uuid, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
 
@@ -664,7 +665,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -709,7 +710,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] filterFindByUuid_PrevAndNext(long roleId, String uuid,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid_PrevAndNext(roleId, uuid, orderByComparator);
 		}
 
@@ -854,7 +855,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -979,7 +980,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByUuid(uuid);
 		}
 
@@ -1001,7 +1002,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -1580,7 +1581,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1640,7 +1641,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -1689,7 +1690,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByUuid_C_PrevAndNext(long roleId, String uuid,
 		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(roleId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1838,7 +1839,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -1972,7 +1973,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -1996,7 +1997,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -2515,7 +2516,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByCompanyId(long companyId, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
 
@@ -2561,7 +2562,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -2605,7 +2606,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByCompanyId_PrevAndNext(long roleId,
 		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(roleId, companyId,
 				orderByComparator);
 		}
@@ -2740,7 +2741,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -2849,7 +2850,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByCompanyId(companyId);
 		}
 
@@ -2859,7 +2860,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -3389,7 +3390,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByName(String name, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByName(name, start, end, orderByComparator);
 		}
 
@@ -3447,7 +3448,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -3492,7 +3493,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] filterFindByName_PrevAndNext(long roleId, String name,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByName_PrevAndNext(roleId, name, orderByComparator);
 		}
 
@@ -3637,7 +3638,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -3762,7 +3763,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByName(String name) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByName(name);
 		}
 
@@ -3784,7 +3785,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FINDER_COLUMN_NAME_NAME_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -4291,7 +4292,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByType(int type, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByType(type, start, end, orderByComparator);
 		}
 
@@ -4337,7 +4338,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -4380,7 +4381,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] filterFindByType_PrevAndNext(long roleId, int type,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByType_PrevAndNext(roleId, type, orderByComparator);
 		}
 
@@ -4513,7 +4514,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -4622,7 +4623,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByType(int type) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByType(type);
 		}
 
@@ -4632,7 +4633,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FINDER_COLUMN_TYPE_TYPE_2_SQL);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -5168,7 +5169,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindBySubtype(String subtype, int start, int end,
 		OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findBySubtype(subtype, start, end, orderByComparator);
 		}
 
@@ -5226,7 +5227,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -5271,7 +5272,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] filterFindBySubtype_PrevAndNext(long roleId, String subtype,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findBySubtype_PrevAndNext(roleId, subtype, orderByComparator);
 		}
 
@@ -5417,7 +5418,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -5542,7 +5543,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountBySubtype(String subtype) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countBySubtype(subtype);
 		}
 
@@ -5564,7 +5565,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -6359,7 +6360,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByC_T(long companyId, int type, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_T(companyId, type, start, end, orderByComparator);
 		}
 
@@ -6407,7 +6408,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -6454,7 +6455,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByC_T_PrevAndNext(long roleId, long companyId,
 		int type, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_T_PrevAndNext(roleId, companyId, type,
 				orderByComparator);
 		}
@@ -6591,7 +6592,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -6679,7 +6680,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByC_T(long companyId, int[] types, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_T(companyId, types, start, end, orderByComparator);
 		}
 
@@ -6741,7 +6742,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -7125,7 +7126,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByC_T(long companyId, int type) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_T(companyId, type);
 		}
 
@@ -7137,7 +7138,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FINDER_COLUMN_C_T_TYPE_2_SQL);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -7177,7 +7178,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByC_T(long companyId, int[] types) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_T(companyId, types);
 		}
 
@@ -7211,7 +7212,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -7783,7 +7784,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> filterFindByT_S(int type, String subtype, int start,
 		int end, OrderByComparator<Role> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByT_S(type, subtype, start, end, orderByComparator);
 		}
 
@@ -7843,7 +7844,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -7892,7 +7893,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] filterFindByT_S_PrevAndNext(long roleId, int type,
 		String subtype, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByT_S_PrevAndNext(roleId, type, subtype,
 				orderByComparator);
 		}
@@ -8041,7 +8042,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -8175,7 +8176,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByT_S(int type, String subtype) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByT_S(type, subtype);
 		}
 
@@ -8199,7 +8200,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FINDER_COLUMN_T_S_SUBTYPE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -8816,7 +8817,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int filterCountByC_C_C(long companyId, long classNameId, long classPK) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_C_C(companyId, classNameId, classPK);
 		}
 
@@ -8830,7 +8831,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -8874,7 +8875,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public int filterCountByC_C_C(long companyId, long classNameId,
 		long[] classPKs) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_C_C(companyId, classNameId, classPKs);
 		}
 
@@ -8910,7 +8911,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -10554,6 +10555,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	protected TableMapper<Role, com.liferay.portal.kernel.model.Group> roleToGroupTableMapper;

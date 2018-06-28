@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1945,7 +1946,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public List<Team> filterFindByGroupId(long groupId, int start, int end,
 		OrderByComparator<Team> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -1991,7 +1992,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Team.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -2035,7 +2036,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public Team[] filterFindByGroupId_PrevAndNext(long teamId, long groupId,
 		OrderByComparator<Team> orderByComparator) throws NoSuchTeamException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(teamId, groupId, orderByComparator);
 		}
 
@@ -2169,7 +2170,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Team.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -2279,7 +2280,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2289,7 +2290,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Team.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -4017,6 +4018,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected TableMapper<Team, com.liferay.portal.kernel.model.User> teamToUserTableMapper;

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -609,7 +610,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	@Override
 	public List<LayoutPrototype> filterFindByUuid(String uuid, int start,
 		int end, OrderByComparator<LayoutPrototype> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
 
@@ -667,7 +668,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -716,7 +717,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		long layoutPrototypeId, String uuid,
 		OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid_PrevAndNext(layoutPrototypeId, uuid,
 				orderByComparator);
 		}
@@ -863,7 +864,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -989,7 +990,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByUuid(uuid);
 		}
 
@@ -1011,7 +1012,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1600,7 +1601,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	public List<LayoutPrototype> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1660,7 +1661,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1712,7 +1713,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		long layoutPrototypeId, String uuid, long companyId,
 		OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(layoutPrototypeId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1861,7 +1862,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1996,7 +1997,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -2020,7 +2021,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2551,7 +2552,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	@Override
 	public List<LayoutPrototype> filterFindByCompanyId(long companyId,
 		int start, int end, OrderByComparator<LayoutPrototype> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
 
@@ -2597,7 +2598,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2644,7 +2645,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		long layoutPrototypeId, long companyId,
 		OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(layoutPrototypeId, companyId,
 				orderByComparator);
 		}
@@ -2779,7 +2780,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2889,7 +2890,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByCompanyId(companyId);
 		}
 
@@ -2899,7 +2900,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3452,7 +3453,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	public List<LayoutPrototype> filterFindByC_A(long companyId,
 		boolean active, int start, int end,
 		OrderByComparator<LayoutPrototype> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_A(companyId, active, start, end, orderByComparator);
 		}
 
@@ -3500,7 +3501,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3550,7 +3551,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		long layoutPrototypeId, long companyId, boolean active,
 		OrderByComparator<LayoutPrototype> orderByComparator)
 		throws NoSuchLayoutPrototypeException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_A_PrevAndNext(layoutPrototypeId, companyId, active,
 				orderByComparator);
 		}
@@ -3687,7 +3688,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3806,7 +3807,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	 */
 	@Override
 	public int filterCountByC_A(long companyId, boolean active) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_A(companyId, active);
 		}
 
@@ -3818,7 +3819,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4669,6 +4670,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_LAYOUTPROTOTYPE = "SELECT layoutPrototype FROM LayoutPrototype layoutPrototype";
 	private static final String _SQL_SELECT_LAYOUTPROTOTYPE_WHERE_PKS_IN = "SELECT layoutPrototype FROM LayoutPrototype layoutPrototype WHERE layoutPrototypeId IN (";
 	private static final String _SQL_SELECT_LAYOUTPROTOTYPE_WHERE = "SELECT layoutPrototype FROM LayoutPrototype layoutPrototype WHERE ";

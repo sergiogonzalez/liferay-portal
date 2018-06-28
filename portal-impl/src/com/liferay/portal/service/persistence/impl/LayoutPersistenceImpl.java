@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1983,7 +1984,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> filterFindByGroupId(long groupId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2029,7 +2030,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -2074,7 +2075,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] filterFindByGroupId_PrevAndNext(long plid, long groupId,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(plid, groupId, orderByComparator);
 		}
 
@@ -2208,7 +2209,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -2318,7 +2319,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2328,7 +2329,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -4731,7 +4732,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> filterFindByG_P(long groupId, boolean privateLayout,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P(groupId, privateLayout, start, end,
 				orderByComparator);
 		}
@@ -4780,7 +4781,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -4828,7 +4829,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] filterFindByG_P_PrevAndNext(long plid, long groupId,
 		boolean privateLayout, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(plid, groupId, privateLayout,
 				orderByComparator);
 		}
@@ -4965,7 +4966,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -5084,7 +5085,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int filterCountByG_P(long groupId, boolean privateLayout) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P(groupId, privateLayout);
 		}
 
@@ -5096,7 +5097,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -5673,7 +5674,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> filterFindByG_T(long groupId, String type, int start,
 		int end, OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_T(groupId, type, start, end, orderByComparator);
 		}
 
@@ -5733,7 +5734,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -5783,7 +5784,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] filterFindByG_T_PrevAndNext(long plid, long groupId,
 		String type, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_T_PrevAndNext(plid, groupId, type, orderByComparator);
 		}
 
@@ -5931,7 +5932,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -6066,7 +6067,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int filterCountByG_T(long groupId, String type) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_T(groupId, type);
 		}
 
@@ -6090,7 +6091,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -7758,7 +7759,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> filterFindByG_P_P(long groupId, boolean privateLayout,
 		long parentLayoutId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_P(groupId, privateLayout, parentLayoutId, start,
 				end, orderByComparator);
 		}
@@ -7809,7 +7810,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -7861,7 +7862,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		boolean privateLayout, long parentLayoutId,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_P_PrevAndNext(plid, groupId, privateLayout,
 				parentLayoutId, orderByComparator);
 		}
@@ -8001,7 +8002,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -8098,7 +8099,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> filterFindByG_P_P(long groupId, boolean privateLayout,
 		long[] parentLayoutIds, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_P(groupId, privateLayout, parentLayoutIds, start,
 				end, orderByComparator);
 		}
@@ -8163,7 +8164,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -8653,7 +8654,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int filterCountByG_P_P(long groupId, boolean privateLayout,
 		long parentLayoutId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_P(groupId, privateLayout, parentLayoutId);
 		}
 
@@ -8667,7 +8668,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -8712,7 +8713,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int filterCountByG_P_P(long groupId, boolean privateLayout,
 		long[] parentLayoutIds) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_P(groupId, privateLayout, parentLayoutIds);
 		}
 
@@ -8748,7 +8749,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -9372,7 +9373,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> filterFindByG_P_T(long groupId, boolean privateLayout,
 		String type, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_T(groupId, privateLayout, type, start, end,
 				orderByComparator);
 		}
@@ -9435,7 +9436,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -9489,7 +9490,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		boolean privateLayout, String type,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_T_PrevAndNext(plid, groupId, privateLayout, type,
 				orderByComparator);
 		}
@@ -9640,7 +9641,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -9785,7 +9786,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int filterCountByG_P_T(long groupId, boolean privateLayout,
 		String type) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_T(groupId, privateLayout, type);
 		}
 
@@ -9811,7 +9812,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -11005,7 +11006,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> filterFindByG_P_P_LtP(long groupId,
 		boolean privateLayout, long parentLayoutId, int priority, int start,
 		int end, OrderByComparator<Layout> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_P_LtP(groupId, privateLayout, parentLayoutId,
 				priority, start, end, orderByComparator);
 		}
@@ -11058,7 +11059,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -11113,7 +11114,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		boolean privateLayout, long parentLayoutId, int priority,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_P_LtP_PrevAndNext(plid, groupId, privateLayout,
 				parentLayoutId, priority, orderByComparator);
 		}
@@ -11257,7 +11258,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -11400,7 +11401,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int filterCountByG_P_P_LtP(long groupId, boolean privateLayout,
 		long parentLayoutId, int priority) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_P_LtP(groupId, privateLayout, parentLayoutId,
 				priority);
 		}
@@ -11417,7 +11418,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		query.append(_FINDER_COLUMN_G_P_P_LTP_PRIORITY_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Layout.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
 				groupId);
 
@@ -12687,6 +12688,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_LAYOUT = "SELECT layout FROM Layout layout";
 	private static final String _SQL_SELECT_LAYOUT_WHERE_PKS_IN = "SELECT layout FROM Layout layout WHERE plid IN (";
 	private static final String _SQL_SELECT_LAYOUT_WHERE = "SELECT layout FROM Layout layout WHERE ";

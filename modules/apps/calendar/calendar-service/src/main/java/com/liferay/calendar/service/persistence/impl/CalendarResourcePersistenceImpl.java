@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1975,7 +1975,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	@Override
 	public List<CalendarResource> filterFindByGroupId(long groupId, int start,
 		int end, OrderByComparator<CalendarResource> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2021,7 +2021,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2068,7 +2068,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		long calendarResourceId, long groupId,
 		OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(calendarResourceId, groupId,
 				orderByComparator);
 		}
@@ -2203,7 +2203,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2313,7 +2313,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2323,7 +2323,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3417,7 +3417,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	public List<CalendarResource> filterFindByG_C(long groupId, String code,
 		int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C(groupId, code, start, end, orderByComparator);
 		}
 
@@ -3477,7 +3477,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3529,7 +3529,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		long calendarResourceId, long groupId, String code,
 		OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(calendarResourceId, groupId, code,
 				orderByComparator);
 		}
@@ -3678,7 +3678,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3770,7 +3770,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	public List<CalendarResource> filterFindByG_C(long[] groupIds, String code,
 		int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return findByG_C(groupIds, code, start, end, orderByComparator);
 		}
 
@@ -3846,7 +3846,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -4284,7 +4284,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, String code) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C(groupId, code);
 		}
 
@@ -4308,7 +4308,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			query.append(_FINDER_COLUMN_G_C_CODE_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4351,7 +4351,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 */
 	@Override
 	public int filterCountByG_C(long[] groupIds, String code) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return countByG_C(groupIds, code);
 		}
 
@@ -4399,7 +4399,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -4963,7 +4963,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	public List<CalendarResource> filterFindByG_A(long groupId, boolean active,
 		int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A(groupId, active, start, end, orderByComparator);
 		}
 
@@ -5011,7 +5011,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5061,7 +5061,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		long calendarResourceId, long groupId, boolean active,
 		OrderByComparator<CalendarResource> orderByComparator)
 		throws NoSuchResourceException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_PrevAndNext(calendarResourceId, groupId, active,
 				orderByComparator);
 		}
@@ -5198,7 +5198,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5317,7 +5317,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 */
 	@Override
 	public int filterCountByG_A(long groupId, boolean active) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_A(groupId, active);
 		}
 
@@ -5329,7 +5329,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 		query.append(_FINDER_COLUMN_G_A_ACTIVE_2_SQL);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				CalendarResource.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7154,6 +7154,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_CALENDARRESOURCE = "SELECT calendarResource FROM CalendarResource calendarResource";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE_PKS_IN = "SELECT calendarResource FROM CalendarResource calendarResource WHERE calendarResourceId IN (";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE = "SELECT calendarResource FROM CalendarResource calendarResource WHERE ";

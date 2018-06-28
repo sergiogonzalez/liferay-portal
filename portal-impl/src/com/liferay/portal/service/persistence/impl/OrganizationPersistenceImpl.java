@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -610,7 +611,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByUuid(String uuid, int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
 
@@ -668,7 +669,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -716,7 +717,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public Organization[] filterFindByUuid_PrevAndNext(long organizationId,
 		String uuid, OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid_PrevAndNext(organizationId, uuid,
 				orderByComparator);
 		}
@@ -863,7 +864,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -989,7 +990,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByUuid(uuid);
 		}
 
@@ -1011,7 +1012,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1597,7 +1598,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1657,7 +1658,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1709,7 +1710,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		String uuid, long companyId,
 		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(organizationId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1858,7 +1859,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1993,7 +1994,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -2017,7 +2018,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2545,7 +2546,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByCompanyId(long companyId, int start,
 		int end, OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
 
@@ -2591,7 +2592,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2638,7 +2639,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		long organizationId, long companyId,
 		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(organizationId, companyId,
 				orderByComparator);
 		}
@@ -2773,7 +2774,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2883,7 +2884,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByCompanyId(companyId);
 		}
 
@@ -2893,7 +2894,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3411,7 +3412,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByLocations(long companyId, int start,
 		int end, OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByLocations(companyId, start, end, orderByComparator);
 		}
 
@@ -3457,7 +3458,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3504,7 +3505,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		long organizationId, long companyId,
 		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByLocations_PrevAndNext(organizationId, companyId,
 				orderByComparator);
 		}
@@ -3639,7 +3640,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3749,7 +3750,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public int filterCountByLocations(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByLocations(companyId);
 		}
 
@@ -3759,7 +3760,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_LOCATIONS_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4319,7 +4320,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public List<Organization> filterFindByC_P(long companyId,
 		long parentOrganizationId, int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_P(companyId, parentOrganizationId, start, end,
 				orderByComparator);
 		}
@@ -4368,7 +4369,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4418,7 +4419,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		long companyId, long parentOrganizationId,
 		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_P_PrevAndNext(organizationId, companyId,
 				parentOrganizationId, orderByComparator);
 		}
@@ -4555,7 +4556,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4674,7 +4675,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public int filterCountByC_P(long companyId, long parentOrganizationId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_P(companyId, parentOrganizationId);
 		}
 
@@ -4686,7 +4687,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_C_P_PARENTORGANIZATIONID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -5255,7 +5256,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public List<Organization> filterFindByC_T(long companyId, String treePath,
 		int start, int end, OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_T(companyId, treePath, start, end, orderByComparator);
 		}
 
@@ -5315,7 +5316,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -5367,7 +5368,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		long companyId, String treePath,
 		OrderByComparator<Organization> orderByComparator)
 		throws NoSuchOrganizationException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_T_PrevAndNext(organizationId, companyId, treePath,
 				orderByComparator);
 		}
@@ -5516,7 +5517,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -5651,7 +5652,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public int filterCountByC_T(long companyId, String treePath) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_T(companyId, treePath);
 		}
 
@@ -5675,7 +5676,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			query.append(_FINDER_COLUMN_C_T_TREEPATH_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -6348,7 +6349,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public List<Organization> filterFindByO_C_P(long organizationId,
 		long companyId, long parentOrganizationId, int start, int end,
 		OrderByComparator<Organization> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByO_C_P(organizationId, companyId, parentOrganizationId,
 				start, end, orderByComparator);
 		}
@@ -6399,7 +6400,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -6527,7 +6528,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public int filterCountByO_C_P(long organizationId, long companyId,
 		long parentOrganizationId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByO_C_P(organizationId, companyId, parentOrganizationId);
 		}
 
@@ -6541,7 +6542,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		query.append(_FINDER_COLUMN_O_C_P_PARENTORGANIZATIONID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				Organization.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -8369,6 +8370,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	protected TableMapper<Organization, com.liferay.portal.kernel.model.Group> organizationToGroupTableMapper;

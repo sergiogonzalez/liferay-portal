@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2494,7 +2494,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByGroupId(long groupId, int start,
 		int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2540,7 +2540,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2586,7 +2586,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByGroupId_PrevAndNext(long id,
 		long groupId, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(id, groupId, orderByComparator);
 		}
 
@@ -2720,7 +2720,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2830,7 +2830,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2840,7 +2840,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7797,7 +7797,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByG_U(long groupId, long userId,
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U(groupId, userId, start, end, orderByComparator);
 		}
 
@@ -7845,7 +7845,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7894,7 +7894,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByG_U_PrevAndNext(long id, long groupId,
 		long userId, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_PrevAndNext(id, groupId, userId, orderByComparator);
 		}
 
@@ -8030,7 +8030,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8149,7 +8149,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_U(long groupId, long userId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U(groupId, userId);
 		}
 
@@ -8161,7 +8161,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_U_USERID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8721,7 +8721,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByG_F(long groupId, long folderId,
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_F(groupId, folderId, start, end, orderByComparator);
 		}
 
@@ -8769,7 +8769,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8818,7 +8818,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByG_F_PrevAndNext(long id, long groupId,
 		long folderId, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_F_PrevAndNext(id, groupId, folderId,
 				orderByComparator);
 		}
@@ -8955,7 +8955,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9044,7 +9044,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByG_F(long groupId, long[] folderIds,
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_F(groupId, folderIds, start, end, orderByComparator);
 		}
 
@@ -9106,7 +9106,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9496,7 +9496,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_F(long groupId, long folderId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_F(groupId, folderId);
 		}
 
@@ -9508,7 +9508,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_F_FOLDERID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9549,7 +9549,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_F(long groupId, long[] folderIds) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_F(groupId, folderIds);
 		}
 
@@ -9583,7 +9583,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10166,7 +10166,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByG_A(long groupId, String articleId,
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A(groupId, articleId, start, end, orderByComparator);
 		}
 
@@ -10226,7 +10226,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10277,7 +10277,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByG_A_PrevAndNext(long id, long groupId,
 		String articleId, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_PrevAndNext(id, groupId, articleId,
 				orderByComparator);
 		}
@@ -10426,7 +10426,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10561,7 +10561,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_A(long groupId, String articleId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_A(groupId, articleId);
 		}
 
@@ -10585,7 +10585,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_A_ARTICLEID_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11174,7 +11174,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByG_UT(long groupId, String urlTitle,
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_UT(groupId, urlTitle, start, end, orderByComparator);
 		}
 
@@ -11234,7 +11234,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11285,7 +11285,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByG_UT_PrevAndNext(long id, long groupId,
 		String urlTitle, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_UT_PrevAndNext(id, groupId, urlTitle,
 				orderByComparator);
 		}
@@ -11434,7 +11434,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11569,7 +11569,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_UT(long groupId, String urlTitle) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_UT(groupId, urlTitle);
 		}
 
@@ -11593,7 +11593,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_UT_URLTITLE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12193,7 +12193,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_DDMSK(long groupId,
 		String DDMStructureKey, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_DDMSK(groupId, DDMStructureKey, start, end,
 				orderByComparator);
 		}
@@ -12254,7 +12254,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12306,7 +12306,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, String DDMStructureKey,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_DDMSK_PrevAndNext(id, groupId, DDMStructureKey,
 				orderByComparator);
 		}
@@ -12455,7 +12455,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12590,7 +12590,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_DDMSK(long groupId, String DDMStructureKey) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_DDMSK(groupId, DDMStructureKey);
 		}
 
@@ -12614,7 +12614,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_DDMSK_DDMSTRUCTUREKEY_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13214,7 +13214,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_DDMTK(long groupId,
 		String DDMTemplateKey, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_DDMTK(groupId, DDMTemplateKey, start, end,
 				orderByComparator);
 		}
@@ -13275,7 +13275,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13327,7 +13327,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, String DDMTemplateKey,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_DDMTK_PrevAndNext(id, groupId, DDMTemplateKey,
 				orderByComparator);
 		}
@@ -13476,7 +13476,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13611,7 +13611,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_DDMTK(long groupId, String DDMTemplateKey) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_DDMTK(groupId, DDMTemplateKey);
 		}
 
@@ -13635,7 +13635,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_DDMTK_DDMTEMPLATEKEY_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14226,7 +14226,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_L(long groupId,
 		String layoutUuid, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_L(groupId, layoutUuid, start, end, orderByComparator);
 		}
 
@@ -14286,7 +14286,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14337,7 +14337,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByG_L_PrevAndNext(long id, long groupId,
 		String layoutUuid, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_L_PrevAndNext(id, groupId, layoutUuid,
 				orderByComparator);
 		}
@@ -14486,7 +14486,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14621,7 +14621,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_L(long groupId, String layoutUuid) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_L(groupId, layoutUuid);
 		}
 
@@ -14645,7 +14645,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_L_LAYOUTUUID_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15220,7 +15220,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_NotL(long groupId,
 		String layoutUuid, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotL(groupId, layoutUuid, start, end,
 				orderByComparator);
 		}
@@ -15281,7 +15281,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15333,7 +15333,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, String layoutUuid,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotL_PrevAndNext(id, groupId, layoutUuid,
 				orderByComparator);
 		}
@@ -15482,7 +15482,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15575,7 +15575,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_NotL(long groupId,
 		String[] layoutUuids, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotL(groupId, layoutUuids, start, end,
 				orderByComparator);
 		}
@@ -15651,7 +15651,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16103,7 +16103,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_NotL(long groupId, String layoutUuid) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_NotL(groupId, layoutUuid);
 		}
 
@@ -16127,7 +16127,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_NOTL_LAYOUTUUID_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16170,7 +16170,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_NotL(long groupId, String[] layoutUuids) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_NotL(groupId, layoutUuids);
 		}
 
@@ -16217,7 +16217,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16778,7 +16778,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public List<JournalArticle> filterFindByG_ST(long groupId, int status,
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_ST(groupId, status, start, end, orderByComparator);
 		}
 
@@ -16826,7 +16826,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16875,7 +16875,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle[] filterFindByG_ST_PrevAndNext(long id, long groupId,
 		int status, OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_ST_PrevAndNext(id, groupId, status, orderByComparator);
 		}
 
@@ -17011,7 +17011,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17130,7 +17130,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_ST(long groupId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_ST(groupId, status);
 		}
 
@@ -17142,7 +17142,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_ST_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21421,7 +21421,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_U_C(long groupId, long userId,
 		long classNameId, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_C(groupId, userId, classNameId, start, end,
 				orderByComparator);
 		}
@@ -21472,7 +21472,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21525,7 +21525,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, long userId, long classNameId,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_C_PrevAndNext(id, groupId, userId, classNameId,
 				orderByComparator);
 		}
@@ -21665,7 +21665,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21793,7 +21793,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_U_C(long groupId, long userId, long classNameId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_C(groupId, userId, classNameId);
 		}
 
@@ -21807,7 +21807,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_U_C_CLASSNAMEID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -22415,7 +22415,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_F_ST(long groupId, long folderId,
 		int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_F_ST(groupId, folderId, status, start, end,
 				orderByComparator);
 		}
@@ -22466,7 +22466,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -22519,7 +22519,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, long folderId, int status,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_F_ST_PrevAndNext(id, groupId, folderId, status,
 				orderByComparator);
 		}
@@ -22658,7 +22658,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -22754,7 +22754,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_F_ST(long groupId, long folderId,
 		int[] statuses, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_F_ST(groupId, folderId, statuses, start, end,
 				orderByComparator);
 		}
@@ -22819,7 +22819,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23239,7 +23239,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_F_ST(long groupId, long folderId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_F_ST(groupId, folderId, status);
 		}
 
@@ -23253,7 +23253,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_F_ST_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23297,7 +23297,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_F_ST(long groupId, long folderId, int[] statuses) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_F_ST(groupId, folderId, statuses);
 		}
 
@@ -23333,7 +23333,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23930,7 +23930,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_C_C(long groupId,
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_C(groupId, classNameId, classPK, start, end,
 				orderByComparator);
 		}
@@ -23981,7 +23981,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -24034,7 +24034,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_C_PrevAndNext(id, groupId, classNameId, classPK,
 				orderByComparator);
 		}
@@ -24174,7 +24174,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -24302,7 +24302,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_C_C(long groupId, long classNameId, long classPK) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_C(groupId, classNameId, classPK);
 		}
 
@@ -24316,7 +24316,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -25246,7 +25246,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_C_DDMTK(long groupId,
 		long classNameId, String DDMTemplateKey, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_DDMTK(groupId, classNameId, DDMTemplateKey, start,
 				end, orderByComparator);
 		}
@@ -25309,7 +25309,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -25364,7 +25364,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, long classNameId, String DDMTemplateKey,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_DDMTK_PrevAndNext(id, groupId, classNameId,
 				DDMTemplateKey, orderByComparator);
 		}
@@ -25518,7 +25518,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -25666,7 +25666,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int filterCountByG_C_DDMTK(long groupId, long classNameId,
 		String DDMTemplateKey) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_DDMTK(groupId, classNameId, DDMTemplateKey);
 		}
 
@@ -25692,7 +25692,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_C_DDMTK_DDMTEMPLATEKEY_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -26327,7 +26327,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_C_L(long groupId,
 		long classNameId, String layoutUuid, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_L(groupId, classNameId, layoutUuid, start, end,
 				orderByComparator);
 		}
@@ -26390,7 +26390,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -26445,7 +26445,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, long classNameId, String layoutUuid,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_L_PrevAndNext(id, groupId, classNameId,
 				layoutUuid, orderByComparator);
 		}
@@ -26597,7 +26597,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -26742,7 +26742,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int filterCountByG_C_L(long groupId, long classNameId,
 		String layoutUuid) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_L(groupId, classNameId, layoutUuid);
 		}
 
@@ -26768,7 +26768,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_C_L_LAYOUTUUID_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -27682,7 +27682,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_A_ST(long groupId,
 		String articleId, int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_ST(groupId, articleId, status, start, end,
 				orderByComparator);
 		}
@@ -27745,7 +27745,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -27800,7 +27800,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, String articleId, int status,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_ST_PrevAndNext(id, groupId, articleId, status,
 				orderByComparator);
 		}
@@ -27952,7 +27952,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -28050,7 +28050,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_A_ST(long groupId,
 		String articleId, int[] statuses, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_ST(groupId, articleId, statuses, start, end,
 				orderByComparator);
 		}
@@ -28127,7 +28127,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -28592,7 +28592,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_A_ST(long groupId, String articleId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_A_ST(groupId, articleId, status);
 		}
 
@@ -28618,7 +28618,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_A_ST_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -28665,7 +28665,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int filterCountByG_A_ST(long groupId, String articleId,
 		int[] statuses) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_A_ST(groupId, articleId, statuses);
 		}
 
@@ -28713,7 +28713,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29329,7 +29329,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_A_NotST(long groupId,
 		String articleId, int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_NotST(groupId, articleId, status, start, end,
 				orderByComparator);
 		}
@@ -29392,7 +29392,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29447,7 +29447,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, String articleId, int status,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_A_NotST_PrevAndNext(id, groupId, articleId, status,
 				orderByComparator);
 		}
@@ -29601,7 +29601,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29745,7 +29745,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_A_NotST(long groupId, String articleId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_A_NotST(groupId, articleId, status);
 		}
 
@@ -29771,7 +29771,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_A_NOTST_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -30406,7 +30406,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> filterFindByG_UT_ST(long groupId,
 		String urlTitle, int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_UT_ST(groupId, urlTitle, status, start, end,
 				orderByComparator);
 		}
@@ -30469,7 +30469,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -30524,7 +30524,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		long groupId, String urlTitle, int status,
 		OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_UT_ST_PrevAndNext(id, groupId, urlTitle, status,
 				orderByComparator);
 		}
@@ -30676,7 +30676,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -30820,7 +30820,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public int filterCountByG_UT_ST(long groupId, String urlTitle, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_UT_ST(groupId, urlTitle, status);
 		}
 
@@ -30846,7 +30846,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_UT_ST_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				JournalArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -33893,6 +33893,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 
 	private Long _getTime(Date date) {
 		if (date == null) {
