@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1077,6 +1078,8 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_HTMLPREVIEWENTRY = "SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry";
 	private static final String _SQL_SELECT_HTMLPREVIEWENTRY_WHERE_PKS_IN = "SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry WHERE htmlPreviewEntryId IN (";
 	private static final String _SQL_SELECT_HTMLPREVIEWENTRY_WHERE = "SELECT htmlPreviewEntry FROM HtmlPreviewEntry htmlPreviewEntry WHERE ";

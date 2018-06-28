@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -3790,6 +3791,8 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_KALEOTASKFORMINSTANCE = "SELECT kaleoTaskFormInstance FROM KaleoTaskFormInstance kaleoTaskFormInstance";
 	private static final String _SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE_PKS_IN = "SELECT kaleoTaskFormInstance FROM KaleoTaskFormInstance kaleoTaskFormInstance WHERE kaleoTaskFormInstanceId IN (";
 	private static final String _SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE = "SELECT kaleoTaskFormInstance FROM KaleoTaskFormInstance kaleoTaskFormInstance WHERE ";

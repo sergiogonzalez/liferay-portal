@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1970,6 +1971,8 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_PUSHNOTIFICATIONSDEVICE = "SELECT pushNotificationsDevice FROM PushNotificationsDevice pushNotificationsDevice";
 	private static final String _SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE_PKS_IN =
 		"SELECT pushNotificationsDevice FROM PushNotificationsDevice pushNotificationsDevice WHERE pushNotificationsDeviceId IN (";

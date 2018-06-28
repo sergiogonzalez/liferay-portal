@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.exception.NoSuchRecentLayoutBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RecentLayoutBranch;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence;
@@ -2652,6 +2654,7 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_RECENTLAYOUTBRANCH = "SELECT recentLayoutBranch FROM RecentLayoutBranch recentLayoutBranch";
 	private static final String _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE_PKS_IN = "SELECT recentLayoutBranch FROM RecentLayoutBranch recentLayoutBranch WHERE recentLayoutBranchId IN (";
 	private static final String _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE = "SELECT recentLayoutBranch FROM RecentLayoutBranch recentLayoutBranch WHERE ";
