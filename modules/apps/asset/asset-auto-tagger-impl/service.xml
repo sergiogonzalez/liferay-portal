@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="AssetAutoTaggerEntryId" primary="true" type="long" />
+		<column name="assetAutoTaggerEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
