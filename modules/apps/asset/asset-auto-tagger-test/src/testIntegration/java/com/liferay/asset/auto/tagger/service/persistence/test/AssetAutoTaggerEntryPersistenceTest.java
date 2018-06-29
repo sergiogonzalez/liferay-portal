@@ -222,7 +222,7 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 	protected OrderByComparator<AssetAutoTaggerEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetAutoTaggerEntry",
-			"uuid", true, "AssetAutoTaggerEntryId", true, "groupId", true,
+			"uuid", true, "assetAutoTaggerEntryId", true, "groupId", true,
 			"companyId", true, "createDate", true, "modifiedDate", true,
 			"assetEntryId", true, "assetTagId", true);
 	}
@@ -357,7 +357,7 @@ public class AssetAutoTaggerEntryPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetAutoTaggerEntry.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("AssetAutoTaggerEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("assetAutoTaggerEntryId",
 				newAssetAutoTaggerEntry.getAssetAutoTaggerEntryId()));
 
 		List<AssetAutoTaggerEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -375,7 +375,7 @@ public class AssetAutoTaggerEntryPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetAutoTaggerEntry.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("AssetAutoTaggerEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("assetAutoTaggerEntryId",
 				RandomTestUtil.nextLong()));
 
 		List<AssetAutoTaggerEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -392,11 +392,11 @@ public class AssetAutoTaggerEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"AssetAutoTaggerEntryId"));
+				"assetAutoTaggerEntryId"));
 
 		Object newAssetAutoTaggerEntryId = newAssetAutoTaggerEntry.getAssetAutoTaggerEntryId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("AssetAutoTaggerEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("assetAutoTaggerEntryId",
 				new Object[] { newAssetAutoTaggerEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -415,9 +415,9 @@ public class AssetAutoTaggerEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"AssetAutoTaggerEntryId"));
+				"assetAutoTaggerEntryId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("AssetAutoTaggerEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("assetAutoTaggerEntryId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

@@ -55,6 +55,17 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link AssetAutoTaggerEntryLocalServiceUtil} to access the asset auto tagger entry local service.
+	*/
+	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry addAssetAutoTaggerEntry(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry,
+		com.liferay.asset.kernel.model.AssetTag assetTag) {
+		return getService().addAssetAutoTaggerEntry(assetEntry, assetTag);
+	}
+
+	/**
 	* Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	*
 	* @param assetAutoTaggerEntryId the primary key for the new asset auto tagger entry
