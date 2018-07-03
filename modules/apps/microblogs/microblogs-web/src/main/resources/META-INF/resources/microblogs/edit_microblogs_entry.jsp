@@ -68,7 +68,6 @@ else if (comment) {
 	formId = "Comment" + formId;
 }
 
-
 String formName = "fm" + formId;
 
 String formCssClass = "microblogs-entry-form";
