@@ -29,14 +29,19 @@ import java.io.File;
  */
 public class DLAppUtil {
 
-	public static String getExtension(String title, String sourceFileName) {
+	public static String getExtension(String sourceFileName) {
 		String extension = FileUtil.getExtension(sourceFileName);
 
-		if (Validator.isNull(extension)) {
-			extension = FileUtil.getExtension(title);
-		}
-
 		return extension;
+	}
+
+	/**
+	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 *             #getExtension(String)}
+	 */
+	@Deprecated
+	public static String getExtension(String title, String sourceFileName) {
+		return getExtension(sourceFileName);
 	}
 
 	public static String getMimeType(
