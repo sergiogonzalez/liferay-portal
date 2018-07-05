@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -372,8 +372,8 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			parentFolder.getFolderId(), sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, StringPool.BLANK, StringPool.BLANK,
+			parentFolder.getFolderId(), sourceFileName, "", title,
+			StringPool.BLANK, StringPool.BLANK,
 			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 	}
@@ -387,8 +387,8 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		DLAppServiceUtil.updateFileEntry(
-			fileEntry.getFileEntryId(), sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, StringPool.BLANK, StringPool.BLANK, false,
+			fileEntry.getFileEntryId(), sourceFileName, "", title,
+			StringPool.BLANK, StringPool.BLANK, false,
 			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 	}
@@ -400,12 +400,19 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = addFileEntry(sourceFileName, title);
 
-		Assert.assertEquals(
-			"Invalid file extension", extension, fileEntry.getExtension());
+		if (DLAppUtil.getExtension(sourceFileName).equals("") &&
+			!extension.equals("")) {
+
+			Assert.assertEquals(
+				"Invalid file extension", "", fileEntry.getExtension());
+		}
+		else {
+			Assert.assertEquals(
+				"Invalid file extension", extension, fileEntry.getExtension());
+		}
 
 		Assert.assertEquals(
 			titleWithExtension, DLUtil.getTitleWithExtension(fileEntry));
-
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
