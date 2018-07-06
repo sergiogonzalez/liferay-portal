@@ -46,6 +46,7 @@ request.setAttribute("view.jsp-displayStyle", displayStyle);
 
 <portlet:actionURL name="/document_library/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
 <liferay-trash:undo
