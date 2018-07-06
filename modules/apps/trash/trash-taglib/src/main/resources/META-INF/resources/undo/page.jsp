@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<String> classNames = (List<String>)request.getAttribute("liferay-trash:undo:classNames");
 String cmd = (String)request.getAttribute("liferay-trash:undo:cmd");
 String portletURL = (String)request.getAttribute("liferay-trash:undo:portletURL");
 List<Long> restoreTrashEntryIds = (List<Long>)request.getAttribute("liferay-trash:undo:restoreTrashEntryIds");
@@ -61,16 +60,6 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 			<c:otherwise>
 
 				<%
-				String className = null;
-
-				String type = "selected-item";
-
-				if (ListUtil.isNotEmpty(classNames)) {
-					className = classNames.get(0);
-
-					type = ResourceActionsUtil.getModelResource(request, className);
-				}
-
 				String title = StringPool.BLANK;
 
 				if (ListUtil.isNotEmpty(titles)) {
