@@ -673,7 +673,7 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
 	String, long, int)}
 	*/
 	@Deprecated
@@ -684,7 +684,7 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link #getRootDiscussionMessages(
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getRootDiscussionMessages(
 	String, long, int, int, int)}
 	*/
 	@Deprecated
@@ -696,7 +696,7 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link
+	* @deprecated As of Judson (7.1.x), replaced by {@link
 	#getRootDiscussionMessagesCount(String, long, int)}
 	*/
 	@Deprecated
