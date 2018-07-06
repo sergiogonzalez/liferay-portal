@@ -1187,15 +1187,10 @@ public class WebServerServlet extends HttpServlet {
 		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 			groupId, folderId, title);
 
-		String contentType = fileEntry.getMimeType();
-
-		response.setContentType(contentType);
-
-		InputStream inputStream = fileEntry.getContentStream();
-
 		ServletResponseUtil.sendFile(
-			null, response, title, inputStream, fileEntry.getSize(),
-			contentType, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+			null, response, title, fileEntry.getContentStream(),
+			fileEntry.getSize(), fileEntry.getMimeType(),
+			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 	}
 
 	protected void sendGroups(
