@@ -90,7 +90,14 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 	}
 
 	<c:if test="<%= thread.getRootMessageId() != message.getMessageId() %>">
-		document.getElementById('<portlet:namespace />message_' + <%= message.getMessageId() %>).scrollIntoView(true);
+		var submessageIdNode = document.getElementById('<portlet:namespace />message_' + <%= message.getMessageId() %>);
+
+		if (<%= BrowserSnifferUtil.isIe(request) %>) {
+			window.scrollBy(0, submessageIdNode.offsetTop);
+		}
+		else {
+			submessageIdNode.scrollIntoView(true);
+		}
 	</c:if>
 </aui:script>
 
