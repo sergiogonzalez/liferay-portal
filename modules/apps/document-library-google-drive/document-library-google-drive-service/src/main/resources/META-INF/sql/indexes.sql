@@ -1,0 +1,1 @@
+create index IX_BF9F341E on GoogleDriveEntry (groupId, fileEntryId);
