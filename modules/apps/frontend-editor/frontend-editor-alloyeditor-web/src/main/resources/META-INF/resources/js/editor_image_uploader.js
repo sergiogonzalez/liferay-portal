@@ -206,6 +206,8 @@ AUI.add(
 
 								imageContainer.remove();
 
+								image._node.outerHTML += '<br><br>';
+
 								editor.fire(
 									'imageUploaded',
 									{
