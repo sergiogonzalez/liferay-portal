@@ -15,37 +15,36 @@
 package com.liferay.document.library.google.drive.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.google.drive.model.GoogleDriveEntry;
 import com.liferay.document.library.google.drive.service.GoogleDriveEntryLocalService;
 import com.liferay.document.library.google.drive.uad.test.GoogleDriveEntryUADTestHelper;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class GoogleDriveEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<GoogleDriveEntry> {
+public class GoogleDriveEntryUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<GoogleDriveEntry> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -53,15 +52,17 @@ public class GoogleDriveEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 	}
 
 	@Override
-	protected GoogleDriveEntry addBaseModel(long userId)
-		throws Exception {
+	protected GoogleDriveEntry addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected GoogleDriveEntry addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
-		GoogleDriveEntry googleDriveEntry = _googleDriveEntryUADTestHelper.addGoogleDriveEntry(userId);
+	protected GoogleDriveEntry addBaseModel(
+			long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
+		GoogleDriveEntry googleDriveEntry =
+			_googleDriveEntryUADTestHelper.addGoogleDriveEntry(userId);
 
 		if (deleteAfterTestRun) {
 			_googleDriveEntries.add(googleDriveEntry);
@@ -73,6 +74,7 @@ public class GoogleDriveEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 	@Override
 	protected void deleteBaseModels(List<GoogleDriveEntry> baseModels)
 		throws Exception {
+
 		_googleDriveEntryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -84,12 +86,15 @@ public class GoogleDriveEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		GoogleDriveEntry googleDriveEntry = _googleDriveEntryLocalService.getGoogleDriveEntry(baseModelPK);
+
+		GoogleDriveEntry googleDriveEntry =
+			_googleDriveEntryLocalService.getGoogleDriveEntry(baseModelPK);
 
 		String userName = googleDriveEntry.getUserName();
 
 		if ((googleDriveEntry.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -98,7 +103,9 @@ public class GoogleDriveEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_googleDriveEntryLocalService.fetchGoogleDriveEntry(baseModelPK) == null) {
+		if (_googleDriveEntryLocalService.fetchGoogleDriveEntry(baseModelPK) ==
+				null) {
+
 			return true;
 		}
 
@@ -106,11 +113,16 @@ public class GoogleDriveEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase
 	}
 
 	@DeleteAfterTestRun
-	private final List<GoogleDriveEntry> _googleDriveEntries = new ArrayList<GoogleDriveEntry>();
+	private final List<GoogleDriveEntry> _googleDriveEntries =
+		new ArrayList<>();
+
 	@Inject
 	private GoogleDriveEntryLocalService _googleDriveEntryLocalService;
+
 	@Inject
 	private GoogleDriveEntryUADTestHelper _googleDriveEntryUADTestHelper;
+
 	@Inject(filter = "component.name=*.GoogleDriveEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

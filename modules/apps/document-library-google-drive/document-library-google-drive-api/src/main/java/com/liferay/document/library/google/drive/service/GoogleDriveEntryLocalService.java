@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +62,8 @@ public interface GoogleDriveEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link GoogleDriveEntryLocalServiceUtil} to access the google drive entry local service. Add custom service methods to {@link com.liferay.document.library.google.drive.service.impl.GoogleDriveEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public GoogleDriveEntry addEntry(FileEntry fileEntry, String googleDriveId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the google drive entry to the database. Also notifies the appropriate model listeners.
@@ -79,6 +83,8 @@ public interface GoogleDriveEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(enabled = false)
 	public GoogleDriveEntry createGoogleDriveEntry(long entryId);
+
+	public void deleteEntry(FileEntry fileEntry) throws PortalException;
 
 	/**
 	* Deletes the google drive entry from the database. Also notifies the appropriate model listeners.
@@ -168,10 +174,17 @@ public interface GoogleDriveEntryLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GoogleDriveEntry fetchEntry(FileEntry fileEntry);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GoogleDriveEntry fetchGoogleDriveEntry(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GoogleDriveEntry getEntry(FileEntry fileEntry)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the google drive entries.

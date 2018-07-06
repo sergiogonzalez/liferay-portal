@@ -22,5 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UADExporter.class)
-public class GoogleDriveEntryUADExporter extends BaseGoogleDriveEntryUADExporter {
+public class GoogleDriveEntryUADExporter
+	extends BaseGoogleDriveEntryUADExporter {
 }

@@ -34,6 +34,16 @@ public class GoogleDriveEntryLocalServiceWrapper
 		_googleDriveEntryLocalService = googleDriveEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.document.library.google.drive.model.GoogleDriveEntry addEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		String googleDriveId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _googleDriveEntryLocalService.addEntry(fileEntry, googleDriveId,
+			serviceContext);
+	}
+
 	/**
 	* Adds the google drive entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -56,6 +66,13 @@ public class GoogleDriveEntryLocalServiceWrapper
 	public com.liferay.document.library.google.drive.model.GoogleDriveEntry createGoogleDriveEntry(
 		long entryId) {
 		return _googleDriveEntryLocalService.createGoogleDriveEntry(entryId);
+	}
+
+	@Override
+	public void deleteEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_googleDriveEntryLocalService.deleteEntry(fileEntry);
 	}
 
 	/**
@@ -181,6 +198,12 @@ public class GoogleDriveEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.document.library.google.drive.model.GoogleDriveEntry fetchEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
+		return _googleDriveEntryLocalService.fetchEntry(fileEntry);
+	}
+
+	@Override
 	public com.liferay.document.library.google.drive.model.GoogleDriveEntry fetchGoogleDriveEntry(
 		long entryId) {
 		return _googleDriveEntryLocalService.fetchGoogleDriveEntry(entryId);
@@ -189,6 +212,13 @@ public class GoogleDriveEntryLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _googleDriveEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.document.library.google.drive.model.GoogleDriveEntry getEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _googleDriveEntryLocalService.getEntry(fileEntry);
 	}
 
 	/**

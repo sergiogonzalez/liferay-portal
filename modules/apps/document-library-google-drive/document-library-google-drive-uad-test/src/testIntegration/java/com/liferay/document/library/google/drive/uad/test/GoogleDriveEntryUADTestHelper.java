@@ -16,17 +16,18 @@ package com.liferay.document.library.google.drive.uad.test;
 
 import com.liferay.document.library.google.drive.model.GoogleDriveEntry;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = GoogleDriveEntryUADTestHelper.class)
 public class GoogleDriveEntryUADTestHelper {
+
 	/**
 	 * Implement addGoogleDriveEntry() to enable some UAD tests.
 	 *
@@ -34,8 +35,7 @@ public class GoogleDriveEntryUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid GoogleDriveEntries with a specified user ID in order to execute correctly. Implement addGoogleDriveEntry() such that it creates a valid GoogleDriveEntry with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
 	 */
-	public GoogleDriveEntry addGoogleDriveEntry(long userId)
-		throws Exception {
+	public GoogleDriveEntry addGoogleDriveEntry(long userId) throws Exception {
 		Assume.assumeTrue(false);
 
 		return null;
@@ -51,4 +51,5 @@ public class GoogleDriveEntryUADTestHelper {
 	public void cleanUpDependencies(List<GoogleDriveEntry> googleDriveEntries)
 		throws Exception {
 	}
+
 }

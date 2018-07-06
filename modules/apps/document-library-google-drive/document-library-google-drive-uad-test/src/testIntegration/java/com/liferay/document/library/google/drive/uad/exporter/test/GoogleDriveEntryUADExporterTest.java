@@ -15,35 +15,34 @@
 package com.liferay.document.library.google.drive.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.google.drive.model.GoogleDriveEntry;
 import com.liferay.document.library.google.drive.uad.test.GoogleDriveEntryUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class GoogleDriveEntryUADExporterTest extends BaseUADExporterTestCase<GoogleDriveEntry> {
+public class GoogleDriveEntryUADExporterTest
+	extends BaseUADExporterTestCase<GoogleDriveEntry> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -51,9 +50,9 @@ public class GoogleDriveEntryUADExporterTest extends BaseUADExporterTestCase<Goo
 	}
 
 	@Override
-	protected GoogleDriveEntry addBaseModel(long userId)
-		throws Exception {
-		GoogleDriveEntry googleDriveEntry = _googleDriveEntryUADTestHelper.addGoogleDriveEntry(userId);
+	protected GoogleDriveEntry addBaseModel(long userId) throws Exception {
+		GoogleDriveEntry googleDriveEntry =
+			_googleDriveEntryUADTestHelper.addGoogleDriveEntry(userId);
 
 		_googleDriveEntries.add(googleDriveEntry);
 
@@ -71,9 +70,13 @@ public class GoogleDriveEntryUADExporterTest extends BaseUADExporterTestCase<Goo
 	}
 
 	@DeleteAfterTestRun
-	private final List<GoogleDriveEntry> _googleDriveEntries = new ArrayList<GoogleDriveEntry>();
+	private final List<GoogleDriveEntry> _googleDriveEntries =
+		new ArrayList<>();
+
 	@Inject
 	private GoogleDriveEntryUADTestHelper _googleDriveEntryUADTestHelper;
+
 	@Inject(filter = "component.name=*.GoogleDriveEntryUADExporter")
 	private UADExporter _uadExporter;
+
 }

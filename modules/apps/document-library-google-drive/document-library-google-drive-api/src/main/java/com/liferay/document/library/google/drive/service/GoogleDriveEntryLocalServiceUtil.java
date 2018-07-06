@@ -42,6 +42,13 @@ public class GoogleDriveEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.document.library.google.drive.service.impl.GoogleDriveEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.document.library.google.drive.model.GoogleDriveEntry addEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		String googleDriveId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addEntry(fileEntry, googleDriveId, serviceContext);
+	}
 
 	/**
 	* Adds the google drive entry to the database. Also notifies the appropriate model listeners.
@@ -63,6 +70,12 @@ public class GoogleDriveEntryLocalServiceUtil {
 	public static com.liferay.document.library.google.drive.model.GoogleDriveEntry createGoogleDriveEntry(
 		long entryId) {
 		return getService().createGoogleDriveEntry(entryId);
+	}
+
+	public static void deleteEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntry(fileEntry);
 	}
 
 	/**
@@ -176,6 +189,11 @@ public class GoogleDriveEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.document.library.google.drive.model.GoogleDriveEntry fetchEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
+		return getService().fetchEntry(fileEntry);
+	}
+
 	public static com.liferay.document.library.google.drive.model.GoogleDriveEntry fetchGoogleDriveEntry(
 		long entryId) {
 		return getService().fetchGoogleDriveEntry(entryId);
@@ -183,6 +201,12 @@ public class GoogleDriveEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.document.library.google.drive.model.GoogleDriveEntry getEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(fileEntry);
 	}
 
 	/**
