@@ -199,6 +199,10 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		AssetEntry assetEntry);
+
 	/**
 	* Returns a range of all the asset auto tagger entries.
 	*
