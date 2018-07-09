@@ -203,6 +203,10 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
 		AssetEntry assetEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		AssetTag assetTag);
+
 	/**
 	* Returns a range of all the asset auto tagger entries.
 	*

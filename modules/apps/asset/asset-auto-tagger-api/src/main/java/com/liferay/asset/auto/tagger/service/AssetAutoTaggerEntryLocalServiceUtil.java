@@ -214,6 +214,11 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		return getService().getAssetAutoTaggerEntries(assetEntry);
 	}
 
+	public static java.util.List<com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry> getAssetAutoTaggerEntries(
+		com.liferay.asset.kernel.model.AssetTag assetTag) {
+		return getService().getAssetAutoTaggerEntries(assetTag);
+	}
+
 	/**
 	* Returns a range of all the asset auto tagger entries.
 	*

@@ -197,6 +197,13 @@ public class AssetAutoTaggerEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAssetTagId() throws Exception {
+		_persistence.countByAssetTagId(RandomTestUtil.nextLong());
+
+		_persistence.countByAssetTagId(0L);
+	}
+
+	@Test
 	public void testCountByA_A() throws Exception {
 		_persistence.countByA_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
