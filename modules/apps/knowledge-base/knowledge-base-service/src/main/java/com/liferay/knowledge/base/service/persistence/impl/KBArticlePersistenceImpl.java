@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2515,7 +2515,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public List<KBArticle> filterFindByR_G(long resourcePrimKey, long groupId,
 		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G(resourcePrimKey, groupId, start, end,
 				orderByComparator);
 		}
@@ -2564,7 +2564,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2613,7 +2613,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long resourcePrimKey, long groupId,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_PrevAndNext(kbArticleId, resourcePrimKey, groupId,
 				orderByComparator);
 		}
@@ -2750,7 +2750,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2869,7 +2869,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByR_G(long resourcePrimKey, long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G(resourcePrimKey, groupId);
 		}
 
@@ -2881,7 +2881,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_R_G_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -6149,7 +6149,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public List<KBArticle> filterFindByG_L(long groupId, boolean latest,
 		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_L(groupId, latest, start, end, orderByComparator);
 		}
 
@@ -6197,7 +6197,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -6246,7 +6246,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_L_PrevAndNext(kbArticleId, groupId, latest,
 				orderByComparator);
 		}
@@ -6383,7 +6383,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -6502,7 +6502,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_L(long groupId, boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_L(groupId, latest);
 		}
 
@@ -6514,7 +6514,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_L_LATEST_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7063,7 +7063,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public List<KBArticle> filterFindByG_M(long groupId, boolean main,
 		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_M(groupId, main, start, end, orderByComparator);
 		}
 
@@ -7111,7 +7111,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7160,7 +7160,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, boolean main,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_M_PrevAndNext(kbArticleId, groupId, main,
 				orderByComparator);
 		}
@@ -7297,7 +7297,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7416,7 +7416,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_M(long groupId, boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_M(groupId, main);
 		}
 
@@ -7428,7 +7428,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_M_MAIN_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7979,7 +7979,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public List<KBArticle> filterFindByG_S(long groupId, int status, int start,
 		int end, OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S(groupId, status, start, end, orderByComparator);
 		}
 
@@ -8027,7 +8027,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8075,7 +8075,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public KBArticle[] filterFindByG_S_PrevAndNext(long kbArticleId,
 		long groupId, int status, OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_PrevAndNext(kbArticleId, groupId, status,
 				orderByComparator);
 		}
@@ -8212,7 +8212,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8331,7 +8331,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_S(long groupId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S(groupId, status);
 		}
 
@@ -8343,7 +8343,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13323,7 +13323,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
 		long groupId, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_L(resourcePrimKey, groupId, latest, start, end,
 				orderByComparator);
 		}
@@ -13374,7 +13374,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13426,7 +13426,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long resourcePrimKey, long groupId, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_L_PrevAndNext(kbArticleId, resourcePrimKey,
 				groupId, latest, orderByComparator);
 		}
@@ -13566,7 +13566,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13663,7 +13663,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
 		long groupId, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_L(resourcePrimKeies, groupId, latest, start, end,
 				orderByComparator);
 		}
@@ -13730,7 +13730,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14155,7 +14155,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByR_G_L(long resourcePrimKey, long groupId,
 		boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G_L(resourcePrimKey, groupId, latest);
 		}
 
@@ -14169,7 +14169,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_R_G_L_LATEST_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14214,7 +14214,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByR_G_L(long[] resourcePrimKeies, long groupId,
 		boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G_L(resourcePrimKeies, groupId, latest);
 		}
 
@@ -14252,7 +14252,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14856,7 +14856,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
 		long groupId, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_M(resourcePrimKey, groupId, main, start, end,
 				orderByComparator);
 		}
@@ -14907,7 +14907,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -14959,7 +14959,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long resourcePrimKey, long groupId, boolean main,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_M_PrevAndNext(kbArticleId, resourcePrimKey,
 				groupId, main, orderByComparator);
 		}
@@ -15098,7 +15098,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15195,7 +15195,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
 		long groupId, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_M(resourcePrimKeies, groupId, main, start, end,
 				orderByComparator);
 		}
@@ -15262,7 +15262,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15686,7 +15686,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByR_G_M(long resourcePrimKey, long groupId,
 		boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G_M(resourcePrimKey, groupId, main);
 		}
 
@@ -15700,7 +15700,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_R_G_M_MAIN_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15745,7 +15745,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByR_G_M(long[] resourcePrimKeies, long groupId,
 		boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G_M(resourcePrimKeies, groupId, main);
 		}
 
@@ -15783,7 +15783,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16387,7 +16387,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
 		long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_S(resourcePrimKey, groupId, status, start, end,
 				orderByComparator);
 		}
@@ -16438,7 +16438,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16490,7 +16490,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long resourcePrimKey, long groupId, int status,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_S_PrevAndNext(kbArticleId, resourcePrimKey,
 				groupId, status, orderByComparator);
 		}
@@ -16629,7 +16629,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16726,7 +16726,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
 		long groupId, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByR_G_S(resourcePrimKeies, groupId, status, start, end,
 				orderByComparator);
 		}
@@ -16793,7 +16793,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17216,7 +17216,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByR_G_S(long resourcePrimKey, long groupId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G_S(resourcePrimKey, groupId, status);
 		}
 
@@ -17230,7 +17230,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_R_G_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17275,7 +17275,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByR_G_S(long[] resourcePrimKeies, long groupId,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByR_G_S(resourcePrimKeies, groupId, status);
 		}
 
@@ -17313,7 +17313,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17922,7 +17922,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_P_L(long groupId,
 		long parentResourcePrimKey, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_L(groupId, parentResourcePrimKey, latest, start,
 				end, orderByComparator);
 		}
@@ -17973,7 +17973,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -18025,7 +18025,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long parentResourcePrimKey, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_L_PrevAndNext(kbArticleId, groupId,
 				parentResourcePrimKey, latest, orderByComparator);
 		}
@@ -18167,7 +18167,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -18264,7 +18264,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_P_L(long groupId,
 		long[] parentResourcePrimKeies, boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_L(groupId, parentResourcePrimKeies, latest, start,
 				end, orderByComparator);
 		}
@@ -18331,7 +18331,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -18761,7 +18761,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_P_L(long groupId, long parentResourcePrimKey,
 		boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_L(groupId, parentResourcePrimKey, latest);
 		}
 
@@ -18775,7 +18775,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_P_L_LATEST_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -18820,7 +18820,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_P_L(long groupId, long[] parentResourcePrimKeies,
 		boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_L(groupId, parentResourcePrimKeies, latest);
 		}
 
@@ -18858,7 +18858,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -19467,7 +19467,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_P_M(long groupId,
 		long parentResourcePrimKey, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_M(groupId, parentResourcePrimKey, main, start,
 				end, orderByComparator);
 		}
@@ -19518,7 +19518,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -19570,7 +19570,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long parentResourcePrimKey, boolean main,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_M_PrevAndNext(kbArticleId, groupId,
 				parentResourcePrimKey, main, orderByComparator);
 		}
@@ -19712,7 +19712,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -19809,7 +19809,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_P_M(long groupId,
 		long[] parentResourcePrimKeies, boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_M(groupId, parentResourcePrimKeies, main, start,
 				end, orderByComparator);
 		}
@@ -19876,7 +19876,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -20304,7 +20304,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_P_M(long groupId, long parentResourcePrimKey,
 		boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_M(groupId, parentResourcePrimKey, main);
 		}
 
@@ -20318,7 +20318,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_P_M_MAIN_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -20363,7 +20363,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_P_M(long groupId, long[] parentResourcePrimKeies,
 		boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_M(groupId, parentResourcePrimKeies, main);
 		}
 
@@ -20401,7 +20401,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21010,7 +21010,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_P_S(long groupId,
 		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_S(groupId, parentResourcePrimKey, status, start,
 				end, orderByComparator);
 		}
@@ -21061,7 +21061,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21113,7 +21113,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long parentResourcePrimKey, int status,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_S_PrevAndNext(kbArticleId, groupId,
 				parentResourcePrimKey, status, orderByComparator);
 		}
@@ -21255,7 +21255,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21352,7 +21352,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_P_S(long groupId,
 		long[] parentResourcePrimKeies, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_S(groupId, parentResourcePrimKeies, status, start,
 				end, orderByComparator);
 		}
@@ -21419,7 +21419,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21848,7 +21848,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_P_S(long groupId, long parentResourcePrimKey,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_S(groupId, parentResourcePrimKey, status);
 		}
 
@@ -21862,7 +21862,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_P_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21907,7 +21907,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_P_S(long groupId, long[] parentResourcePrimKeies,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P_S(groupId, parentResourcePrimKeies, status);
 		}
 
@@ -21945,7 +21945,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -22572,7 +22572,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_KBFI_UT(long groupId, long kbFolderId,
 		String urlTitle, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_UT(groupId, kbFolderId, urlTitle, start, end,
 				orderByComparator);
 		}
@@ -22635,7 +22635,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -22689,7 +22689,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long kbFolderId, String urlTitle,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_UT_PrevAndNext(kbArticleId, groupId,
 				kbFolderId, urlTitle, orderByComparator);
 		}
@@ -22840,7 +22840,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -22985,7 +22985,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_KBFI_UT(long groupId, long kbFolderId,
 		String urlTitle) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_KBFI_UT(groupId, kbFolderId, urlTitle);
 		}
 
@@ -23011,7 +23011,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23614,7 +23614,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_KBFI_L(long groupId, long kbFolderId,
 		boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_L(groupId, kbFolderId, latest, start, end,
 				orderByComparator);
 		}
@@ -23665,7 +23665,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23717,7 +23717,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long kbFolderId, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_L_PrevAndNext(kbArticleId, groupId, kbFolderId,
 				latest, orderByComparator);
 		}
@@ -23856,7 +23856,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23985,7 +23985,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_KBFI_L(long groupId, long kbFolderId,
 		boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_KBFI_L(groupId, kbFolderId, latest);
 		}
 
@@ -23999,7 +23999,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_KBFI_L_LATEST_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -24598,7 +24598,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_KBFI_S(long groupId, long kbFolderId,
 		int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_S(groupId, kbFolderId, status, start, end,
 				orderByComparator);
 		}
@@ -24649,7 +24649,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -24701,7 +24701,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long kbFolderId, int status,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_S_PrevAndNext(kbArticleId, groupId, kbFolderId,
 				status, orderByComparator);
 		}
@@ -24840,7 +24840,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -24968,7 +24968,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_KBFI_S(long groupId, long kbFolderId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_KBFI_S(groupId, kbFolderId, status);
 		}
 
@@ -24982,7 +24982,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_KBFI_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -25590,7 +25590,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_S_L(long groupId, String sections,
 		boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_L(groupId, sections, latest, start, end,
 				orderByComparator);
 		}
@@ -25653,7 +25653,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -25707,7 +25707,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, String sections, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_L_PrevAndNext(kbArticleId, groupId, sections,
 				latest, orderByComparator);
 		}
@@ -25858,7 +25858,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -25956,7 +25956,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_S_L(long groupId, String[] sectionses,
 		boolean latest, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_L(groupId, sectionses, latest, start, end,
 				orderByComparator);
 		}
@@ -26036,7 +26036,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -26517,7 +26517,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_S_L(long groupId, String sections, boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S_L(groupId, sections, latest);
 		}
 
@@ -26543,7 +26543,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_S_L_LATEST_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -26590,7 +26590,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_S_L(long groupId, String[] sectionses,
 		boolean latest) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S_L(groupId, sectionses, latest);
 		}
 
@@ -26641,7 +26641,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -27260,7 +27260,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_S_M(long groupId, String sections,
 		boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_M(groupId, sections, main, start, end,
 				orderByComparator);
 		}
@@ -27323,7 +27323,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -27377,7 +27377,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, String sections, boolean main,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_M_PrevAndNext(kbArticleId, groupId, sections,
 				main, orderByComparator);
 		}
@@ -27528,7 +27528,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -27626,7 +27626,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_S_M(long groupId, String[] sectionses,
 		boolean main, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_M(groupId, sectionses, main, start, end,
 				orderByComparator);
 		}
@@ -27706,7 +27706,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -28187,7 +28187,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_S_M(long groupId, String sections, boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S_M(groupId, sections, main);
 		}
 
@@ -28213,7 +28213,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_S_M_MAIN_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -28260,7 +28260,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_S_M(long groupId, String[] sectionses,
 		boolean main) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S_M(groupId, sectionses, main);
 		}
 
@@ -28311,7 +28311,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -28930,7 +28930,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_S_S(long groupId, String sections,
 		int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_S(groupId, sections, status, start, end,
 				orderByComparator);
 		}
@@ -28993,7 +28993,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29047,7 +29047,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, String sections, int status,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_S_PrevAndNext(kbArticleId, groupId, sections,
 				status, orderByComparator);
 		}
@@ -29198,7 +29198,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29296,7 +29296,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_S_S(long groupId, String[] sectionses,
 		int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_S(groupId, sectionses, status, start, end,
 				orderByComparator);
 		}
@@ -29376,7 +29376,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29857,7 +29857,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_S_S(long groupId, String sections, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S_S(groupId, sections, status);
 		}
 
@@ -29883,7 +29883,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_S_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -29929,7 +29929,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	 */
 	@Override
 	public int filterCountByG_S_S(long groupId, String[] sectionses, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S_S(groupId, sectionses, status);
 		}
 
@@ -29980,7 +29980,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -30664,7 +30664,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
 		long kbFolderId, String urlTitle, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, status,
 				start, end, orderByComparator);
 		}
@@ -30729,7 +30729,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -30786,7 +30786,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		long groupId, long kbFolderId, String urlTitle, int status,
 		OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_UT_ST_PrevAndNext(kbArticleId, groupId,
 				kbFolderId, urlTitle, status, orderByComparator);
 		}
@@ -30942,7 +30942,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -31046,7 +31046,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
 		long kbFolderId, String urlTitle, int[] statuses, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, statuses,
 				start, end, orderByComparator);
 		}
@@ -31125,7 +31125,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -31615,7 +31615,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_KBFI_UT_ST(long groupId, long kbFolderId,
 		String urlTitle, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, status);
 		}
 
@@ -31643,7 +31643,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -31693,7 +31693,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	@Override
 	public int filterCountByG_KBFI_UT_ST(long groupId, long kbFolderId,
 		String urlTitle, int[] statuses) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, statuses);
 		}
 
@@ -31743,7 +31743,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBArticle.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -33434,6 +33434,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_KBARTICLE = "SELECT kbArticle FROM KBArticle kbArticle";
 	private static final String _SQL_SELECT_KBARTICLE_WHERE_PKS_IN = "SELECT kbArticle FROM KBArticle kbArticle WHERE kbArticleId IN (";
 	private static final String _SQL_SELECT_KBARTICLE_WHERE = "SELECT kbArticle FROM KBArticle kbArticle WHERE ";

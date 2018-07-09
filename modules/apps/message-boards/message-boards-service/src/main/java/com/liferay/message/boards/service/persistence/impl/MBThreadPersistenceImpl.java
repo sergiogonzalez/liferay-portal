@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1966,7 +1966,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public List<MBThread> filterFindByGroupId(long groupId, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2012,7 +2012,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2057,7 +2057,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread[] filterFindByGroupId_PrevAndNext(long threadId,
 		long groupId, OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(threadId, groupId,
 				orderByComparator);
 		}
@@ -2192,7 +2192,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2302,7 +2302,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2312,7 +2312,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3077,7 +3077,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public List<MBThread> filterFindByG_C(long groupId, long categoryId,
 		int start, int end, OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C(groupId, categoryId, start, end, orderByComparator);
 		}
 
@@ -3125,7 +3125,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3173,7 +3173,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread[] filterFindByG_C_PrevAndNext(long threadId, long groupId,
 		long categoryId, OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(threadId, groupId, categoryId,
 				orderByComparator);
 		}
@@ -3310,7 +3310,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3399,7 +3399,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public List<MBThread> filterFindByG_C(long groupId, long[] categoryIds,
 		int start, int end, OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C(groupId, categoryIds, start, end, orderByComparator);
 		}
 
@@ -3461,7 +3461,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3852,7 +3852,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, long categoryId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C(groupId, categoryId);
 		}
 
@@ -3864,7 +3864,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3905,7 +3905,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, long[] categoryIds) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C(groupId, categoryIds);
 		}
 
@@ -3939,7 +3939,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4476,7 +4476,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public List<MBThread> filterFindByG_NotC(long groupId, long categoryId,
 		int start, int end, OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotC(groupId, categoryId, start, end,
 				orderByComparator);
 		}
@@ -4525,7 +4525,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4574,7 +4574,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotC_PrevAndNext(threadId, groupId, categoryId,
 				orderByComparator);
 		}
@@ -4711,7 +4711,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4830,7 +4830,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_NotC(long groupId, long categoryId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_NotC(groupId, categoryId);
 		}
 
@@ -4842,7 +4842,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5391,7 +5391,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public List<MBThread> filterFindByG_S(long groupId, int status, int start,
 		int end, OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S(groupId, status, start, end, orderByComparator);
 		}
 
@@ -5439,7 +5439,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5487,7 +5487,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread[] filterFindByG_S_PrevAndNext(long threadId, long groupId,
 		int status, OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_S_PrevAndNext(threadId, groupId, status,
 				orderByComparator);
 		}
@@ -5624,7 +5624,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5743,7 +5743,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_S(long groupId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_S(groupId, status);
 		}
 
@@ -5755,7 +5755,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7488,7 +7488,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_C_L(long groupId, long categoryId,
 		Date lastPostDate, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_L(groupId, categoryId, lastPostDate, start, end,
 				orderByComparator);
 		}
@@ -7548,7 +7548,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7602,7 +7602,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		long groupId, long categoryId, Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_L_PrevAndNext(threadId, groupId, categoryId,
 				lastPostDate, orderByComparator);
 		}
@@ -7750,7 +7750,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -7894,7 +7894,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public int filterCountByG_C_L(long groupId, long categoryId,
 		Date lastPostDate) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_L(groupId, categoryId, lastPostDate);
 		}
 
@@ -7917,7 +7917,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			query.append(_FINDER_COLUMN_G_C_L_LASTPOSTDATE_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8523,7 +8523,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_C_S(long groupId, long categoryId,
 		int status, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_S(groupId, categoryId, status, start, end,
 				orderByComparator);
 		}
@@ -8574,7 +8574,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8626,7 +8626,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_S_PrevAndNext(threadId, groupId, categoryId,
 				status, orderByComparator);
 		}
@@ -8765,7 +8765,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8861,7 +8861,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_C_S(long groupId, long[] categoryIds,
 		int status, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_S(groupId, categoryIds, status, start, end,
 				orderByComparator);
 		}
@@ -8928,7 +8928,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9350,7 +9350,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_C_S(long groupId, long categoryId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_S(groupId, categoryId, status);
 		}
 
@@ -9364,7 +9364,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_C_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9408,7 +9408,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_C_S(long groupId, long[] categoryIds, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_S(groupId, categoryIds, status);
 		}
 
@@ -9446,7 +9446,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10024,7 +10024,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_C_NotS(long groupId, long categoryId,
 		int status, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_NotS(groupId, categoryId, status, start, end,
 				orderByComparator);
 		}
@@ -10075,7 +10075,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10127,7 +10127,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_NotS_PrevAndNext(threadId, groupId, categoryId,
 				status, orderByComparator);
 		}
@@ -10266,7 +10266,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10363,7 +10363,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_C_NotS(long groupId,
 		long[] categoryIds, int status, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_NotS(groupId, categoryIds, status, start, end,
 				orderByComparator);
 		}
@@ -10430,7 +10430,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10852,7 +10852,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_C_NotS(long groupId, long categoryId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_NotS(groupId, categoryId, status);
 		}
 
@@ -10866,7 +10866,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_C_NOTS_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10911,7 +10911,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public int filterCountByG_C_NotS(long groupId, long[] categoryIds,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_NotS(groupId, categoryIds, status);
 		}
 
@@ -10949,7 +10949,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11527,7 +11527,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_NotC_S(long groupId, long categoryId,
 		int status, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotC_S(groupId, categoryId, status, start, end,
 				orderByComparator);
 		}
@@ -11578,7 +11578,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11630,7 +11630,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotC_S_PrevAndNext(threadId, groupId, categoryId,
 				status, orderByComparator);
 		}
@@ -11769,7 +11769,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -11897,7 +11897,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 */
 	@Override
 	public int filterCountByG_NotC_S(long groupId, long categoryId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_NotC_S(groupId, categoryId, status);
 		}
 
@@ -11911,7 +11911,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12491,7 +12491,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> filterFindByG_NotC_NotS(long groupId,
 		long categoryId, int status, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotC_NotS(groupId, categoryId, status, start, end,
 				orderByComparator);
 		}
@@ -12542,7 +12542,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12594,7 +12594,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
 		throws NoSuchThreadException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_NotC_NotS_PrevAndNext(threadId, groupId, categoryId,
 				status, orderByComparator);
 		}
@@ -12733,7 +12733,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -12862,7 +12862,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public int filterCountByG_NotC_NotS(long groupId, long categoryId,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_NotC_NotS(groupId, categoryId, status);
 		}
 
@@ -12876,7 +12876,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_NOTC_NOTS_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -13970,6 +13970,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 
 	private Long _getTime(Date date) {
 		if (date == null) {

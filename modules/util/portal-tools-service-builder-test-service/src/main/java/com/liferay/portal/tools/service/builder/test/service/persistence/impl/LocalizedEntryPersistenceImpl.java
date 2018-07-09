@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -705,6 +706,8 @@ public class LocalizedEntryPersistenceImpl extends BasePersistenceImpl<Localized
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_LOCALIZEDENTRY = "SELECT localizedEntry FROM LocalizedEntry localizedEntry";
 	private static final String _SQL_SELECT_LOCALIZEDENTRY_WHERE_PKS_IN = "SELECT localizedEntry FROM LocalizedEntry localizedEntry WHERE localizedEntryId IN (";
 	private static final String _SQL_COUNT_LOCALIZEDENTRY = "SELECT COUNT(localizedEntry) FROM LocalizedEntry localizedEntry";
