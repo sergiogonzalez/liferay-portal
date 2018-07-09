@@ -14,29 +14,65 @@
 
 package com.liferay.document.library.google.drive.service.impl;
 
+import com.liferay.document.library.google.drive.model.GoogleDriveEntry;
 import com.liferay.document.library.google.drive.service.base.GoogleDriveEntryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * The implementation of the google drive entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.document.library.google.drive.service.GoogleDriveEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see GoogleDriveEntryLocalServiceBaseImpl
- * @see com.liferay.document.library.google.drive.service.GoogleDriveEntryLocalServiceUtil
+ * @author Adolfo Pérez
  */
 public class GoogleDriveEntryLocalServiceImpl
 	extends GoogleDriveEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.document.library.google.drive.service.GoogleDriveEntryLocalServiceUtil} to access the google drive entry local service.
-	 */
+	@Override
+	public GoogleDriveEntry addEntry(
+			FileEntry fileEntry, String googleDriveId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		GoogleDriveEntry googleDriveEntry =
+			googleDriveEntryLocalService.createGoogleDriveEntry(
+				counterLocalService.increment());
+
+		googleDriveEntry.setGroupId(fileEntry.getGroupId());
+		googleDriveEntry.setCompanyId(fileEntry.getCompanyId());
+		googleDriveEntry.setUserId(user.getUserId());
+		googleDriveEntry.setUserName(user.getFullName());
+		googleDriveEntry.setCreateDate(serviceContext.getCreateDate());
+		googleDriveEntry.setFileEntryId(fileEntry.getFileEntryId());
+		googleDriveEntry.setGoogleDriveId(googleDriveId);
+		googleDriveEntry.setUserUuid(user.getUserUuid());
+
+		return googleDriveEntryLocalService.updateGoogleDriveEntry(
+			googleDriveEntry);
+	}
+
+	@Override
+	public void deleteEntry(FileEntry fileEntry) throws PortalException {
+		GoogleDriveEntry googleDriveEntry =
+			googleDriveEntryPersistence.findByG_F(
+				fileEntry.getGroupId(), fileEntry.getFileEntryId());
+
+		googleDriveEntryLocalService.deleteGoogleDriveEntry(googleDriveEntry);
+	}
+
+	@Override
+	public GoogleDriveEntry fetchEntry(FileEntry fileEntry) {
+		return googleDriveEntryPersistence.fetchByG_F(
+			fileEntry.getGroupId(), fileEntry.getFileEntryId());
+	}
+
+	@Override
+	public GoogleDriveEntry getEntry(FileEntry fileEntry)
+		throws PortalException {
+
+		return googleDriveEntryPersistence.findByG_F(
+			fileEntry.getGroupId(), fileEntry.getFileEntryId());
+	}
 
 }
