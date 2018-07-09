@@ -218,26 +218,27 @@ public class MicroblogsEntryLocalServiceImpl
 
 		microblogsEntries.add(microblogsEntry);
 
-		getAllRelatedMicroblogsEntries(
-			microblogsEntries, microblogsEntry.getMicroblogsEntryId());
+		microblogsEntries.addAll(
+			_getAllRelatedMicroblogsEntries(
+				microblogsEntry.getMicroblogsEntryId()));
 
-		for (MicroblogsEntry mbEntry : microblogsEntries) {
+		for (MicroblogsEntry curMicroblogsEntry : microblogsEntries) {
 
 			// Microblogs entry
 
-			microblogsEntryPersistence.remove(mbEntry);
+			microblogsEntryPersistence.remove(curMicroblogsEntry);
 
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
 				MicroblogsEntry.class.getName(),
-				mbEntry.getMicroblogsEntryId());
+				curMicroblogsEntry.getMicroblogsEntryId());
 
 			// Social
 
 			socialActivityLocalService.deleteActivities(
 				MicroblogsEntry.class.getName(),
-				mbEntry.getMicroblogsEntryId());
+				curMicroblogsEntry.getMicroblogsEntryId());
 		}
 
 		return microblogsEntry;
@@ -561,25 +562,6 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntry;
 	}
 
-	protected void getAllRelatedMicroblogsEntries(
-		List<MicroblogsEntry> microblogsEntries, long microblogsEntryId) {
-
-		microblogsEntries.addAll(
-			microblogsEntryPersistence.findByT_P(
-				MicroblogsEntryConstants.TYPE_REPLY, microblogsEntryId));
-
-		List<MicroblogsEntry> repostMicroblogsEntries =
-			microblogsEntryPersistence.findByT_P(
-				MicroblogsEntryConstants.TYPE_REPOST, microblogsEntryId);
-
-		for (MicroblogsEntry microblogsEntry : repostMicroblogsEntries) {
-			microblogsEntries.add(microblogsEntry);
-
-			getAllRelatedMicroblogsEntries(
-				microblogsEntries, microblogsEntry.getMicroblogsEntryId());
-		}
-	}
-
 	protected long getSubscriptionId(
 		long userId, MicroblogsEntry microblogsEntry) {
 
@@ -712,6 +694,30 @@ public class MicroblogsEntryLocalServiceImpl
 
 	@ServiceReference(type = SubscriptionLocalService.class)
 	protected SubscriptionLocalService subscriptionLocalService;
+
+	private List<MicroblogsEntry> _getAllRelatedMicroblogsEntries(
+		long microblogsEntryId) {
+
+		List<MicroblogsEntry> microblogsEntries = new ArrayList<>();
+
+		microblogsEntries.addAll(
+			microblogsEntryPersistence.findByT_P(
+				MicroblogsEntryConstants.TYPE_REPLY, microblogsEntryId));
+
+		List<MicroblogsEntry> repostMicroblogsEntries =
+			microblogsEntryPersistence.findByT_P(
+				MicroblogsEntryConstants.TYPE_REPOST, microblogsEntryId);
+
+		for (MicroblogsEntry microblogsEntry : repostMicroblogsEntries) {
+			microblogsEntries.add(microblogsEntry);
+
+			microblogsEntries.addAll(
+				_getAllRelatedMicroblogsEntries(
+					microblogsEntry.getMicroblogsEntryId()));
+		}
+
+		return microblogsEntries;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MicroblogsEntryLocalServiceImpl.class);
