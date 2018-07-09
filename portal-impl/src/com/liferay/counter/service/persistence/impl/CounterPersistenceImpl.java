@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -702,6 +704,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_COUNTER = "SELECT counter FROM Counter counter";
 	private static final String _SQL_SELECT_COUNTER_WHERE_PKS_IN = "SELECT counter FROM Counter counter WHERE name IN (";
 	private static final String _SQL_COUNT_COUNTER = "SELECT COUNT(counter) FROM Counter counter";

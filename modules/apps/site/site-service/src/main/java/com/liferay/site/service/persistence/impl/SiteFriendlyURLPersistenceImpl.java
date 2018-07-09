@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -3814,8 +3813,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	@ServiceReference(type = InlineSQLHelper.class)
-	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_SITEFRIENDLYURL = "SELECT siteFriendlyURL FROM SiteFriendlyURL siteFriendlyURL";
 	private static final String _SQL_SELECT_SITEFRIENDLYURL_WHERE_PKS_IN = "SELECT siteFriendlyURL FROM SiteFriendlyURL siteFriendlyURL WHERE siteFriendlyURLId IN (";
 	private static final String _SQL_SELECT_SITEFRIENDLYURL_WHERE = "SELECT siteFriendlyURL FROM SiteFriendlyURL siteFriendlyURL WHERE ";
