@@ -34,8 +34,7 @@ public interface SocialActivityGroupServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "-100|-20|-10|-5|-4|-3|-2|-1|0|1|2|3|4|5|10|20|50|100",
-		name = "contribution-increments",
-		required = false
+		name = "contribution-increments", required = false
 	)
 	public String[] contributionIncrements();
 
@@ -47,8 +46,7 @@ public interface SocialActivityGroupServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "-100|-20|-10|-5|-4|-3|-2|-1|0|1|2|3|4|5|10|20|50|100",
-		name = "participation-increments",
-		required = false
+		name = "participation-increments", required = false
 	)
 	public String[] participationIncrements();
 
