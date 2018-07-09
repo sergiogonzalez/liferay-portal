@@ -19,6 +19,7 @@
 <%
 String cmd = (String)request.getAttribute("liferay-trash:undo:cmd");
 String portletURL = (String)request.getAttribute("liferay-trash:undo:portletURL");
+String redirectURL = GetterUtil.getString(request.getAttribute("liferay-trash:undo:redirect"), currentURL);
 List<Long> restoreTrashEntryIds = (List<Long>)request.getAttribute("liferay-trash:undo:restoreTrashEntryIds");
 List<String> titles = (List<String>)request.getAttribute("liferay-trash:undo:titles");
 int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-trash:undo:trashedEntriesCount"));
@@ -86,6 +87,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 			</c:otherwise>
 		</c:choose>
 
+		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 		<aui:input name="restoreTrashEntryIds" type="hidden" value="<%= StringUtil.merge(restoreTrashEntryIds) %>" />
 
 		<aui:button cssClass="alert-link btn-link trash-undo-button" type="submit" value="undo" />
