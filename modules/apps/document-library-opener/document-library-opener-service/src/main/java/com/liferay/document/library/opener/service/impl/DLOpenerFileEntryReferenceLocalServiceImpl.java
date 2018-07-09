@@ -14,29 +14,69 @@
 
 package com.liferay.document.library.opener.service.impl;
 
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.base.DLOpenerFileEntryReferenceLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
- * The implementation of the dl opener file entry reference local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see DLOpenerFileEntryReferenceLocalServiceBaseImpl
- * @see com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalServiceUtil
+ * @author Adolfo Pérez
  */
 public class DLOpenerFileEntryReferenceLocalServiceImpl
 	extends DLOpenerFileEntryReferenceLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalServiceUtil} to access the dl opener file entry reference local service.
-	 */
+	@Override
+	public DLOpenerFileEntryReference addEntry(
+			long userId, String referenceKey, FileEntry fileEntry)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long dlOpenerFileEntryReferenceId = counterLocalService.increment();
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			dlOpenerFileEntryReferenceLocalService.
+				createDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+
+		dlOpenerFileEntryReference.setGroupId(fileEntry.getGroupId());
+		dlOpenerFileEntryReference.setCompanyId(fileEntry.getCompanyId());
+		dlOpenerFileEntryReference.setUserId(user.getUserId());
+		dlOpenerFileEntryReference.setUserName(user.getFullName());
+		dlOpenerFileEntryReference.setReferenceKey(referenceKey);
+		dlOpenerFileEntryReference.setFileEntryId(fileEntry.getFileEntryId());
+
+		return dlOpenerFileEntryReferencePersistence.update(
+			dlOpenerFileEntryReference);
+	}
+
+	@Override
+	public void deleteEntry(FileEntry fileEntry) throws PortalException {
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			dlOpenerFileEntryReferencePersistence.findByFileEntryId(
+				fileEntry.getFileEntryId());
+
+		dlOpenerFileEntryReferenceLocalService.deleteDLOpenerFileEntryReference(
+			dlOpenerFileEntryReference);
+	}
+
+	@Override
+	public DLOpenerFileEntryReference fetchEntry(FileEntry fileEntry) {
+		return dlOpenerFileEntryReferencePersistence.fetchByFileEntryId(
+			fileEntry.getFileEntryId());
+	}
+
+	@Override
+	public DLOpenerFileEntryReference getEntry(FileEntry fileEntry)
+		throws PortalException {
+
+		return dlOpenerFileEntryReferencePersistence.findByFileEntryId(
+			fileEntry.getFileEntryId());
+	}
+
+	@ServiceReference(type = UserLocalService.class)
+	protected UserLocalService userLocalService;
 
 }
