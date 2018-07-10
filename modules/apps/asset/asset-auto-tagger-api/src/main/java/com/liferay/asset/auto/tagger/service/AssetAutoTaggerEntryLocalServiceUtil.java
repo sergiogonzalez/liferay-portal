@@ -192,6 +192,11 @@ public class AssetAutoTaggerEntryLocalServiceUtil {
 		return getService().fetchAssetAutoTaggerEntry(assetAutoTaggerEntryId);
 	}
 
+	public static com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(
+		long assetEntryId, long assetTagId) {
+		return getService().fetchAssetAutoTaggerEntry(assetEntryId, assetTagId);
+	}
+
 	/**
 	* Returns the asset auto tagger entry matching the UUID and group.
 	*

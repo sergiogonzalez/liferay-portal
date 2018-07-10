@@ -185,6 +185,10 @@ public interface AssetAutoTaggerEntryLocalService extends BaseLocalService,
 	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(
 		long assetAutoTaggerEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetAutoTaggerEntry fetchAssetAutoTaggerEntry(long assetEntryId,
+		long assetTagId);
+
 	/**
 	* Returns the asset auto tagger entry matching the UUID and group.
 	*
