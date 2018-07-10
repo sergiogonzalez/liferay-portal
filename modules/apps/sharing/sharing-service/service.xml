@@ -49,4 +49,8 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>InvalidSharingEntryActionKey</exception>
+		<exception>InvalidSharingEntryUser</exception>
+	</exceptions>
 </service-builder>
