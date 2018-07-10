@@ -1462,9 +1462,23 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				orderByComparator = (OrderByComparator<MBMessage>)comparator;
 			}
 
-			List<MBMessage> messages = mbMessagePersistence.findByT_notS(
-				threadId, WorkflowConstants.STATUS_IN_TRASH, start, end,
-				orderByComparator);
+			MBThread mbThread = mbThreadPersistence.fetchByPrimaryKey(threadId);
+
+			if (mbThread == null) {
+				return Collections.emptyList();
+			}
+
+			List<MBMessage> messages = null;
+
+			if (mbThread.isInTrash()) {
+				messages = mbMessagePersistence.findByThreadId(
+					threadId, start, end, orderByComparator);
+			}
+			else {
+				messages = mbMessagePersistence.findByT_notS(
+					threadId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+					orderByComparator);
+			}
 
 			if (!(comparator instanceof OrderByComparator)) {
 				messages = ListUtil.sort(messages, comparator);
