@@ -42,6 +42,16 @@ public class SharingEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
+		long fromUserId, long toUserId, String className, long classPK,
+		long groupId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSharingEntry(fromUserId, toUserId, className, classPK,
+			groupId, sharingEntryActionKeys, serviceContext);
+	}
 
 	/**
 	* Adds the sharing entry to the database. Also notifies the appropriate model listeners.
@@ -52,6 +62,14 @@ public class SharingEntryLocalServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 		com.liferay.sharing.model.SharingEntry sharingEntry) {
 		return getService().addSharingEntry(sharingEntry);
+	}
+
+	public static int countSharingEntriesFromUserId(long fromUserId) {
+		return getService().countSharingEntriesFromUserId(fromUserId);
+	}
+
+	public static int countSharingEntriesToUserId(long toUserId) {
+		return getService().countSharingEntriesToUserId(toUserId);
 	}
 
 	/**
@@ -85,6 +103,12 @@ public class SharingEntryLocalServiceUtil {
 		long sharingEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSharingEntry(sharingEntryId);
+	}
+
+	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+		long toUserId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSharingEntry(toUserId, className, classPK);
 	}
 
 	/**
@@ -237,6 +261,11 @@ public class SharingEntryLocalServiceUtil {
 		return getService().getSharingEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
+		String className, long classPK) {
+		return getService().getSharingEntries(className, classPK);
+	}
+
 	/**
 	* Returns all the sharing entries matching the UUID and company.
 	*
@@ -276,6 +305,21 @@ public class SharingEntryLocalServiceUtil {
 		return getService().getSharingEntriesCount();
 	}
 
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntriesFromUserId(
+		long fromUserId) {
+		return getService().getSharingEntriesFromUserId(fromUserId);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntriesToUserId(
+		long toUserId) {
+		return getService().getSharingEntriesToUserId(toUserId);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntriesToUserId(
+		long toUserId, String className) {
+		return getService().getSharingEntriesToUserId(toUserId, className);
+	}
+
 	/**
 	* Returns the sharing entry with the primary key.
 	*
@@ -287,6 +331,12 @@ public class SharingEntryLocalServiceUtil {
 		long sharingEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSharingEntry(sharingEntryId);
+	}
+
+	public static com.liferay.sharing.model.SharingEntry getSharingEntry(
+		long toUserId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSharingEntry(toUserId, className, classPK);
 	}
 
 	/**
@@ -301,6 +351,14 @@ public class SharingEntryLocalServiceUtil {
 		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSharingEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static boolean hasSharingPermission(long toUserId, String className,
+		long classPK,
+		com.liferay.sharing.constants.SharingEntryActionKey sharingEntryActionKey) {
+		return getService()
+				   .hasSharingPermission(toUserId, className, classPK,
+			sharingEntryActionKey);
 	}
 
 	/**
