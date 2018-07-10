@@ -55,6 +55,13 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 				   .addDLOpenerFileEntryReference(dlOpenerFileEntryReference);
 	}
 
+	public static com.liferay.document.library.opener.model.DLOpenerFileEntryReference addEntry(
+		long userId, String referenceKey,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addEntry(userId, referenceKey, fileEntry);
+	}
+
 	/**
 	* Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	*
@@ -91,6 +98,12 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
+	}
+
+	public static void deleteEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntry(fileEntry);
 	}
 
 	/**
@@ -186,6 +199,11 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 				   .fetchDLOpenerFileEntryReference(dlOpenerFileEntryReferenceId);
 	}
 
+	public static com.liferay.document.library.opener.model.DLOpenerFileEntryReference fetchEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
+		return getService().fetchEntry(fileEntry);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -227,6 +245,12 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 	*/
 	public static int getDLOpenerFileEntryReferencesCount() {
 		return getService().getDLOpenerFileEntryReferencesCount();
+	}
+
+	public static com.liferay.document.library.opener.model.DLOpenerFileEntryReference getEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(fileEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
