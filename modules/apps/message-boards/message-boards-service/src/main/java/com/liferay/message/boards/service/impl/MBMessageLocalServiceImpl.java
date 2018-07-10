@@ -2008,7 +2008,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected String getBody(String subject, String body, String format) {
-		if (Validator.isNull(body)) {
+		if (Validator.isBlank(body)) {
 			if (StringUtil.equals(format, "html")) {
 				return HtmlUtil.escape(subject);
 			}
