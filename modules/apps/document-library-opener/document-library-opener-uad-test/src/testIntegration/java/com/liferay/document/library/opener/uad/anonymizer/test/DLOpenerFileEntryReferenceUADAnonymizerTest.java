@@ -15,28 +15,24 @@
 package com.liferay.document.library.opener.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.uad.test.DLOpenerFileEntryReferenceUADTestHelper;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,25 +40,32 @@ import java.util.List;
 @RunWith(Arquillian.class)
 public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	extends BaseUADAnonymizerTestCase<DLOpenerFileEntryReference> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
-		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(_dlOpenerFileEntryReferences);
+		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(
+			_dlOpenerFileEntryReferences);
 	}
 
 	@Override
 	protected DLOpenerFileEntryReference addBaseModel(long userId)
 		throws Exception {
+
 		return addBaseModel(userId, true);
 	}
 
 	@Override
 	protected DLOpenerFileEntryReference addBaseModel(long userId,
 		boolean deleteAfterTestRun) throws Exception {
-		DLOpenerFileEntryReference dlOpenerFileEntryReference = _dlOpenerFileEntryReferenceUADTestHelper.addDLOpenerFileEntryReference(userId);
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceUADTestHelper.addDLOpenerFileEntryReference(
+				userId);
 
 		if (deleteAfterTestRun) {
 			_dlOpenerFileEntryReferences.add(dlOpenerFileEntryReference);
@@ -74,7 +77,9 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	@Override
 	protected void deleteBaseModels(List<DLOpenerFileEntryReference> baseModels)
 		throws Exception {
-		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(baseModels);
+
+		_dlOpenerFileEntryReferenceUADTestHelper.cleanUpDependencies(
+			baseModels);
 	}
 
 	@Override
@@ -85,12 +90,16 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		DLOpenerFileEntryReference dlOpenerFileEntryReference = _dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReference(baseModelPK);
+
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReference(
+				baseModelPK);
 
 		String userName = dlOpenerFileEntryReference.getUserName();
 
 		if ((dlOpenerFileEntryReference.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -100,19 +109,27 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
 		if (_dlOpenerFileEntryReferenceLocalService.fetchDLOpenerFileEntryReference(
-					baseModelPK) == null) {
+				baseModelPK) == null) {
+
 			return true;
 		}
 
 		return false;
 	}
 
+	@Inject
+	private DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
+
 	@DeleteAfterTestRun
-	private final List<DLOpenerFileEntryReference> _dlOpenerFileEntryReferences = new ArrayList<DLOpenerFileEntryReference>();
+	private final List<DLOpenerFileEntryReference> _dlOpenerFileEntryReferences =
+		new ArrayList<>();
+
 	@Inject
-	private DLOpenerFileEntryReferenceLocalService _dlOpenerFileEntryReferenceLocalService;
-	@Inject
-	private DLOpenerFileEntryReferenceUADTestHelper _dlOpenerFileEntryReferenceUADTestHelper;
+	private DLOpenerFileEntryReferenceUADTestHelper
+		_dlOpenerFileEntryReferenceUADTestHelper;
+
 	@Inject(filter = "component.name=*.DLOpenerFileEntryReferenceUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

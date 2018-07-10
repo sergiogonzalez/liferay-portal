@@ -28,11 +28,13 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class DLOpenerFileEntryReferenceImpl
 	extends DLOpenerFileEntryReferenceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a dl opener file entry reference model instance should use the {@link com.liferay.document.library.opener.model.DLOpenerFileEntryReference} interface instead.
 	 */
 	public DLOpenerFileEntryReferenceImpl() {
 	}
+
 }
