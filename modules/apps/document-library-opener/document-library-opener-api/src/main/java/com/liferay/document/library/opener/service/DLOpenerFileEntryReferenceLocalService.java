@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -71,6 +72,9 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference);
 
+	public DLOpenerFileEntryReference addEntry(long userId,
+		String referenceKey, FileEntry fileEntry) throws PortalException;
+
 	/**
 	* Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	*
@@ -101,6 +105,8 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public DLOpenerFileEntryReference deleteDLOpenerFileEntryReference(
 		long dlOpenerFileEntryReferenceId) throws PortalException;
+
+	public void deleteEntry(FileEntry fileEntry) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -173,6 +179,9 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 		long dlOpenerFileEntryReferenceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLOpenerFileEntryReference fetchEntry(FileEntry fileEntry);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -208,6 +217,10 @@ public interface DLOpenerFileEntryReferenceLocalService extends BaseLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLOpenerFileEntryReferencesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLOpenerFileEntryReference getEntry(FileEntry fileEntry)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
