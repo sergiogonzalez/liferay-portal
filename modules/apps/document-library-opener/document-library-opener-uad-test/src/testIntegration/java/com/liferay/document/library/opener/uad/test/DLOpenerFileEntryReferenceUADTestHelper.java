@@ -16,17 +16,18 @@ package com.liferay.document.library.opener.uad.test;
 
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = DLOpenerFileEntryReferenceUADTestHelper.class)
 public class DLOpenerFileEntryReferenceUADTestHelper {
+
 	/**
 	 * Implement addDLOpenerFileEntryReference() to enable some UAD tests.
 	 *
@@ -36,6 +37,7 @@ public class DLOpenerFileEntryReferenceUADTestHelper {
 	 */
 	public DLOpenerFileEntryReference addDLOpenerFileEntryReference(long userId)
 		throws Exception {
+
 		Assume.assumeTrue(false);
 
 		return null;
@@ -49,7 +51,8 @@ public class DLOpenerFileEntryReferenceUADTestHelper {
 	 * </p>
 	 */
 	public void cleanUpDependencies(
-		List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences)
+			List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences)
 		throws Exception {
 	}
+
 }

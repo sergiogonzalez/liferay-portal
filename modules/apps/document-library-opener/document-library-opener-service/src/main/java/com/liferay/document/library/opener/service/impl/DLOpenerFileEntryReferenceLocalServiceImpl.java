@@ -32,9 +32,11 @@ import com.liferay.document.library.opener.service.base.DLOpenerFileEntryReferen
  */
 public class DLOpenerFileEntryReferenceLocalServiceImpl
 	extends DLOpenerFileEntryReferenceLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalServiceUtil} to access the dl opener file entry reference local service.
 	 */
+
 }

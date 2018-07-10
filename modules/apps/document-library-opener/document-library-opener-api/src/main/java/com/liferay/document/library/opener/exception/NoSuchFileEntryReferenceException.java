@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.document.library.opener.exception;
 
 import aQute.bnd.annotation.ProviderType;
