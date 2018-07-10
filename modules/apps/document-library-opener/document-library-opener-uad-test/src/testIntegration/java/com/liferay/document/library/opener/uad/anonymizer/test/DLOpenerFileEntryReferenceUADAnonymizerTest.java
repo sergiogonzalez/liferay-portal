@@ -60,12 +60,13 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	}
 
 	@Override
-	protected DLOpenerFileEntryReference addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
+	protected DLOpenerFileEntryReference addBaseModel(
+			long userId, boolean deleteAfterTestRun)
+		throws Exception {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			_dlOpenerFileEntryReferenceUADTestHelper.addDLOpenerFileEntryReference(
-				userId);
+			_dlOpenerFileEntryReferenceUADTestHelper.
+				addDLOpenerFileEntryReference(userId);
 
 		if (deleteAfterTestRun) {
 			_dlOpenerFileEntryReferences.add(dlOpenerFileEntryReference);
@@ -92,8 +93,8 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 		throws Exception {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			_dlOpenerFileEntryReferenceLocalService.getDLOpenerFileEntryReference(
-				baseModelPK);
+			_dlOpenerFileEntryReferenceLocalService.
+				getDLOpenerFileEntryReference(baseModelPK);
 
 		String userName = dlOpenerFileEntryReference.getUserName();
 
@@ -108,8 +109,8 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_dlOpenerFileEntryReferenceLocalService.fetchDLOpenerFileEntryReference(
-				baseModelPK) == null) {
+		if (_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(baseModelPK) == null) {
 
 			return true;
 		}
@@ -122,8 +123,8 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 		_dlOpenerFileEntryReferenceLocalService;
 
 	@DeleteAfterTestRun
-	private final List<DLOpenerFileEntryReference> _dlOpenerFileEntryReferences =
-		new ArrayList<>();
+	private final List<DLOpenerFileEntryReference>
+		_dlOpenerFileEntryReferences = new ArrayList<>();
 
 	@Inject
 	private DLOpenerFileEntryReferenceUADTestHelper

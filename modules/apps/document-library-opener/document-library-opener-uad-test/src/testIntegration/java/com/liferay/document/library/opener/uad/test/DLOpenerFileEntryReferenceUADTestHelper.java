@@ -25,7 +25,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = DLOpenerFileEntryReferenceUADTestHelper.class)
+@Component(
+	immediate = true, service = DLOpenerFileEntryReferenceUADTestHelper.class
+)
 public class DLOpenerFileEntryReferenceUADTestHelper {
 
 	/**
