@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class SharingEntryImpl extends SharingEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a sharing entry model instance should use the {@link com.liferay.sharing.model.SharingEntry} interface instead.
 	 */
 	public SharingEntryImpl() {
 	}
+
 }
