@@ -32,9 +32,11 @@ import com.liferay.sharing.service.base.SharingEntryLocalServiceBaseImpl;
  */
 public class SharingEntryLocalServiceImpl
 	extends SharingEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.sharing.service.SharingEntryLocalServiceUtil} to access the sharing entry local service.
 	 */
+
 }
