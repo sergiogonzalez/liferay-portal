@@ -55,8 +55,8 @@ public class DLOpenerFileEntryReferenceUADExporterTest
 		throws Exception {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			_dlOpenerFileEntryReferenceUADTestHelper.addDLOpenerFileEntryReference(
-				userId);
+			_dlOpenerFileEntryReferenceUADTestHelper.
+				addDLOpenerFileEntryReference(userId);
 
 		_dlOpenerFileEntryReferences.add(dlOpenerFileEntryReference);
 
@@ -74,8 +74,8 @@ public class DLOpenerFileEntryReferenceUADExporterTest
 	}
 
 	@DeleteAfterTestRun
-	private final List<DLOpenerFileEntryReference> _dlOpenerFileEntryReferences =
-		new ArrayList<>();
+	private final List<DLOpenerFileEntryReference>
+		_dlOpenerFileEntryReferences = new ArrayList<>();
 
 	@Inject
 	private DLOpenerFileEntryReferenceUADTestHelper
