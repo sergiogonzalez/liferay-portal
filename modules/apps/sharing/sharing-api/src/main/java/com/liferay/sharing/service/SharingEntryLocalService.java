@@ -30,15 +30,18 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,6 +66,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryLocalServiceUtil} to access the sharing entry local service. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SharingEntry addSharingEntry(long fromUserId, long toUserId,
+		String className, long classPK, long groupId,
+		Collection<SharingEntryActionKey> sharingEntryActionKeys,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the sharing entry to the database. Also notifies the appropriate model listeners.
@@ -72,6 +79,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SharingEntry addSharingEntry(SharingEntry sharingEntry);
+
+	public int countSharingEntriesFromUserId(long fromUserId);
+
+	public int countSharingEntriesToUserId(long toUserId);
 
 	/**
 	* Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
@@ -99,6 +110,9 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException;
+
+	public SharingEntry deleteSharingEntry(long toUserId, String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Deletes the sharing entry from the database. Also notifies the appropriate model listeners.
@@ -218,6 +232,9 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getSharingEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getSharingEntries(String className, long classPK);
+
 	/**
 	* Returns all the sharing entries matching the UUID and company.
 	*
@@ -252,6 +269,16 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSharingEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getSharingEntriesFromUserId(long fromUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getSharingEntriesToUserId(long toUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getSharingEntriesToUserId(long toUserId,
+		String className);
+
 	/**
 	* Returns the sharing entry with the primary key.
 	*
@@ -262,6 +289,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntry(long sharingEntryId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SharingEntry getSharingEntry(long toUserId, String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Returns the sharing entry matching the UUID and group.
@@ -274,6 +305,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntryByUuidAndGroupId(String uuid,
 		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasSharingPermission(long toUserId, String className,
+		long classPK, SharingEntryActionKey sharingEntryActionKey);
 
 	/**
 	* Updates the sharing entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

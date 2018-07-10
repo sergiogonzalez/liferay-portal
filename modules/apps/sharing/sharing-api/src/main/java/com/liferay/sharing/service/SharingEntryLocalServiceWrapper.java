@@ -33,6 +33,17 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		_sharingEntryLocalService = sharingEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.sharing.model.SharingEntry addSharingEntry(
+		long fromUserId, long toUserId, String className, long classPK,
+		long groupId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharingEntryLocalService.addSharingEntry(fromUserId, toUserId,
+			className, classPK, groupId, sharingEntryActionKeys, serviceContext);
+	}
+
 	/**
 	* Adds the sharing entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -43,6 +54,16 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
 		com.liferay.sharing.model.SharingEntry sharingEntry) {
 		return _sharingEntryLocalService.addSharingEntry(sharingEntry);
+	}
+
+	@Override
+	public int countSharingEntriesFromUserId(long fromUserId) {
+		return _sharingEntryLocalService.countSharingEntriesFromUserId(fromUserId);
+	}
+
+	@Override
+	public int countSharingEntriesToUserId(long toUserId) {
+		return _sharingEntryLocalService.countSharingEntriesToUserId(toUserId);
 	}
 
 	/**
@@ -79,6 +100,14 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		long sharingEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.deleteSharingEntry(sharingEntryId);
+	}
+
+	@Override
+	public com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+		long toUserId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharingEntryLocalService.deleteSharingEntry(toUserId,
+			className, classPK);
 	}
 
 	/**
@@ -248,6 +277,12 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		return _sharingEntryLocalService.getSharingEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
+		String className, long classPK) {
+		return _sharingEntryLocalService.getSharingEntries(className, classPK);
+	}
+
 	/**
 	* Returns all the sharing entries matching the UUID and company.
 	*
@@ -290,6 +325,25 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		return _sharingEntryLocalService.getSharingEntriesCount();
 	}
 
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntriesFromUserId(
+		long fromUserId) {
+		return _sharingEntryLocalService.getSharingEntriesFromUserId(fromUserId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntriesToUserId(
+		long toUserId) {
+		return _sharingEntryLocalService.getSharingEntriesToUserId(toUserId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntriesToUserId(
+		long toUserId, String className) {
+		return _sharingEntryLocalService.getSharingEntriesToUserId(toUserId,
+			className);
+	}
+
 	/**
 	* Returns the sharing entry with the primary key.
 	*
@@ -302,6 +356,14 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		long sharingEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
+	}
+
+	@Override
+	public com.liferay.sharing.model.SharingEntry getSharingEntry(
+		long toUserId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharingEntryLocalService.getSharingEntry(toUserId, className,
+			classPK);
 	}
 
 	/**
@@ -318,6 +380,14 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sharingEntryLocalService.getSharingEntryByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public boolean hasSharingPermission(long toUserId, String className,
+		long classPK,
+		com.liferay.sharing.constants.SharingEntryActionKey sharingEntryActionKey) {
+		return _sharingEntryLocalService.hasSharingPermission(toUserId,
+			className, classPK, sharingEntryActionKey);
 	}
 
 	/**
