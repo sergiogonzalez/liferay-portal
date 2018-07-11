@@ -71,11 +71,11 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
 			previewURL = DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false);
+				_IMAGE_PREVIEW_QUERY_STRING, false, false);
 		}
 		else {
 			previewURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-				themeDisplay, fileEntry, StringPool.BLANK, false);
+				themeDisplay, fileEntry, _IMAGE_PREVIEW_QUERY_STRING, false);
 		}
 
 		fileEntryJSONObject.put("defaultSource", previewURL);
@@ -116,6 +116,8 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 
 		return sourceJSONObject;
 	}
+
+	private static final String _IMAGE_PREVIEW_QUERY_STRING = "&imagePreview=1";
 
 	@Reference
 	private MediaQueryProvider _mediaQueryProvider;
