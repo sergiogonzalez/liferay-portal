@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
@@ -114,6 +115,30 @@ public class MBThreadLocalServiceTest {
 		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());
+	}
+
+	@Test
+	public void testGetThreadMessagesInTrash() throws Exception {
+		MBMessage mbMessage = addMessage(null, false);
+
+		Assert.assertEquals(
+			1,
+			MBMessageLocalServiceUtil.getThreadMessagesCount(
+				mbMessage.getThreadId(), WorkflowConstants.STATUS_ANY));
+
+		MBThreadLocalServiceUtil.moveThreadToTrash(
+			TestPropsValues.getUserId(), mbMessage.getThreadId());
+
+		Assert.assertEquals(
+			1,
+			MBMessageLocalServiceUtil.getThreadMessagesCount(
+				mbMessage.getThreadId(), WorkflowConstants.STATUS_ANY));
+
+		List<MBMessage> mbMessages =
+			MBMessageLocalServiceUtil.getThreadMessages(
+				mbMessage.getThreadId(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(mbMessage, mbMessages.get(0));
 	}
 
 	@Test
