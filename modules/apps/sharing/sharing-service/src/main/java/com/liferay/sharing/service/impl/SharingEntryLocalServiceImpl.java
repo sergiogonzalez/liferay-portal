@@ -89,6 +89,16 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteGroupSharingEntries(long groupId) {
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByGroupId(groupId);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryPersistence.remove(sharingEntry);
+		}
+	}
+
+	@Override
 	public void deleteSharingEntries(long classNameId, long classPK) {
 		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByC_C(
 			classNameId, classPK);
@@ -122,6 +132,11 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public List<SharingEntry> getFromUserSharingEntries(long fromUserId) {
 		return sharingEntryPersistence.findByFromUserId(fromUserId);
+	}
+
+	@Override
+	public List<SharingEntry> getGroupSharingEntries(long groupId) {
+		return sharingEntryPersistence.findByGroupId(groupId);
 	}
 
 	@Override
