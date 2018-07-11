@@ -92,6 +92,10 @@ public class SharingEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteSharingEntries(long classNameId, long classPK) {
+		getService().deleteSharingEntries(classNameId, classPK);
+	}
+
 	/**
 	* Deletes the sharing entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
