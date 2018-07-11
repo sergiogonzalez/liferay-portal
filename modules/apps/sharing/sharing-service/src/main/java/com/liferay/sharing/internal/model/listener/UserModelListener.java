@@ -17,7 +17,6 @@ package com.liferay.sharing.internal.model.listener;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,9 +32,6 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeRemove(User user) {
 		_sharingEntryLocalService.deleteToUserSharingEntries(user.getUserId());
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
