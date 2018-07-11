@@ -341,6 +341,91 @@ public class SharingEntryLocalServiceTest {
 				sharingEntry.getSharingEntryId()));
 	}
 
+	@Test
+	public void testDeleteToUserSharingEntries() throws Exception {
+		long toUserId = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), toUserId, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), toUserId, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), toUserId, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		List<SharingEntry> sharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(toUserId);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 3, sharingEntries.size());
+
+		_sharingEntryLocalService.deleteToUserSharingEntries(toUserId);
+
+		sharingEntries = _sharingEntryLocalService.getToUserSharingEntries(
+			toUserId);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 0, sharingEntries.size());
+	}
+
+	@Test
+	public void testDeleteToUserSharingEntriesDoesNotDeleteFromUserSharingEntries()
+		throws Exception {
+
+		long toUserId = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), toUserId, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			toUserId, RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		List<SharingEntry> toUserSharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(toUserId);
+
+		Assert.assertEquals(
+			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
+
+		List<SharingEntry> fromUserSharingEntries =
+			_sharingEntryLocalService.getFromUserSharingEntries(toUserId);
+
+		Assert.assertEquals(
+			fromUserSharingEntries.toString(), 1,
+			fromUserSharingEntries.size());
+
+		_sharingEntryLocalService.deleteToUserSharingEntries(toUserId);
+
+		toUserSharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(toUserId);
+
+		Assert.assertEquals(
+			toUserSharingEntries.toString(), 0, toUserSharingEntries.size());
+
+		fromUserSharingEntries =
+			_sharingEntryLocalService.getFromUserSharingEntries(toUserId);
+
+		Assert.assertEquals(
+			fromUserSharingEntries.toString(), 1,
+			fromUserSharingEntries.size());
+	}
+
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
 	public void testHasSharingPermissionWithoutViewSharingEntryActionKey()
 		throws Exception {
