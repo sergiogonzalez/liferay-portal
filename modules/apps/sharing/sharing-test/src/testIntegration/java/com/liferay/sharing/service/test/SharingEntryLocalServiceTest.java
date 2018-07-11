@@ -250,6 +250,106 @@ public class SharingEntryLocalServiceTest {
 			_group.getGroupId(), sharingEntryActionKeys, serviceContext);
 	}
 
+	@Test
+	public void testDeleteGroupSharingEntries() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		List<SharingEntry> sharingEntries =
+			_sharingEntryLocalService.getGroupSharingEntries(
+				_group.getGroupId());
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 3, sharingEntries.size());
+
+		_sharingEntryLocalService.deleteGroupSharingEntries(
+			_group.getGroupId());
+
+		sharingEntries = _sharingEntryLocalService.getGroupSharingEntries(
+			_group.getGroupId());
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 0, sharingEntries.size());
+	}
+
+	@Test
+	public void testDeleteGroupSharingEntriesDoesNotDeleteOtherGroupSharingEntries()
+		throws Exception {
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			_sharingEntryLocalService.addSharingEntry(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
+				serviceContext);
+
+			_sharingEntryLocalService.addSharingEntry(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				group2.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
+				serviceContext);
+
+			List<SharingEntry> groupSharingEntries =
+				_sharingEntryLocalService.getGroupSharingEntries(
+					_group.getGroupId());
+
+			Assert.assertEquals(
+				groupSharingEntries.toString(), 1, groupSharingEntries.size());
+
+			List<SharingEntry> group2SharingEntries =
+				_sharingEntryLocalService.getGroupSharingEntries(
+					group2.getGroupId());
+
+			Assert.assertEquals(
+				group2SharingEntries.toString(), 1,
+				group2SharingEntries.size());
+
+			_sharingEntryLocalService.deleteGroupSharingEntries(
+				_group.getGroupId());
+
+			groupSharingEntries =
+				_sharingEntryLocalService.getGroupSharingEntries(
+					_group.getGroupId());
+
+			Assert.assertEquals(
+				groupSharingEntries.toString(), 0, groupSharingEntries.size());
+
+			group2SharingEntries =
+				_sharingEntryLocalService.getGroupSharingEntries(
+					group2.getGroupId());
+
+			Assert.assertEquals(
+				group2SharingEntries.toString(), 1,
+				group2SharingEntries.size());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group2);
+		}
+	}
+
 	@Test(expected = NoSuchEntryException.class)
 	public void testDeleteNonExistingSharingEntry() throws Exception {
 		_sharingEntryLocalService.deleteSharingEntry(
