@@ -158,14 +158,16 @@ public class SharingEntryLocalServiceImpl
 		throws InvalidSharingEntryActionKeyException {
 
 		if (sharedEntryActionKeys.isEmpty()) {
-			throw new InvalidSharingEntryActionKeyException();
+			throw new InvalidSharingEntryActionKeyException(
+				"Shared entry action keys is empty");
 		}
 
 		for (SharingEntryActionKey curSharingEntryActionKey :
 				sharedEntryActionKeys) {
 
 			if (curSharingEntryActionKey == null) {
-				throw new InvalidSharingEntryActionKeyException();
+				throw new InvalidSharingEntryActionKeyException(
+					"Shared entry action keys contains a null value");
 			}
 		}
 	}
@@ -174,7 +176,8 @@ public class SharingEntryLocalServiceImpl
 		throws InvalidSharingEntryUserException {
 
 		if (fromUserId == toUserId) {
-			throw new InvalidSharingEntryUserException();
+			throw new InvalidSharingEntryUserException(
+				"From user cannot be the same as to user");
 		}
 	}
 
