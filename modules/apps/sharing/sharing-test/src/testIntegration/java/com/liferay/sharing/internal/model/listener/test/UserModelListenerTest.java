@@ -74,7 +74,7 @@ public class UserModelListenerTest {
 	}
 
 	@Test
-	public void testDeletingUserSharedDeleteSharingEntries() throws Exception {
+	public void testDeletingUserSharedDeletesSharingEntries() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
 
