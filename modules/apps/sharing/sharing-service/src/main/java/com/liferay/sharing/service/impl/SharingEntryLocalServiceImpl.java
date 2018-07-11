@@ -110,6 +110,16 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteToUserSharingEntries(long toUserId) {
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByToUserId(toUserId);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryPersistence.remove(sharingEntry);
+		}
+	}
+
+	@Override
 	public List<SharingEntry> getFromUserSharingEntries(long fromUserId) {
 		return sharingEntryPersistence.findByFromUserId(fromUserId);
 	}
