@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -728,6 +729,8 @@ public class TestEntityPersistenceImpl extends BasePersistenceImpl<TestEntity>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_TESTENTITY = "SELECT testEntity FROM TestEntity testEntity";
 	private static final String _SQL_SELECT_TESTENTITY_WHERE_PKS_IN = "SELECT testEntity FROM TestEntity testEntity WHERE id_ IN (";
 	private static final String _SQL_COUNT_TESTENTITY = "SELECT COUNT(testEntity) FROM TestEntity testEntity";

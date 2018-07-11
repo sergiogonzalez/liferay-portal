@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -3839,6 +3840,8 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_CHANGESETENTRY = "SELECT changesetEntry FROM ChangesetEntry changesetEntry";
 	private static final String _SQL_SELECT_CHANGESETENTRY_WHERE_PKS_IN = "SELECT changesetEntry FROM ChangesetEntry changesetEntry WHERE changesetEntryId IN (";
 	private static final String _SQL_SELECT_CHANGESETENTRY_WHERE = "SELECT changesetEntry FROM ChangesetEntry changesetEntry WHERE ";

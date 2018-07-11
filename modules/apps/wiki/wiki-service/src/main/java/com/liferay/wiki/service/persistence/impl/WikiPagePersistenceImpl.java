@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -8937,7 +8937,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> filterFindByG_N_H(long groupId, long nodeId,
 		boolean head, int start, int end,
 		OrderByComparator<WikiPage> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_H(groupId, nodeId, head, start, end,
 				orderByComparator);
 		}
@@ -8988,7 +8988,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9039,7 +9039,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage[] filterFindByG_N_H_PrevAndNext(long pageId, long groupId,
 		long nodeId, boolean head, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_H_PrevAndNext(pageId, groupId, nodeId, head,
 				orderByComparator);
 		}
@@ -9178,7 +9178,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9306,7 +9306,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public int filterCountByG_N_H(long groupId, long nodeId, boolean head) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_N_H(groupId, nodeId, head);
 		}
 
@@ -9320,7 +9320,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_FINDER_COLUMN_G_N_H_HEAD_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9914,7 +9914,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> filterFindByG_N_S(long groupId, long nodeId,
 		int status, int start, int end,
 		OrderByComparator<WikiPage> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_S(groupId, nodeId, status, start, end,
 				orderByComparator);
 		}
@@ -9965,7 +9965,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10016,7 +10016,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage[] filterFindByG_N_S_PrevAndNext(long pageId, long groupId,
 		long nodeId, int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_S_PrevAndNext(pageId, groupId, nodeId, status,
 				orderByComparator);
 		}
@@ -10155,7 +10155,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10283,7 +10283,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public int filterCountByG_N_S(long groupId, long nodeId, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_N_S(groupId, nodeId, status);
 		}
 
@@ -10297,7 +10297,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_FINDER_COLUMN_G_N_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15434,7 +15434,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> filterFindByG_U_N_S(long groupId, long userId,
 		long nodeId, int status, int start, int end,
 		OrderByComparator<WikiPage> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_N_S(groupId, userId, nodeId, status, start, end,
 				orderByComparator);
 		}
@@ -15487,7 +15487,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15542,7 +15542,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		long groupId, long userId, long nodeId, int status,
 		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_U_N_S_PrevAndNext(pageId, groupId, userId, nodeId,
 				status, orderByComparator);
 		}
@@ -15683,7 +15683,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -15822,7 +15822,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public int filterCountByG_U_N_S(long groupId, long userId, long nodeId,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_U_N_S(groupId, userId, nodeId, status);
 		}
 
@@ -15838,7 +15838,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_FINDER_COLUMN_G_U_N_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16499,7 +16499,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> filterFindByG_N_T_H(long groupId, long nodeId,
 		String title, boolean head, int start, int end,
 		OrderByComparator<WikiPage> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_T_H(groupId, nodeId, title, head, start, end,
 				orderByComparator);
 		}
@@ -16564,7 +16564,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16621,7 +16621,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		long groupId, long nodeId, String title, boolean head,
 		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_T_H_PrevAndNext(pageId, groupId, nodeId, title,
 				head, orderByComparator);
 		}
@@ -16775,7 +16775,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -16931,7 +16931,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public int filterCountByG_N_T_H(long groupId, long nodeId, String title,
 		boolean head) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_N_T_H(groupId, nodeId, title, head);
 		}
 
@@ -16959,7 +16959,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_FINDER_COLUMN_G_N_T_H_HEAD_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17593,7 +17593,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> filterFindByG_N_H_S(long groupId, long nodeId,
 		boolean head, int status, int start, int end,
 		OrderByComparator<WikiPage> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_H_S(groupId, nodeId, head, status, start, end,
 				orderByComparator);
 		}
@@ -17646,7 +17646,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17701,7 +17701,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		long groupId, long nodeId, boolean head, int status,
 		OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_H_S_PrevAndNext(pageId, groupId, nodeId, head,
 				status, orderByComparator);
 		}
@@ -17842,7 +17842,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -17982,7 +17982,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public int filterCountByG_N_H_S(long groupId, long nodeId, boolean head,
 		int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_N_H_S(groupId, nodeId, head, status);
 		}
 
@@ -17998,7 +17998,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_FINDER_COLUMN_G_N_H_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21338,7 +21338,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public List<WikiPage> filterFindByG_N_H_P_S(long groupId, long nodeId,
 		boolean head, String parentTitle, int status, int start, int end,
 		OrderByComparator<WikiPage> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_H_P_S(groupId, nodeId, head, parentTitle, status,
 				start, end, orderByComparator);
 		}
@@ -21405,7 +21405,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21465,7 +21465,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		long groupId, long nodeId, boolean head, String parentTitle,
 		int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_H_P_S_PrevAndNext(pageId, groupId, nodeId, head,
 				parentTitle, status, orderByComparator);
 		}
@@ -21623,7 +21623,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -21790,7 +21790,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public int filterCountByG_N_H_P_S(long groupId, long nodeId, boolean head,
 		String parentTitle, int status) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_N_H_P_S(groupId, nodeId, head, parentTitle, status);
 		}
 
@@ -21820,7 +21820,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		query.append(_FINDER_COLUMN_G_N_H_P_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				WikiPage.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -23571,6 +23571,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_WIKIPAGE = "SELECT wikiPage FROM WikiPage wikiPage";
 	private static final String _SQL_SELECT_WIKIPAGE_WHERE_PKS_IN = "SELECT wikiPage FROM WikiPage wikiPage WHERE pageId IN (";
 	private static final String _SQL_SELECT_WIKIPAGE_WHERE = "SELECT wikiPage FROM WikiPage wikiPage WHERE ";
