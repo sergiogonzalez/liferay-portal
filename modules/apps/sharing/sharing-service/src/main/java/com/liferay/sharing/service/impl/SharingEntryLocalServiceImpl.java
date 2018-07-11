@@ -89,6 +89,16 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteSharingEntries(long classNameId, long classPK) {
+		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByC_C(
+			classNameId, classPK);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryPersistence.remove(sharingEntry);
+		}
+	}
+
+	@Override
 	public SharingEntry deleteSharingEntry(
 			long toUserId, long classNameId, long classPK)
 		throws PortalException {
