@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -2652,6 +2653,8 @@ public class LVEntryVersionPersistenceImpl extends BasePersistenceImpl<LVEntryVe
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_LVENTRYVERSION = "SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion";
 	private static final String _SQL_SELECT_LVENTRYVERSION_WHERE_PKS_IN = "SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion WHERE lvEntryVersionId IN (";
 	private static final String _SQL_SELECT_LVENTRYVERSION_WHERE = "SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion WHERE ";

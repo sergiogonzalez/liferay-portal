@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -3738,6 +3739,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 
 	private Long _getTime(Date date) {
 		if (date == null) {

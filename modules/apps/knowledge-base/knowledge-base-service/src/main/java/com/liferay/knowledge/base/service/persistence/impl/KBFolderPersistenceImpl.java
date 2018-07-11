@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1988,7 +1988,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	@Override
 	public List<KBFolder> filterFindByG_P(long groupId, long parentKBFolderId,
 		int start, int end, OrderByComparator<KBFolder> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P(groupId, parentKBFolderId, start, end,
 				orderByComparator);
 		}
@@ -2037,7 +2037,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBFolder.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2086,7 +2086,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		long groupId, long parentKBFolderId,
 		OrderByComparator<KBFolder> orderByComparator)
 		throws NoSuchFolderException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(kbFolderId, groupId, parentKBFolderId,
 				orderByComparator);
 		}
@@ -2223,7 +2223,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBFolder.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2342,7 +2342,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	 */
 	@Override
 	public int filterCountByG_P(long groupId, long parentKBFolderId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P(groupId, parentKBFolderId);
 		}
 
@@ -2354,7 +2354,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 		query.append(_FINDER_COLUMN_G_P_PARENTKBFOLDERID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				KBFolder.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3864,6 +3864,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_KBFOLDER = "SELECT kbFolder FROM KBFolder kbFolder";
 	private static final String _SQL_SELECT_KBFOLDER_WHERE_PKS_IN = "SELECT kbFolder FROM KBFolder kbFolder WHERE kbFolderId IN (";
 	private static final String _SQL_SELECT_KBFOLDER_WHERE = "SELECT kbFolder FROM KBFolder kbFolder WHERE ";

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortalPreferences;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1013,6 +1015,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_PORTALPREFERENCES = "SELECT portalPreferences FROM PortalPreferences portalPreferences";
 	private static final String _SQL_SELECT_PORTALPREFERENCES_WHERE_PKS_IN = "SELECT portalPreferences FROM PortalPreferences portalPreferences WHERE portalPreferencesId IN (";
 	private static final String _SQL_SELECT_PORTALPREFERENCES_WHERE = "SELECT portalPreferences FROM PortalPreferences portalPreferences WHERE ";

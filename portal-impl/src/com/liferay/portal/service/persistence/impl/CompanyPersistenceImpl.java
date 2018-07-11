@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2027,6 +2029,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_COMPANY = "SELECT company FROM Company company";
 	private static final String _SQL_SELECT_COMPANY_WHERE_PKS_IN = "SELECT company FROM Company company WHERE companyId IN (";
 	private static final String _SQL_SELECT_COMPANY_WHERE = "SELECT company FROM Company company WHERE ";

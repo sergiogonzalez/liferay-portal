@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.AccountPersistence;
@@ -774,6 +776,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_ACCOUNT = "SELECT account FROM Account account";
 	private static final String _SQL_SELECT_ACCOUNT_WHERE_PKS_IN = "SELECT account FROM Account account WHERE accountId IN (";
 	private static final String _SQL_COUNT_ACCOUNT = "SELECT COUNT(account) FROM Account account";

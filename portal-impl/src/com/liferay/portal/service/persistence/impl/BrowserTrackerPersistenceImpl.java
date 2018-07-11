@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.exception.NoSuchBrowserTrackerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BrowserTracker;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -975,6 +977,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_BROWSERTRACKER = "SELECT browserTracker FROM BrowserTracker browserTracker";
 	private static final String _SQL_SELECT_BROWSERTRACKER_WHERE_PKS_IN = "SELECT browserTracker FROM BrowserTracker browserTracker WHERE browserTrackerId IN (";
 	private static final String _SQL_SELECT_BROWSERTRACKER_WHERE = "SELECT browserTracker FROM BrowserTracker browserTracker WHERE ";

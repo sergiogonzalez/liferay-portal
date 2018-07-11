@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2374,6 +2376,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_CONTACT = "SELECT contact FROM Contact contact";
 	private static final String _SQL_SELECT_CONTACT_WHERE_PKS_IN = "SELECT contact FROM Contact contact WHERE contactId IN (";
 	private static final String _SQL_SELECT_CONTACT_WHERE = "SELECT contact FROM Contact contact WHERE ";

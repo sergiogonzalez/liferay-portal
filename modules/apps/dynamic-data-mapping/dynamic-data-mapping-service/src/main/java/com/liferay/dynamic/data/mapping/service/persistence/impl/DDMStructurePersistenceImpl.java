@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1961,7 +1961,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long groupId, int start,
 		int end, OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2007,7 +2007,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2053,7 +2053,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure[] filterFindByGroupId_PrevAndNext(long structureId,
 		long groupId, OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(structureId, groupId,
 				orderByComparator);
 		}
@@ -2188,7 +2188,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2272,7 +2272,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long[] groupIds, int start,
 		int end, OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return findByGroupId(groupIds, start, end, orderByComparator);
 		}
 
@@ -2332,7 +2332,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -2689,7 +2689,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2699,7 +2699,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2737,7 +2737,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int filterCountByGroupId(long[] groupIds) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return countByGroupId(groupIds);
 		}
 
@@ -2769,7 +2769,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -4894,7 +4894,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public List<DDMStructure> filterFindByG_P(long groupId,
 		long parentStructureId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P(groupId, parentStructureId, start, end,
 				orderByComparator);
 		}
@@ -4943,7 +4943,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4993,7 +4993,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		long groupId, long parentStructureId,
 		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(structureId, groupId,
 				parentStructureId, orderByComparator);
 		}
@@ -5130,7 +5130,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5249,7 +5249,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int filterCountByG_P(long groupId, long parentStructureId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_P(groupId, parentStructureId);
 		}
 
@@ -5261,7 +5261,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		query.append(_FINDER_COLUMN_G_P_PARENTSTRUCTUREID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5817,7 +5817,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public List<DDMStructure> filterFindByG_C(long groupId, long classNameId,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C(groupId, classNameId, start, end, orderByComparator);
 		}
 
@@ -5865,7 +5865,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -5915,7 +5915,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		long groupId, long classNameId,
 		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(structureId, groupId, classNameId,
 				orderByComparator);
 		}
@@ -6052,7 +6052,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -6142,7 +6142,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public List<DDMStructure> filterFindByG_C(long[] groupIds,
 		long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return findByG_C(groupIds, classNameId, start, end,
 				orderByComparator);
 		}
@@ -6207,7 +6207,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -6602,7 +6602,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, long classNameId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C(groupId, classNameId);
 		}
 
@@ -6614,7 +6614,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		query.append(_FINDER_COLUMN_G_C_CLASSNAMEID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -6655,7 +6655,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int filterCountByG_C(long[] groupIds, long classNameId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return countByG_C(groupIds, classNameId);
 		}
 
@@ -6691,7 +6691,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -8158,7 +8158,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public List<DDMStructure> filterFindByG_N_D(long groupId, String name,
 		String description, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_D(groupId, name, description, start, end,
 				orderByComparator);
 		}
@@ -8233,7 +8233,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8290,7 +8290,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		long groupId, String name, String description,
 		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_N_D_PrevAndNext(structureId, groupId, name,
 				description, orderByComparator);
 		}
@@ -8454,7 +8454,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -8614,7 +8614,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 */
 	@Override
 	public int filterCountByG_N_D(long groupId, String name, String description) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_N_D(groupId, name, description);
 		}
 
@@ -8652,7 +8652,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			query.append(_FINDER_COLUMN_G_N_D_DESCRIPTION_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9356,7 +9356,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public List<DDMStructure> filterFindByG_C_N_D(long groupId,
 		long classNameId, String name, String description, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_N_D(groupId, classNameId, name, description,
 				start, end, orderByComparator);
 		}
@@ -9433,7 +9433,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9493,7 +9493,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		long groupId, long classNameId, String name, String description,
 		OrderByComparator<DDMStructure> orderByComparator)
 		throws NoSuchStructureException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_C_N_D_PrevAndNext(structureId, groupId, classNameId,
 				name, description, orderByComparator);
 		}
@@ -9661,7 +9661,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -9767,7 +9767,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public List<DDMStructure> filterFindByG_C_N_D(long[] groupIds,
 		long classNameId, String name, String description, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return findByG_C_N_D(groupIds, classNameId, name, description,
 				start, end, orderByComparator);
 		}
@@ -9860,7 +9860,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -10402,7 +10402,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public int filterCountByG_C_N_D(long groupId, long classNameId,
 		String name, String description) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_C_N_D(groupId, classNameId, name, description);
 		}
 
@@ -10442,7 +10442,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			query.append(_FINDER_COLUMN_G_C_N_D_DESCRIPTION_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -10494,7 +10494,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public int filterCountByG_C_N_D(long[] groupIds, long classNameId,
 		String name, String description) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+		if (!inlineSQLHelper.isEnabled(groupIds)) {
 			return countByG_C_N_D(groupIds, classNameId, name, description);
 		}
 
@@ -10558,7 +10558,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				DDMStructure.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
 
@@ -11708,6 +11708,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_DDMSTRUCTURE = "SELECT ddmStructure FROM DDMStructure ddmStructure";
 	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE_PKS_IN = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE structureId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE ";

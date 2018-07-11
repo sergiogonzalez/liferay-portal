@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2074,6 +2075,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_DDMTEMPLATELINK = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink";
 	private static final String _SQL_SELECT_DDMTEMPLATELINK_WHERE_PKS_IN = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink WHERE templateLinkId IN (";
 	private static final String _SQL_SELECT_DDMTEMPLATELINK_WHERE = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink WHERE ";

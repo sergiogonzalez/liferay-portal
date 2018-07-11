@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -611,7 +612,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<UserGroup> filterFindByUuid(String uuid, int start, int end,
 		OrderByComparator<UserGroup> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
 
@@ -669,7 +670,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -715,7 +716,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup[] filterFindByUuid_PrevAndNext(long userGroupId,
 		String uuid, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid_PrevAndNext(userGroupId, uuid, orderByComparator);
 		}
 
@@ -861,7 +862,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -986,7 +987,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByUuid(uuid);
 		}
 
@@ -1008,7 +1009,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -1592,7 +1593,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<UserGroup> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1652,7 +1653,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -1702,7 +1703,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		String uuid, long companyId,
 		OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(userGroupId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1851,7 +1852,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -1985,7 +1986,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -2009,7 +2010,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -2535,7 +2536,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<UserGroup> filterFindByCompanyId(long companyId, int start,
 		int end, OrderByComparator<UserGroup> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
 
@@ -2581,7 +2582,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -2625,7 +2626,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup[] filterFindByCompanyId_PrevAndNext(long userGroupId,
 		long companyId, OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByCompanyId_PrevAndNext(userGroupId, companyId,
 				orderByComparator);
 		}
@@ -2760,7 +2761,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -2869,7 +2870,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByCompanyId(companyId);
 		}
 
@@ -2879,7 +2880,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -3430,7 +3431,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public List<UserGroup> filterFindByC_P(long companyId,
 		long parentUserGroupId, int start, int end,
 		OrderByComparator<UserGroup> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_P(companyId, parentUserGroupId, start, end,
 				orderByComparator);
 		}
@@ -3479,7 +3480,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -3527,7 +3528,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		long companyId, long parentUserGroupId,
 		OrderByComparator<UserGroup> orderByComparator)
 		throws NoSuchUserGroupException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_P_PrevAndNext(userGroupId, companyId,
 				parentUserGroupId, orderByComparator);
 		}
@@ -3664,7 +3665,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -3782,7 +3783,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int filterCountByC_P(long companyId, long parentUserGroupId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_P(companyId, parentUserGroupId);
 		}
 
@@ -3794,7 +3795,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		query.append(_FINDER_COLUMN_C_P_PARENTUSERGROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				UserGroup.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -6136,6 +6137,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	protected TableMapper<UserGroup, com.liferay.portal.kernel.model.Group> userGroupToGroupTableMapper;
