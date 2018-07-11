@@ -89,6 +89,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 		return _sharingEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public void deleteSharingEntries(long classNameId, long classPK) {
+		_sharingEntryLocalService.deleteSharingEntries(classNameId, classPK);
+	}
+
 	/**
 	* Deletes the sharing entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*

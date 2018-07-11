@@ -100,6 +100,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteSharingEntries(long classNameId, long classPK);
+
 	/**
 	* Deletes the sharing entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
