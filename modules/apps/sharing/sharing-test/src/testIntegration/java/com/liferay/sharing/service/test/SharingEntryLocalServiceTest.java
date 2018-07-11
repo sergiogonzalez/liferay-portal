@@ -257,6 +257,66 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSharingEntries() throws Exception {
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK1 = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			classNameId, classPK1, _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			classNameId, classPK1, _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		long classPK2 = RandomTestUtil.randomLong();
+
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			classNameId, classPK2, _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		List<SharingEntry> sharingEntries =
+			_sharingEntryLocalService.getSharingEntries(classNameId, classPK1);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 2, sharingEntries.size());
+
+		sharingEntries = _sharingEntryLocalService.getSharingEntries(
+			classNameId, classPK2);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 1, sharingEntries.size());
+
+		_sharingEntryLocalService.deleteSharingEntries(classNameId, classPK1);
+
+		sharingEntries = _sharingEntryLocalService.getSharingEntries(
+			classNameId, classPK1);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 0, sharingEntries.size());
+
+		sharingEntries = _sharingEntryLocalService.getSharingEntries(
+			classNameId, classPK2);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 1, sharingEntries.size());
+
+		_sharingEntryLocalService.deleteSharingEntries(classNameId, classPK2);
+
+		sharingEntries = _sharingEntryLocalService.getSharingEntries(
+			classNameId, classPK2);
+
+		Assert.assertEquals(
+			sharingEntries.toString(), 0, sharingEntries.size());
+	}
+
+	@Test
 	public void testDeleteSharingEntry() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
