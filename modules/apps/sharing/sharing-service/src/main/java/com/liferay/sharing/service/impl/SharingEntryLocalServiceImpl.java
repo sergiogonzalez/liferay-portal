@@ -170,6 +170,12 @@ public class SharingEntryLocalServiceImpl
 					"Shared entry action keys contains a null value");
 			}
 		}
+
+		if (!sharedEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+			throw new InvalidSharingEntryActionKeyException(
+				"Shared entry action keys must contain VIEW shared entry " +
+					"action key");
+		}
 	}
 
 	private void _validateUsers(long fromUserId, long toUserId)
