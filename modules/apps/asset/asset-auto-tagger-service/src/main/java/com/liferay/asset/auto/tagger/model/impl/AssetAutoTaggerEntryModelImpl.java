@@ -100,13 +100,13 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.asset.auto.tagger.impl.util.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.asset.auto.tagger.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.asset.auto.tagger.impl.util.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.asset.auto.tagger.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.asset.auto.tagger.impl.util.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.asset.auto.tagger.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry"),
 			true);
 	public static final long ASSETENTRYID_COLUMN_BITMASK = 1L;
@@ -163,7 +163,7 @@ public class AssetAutoTaggerEntryModelImpl extends BaseModelImpl<AssetAutoTagger
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.auto.tagger.impl.util.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.auto.tagger.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry"));
 
 	public AssetAutoTaggerEntryModelImpl() {
