@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -621,7 +622,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid(String uuid, int start,
 		int end, OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
 
@@ -679,7 +680,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -727,7 +728,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(long entryId,
 		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
 		}
 
@@ -874,7 +875,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1000,7 +1001,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByUuid(uuid);
 		}
 
@@ -1022,7 +1023,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1616,7 +1617,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
@@ -1676,7 +1677,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -1728,7 +1729,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		String uuid, long companyId,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(entryId, uuid, companyId,
 				orderByComparator);
 		}
@@ -1880,7 +1881,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2015,7 +2016,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByUuid_C(uuid, companyId);
 		}
 
@@ -2039,7 +2040,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2569,7 +2570,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public List<AnnouncementsEntry> filterFindByUserId(long userId, int start,
 		int end, OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUserId(userId, start, end, orderByComparator);
 		}
 
@@ -2615,7 +2616,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2661,7 +2662,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(long entryId,
 		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByUserId_PrevAndNext(entryId, userId, orderByComparator);
 		}
 
@@ -2796,7 +2797,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -2906,7 +2907,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public int filterCountByUserId(long userId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByUserId(userId);
 		}
 
@@ -2916,7 +2917,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3475,7 +3476,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public List<AnnouncementsEntry> filterFindByC_C(long classNameId,
 		long classPK, int start, int end,
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByC_C(classNameId, classPK, start, end, orderByComparator);
 		}
 
@@ -3523,7 +3524,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3573,7 +3574,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		long classNameId, long classPK,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByC_C_PrevAndNext(entryId, classNameId, classPK,
 				orderByComparator);
 		}
@@ -3711,7 +3712,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -3830,7 +3831,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public int filterCountByC_C(long classNameId, long classPK) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByC_C(classNameId, classPK);
 		}
 
@@ -3842,7 +3843,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4443,7 +4444,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public List<AnnouncementsEntry> filterFindByC_C_C(long companyId,
 		long classNameId, long classPK, int start, int end,
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_C_C(companyId, classNameId, classPK, start, end,
 				orderByComparator);
 		}
@@ -4494,7 +4495,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4547,7 +4548,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_C_C_PrevAndNext(entryId, companyId, classNameId,
 				classPK, orderByComparator);
 		}
@@ -4690,7 +4691,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -4818,7 +4819,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public int filterCountByC_C_C(long companyId, long classNameId, long classPK) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_C_C(companyId, classNameId, classPK);
 		}
 
@@ -4832,7 +4833,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -5434,7 +5435,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public List<AnnouncementsEntry> filterFindByC_C_A(long classNameId,
 		long classPK, boolean alert, int start, int end,
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByC_C_A(classNameId, classPK, alert, start, end,
 				orderByComparator);
 		}
@@ -5485,7 +5486,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -5538,7 +5539,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		long classNameId, long classPK, boolean alert,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return findByC_C_A_PrevAndNext(entryId, classNameId, classPK,
 				alert, orderByComparator);
 		}
@@ -5680,7 +5681,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -5808,7 +5809,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 */
 	@Override
 	public int filterCountByC_C_A(long classNameId, long classPK, boolean alert) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
+		if (!inlineSQLHelper.isEnabled()) {
 			return countByC_C_A(classNameId, classPK, alert);
 		}
 
@@ -5822,7 +5823,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_C_C_A_ALERT_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -6461,7 +6462,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public List<AnnouncementsEntry> filterFindByC_C_C_A(long companyId,
 		long classNameId, long classPK, boolean alert, int start, int end,
 		OrderByComparator<AnnouncementsEntry> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_C_C_A(companyId, classNameId, classPK, alert, start,
 				end, orderByComparator);
 		}
@@ -6514,7 +6515,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -6570,7 +6571,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		long companyId, long classNameId, long classPK, boolean alert,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return findByC_C_C_A_PrevAndNext(entryId, companyId, classNameId,
 				classPK, alert, orderByComparator);
 		}
@@ -6715,7 +6716,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -6858,7 +6859,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public int filterCountByC_C_C_A(long companyId, long classNameId,
 		long classPK, boolean alert) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+		if (!inlineSQLHelper.isEnabled(companyId, 0)) {
 			return countByC_C_C_A(companyId, classNameId, classPK, alert);
 		}
 
@@ -6874,7 +6875,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				AnnouncementsEntry.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
@@ -7858,6 +7859,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	protected InlineSQLHelper inlineSQLHelper = InlineSQLHelperUtil.getInlineSQLHelper();
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE_PKS_IN = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE ";

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2007,7 +2007,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public List<LayoutPageTemplateCollection> filterFindByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
 
@@ -2053,7 +2053,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPageTemplateCollection.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2102,7 +2102,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		long layoutPageTemplateCollectionId, long groupId,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(layoutPageTemplateCollectionId,
 				groupId, orderByComparator);
 		}
@@ -2242,7 +2242,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPageTemplateCollection.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -2354,7 +2354,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
 
@@ -2364,7 +2364,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPageTemplateCollection.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3192,7 +3192,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public List<LayoutPageTemplateCollection> filterFindByG_LikeN(
 		long groupId, String name, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LikeN(groupId, name, start, end, orderByComparator);
 		}
 
@@ -3252,7 +3252,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPageTemplateCollection.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3306,7 +3306,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		long layoutPageTemplateCollectionId, long groupId, String name,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws NoSuchPageTemplateCollectionException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return findByG_LikeN_PrevAndNext(layoutPageTemplateCollectionId,
 				groupId, name, orderByComparator);
 		}
@@ -3460,7 +3460,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPageTemplateCollection.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -3597,7 +3597,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_LikeN(long groupId, String name) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!inlineSQLHelper.isEnabled(groupId)) {
 			return countByG_LikeN(groupId, name);
 		}
 
@@ -3621,7 +3621,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			query.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+		String sql = inlineSQLHelper.replacePermissionCheck(query.toString(),
 				LayoutPageTemplateCollection.class.getName(),
 				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
@@ -4564,6 +4564,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@ServiceReference(type = InlineSQLHelper.class)
+	protected InlineSQLHelper inlineSQLHelper;
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION = "SELECT layoutPageTemplateCollection FROM LayoutPageTemplateCollection layoutPageTemplateCollection";
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE_PKS_IN =
 		"SELECT layoutPageTemplateCollection FROM LayoutPageTemplateCollection layoutPageTemplateCollection WHERE layoutPageTemplateCollectionId IN (";
