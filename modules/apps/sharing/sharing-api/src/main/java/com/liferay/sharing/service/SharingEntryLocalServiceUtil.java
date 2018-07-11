@@ -126,6 +126,10 @@ public class SharingEntryLocalServiceUtil {
 		return getService().deleteSharingEntry(sharingEntry);
 	}
 
+	public static void deleteToUserSharingEntries(long toUserId) {
+		getService().deleteToUserSharingEntries(toUserId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
