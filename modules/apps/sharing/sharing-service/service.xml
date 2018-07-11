@@ -23,7 +23,7 @@
 
 		<column name="fromUserId" type="long" />
 		<column name="toUserId" type="long" />
-		<column name="className" type="String" />
+		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="actionIds" type="long" />
 
@@ -35,17 +35,17 @@
 		<finder name="ToUserId" return-type="Collection">
 			<finder-column name="toUserId" />
 		</finder>
-		<finder name="TU_CN" return-type="Collection">
+		<finder name="TU_C" return-type="Collection">
 			<finder-column name="toUserId" />
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 		</finder>
-		<finder name="CN_PK" return-type="Collection">
-			<finder-column name="className" />
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="TU_CN_PK" return-type="SharingEntry" unique="true">
+		<finder name="TU_C_C" return-type="SharingEntry" unique="true">
 			<finder-column name="toUserId" />
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
