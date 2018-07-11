@@ -67,7 +67,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryLocalServiceUtil} to access the sharing entry local service. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public SharingEntry addSharingEntry(long fromUserId, long toUserId,
-		String className, long classPK, long groupId,
+		long classNameId, long classPK, long groupId,
 		Collection<SharingEntryActionKey> sharingEntryActionKeys,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -111,7 +111,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException;
 
-	public SharingEntry deleteSharingEntry(long toUserId, String className,
+	public SharingEntry deleteSharingEntry(long toUserId, long classNameId,
 		long classPK) throws PortalException;
 
 	/**
@@ -236,7 +236,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public List<SharingEntry> getSharingEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SharingEntry> getSharingEntries(String className, long classPK);
+	public List<SharingEntry> getSharingEntries(long classNameId, long classPK);
 
 	/**
 	* Returns all the sharing entries matching the UUID and company.
@@ -284,7 +284,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SharingEntry getSharingEntry(long toUserId, String className,
+	public SharingEntry getSharingEntry(long toUserId, long classNameId,
 		long classPK) throws PortalException;
 
 	/**
@@ -304,10 +304,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getToUserSharingEntries(long toUserId,
-		String className);
+		long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSharingPermission(long toUserId, String className,
+	public boolean hasSharingPermission(long toUserId, long classNameId,
 		long classPK, SharingEntryActionKey sharingEntryActionKey);
 
 	/**
