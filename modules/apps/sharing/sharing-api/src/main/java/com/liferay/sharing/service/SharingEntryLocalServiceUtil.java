@@ -83,6 +83,10 @@ public class SharingEntryLocalServiceUtil {
 		return getService().createSharingEntry(sharingEntryId);
 	}
 
+	public static void deleteGroupSharingEntries(long groupId) {
+		getService().deleteGroupSharingEntries(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -237,6 +241,11 @@ public class SharingEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.sharing.model.SharingEntry> getFromUserSharingEntries(
 		long fromUserId) {
 		return getService().getFromUserSharingEntries(fromUserId);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry> getGroupSharingEntries(
+		long groupId) {
+		return getService().getGroupSharingEntries(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

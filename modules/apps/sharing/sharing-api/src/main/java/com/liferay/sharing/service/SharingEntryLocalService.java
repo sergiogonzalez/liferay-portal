@@ -93,6 +93,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public SharingEntry createSharingEntry(long sharingEntryId);
 
+	public void deleteGroupSharingEntries(long groupId);
+
 	/**
 	* @throws PortalException
 	*/
@@ -209,6 +211,9 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getFromUserSharingEntries(long fromUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getGroupSharingEntries(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
