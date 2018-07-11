@@ -37,7 +37,7 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public SharingEntry addSharingEntry(
-			long fromUserId, long toUserId, String className, long classPK,
+			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
 			ServiceContext serviceContext)
@@ -61,7 +61,7 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setGroupId(groupId);
 		sharingEntry.setFromUserId(fromUserId);
 		sharingEntry.setToUserId(toUserId);
-		sharingEntry.setClassName(className);
+		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
@@ -90,11 +90,11 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public SharingEntry deleteSharingEntry(
-			long toUserId, String className, long classPK)
+			long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.findByTU_CN_PK(
-			toUserId, className, classPK);
+		SharingEntry sharingEntry = sharingEntryPersistence.findByTU_C_C(
+			toUserId, classNameId, classPK);
 
 		return sharingEntryPersistence.remove(sharingEntry);
 	}
@@ -106,18 +106,18 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public List<SharingEntry> getSharingEntries(
-		String className, long classPK) {
+		long classNameId, long classPK) {
 
-		return sharingEntryPersistence.findByCN_PK(className, classPK);
+		return sharingEntryPersistence.findByC_C(classNameId, classPK);
 	}
 
 	@Override
 	public SharingEntry getSharingEntry(
-			long toUserId, String className, long classPK)
+			long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
-		return sharingEntryPersistence.findByTU_CN_PK(
-			toUserId, className, classPK);
+		return sharingEntryPersistence.findByTU_C_C(
+			toUserId, classNameId, classPK);
 	}
 
 	@Override
@@ -127,18 +127,18 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public List<SharingEntry> getToUserSharingEntries(
-		long toUserId, String className) {
+		long toUserId, long classNameId) {
 
-		return sharingEntryPersistence.findByTU_CN(toUserId, className);
+		return sharingEntryPersistence.findByTU_C(toUserId, classNameId);
 	}
 
 	@Override
 	public boolean hasSharingPermission(
-		long toUserId, String className, long classPK,
+		long toUserId, long classNameId, long classPK,
 		SharingEntryActionKey sharingEntryActionKey) {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_CN_PK(
-			toUserId, className, classPK);
+		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_C_C(
+			toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
 			return false;
