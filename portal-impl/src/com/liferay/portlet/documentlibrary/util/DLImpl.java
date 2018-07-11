@@ -521,14 +521,14 @@ public class DLImpl implements DL {
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
 		if (ImageProcessorUtil.isSupported(fileVersion.getMimeType())) {
-			queryString.concat("&imagePreview=1");
+			queryString = queryString.concat("&imagePreview=1");
 		}
 		else if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 			if (PDFProcessorUtil.hasImages(fileVersion)) {
-				queryString.concat("&previewFileIndex=1");
+				queryString = queryString.concat("&previewFileIndex=1");
 			}
 			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-				queryString.concat("&videoThumbnail=1");
+				queryString = queryString.concat("&videoThumbnail=1");
 			}
 		}
 
