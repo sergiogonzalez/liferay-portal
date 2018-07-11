@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -80,8 +79,8 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 
 		Assert.assertEquals(
 			DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false),
+				fileEntry, fileEntry.getFileVersion(), null,
+				_IMAGE_PREVIEW_QUERY_STRING, false, false),
 			url);
 
 		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
@@ -102,6 +101,8 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 			FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest.class,
 			"image.jpg");
 	}
+
+	private static final String _IMAGE_PREVIEW_QUERY_STRING = "&imagePreview=1";
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
