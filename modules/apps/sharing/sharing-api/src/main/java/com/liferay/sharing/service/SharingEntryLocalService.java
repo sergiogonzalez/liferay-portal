@@ -125,6 +125,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SharingEntry deleteSharingEntry(SharingEntry sharingEntry);
 
+	public void deleteToUserSharingEntries(long toUserId);
+
 	public DynamicQuery dynamicQuery();
 
 	/**

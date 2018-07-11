@@ -129,6 +129,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	@Override
+	public void deleteToUserSharingEntries(long toUserId) {
+		_sharingEntryLocalService.deleteToUserSharingEntries(toUserId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _sharingEntryLocalService.dynamicQuery();
 	}
