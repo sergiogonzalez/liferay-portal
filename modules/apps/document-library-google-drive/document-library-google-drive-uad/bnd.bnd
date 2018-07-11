@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Google Drive UAD
+Bundle-SymbolicName: com.liferay.document.library.google.drive.uad
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

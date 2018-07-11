@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Document Library Google Drive Service
+Bundle-SymbolicName: com.liferay.document.library.google.drive.service
+Bundle-Version: 1.0.0
+Import-Package:\
+	!javax.jdo.*,\
+	\
+	!org.apache.http.*,\
+	\
+	!org.checkerframework.*,\
+	\
+	*
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

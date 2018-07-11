@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Document Library Google Drive API
+Bundle-SymbolicName: com.liferay.document.library.google.drive.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.google.drive.constants,\
+	com.liferay.document.library.google.drive.exception,\
+	com.liferay.document.library.google.drive.model,\
+	com.liferay.document.library.google.drive.service,\
+	com.liferay.document.library.google.drive.service.persistence
