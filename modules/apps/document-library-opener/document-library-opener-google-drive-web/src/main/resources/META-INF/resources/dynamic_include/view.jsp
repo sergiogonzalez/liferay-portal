@@ -21,7 +21,13 @@ GoogleDriveFileReference googleDriveFileReference = (GoogleDriveFileReference)re
 %>
 
 <c:if test="<%= Validator.isNotNull(googleDriveFileReference) %>">
+	<portlet:renderURL var="renderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/open_google_docs" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(googleDriveFileReference.getFileEntryId()) %>" />
+		<portlet:param name="cookie" value="<%= String.valueOf(googleDriveFileReference.getCookie()) %>" />
+	</portlet:renderURL>
+
 	<aui:script>
-		window.open('<%= googleDriveFileReference.getUrl() %>');
+		window.open('<%= renderURL %>');
 	</aui:script>
 </c:if>
