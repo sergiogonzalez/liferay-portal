@@ -463,7 +463,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -511,8 +511,8 @@ public class DLImpl implements DL {
 		FileEntry fileEntry, FileVersion fileVersion,
 		ThemeDisplay themeDisplay) {
 
-		return getImagePreviewURL(fileEntry, fileVersion, themeDisplay, null,
-			true, true);
+		return getImagePreviewURL(
+			fileEntry, fileVersion, themeDisplay, null, true, true);
 	}
 
 	@Override
@@ -711,7 +711,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, (7.0.x), replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getThumbnailSrc(FileEntry, ThemeDisplay)}
 	 */
 	@Deprecated
@@ -726,7 +726,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, (7.0.x), replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getThumbnailSrc(FileEntry, FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated
@@ -1006,7 +1006,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
 	 *             long, long)}
@@ -1028,7 +1028,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
 	 *             long)}
@@ -1043,7 +1043,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
 	 *             long, boolean)}
@@ -1196,8 +1196,8 @@ public class DLImpl implements DL {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString) {
 
-		return getImageSrc(fileEntry, fileVersion, themeDisplay, queryString,
-			true, true);
+		return getImageSrc(
+			fileEntry, fileVersion, themeDisplay, queryString, true, true);
 	}
 
 	protected String getImageSrc(
