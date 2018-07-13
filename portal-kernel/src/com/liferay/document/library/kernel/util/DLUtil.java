@@ -140,7 +140,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), with no direct replacement
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
 	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {
@@ -231,7 +231,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, (7.0.x), replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getThumbnailSrc(FileEntry, ThemeDisplay)}
 	 */
 	@Deprecated
@@ -244,7 +244,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, (7.0.x), replaced by {@link
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getThumbnailSrc(FileEntry, FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated
@@ -346,7 +346,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
 	 *             long, long)}
@@ -360,7 +360,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
 	 *             long)}
@@ -375,7 +375,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, (7.1.x), replaced by {@link
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             com.liferay.document.library.web.internal.util.
 	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
 	 *             long, boolean)}
