@@ -68,7 +68,7 @@ if (portletTitleBasedNavigation) {
 					message="<%= StringPool.BLANK %>"
 					showWhenSingleIcon="<%= true %>"
 				>
-					<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
+					<c:if test="<%= !thread.isLocked() && !thread.isInTrash() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
 
 						<%
 						MBMessage rootMessage = null;
@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 						/>
 					</c:if>
 
-					<c:if test="<%= enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
+					<c:if test="<%= enableRSS && !thread.isInTrash() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
 						<liferay-rss:rss
 							delta="<%= rssDelta %>"
 							displayStyle="<%= rssDisplayStyle %>"
@@ -106,7 +106,7 @@ if (portletTitleBasedNavigation) {
 						/>
 					</c:if>
 
-					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
+					<c:if test="<%= !thread.isInTrash() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 						<c:choose>
 							<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), MBThread.class.getName(), message.getThreadId()) %>">
 								<portlet:actionURL name="/message_boards/edit_message" var="unsubscribeURL">
@@ -135,7 +135,7 @@ if (portletTitleBasedNavigation) {
 						</c:choose>
 					</c:if>
 
-					<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.LOCK_THREAD) %>">
+					<c:if test="<%= !thread.isInTrash() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.LOCK_THREAD) %>">
 						<c:choose>
 							<c:when test="<%= thread.isLocked() %>">
 								<portlet:actionURL name="/message_boards/edit_message" var="unlockThreadURL">
@@ -164,7 +164,7 @@ if (portletTitleBasedNavigation) {
 						</c:choose>
 					</c:if>
 
-					<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
+					<c:if test="<%= !thread.isInTrash() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
 						<portlet:renderURL var="editThreadURL">
 							<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
