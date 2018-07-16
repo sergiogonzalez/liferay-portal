@@ -221,19 +221,15 @@ if (portletTitleBasedNavigation) {
 	<div class="card-tab-group message-container" id="<portlet:namespace />messageContainer">
 
 		<%
-		boolean viewableThread = false;
-
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, treeWalker.getRoot());
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
+		request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+		request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
+		request.setAttribute("edit_message.jsp-category", category);
+		request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
+		request.setAttribute("edit_message.jsp-message", message);
+		request.setAttribute("edit_message.jsp-thread", thread);
 		%>
 
-		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 
 		<%
 		int index = 0;
@@ -312,7 +308,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<%
-	viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
+	boolean viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
 	%>
 
 	<c:if test="<%= !viewableThread %>">
