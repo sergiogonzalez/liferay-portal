@@ -43,7 +43,7 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 	request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
 	request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-category", category);
-	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
+	request.setAttribute("edit_message.jsp-editable", !thread.isInTrash());
 	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
