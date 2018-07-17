@@ -70,8 +70,7 @@ public class DLFileEntryPermission {
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
 	)
 	protected void setDLFileEntryModelResourcePermission(
 		ModelResourcePermission<DLFileEntry> modelResourcePermission) {
@@ -87,6 +86,10 @@ public class DLFileEntryPermission {
 		ModelResourcePermission<FileEntry> modelResourcePermission) {
 
 		_fileEntryModelResourcePermission = modelResourcePermission;
+	}
+
+	protected void unsetDLFileEntryModelResourcePermission(
+		ModelResourcePermission<DLFileEntry> modelResourcePermission) {
 	}
 
 	private static ModelResourcePermission<DLFileEntry>
