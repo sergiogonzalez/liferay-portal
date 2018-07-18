@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
+import com.liferay.portal.search.permission.SearchPermissionFilterProcessor;
 
 import java.io.Serializable;
 
@@ -60,11 +61,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Allen Chiang
@@ -175,6 +181,24 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		_searchPermissionCheckerConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SearchPermissionCheckerConfiguration.class, properties);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSearchPermissionFilterProcessor(
+		SearchPermissionFilterProcessor searchPermissionFilterProcessor) {
+
+		_searchPermissionFilterProcessors.add(searchPermissionFilterProcessor);
+	}
+
+	protected void removeSearchPermissionFilterProcessor(
+		SearchPermissionFilterProcessor searchPermissionFilterProcessor) {
+
+		_searchPermissionFilterProcessors.remove(
+			searchPermissionFilterProcessor);
 	}
 
 	private void _addGroup(
@@ -483,6 +507,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			permissionBooleanFilter.add(rolesTermsFilter);
 		}
 
+		Stream<SearchPermissionFilterProcessor> stream =
+			_searchPermissionFilterProcessors.stream();
+
+		stream.forEach(
+			searchPermissionFilterProcessor ->
+				searchPermissionFilterProcessor.process(
+					permissionBooleanFilter, companyId, searchGroupIds, userId,
+					permissionChecker, className));
+
 		if (!permissionBooleanFilter.hasClauses()) {
 			return null;
 		}
@@ -513,6 +546,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	private volatile SearchPermissionCheckerConfiguration
 		_searchPermissionCheckerConfiguration;
+	private final Collection<SearchPermissionFilterProcessor>
+		_searchPermissionFilterProcessors = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private UserLocalService _userLocalService;
