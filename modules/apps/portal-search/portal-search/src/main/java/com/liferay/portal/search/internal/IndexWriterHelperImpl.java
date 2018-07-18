@@ -52,6 +52,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -673,7 +675,10 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;
 
-	@Reference
-	private SearchPermissionChecker _searchPermissionChecker;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile SearchPermissionChecker _searchPermissionChecker;
 
 }
