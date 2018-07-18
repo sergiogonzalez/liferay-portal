@@ -139,9 +139,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		try {
-			booleanFilter = _getPermissionBooleanFilter(
-				companyId, groupIds, userId, className, booleanFilter,
-				searchContext);
+			BooleanFilter permissionBooleanFilter = _getPermissionBooleanFilter(
+				companyId, groupIds, userId, className, searchContext);
+
+			if ((booleanFilter != null) && (permissionBooleanFilter != null)) {
+				booleanFilter.add(
+					permissionBooleanFilter, BooleanClauseOccur.MUST);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -337,14 +341,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	private BooleanFilter _getPermissionBooleanFilter(
 			long companyId, long[] searchGroupIds, long userId,
-			String className, BooleanFilter booleanFilter,
-			SearchContext searchContext)
+			String className, SearchContext searchContext)
 		throws Exception {
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(className);
 
 		if (!indexer.isPermissionAware()) {
-			return booleanFilter;
+			return null;
 		}
 
 		PermissionChecker permissionChecker =
@@ -356,7 +359,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			user = _userLocalService.fetchUser(userId);
 
 			if (user == null) {
-				return booleanFilter;
+				return null;
 			}
 
 			permissionChecker = PermissionCheckerFactoryUtil.create(user);
@@ -371,7 +374,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			if (searchPermissionContextObject ==
 					_NULL_SEARCH_PERMISSION_CONTEXT) {
 
-				return booleanFilter;
+				return null;
 			}
 
 			searchPermissionContext =
@@ -386,7 +389,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			searchContext.setAttribute(
 				"searchPermissionContext", _NULL_SEARCH_PERMISSION_CONTEXT);
 
-			return booleanFilter;
+			return null;
 		}
 
 		searchContext.setAttribute(
@@ -394,13 +397,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		return _getPermissionFilter(
 			companyId, searchGroupIds, userId, permissionChecker, className,
-			booleanFilter, searchPermissionContext);
+			searchPermissionContext);
 	}
 
 	private BooleanFilter _getPermissionFilter(
 			long companyId, long[] searchGroupIds, long userId,
 			PermissionChecker permissionChecker, String className,
-			BooleanFilter booleanFilter,
 			SearchPermissionContext searchPermissionContext)
 		throws Exception {
 
@@ -426,7 +428,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				companyId, className, ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(companyId), roleIds, ActionKeys.VIEW)) {
 
-			return booleanFilter;
+			return null;
 		}
 
 		if (_resourcePermissionLocalService.hasResourcePermission(
@@ -434,7 +436,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 				regularRoleIds, ActionKeys.VIEW)) {
 
-			return booleanFilter;
+			return null;
 		}
 
 		for (UsersGroupIdRoles usersGroupIdRoles : usersGroupIdsRoles) {
@@ -482,13 +484,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 
 		if (!permissionBooleanFilter.hasClauses()) {
-			return booleanFilter;
-		}
-
-		if (booleanFilter != null) {
-			booleanFilter.add(permissionBooleanFilter, BooleanClauseOccur.MUST);
-
-			return booleanFilter;
+			return null;
 		}
 
 		return permissionBooleanFilter;
