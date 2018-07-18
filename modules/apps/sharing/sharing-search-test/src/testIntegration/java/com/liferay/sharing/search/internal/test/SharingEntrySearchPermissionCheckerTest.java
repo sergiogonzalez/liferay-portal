@@ -105,7 +105,9 @@ public class SharingEntrySearchPermissionCheckerTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=com.liferay.sharing.search.internal.SharingEntrySearchPermissionCheckerImpl")
+	@Inject(
+		filter = "component.name=com.liferay.sharing.search.internal.SharingEntrySearchPermissionCheckerImpl"
+	)
 	private SearchPermissionChecker _searchPermissionChecker;
 
 	@DeleteAfterTestRun
