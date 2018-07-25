@@ -16,20 +16,15 @@ package com.liferay.blogs.web.internal.exportimport.data.handler;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.util.PropsValues;
 
-import javax.portlet.PortletPreferences;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -42,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 	service = PortletDataHandler.class
 )
-public class BlogsPortletDataHandler extends BasePortletDataHandler {
+public class BlogsPortletDataHandler extends BlogsAdminPortletDataHandler {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
@@ -57,21 +52,6 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 	 */
 	@Deprecated
 	public static final String SCHEMA_VERSION = "1.0.0";
-
-	@Override
-	public String getNamespace() {
-		return _blogsAdminPortletDataHandler.getNamespace();
-	}
-
-	@Override
-	public String getSchemaVersion() {
-		return _blogsAdminPortletDataHandler.getSchemaVersion();
-	}
-
-	@Override
-	public String getServiceName() {
-		return _blogsAdminPortletDataHandler.getServiceName();
-	}
 
 	@Activate
 	protected void activate() {
@@ -89,48 +69,5 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		setPublishToLiveByDefault(PropsValues.BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT);
 		setStagingControls(getExportControls());
 	}
-
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _blogsAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _blogsAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _blogsAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_blogsAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
-	}
-
-	@Reference
-	private BlogsAdminPortletDataHandler _blogsAdminPortletDataHandler;
 
 }

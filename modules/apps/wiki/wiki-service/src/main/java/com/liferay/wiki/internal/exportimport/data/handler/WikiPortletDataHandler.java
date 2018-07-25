@@ -14,23 +14,17 @@
 
 package com.liferay.wiki.internal.exportimport.data.handler;
 
-import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
-
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
 	service = PortletDataHandler.class
 )
-public class WikiPortletDataHandler extends BasePortletDataHandler {
+public class WikiPortletDataHandler extends WikiAdminPortletDataHandler {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
@@ -64,31 +58,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	 */
 	@Deprecated
 	public static final String SCHEMA_VERSION = "1.0.0";
-
-	@Override
-	public String getNamespace() {
-		return _wikiAdminPortletDataHandler.getNamespace();
-	}
-
-	@Override
-	public String getSchemaVersion() {
-		return _wikiAdminPortletDataHandler.getSchemaVersion();
-	}
-
-	@Override
-	public String getServiceName() {
-		return _wikiAdminPortletDataHandler.getServiceName();
-	}
-
-	@Override
-	public PortletPreferences importData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws PortletDataException {
-
-		return _wikiAdminPortletDataHandler.importData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
 
 	@Activate
 	protected void activate() {
@@ -110,48 +79,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				WikiPage.class.getName()));
 		setStagingControls(getExportControls());
 
-		_portalCache = _multiVMPool.getPortalCache(
+		super.portalCache = _multiVMPool.getPortalCache(
 			WikiPageDisplay.class.getName());
-	}
-
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _wikiAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _wikiAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _wikiAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_wikiAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -161,10 +90,5 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private MultiVMPool _multiVMPool;
-
-	private PortalCache<?, ?> _portalCache;
-
-	@Reference
-	private WikiAdminPortletDataHandler _wikiAdminPortletDataHandler;
 
 }

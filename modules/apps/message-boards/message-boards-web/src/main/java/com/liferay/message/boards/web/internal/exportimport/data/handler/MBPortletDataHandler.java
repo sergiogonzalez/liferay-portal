@@ -14,9 +14,7 @@
 
 package com.liferay.message.boards.web.internal.exportimport.data.handler;
 
-import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -28,11 +26,8 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.portal.util.PropsValues;
 
-import javax.portlet.PortletPreferences;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -44,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = PortletDataHandler.class
 )
-public class MBPortletDataHandler extends BasePortletDataHandler {
+public class MBPortletDataHandler extends MBAdminPortletDataHandler {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
@@ -59,21 +54,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	 */
 	@Deprecated
 	public static final String SCHEMA_VERSION = "1.0.0";
-
-	@Override
-	public String getNamespace() {
-		return _mbAdminPortletDataHandler.getNamespace();
-	}
-
-	@Override
-	public String getSchemaVersion() {
-		return _mbAdminPortletDataHandler.getSchemaVersion();
-	}
-
-	@Override
-	public String getServiceName() {
-		return _mbAdminPortletDataHandler.getServiceName();
-	}
 
 	@Activate
 	protected void activate() {
@@ -102,48 +82,5 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
 		setStagingControls(getExportControls());
 	}
-
-	@Override
-	protected PortletPreferences doDeleteData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _mbAdminPortletDataHandler.doDeleteData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return _mbAdminPortletDataHandler.doExportData(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		return _mbAdminPortletDataHandler.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		_mbAdminPortletDataHandler.doPrepareManifestSummary(
-			portletDataContext, portletPreferences);
-	}
-
-	@Reference
-	private MBAdminPortletDataHandler _mbAdminPortletDataHandler;
 
 }
