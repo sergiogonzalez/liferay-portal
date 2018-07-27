@@ -342,6 +342,19 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
+		if (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
+			DLFileVersion lastDLFileVersion =
+				dlFileVersionLocalService.getFileVersion(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+
+			_overwritePreviousFileVersion(
+				user, dlFileEntry, latestDLFileVersion, lastDLFileVersion);
+
+			unlockFileEntry(fileEntryId);
+
+			return;
+		}
+
 		// File version
 
 		String version = getNextVersion(
@@ -2839,6 +2852,47 @@ public class DLFileEntryLocalServiceImpl
 
 	@BeanReference(type = DLFileVersionPolicy.class)
 	protected DLFileVersionPolicy dlFileVersionPolicy;
+
+	private void _overwritePreviousFileVersion(
+			User user, DLFileEntry dlFileEntry,
+			DLFileVersion latestDLFileVersion, DLFileVersion lastDLFileVersion)
+		throws PortalException {
+
+		// File entry
+
+		dlFileEntry.setModifiedDate(latestDLFileVersion.getModifiedDate());
+		dlFileEntry.setFileName(latestDLFileVersion.getFileName());
+		dlFileEntry.setExtension(latestDLFileVersion.getExtension());
+		dlFileEntry.setMimeType(latestDLFileVersion.getMimeType());
+		dlFileEntry.setSize(latestDLFileVersion.getSize());
+
+		dlFileEntryPersistence.update(dlFileEntry);
+
+		// File version
+
+		lastDLFileVersion.setFileName(latestDLFileVersion.getFileName());
+		lastDLFileVersion.setExtension(latestDLFileVersion.getExtension());
+		lastDLFileVersion.setMimeType(latestDLFileVersion.getMimeType());
+		lastDLFileVersion.setSize(latestDLFileVersion.getSize());
+
+		dlFileVersionPersistence.update(lastDLFileVersion);
+
+		// File
+
+		DLStoreUtil.deleteFile(
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), lastDLFileVersion.getVersion());
+
+		DLStoreUtil.copyFileVersion(
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(),
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+			lastDLFileVersion.getVersion());
+
+		// Latest file version
+
+		removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
