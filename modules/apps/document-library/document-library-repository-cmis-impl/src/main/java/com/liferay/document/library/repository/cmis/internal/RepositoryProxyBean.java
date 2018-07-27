@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
@@ -212,15 +213,17 @@ public class RepositoryProxyBean
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean majorVersion,
-			String changeLog, ServiceContext serviceContext)
+			long userId, long fileEntryId,
+			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(_classLoader)) {
 
 			_repository.checkInFileEntry(
-				userId, fileEntryId, majorVersion, changeLog, serviceContext);
+				userId, fileEntryId, dlVersionNumberIncrease, changeLog,
+				serviceContext);
 		}
 	}
 
@@ -1147,7 +1150,8 @@ public class RepositoryProxyBean
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
@@ -1155,7 +1159,8 @@ public class RepositoryProxyBean
 
 			FileEntry fileEntry = _repository.updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title,
-				description, changeLog, majorVersion, file, serviceContext);
+				description, changeLog, dlVersionNumberIncrease, file,
+				serviceContext);
 
 			return newFileEntryProxyBean(fileEntry);
 		}
@@ -1165,8 +1170,8 @@ public class RepositoryProxyBean
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
+			DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
@@ -1174,7 +1179,8 @@ public class RepositoryProxyBean
 
 			FileEntry fileEntry = _repository.updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title,
-				description, changeLog, majorVersion, is, size, serviceContext);
+				description, changeLog, dlVersionNumberIncrease, is, size,
+				serviceContext);
 
 			return newFileEntryProxyBean(fileEntry);
 		}
