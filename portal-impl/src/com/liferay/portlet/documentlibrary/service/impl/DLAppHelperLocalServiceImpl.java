@@ -746,6 +746,15 @@ public class DLAppHelperLocalServiceImpl
 		SocialActivityManagerUtil.addActivity(
 			userId, fileEntry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+		
+		// Folder
+
+		if (!dlFileEntry.isCheckedOut() &&
+			(dlFileEntry.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			dlFolderLocalService.updateLastPostDate(dlFileEntry.getFolderId(), new Date());
+		}
 	}
 
 	@Override
@@ -1455,6 +1464,15 @@ public class DLAppHelperLocalServiceImpl
 				fileVersion.getCompanyId(), fileVersion.getGroupId(),
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId());
+		}
+
+		// Folder
+
+		if (!dlFileEntry.isCheckedOut() &&
+			(dlFileEntry.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			dlFolderLocalService.updateLastPostDate(dlFileEntry.getFolderId(), new Date());
 		}
 
 		return fileEntry;
