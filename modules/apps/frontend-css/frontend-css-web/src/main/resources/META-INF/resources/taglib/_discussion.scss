@@ -66,6 +66,22 @@ $light-color: #E7E7ED;
 		}
 	}
 
+	.lfr-discussion-reply {
+		font-size: .875rem;
+
+		&.popover {
+			max-width: 100%;
+		}
+
+		.popover-title {
+			font-size: inherit;
+		}
+
+		.popover-content {
+			overflow: hidden;
+		}
+	}
+
 	// workaround bs4-popover
 	// Pseudo implementation of popover of bootstrap 4 with the cssClass that aui-popover provide
 	// I haven't context for make via @extend :(
