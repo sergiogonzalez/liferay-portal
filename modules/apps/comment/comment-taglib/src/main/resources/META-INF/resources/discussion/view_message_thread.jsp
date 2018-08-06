@@ -94,21 +94,24 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											User parentMessageUser = parentDiscussionComment.getUser();
 											%>
 
-											<span>
-												<div class="lfr-discussion-reply-user-avatar">
+											<div class="autofit-padded-no-gutters-x autofit-row">
+												<div class="autofit-col">
 													<liferay-ui:user-portrait
+														cssClass="user-icon-lg"
 														user="<%= parentMessageUser %>"
 													/>
 												</div>
 
-												<div class="lfr-discussion-reply-user-name">
-													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
-												</div>
+												<div class="autofit-col autofit-col-expand">
+													<div class="text-truncate username">
+														<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
+													</div>
 
-												<div class="lfr-discussion-reply-creation-date">
-													<%= dateFormatDateTime.format(parentDiscussionComment.getCreateDate()) %>
+													<div class="small text-secondary">
+														<%= dateFormatDateTime.format(parentDiscussionComment.getCreateDate()) %>
+													</div>
 												</div>
-											</span>
+											</div>
 										</liferay-util:buffer>
 
 										<liferay-util:buffer
