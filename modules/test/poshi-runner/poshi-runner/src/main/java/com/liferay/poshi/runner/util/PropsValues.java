@@ -260,9 +260,6 @@ public class PropsValues {
 	public static final String[] TEST_SUBREPO_DIRS = StringUtil.split(
 		PropsUtil.get("test.subrepo.dirs"));
 
-	public static final String[] TEST_TOGGLE_FILE_NAMES = StringUtil.split(
-		PropsUtil.get("test.toggle.file.names"));
-
 	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
 		PropsUtil.get("testing.class.method"));
 

@@ -579,7 +579,7 @@ public class PoshiRunnerGetterUtil {
 			"equals", "execute", "fail", "for", "if", "head", "html", "isset",
 			"not", "off", "on", "or", "property", "prose", "return", "set-up",
 			"table", "take-screenshot", "task", "tbody", "td", "tear-down",
-			"thead", "then", "title", "toggle", "tr", "var", "while"
+			"thead", "then", "title", "tr", "var", "while"
 		});
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 	private static final Map<String, String > _utilityClassMap =

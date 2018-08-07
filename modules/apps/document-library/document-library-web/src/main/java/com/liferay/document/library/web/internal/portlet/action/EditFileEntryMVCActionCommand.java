@@ -949,23 +949,31 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, actionResponse, jsonObject);
 				}
 			}
-			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
-
-				// Update file entry and checkin
-
-				fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, majorVersion, inputStream, size,
-					serviceContext);
-			}
 			else {
+				if (size == 0) {
+					fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-				// Update file entry
+					contentType = fileEntry.getMimeType();
+				}
 
-				fileEntry = _dlAppService.updateFileEntry(
-					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, majorVersion, inputStream, size,
-					serviceContext);
+				if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+
+					// Update file entry and checkin
+
+					fileEntry = _dlAppService.updateFileEntryAndCheckIn(
+						fileEntryId, sourceFileName, contentType, title,
+						description, changeLog, majorVersion, inputStream, size,
+						serviceContext);
+				}
+				else {
+
+					// Update file entry
+
+					fileEntry = _dlAppService.updateFileEntry(
+						fileEntryId, sourceFileName, contentType, title,
+						description, changeLog, majorVersion, inputStream, size,
+						serviceContext);
+				}
 			}
 
 			return fileEntry;
