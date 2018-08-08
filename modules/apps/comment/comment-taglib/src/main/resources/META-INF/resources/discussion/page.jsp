@@ -115,18 +115,20 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 							<c:choose>
 								<c:when test="<%= commentSectionDisplayContext.isReplyButtonVisible() %>">
-									<div class="panel">
-										<div class="panel-body">
-											<div class="lfr-discussion-details">
+									<div class="lfr-discussion-reply-container">
+										<div class="autofit-padded-no-gutters autofit-row">
+											<div class="autofit-col lfr-discussion-details">
 												<liferay-ui:user-portrait
+													cssClass="user-icon-lg"
 													user="<%= user %>"
 												/>
 											</div>
 
-											<div class="lfr-discussion-body">
+											<div class="autofit-col autofit-col-expand lfr-discussion-editor">
 												<liferay-ui:input-editor
 													configKey="commentEditor"
 													contents=""
+													cssClass="form-control"
 													editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
 													name='<%= randomNamespace + "postReplyBody0" %>'
 													onChangeMethod='<%= randomNamespace + "0ReplyOnChange" %>'
@@ -137,12 +139,14 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 												<aui:input name="postReplyBody0" type="hidden" />
 
+												<%-- Remove this check
 												<c:if test="<%= canSubscribe && !subscribed %>">
 													<aui:input helpMessage="comments-subscribe-me-help" label="subscribe-me" name="subscribe" type="checkbox" value="<%= PropsValues.DISCUSSION_SUBSCRIBE_BY_DEFAULT %>" />
 												</c:if>
+												--%>
 
 												<aui:button-row>
-													<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 												</aui:button-row>
 											</div>
 										</div>

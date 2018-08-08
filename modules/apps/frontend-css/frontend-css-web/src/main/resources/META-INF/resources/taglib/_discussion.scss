@@ -16,6 +16,16 @@ $light-color: #E7E7ED;
 		text-align: right;
 	}
 
+	.lfr-discussion-reply-container {
+		border-bottom: 1px solid $light-color;
+		margin-bottom: 1.5rem;
+		padding-bottom: 1.5rem;
+
+		.button-holder {
+			margin: 1rem 0 0;
+		}
+	}
+
 	.lfr-discussion-container {
 		border-bottom: 1px solid $light-color;
 		margin-bottom: $discussion-margin-button;
