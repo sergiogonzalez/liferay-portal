@@ -214,12 +214,12 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						%>
 
 						<c:if test="<%= moreCommentsPagination %>">
-							<div id="<%= namespace %>moreCommentsPage"></div>
+							<div class="lfr-discussion-more-comments" id="<%= namespace %>moreCommentsContainer">
+								<button class="btn btn-default btn-sm" id="<%= namespace %>moreCommentsTrigger" type="button"><liferay-ui:message key="more-comments" /></button>
 
-							<a class="btn btn-default" href="javascript:;" id="<%= namespace %>moreComments"><liferay-ui:message key="more-comments" /></a>
-
-							<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
-							<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+								<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
+								<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+							</div>
 						</c:if>
 					</div>
 				</c:if>
@@ -647,7 +647,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		</aui:script>
 
 		<aui:script sandbox="<%= true %>">
-			$('#<%= namespace %>moreComments').on(
+			$('#<%= namespace %>moreCommentsTrigger').on(
 				'click',
 				function(event) {
 					var form = $('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
@@ -687,7 +687,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								);
 							},
 							success: function(data) {
-								$('#<%= namespace %>moreCommentsPage').append(data);
+								$('#<%= namespace %>moreCommentsContainer').before(data);
 							}
 						}
 					);
