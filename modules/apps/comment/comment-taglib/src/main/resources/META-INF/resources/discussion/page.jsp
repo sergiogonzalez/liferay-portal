@@ -91,31 +91,25 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 
-						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
+						String subscriptionHandleClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<c:if test="<%= !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() %>">
-							<c:choose>
-								<c:when test="<%= subscribed %>">
-									<liferay-ui:icon
-										cssClass="subscribe-link"
-										iconCssClass="icon-remove-sign"
-										label="<%= true %>"
-										message="unsubscribe-from-comments"
-										url="<%= subscriptionURL %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:icon
-										cssClass="subscribe-link"
-										iconCssClass="icon-ok-sign"
-										label="<%= true %>"
-										message="subscribe-to-comments"
-										url="<%= subscriptionURL %>"
-									/>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
+						<div class="lfr-discussion-subscribe-button-container">
+							<c:if test="<%= !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() %>">
+								<c:choose>
+									<c:when test="<%= subscribed %>">
+										<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionHandleClick %>" type="button">
+											<liferay-ui:message key="subscribe" />
+										</button>
+									</c:when>
+									<c:otherwise>
+										<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionHandleClick %>" type="button">
+											<liferay-ui:message key="unsubscribe" />
+										</button>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</div>
 
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<aui:input name="emailAddress" type="hidden" />
