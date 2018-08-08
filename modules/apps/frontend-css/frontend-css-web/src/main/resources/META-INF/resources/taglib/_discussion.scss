@@ -15,7 +15,7 @@ $light-color: #E7E7ED;
 		border-bottom: 1px solid $light-color;
 		margin-bottom: $discussion-margin-button;
 
-		&:last-child {
+		&:last-of-type {
 			border-bottom: 0;
 		}
 
