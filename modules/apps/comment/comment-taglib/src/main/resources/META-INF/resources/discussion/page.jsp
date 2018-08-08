@@ -92,28 +92,20 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						boolean canSubscribe = !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() && discussionPermission.hasSubscribePermission(company.getCompanyId(), siteGroup.getGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 
-						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
+						String subscriptionHandleClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
 						<c:if test="<%= canSubscribe %>">
 							<c:choose>
 								<c:when test="<%= subscribed %>">
-									<liferay-ui:icon
-										cssClass="subscribe-link"
-										iconCssClass="icon-remove-sign"
-										label="<%= true %>"
-										message="unsubscribe-from-comments"
-										url="<%= subscriptionURL %>"
-									/>
+									<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionHandleClick %>" type="button">
+										<liferay-ui:message key="subscribe" />
+									</button>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:icon
-										cssClass="subscribe-link"
-										iconCssClass="icon-ok-sign"
-										label="<%= true %>"
-										message="subscribe-to-comments"
-										url="<%= subscriptionURL %>"
-									/>
+									<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionHandleClick %>" type="button">
+										<liferay-ui:message key="unsubscribe" />
+									</button>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
