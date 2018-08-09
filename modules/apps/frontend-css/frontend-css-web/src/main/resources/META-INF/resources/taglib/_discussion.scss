@@ -17,9 +17,7 @@ $light-color: #E7E7ED;
 	}
 
 	.lfr-discussion-reply-container {
-		border-bottom: 1px solid $light-color;
 		margin-bottom: 1.5rem;
-		padding-bottom: 1.5rem;
 
 		.button-holder {
 			margin: 1rem 0 0;
@@ -30,6 +28,11 @@ $light-color: #E7E7ED;
 		border-bottom: 1px solid $light-color;
 		margin-bottom: $discussion-margin-button;
 
+		&:first-of-type {
+			border-top: 1px solid $light-color;
+			padding-top: 1.5rem;
+		}
+		
 		&:last-of-type {
 			border-bottom: 0;
 		}
