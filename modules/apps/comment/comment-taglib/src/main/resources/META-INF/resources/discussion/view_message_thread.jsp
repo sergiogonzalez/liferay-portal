@@ -251,27 +251,28 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<div class="lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
-			<div class="panel">
-				<div class="panel-body">
-					<div class="lfr-discussion-details">
+			<div class="lfr-discussion-reply-container">
+				<div class="autofit-padded-no-gutters autofit-row">
+					<div class="autofit-col lfr-discussion-details">
 						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
 							user="<%= user %>"
 						/>
 					</div>
 
-					<div class="lfr-discussion-body">
+					<div class="autofit-col autofit-col-expand lfr-discussion-editor">
 						<div class="editor-wrapper"></div>
 
 						<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
 						<aui:button-row>
-							<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+							<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 							<%
 							String taglibCancel = randomNamespace + "hideEditor('" + randomNamespace + "postReplyBody" + index + "', '" + namespace + randomNamespace + "postReplyForm" + index + "')";
 							%>
 
-							<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
+							<aui:button cssClass="btn-comment btn-sm" onClick="<%= taglibCancel %>" type="cancel" />
 						</aui:button-row>
 
 						<aui:script>
