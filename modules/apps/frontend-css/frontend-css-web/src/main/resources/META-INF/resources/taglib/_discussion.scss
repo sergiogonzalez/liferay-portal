@@ -88,6 +88,12 @@ $light-color: #E7E7ED;
 		}
 	}
 
+	.lfr-discussion-parent-link {
+		color: #67678C;
+		font-weight: 600;
+		margin-left: 1em;
+	}
+
 	.lfr-discussion-reply {
 		font-size: .875rem;
 
@@ -97,6 +103,7 @@ $light-color: #E7E7ED;
 
 		.popover-title {
 			font-size: inherit;
+			font-weight: 400;
 		}
 
 		.popover-content {

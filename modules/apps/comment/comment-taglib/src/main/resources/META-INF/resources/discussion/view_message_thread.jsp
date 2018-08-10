@@ -59,71 +59,62 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<div class="autofit-col autofit-col-expand">
 					<div class="autofit-row">
 						<div class="autofit-col autofit-col-expand">
-							<div class="text-truncate-inline">
-								<aui:a cssClass="text-truncate username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
+							<div class="text-truncate">
+								<aui:a cssClass="username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
 									<%= HtmlUtil.escape(discussionComment.getUserName()) %>
-
 									<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">
 										(<liferay-ui:message key="you" />)
 									</c:if>
 								</aui:a>
-							</div>
 
-							<%
-							Date createDate = discussionComment.getCreateDate();
+								<%
+								Date createDate = discussionComment.getCreateDate();
 
-							String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-							%>
+								String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
 
-							<div class="small text-secondary">
-								<c:choose>
-									<c:when test="<%= discussionComment.getParentCommentId() == rootDiscussionComment.getCommentId() %>">
-										<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
-									</c:when>
-									<c:otherwise>
+								<c:if test="<%= discussionComment.getParentCommentId() != rootDiscussionComment.getCommentId() %>">
+
+									<%
+									DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
+									%>
+
+									<liferay-util:buffer
+										var="parentCommentUserBuffer"
+									>
 
 										<%
-										DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
+										User parentMessageUser = parentDiscussionComment.getUser();
 										%>
 
-										<liferay-util:buffer
-											var="parentCommentUserBuffer"
-										>
+										<div class="autofit-padded-no-gutters-x autofit-row">
+											<div class="autofit-col">
+												<liferay-ui:user-portrait
+													cssClass="user-icon-lg"
+													user="<%= parentMessageUser %>"
+												/>
+											</div>
 
-											<%
-											User parentMessageUser = parentDiscussionComment.getUser();
-											%>
-
-											<div class="autofit-padded-no-gutters-x autofit-row">
-												<div class="autofit-col">
-													<liferay-ui:user-portrait
-														cssClass="user-icon-lg"
-														user="<%= parentMessageUser %>"
-													/>
+											<div class="autofit-col autofit-col-expand">
+												<div class="username">
+													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 												</div>
 
-												<div class="autofit-col autofit-col-expand">
-													<div class="text-truncate username">
-														<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
-													</div>
-
-													<div class="small text-secondary">
-														<%= dateFormatDateTime.format(parentDiscussionComment.getCreateDate()) %>
-													</div>
+												<div class="text-secondary">
+													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionComment.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 												</div>
 											</div>
-										</liferay-util:buffer>
+										</div>
+									</liferay-util:buffer>
 
-										<liferay-util:buffer
-											var="parentCommentBodyBuffer"
-										>
-											<a class="lfr-discussion-parent-link" data-metadata="<%= HtmlUtil.escape(parentDiscussionComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>">
-											<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %></a>
-										</liferay-util:buffer>
+									<a aria-label="<liferay-ui:message key="in-reply-to-x" />" class="lfr-discussion-parent-link" data-metaData="<%= HtmlUtil.escape(parentDiscussionComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>" href="javascript:void(0);">
+										<span class="inline-item inline-item-before"><clay:icon symbol="redo" /></span><%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
+									</a>
+								</c:if>
+							</div>
 
-										<liferay-ui:message arguments="<%= new Object[] {createDateDescription, parentCommentBodyBuffer} %>" key="x-ago-in-reply-to-x" translateArguments="<%= false %>" />
-									</c:otherwise>
-								</c:choose>
+							<div class="text-secondary">
+								<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
 
 								<%
 								Date modifiedDate = discussionComment.getModifiedDate();
