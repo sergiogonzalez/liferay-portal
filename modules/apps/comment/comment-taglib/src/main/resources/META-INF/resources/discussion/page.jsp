@@ -727,8 +727,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					var currentTarget = event.currentTarget;
 
 					popover.set('align.node', currentTarget);
-					popover.set('bodyContent', currentTarget.attr('data-metaData'));
-					popover.set('headerContent', currentTarget.attr('data-title'));
+					popover.set('headerContent', currentTarget.attr('data-inreply-title'));
+					popover.set('bodyContent', currentTarget.attr('data-inreply-content'));
 
 					popover.show();
 				},
