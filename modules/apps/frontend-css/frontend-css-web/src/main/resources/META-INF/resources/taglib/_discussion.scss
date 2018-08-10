@@ -32,7 +32,7 @@ $light-color: #E7E7ED;
 			border-top: 1px solid $light-color;
 			padding-top: 1.5rem;
 		}
-		
+
 		&:last-of-type {
 			border-bottom: 0;
 		}
@@ -67,6 +67,10 @@ $light-color: #E7E7ED;
 	.username {
 		color: $dark-color;
 		font-weight: 600;
+	}
+
+	.taglib-workflow-status {
+		margin-left: .5rem;
 	}
 
 	.workflow-value {
