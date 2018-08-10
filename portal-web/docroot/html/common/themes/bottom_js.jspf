@@ -70,6 +70,8 @@
 		Liferay.Data.LFR_PORTAL_CLAY_TOOLTIP = ClayTooltip.default.init(
 			{
 				selectors: [
+					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
+					'.taglib-discussion [title]:not(.lfr-portal-tooltip)',
 					'.management-bar [data-title]:not(.lfr-portal-tooltip)',
 					'.management-bar [title]:not(.lfr-portal-tooltip)'
 				]
