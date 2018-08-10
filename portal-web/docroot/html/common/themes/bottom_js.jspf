@@ -71,7 +71,7 @@
 			{
 				selectors: [
 					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
-					'.taglib-discussion [title]:not(.lfr-portal-tooltip)',
+					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])',
 					'.management-bar [data-title]:not(.lfr-portal-tooltip)',
 					'.management-bar [title]:not(.lfr-portal-tooltip)'
 				]
