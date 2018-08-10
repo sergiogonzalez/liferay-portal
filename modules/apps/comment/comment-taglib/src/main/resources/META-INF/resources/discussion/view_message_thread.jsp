@@ -114,15 +114,16 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							</div>
 
 							<div class="text-secondary">
-								<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
+								<span title="<%= dateFormatDateTime.format(createDate) %>"><liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" /></span>
 
 								<%
 								Date modifiedDate = discussionComment.getModifiedDate();
 								%>
 
 								<c:if test="<%= createDate.before(modifiedDate) %>">
-									<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateFormatDateTime.format(modifiedDate)) %>');">
-										- <liferay-ui:message key="edited" />
+									-
+									<strong title="<%= dateFormatDateTime.format(modifiedDate) %>">
+										<liferay-ui:message key="edited" />
 									</strong>
 								</c:if>
 
