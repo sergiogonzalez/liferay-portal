@@ -524,6 +524,15 @@ public class DLAppHelperLocalServiceImpl
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), null,
 			oldStatus, null, null);
 
+		// Folder
+
+		if (dlFileShortcut.getFolderId() !=
+			 DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			dlFolderLocalService.updateLastPostDate(
+				dlFileShortcut.getFolderId(), new Date());
+		}
+
 		return new LiferayFileShortcut(dlFileShortcut);
 	}
 
@@ -794,6 +803,15 @@ public class DLAppHelperLocalServiceImpl
 		// Trash
 
 		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
+
+		// Folder
+
+		if (dlFileShortcut.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			dlFolderLocalService.updateLastPostDate(
+				dlFileShortcut.getFolderId(), new Date());
+		}
 	}
 
 	@Override
