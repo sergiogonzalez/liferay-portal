@@ -60,12 +60,14 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<div class="autofit-row">
 						<div class="autofit-col autofit-col-expand">
 							<div class="text-truncate">
-								<aui:a cssClass="username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
-									<%= HtmlUtil.escape(discussionComment.getUserName()) %>
-									<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">
-										(<liferay-ui:message key="you" />)
-									</c:if>
-								</aui:a>
+								<liferay-util:whitespace-remover>
+									<aui:a cssClass="username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
+										<%= HtmlUtil.escape(discussionComment.getUserName()) %>
+										<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">
+											<%= StringPool.SPACE %>(<liferay-ui:message key="you" />)
+										</c:if>
+									</aui:a>
+								</liferay-util:whitespace-remover>
 
 								<%
 								Date createDate = discussionComment.getCreateDate();
