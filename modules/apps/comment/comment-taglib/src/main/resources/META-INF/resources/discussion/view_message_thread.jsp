@@ -109,7 +109,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										</div>
 									</liferay-util:buffer>
 
-									<a aria-label="<liferay-ui:message arguments="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>" key="in-reply-to-x" />" class="lfr-discussion-parent-link" data-inreply-content="<%= HtmlUtil.escape(parentDiscussionComment.getBody()) %>" data-inreply-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>" href="javascript:void(0);">
+									<a aria-label="<liferay-ui:message arguments="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>" key="in-reply-to-x" />" class="lfr-discussion-parent-link" data-inreply-content="<%= StringUtil.shorten(HtmlUtil.escape(parentDiscussionComment.getBody()), 200) %>" data-inreply-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>" href="javascript:void(0);">
 										<span class="inline-item inline-item-before"><clay:icon symbol="redo" /></span><%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 									</a>
 								</c:if>
