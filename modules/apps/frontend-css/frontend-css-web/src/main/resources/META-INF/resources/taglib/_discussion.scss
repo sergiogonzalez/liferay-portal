@@ -114,6 +114,10 @@ $light-color: #E7E7ED;
 		}
 	}
 
+	.lfr-discussion-controls .autofit-col:first-of-type > .btn-outline-borderless {
+		margin-left: -0.75rem;
+	}
+
 	.lfr-discussion-more-comments {
 		border-top: 1px solid $light-color;
 		margin-top: 1.5rem;
