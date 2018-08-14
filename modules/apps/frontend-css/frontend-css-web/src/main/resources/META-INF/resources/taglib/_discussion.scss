@@ -19,7 +19,7 @@ $light-color: #E7E7ED;
 	.button-holder {
 		margin: 1rem 0;
 	}
-	
+
 	.lfr-discussion-add-container {
 		margin-bottom: 1.5rem;
 
@@ -44,9 +44,9 @@ $light-color: #E7E7ED;
 		.lfr-discussion {
 			padding-left: $discussion-indent;
 
-			// limit the level of nesting (2 levels)
+			// limit the level of nesting
 
-			.lfr-discussion .lfr-discussion {
+			.lfr-discussion .lfr-discussion .lfr-discussion {
 				padding-left: 0;
 			}
 
