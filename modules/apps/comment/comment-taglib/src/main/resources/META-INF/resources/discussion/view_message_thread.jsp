@@ -209,7 +209,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:if>
 				</div>
 
-				<div class="autofit-row lfr-discussion-controls widget-toolbar">
+				<div class="autofit-row lfr-discussion-controls">
 					<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && commentTreeDisplayContext.isReplyActionControlVisible() %>">
 						<div class="autofit-col">
 							<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
