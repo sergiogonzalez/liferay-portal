@@ -111,6 +111,13 @@ $light-color: #E7E7ED;
 		}
 	}
 
+	.lfr-discussion-more-comments {
+		border-top: 1px solid $light-color;
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		text-align: center;
+	}
+
 	// workaround bs4-popover
 	// Pseudo implementation of popover of bootstrap 4 with the cssClass that aui-popover provide
 	// I haven't context for make via @extend :(
