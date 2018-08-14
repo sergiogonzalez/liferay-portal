@@ -16,11 +16,15 @@ $light-color: #E7E7ED;
 		text-align: right;
 	}
 
-	.lfr-discussion-reply-container {
+	.button-holder {
+		margin: 1rem 0;
+	}
+	
+	.lfr-discussion-add-container {
 		margin-bottom: 1.5rem;
 
 		.button-holder {
-			margin: 1rem 0 0;
+			margin-bottom: 0;
 		}
 	}
 
