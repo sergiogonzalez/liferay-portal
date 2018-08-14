@@ -185,19 +185,19 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</div>
 
 					<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
-						<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style="<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>">
+						<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style="display: none;">
 							<div class="editor-wrapper"></div>
 
 							<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= discussionComment.getBody() %>" />
 
 							<aui:button-row>
-								<aui:button name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
+								<aui:button cssClass="btn-comment btn-primary btn-sm" name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
 
 								<%
 								String taglibCancel = randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "');" + randomNamespace + "hideEditor('" + randomNamespace + "editReplyBody" + index + "', '" + namespace + randomNamespace + "editForm" + index + "');";
 								%>
 
-								<aui:button onClick="<%= taglibCancel %>" type="cancel" />
+								<aui:button cssClass="btn-comment btn-primary btn-sm" onClick="<%= taglibCancel %>" type="cancel" />
 							</aui:button-row>
 
 							<aui:script>
@@ -254,7 +254,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						/>
 					</div>
 
-					<div class="autofit-col autofit-col-expand lfr-discussion-editor">
+					<div class="autofit-col autofit-col-expand">
 						<div class="editor-wrapper"></div>
 
 						<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
@@ -271,7 +271,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 						<aui:script>
 							window['<%= namespace + randomNamespace + index %>ReplyOnChange'] = function(html) {
-							Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= index %>', html.trim() === '');
+								Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= index %>', html.trim() === '');
 							};
 						</aui:script>
 					</div>
