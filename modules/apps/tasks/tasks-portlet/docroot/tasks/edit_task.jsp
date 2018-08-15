@@ -123,9 +123,11 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 						<aui:option label="low" value="3" />
 					</aui:select>
 
-					<label class="due-date-label field-label"><%= LanguageUtil.get(request, "due-date") %></label>
+					<aui:field-wrapper>
+						<label class="control-label"><%= LanguageUtil.get(request, "due-date") %></label>
 
-					<a class="due-date-toggle field-content" href="javascript:;" id="toggleDueDate" onClick="<%= renderResponse.getNamespace() + "displayInputDate();" %>"><%= dueDateToggleText %></a>
+						<a class="field-content" href="javascript:;" id="toggleDueDate" onClick="<%= renderResponse.getNamespace() + "displayInputDate();" %>"><%= dueDateToggleText %></a>
+					</aui:field-wrapper>
 
 					<aui:input id="addDueDate" name="addDueDate" type="hidden" value="<%= addDueDate %>" />
 
