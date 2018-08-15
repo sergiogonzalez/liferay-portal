@@ -37,8 +37,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author André de Oliveira
@@ -217,11 +215,8 @@ public class UpdateDocumentIndexWriterImpl
 	@Reference
 	protected SearchEngineHelper searchEngineHelper;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchPermissionDocumentContributor
+	@Reference
+	protected SearchPermissionDocumentContributor
 		searchPermissionDocumentContributor;
 
 	private static final Log _log = LogFactoryUtil.getLog(

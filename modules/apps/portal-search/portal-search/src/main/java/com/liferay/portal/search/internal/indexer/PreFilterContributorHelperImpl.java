@@ -37,8 +37,6 @@ import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author André de Oliveira
@@ -94,11 +92,8 @@ public class PreFilterContributorHelperImpl
 	@Reference
 	protected QueryPreFilterContributorsHolder queryPreFilterContributorsHolder;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchPermissionChecker searchPermissionChecker;
+	@Reference
+	protected SearchPermissionChecker searchPermissionChecker;
 
 	@Reference
 	protected SearchPermissionFilterContributorsHolder

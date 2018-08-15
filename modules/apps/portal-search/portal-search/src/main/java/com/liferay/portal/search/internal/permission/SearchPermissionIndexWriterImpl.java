@@ -23,8 +23,6 @@ import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -50,11 +48,8 @@ public class SearchPermissionIndexWriterImpl
 	@Reference
 	protected BaseModelDocumentFactory baseModelDocumentFactory;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchPermissionDocumentContributor
+	@Reference
+	protected SearchPermissionDocumentContributor
 		searchPermissionDocumentContributor;
 
 	@Reference
