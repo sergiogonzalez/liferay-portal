@@ -65,8 +65,6 @@ import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -408,11 +406,8 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	@Reference
 	protected IndexWriterHelper indexWriterHelper;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchPermissionChecker searchPermissionChecker;
+	@Reference
+	protected SearchPermissionChecker searchPermissionChecker;
 
 	@Reference
 	protected StorageEngine storageEngine;
