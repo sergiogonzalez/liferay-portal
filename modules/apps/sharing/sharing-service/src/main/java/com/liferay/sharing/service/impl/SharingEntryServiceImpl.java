@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.security.permission.SharingAssetPermissionChecker;
+import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
 import java.util.Collection;
@@ -43,10 +43,10 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SharingAssetPermissionChecker sharingAssetPermissionChecker =
+		SharingPermissionChecker sharingPermissionChecker =
 			_serviceTrackerMap.getService(classNameId);
 
-		sharingAssetPermissionChecker.check(
+		sharingPermissionChecker.check(
 			getPermissionChecker(), classPK, groupId, sharingEntryActionKeys);
 
 		return sharingEntryLocalService.addSharingEntry(
@@ -63,7 +63,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SharingAssetPermissionChecker.class,
+			bundleContext, SharingPermissionChecker.class,
 			"(model.class.name=*)",
 			(serviceReference, emitter) -> {
 				emitter.emit(
@@ -83,7 +83,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	@ServiceReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
 
-	private ServiceTrackerMap<Long, SharingAssetPermissionChecker>
+	private ServiceTrackerMap<Long, SharingPermissionChecker>
 		_serviceTrackerMap;
 
 }

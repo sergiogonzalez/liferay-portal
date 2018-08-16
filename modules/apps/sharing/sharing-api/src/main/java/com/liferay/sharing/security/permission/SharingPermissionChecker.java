@@ -23,7 +23,7 @@ import java.util.Collection;
 /**
  * @author Sergio González
  */
-public interface SharingAssetPermissionChecker {
+public interface SharingPermissionChecker {
 
 	public void check(
 			PermissionChecker permissionChecker, long classPK, long groupId,

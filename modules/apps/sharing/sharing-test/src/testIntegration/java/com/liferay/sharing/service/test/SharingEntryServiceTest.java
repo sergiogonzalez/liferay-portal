@@ -34,7 +34,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.security.permission.SharingAssetPermissionChecker;
+import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.SharingEntryService;
 
 import java.util.Arrays;
@@ -80,9 +80,8 @@ public class SharingEntryServiceTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_testSharingAssetPermissionClassName =
-			_classNameLocalService.addClassName(
-				"TestSharingAssetPermissionChecker");
+		_testSharingPermissionCheckerClassName =
+			_classNameLocalService.addClassName("TestSharingPermissionChecker");
 	}
 
 	@After
@@ -96,12 +95,12 @@ public class SharingEntryServiceTest {
 	public void testAddSharingEntryWithUpdatePermissionWhenUserHasViewPermissionThrowsException()
 		throws Exception {
 
-		_registerSharingAssetPermissionChecker(
-			new TestSharingAssetPermissionChecker(
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
 				Arrays.asList(SharingEntryActionKey.VIEW)));
 
 		long classNameId =
-			_testSharingAssetPermissionClassName.getClassNameId();
+			_testSharingPermissionCheckerClassName.getClassNameId();
 		long classPK = RandomTestUtil.randomLong();
 
 		ServiceContext serviceContext =
@@ -116,13 +115,13 @@ public class SharingEntryServiceTest {
 	public void testAddSharingEntryWithViewAndUpdatePermission()
 		throws Exception {
 
-		_registerSharingAssetPermissionChecker(
-			new TestSharingAssetPermissionChecker(
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
 				Arrays.asList(
 					SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW)));
 
 		long classNameId =
-			_testSharingAssetPermissionClassName.getClassNameId();
+			_testSharingPermissionCheckerClassName.getClassNameId();
 		long classPK = RandomTestUtil.randomLong();
 
 		ServiceContext serviceContext =
@@ -147,12 +146,12 @@ public class SharingEntryServiceTest {
 	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasViewPermissionThrowsException()
 		throws Exception {
 
-		_registerSharingAssetPermissionChecker(
-			new TestSharingAssetPermissionChecker(
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
 				Arrays.asList(SharingEntryActionKey.VIEW)));
 
 		long classNameId =
-			_testSharingAssetPermissionClassName.getClassNameId();
+			_testSharingPermissionCheckerClassName.getClassNameId();
 		long classPK = RandomTestUtil.randomLong();
 
 		ServiceContext serviceContext =
@@ -167,12 +166,12 @@ public class SharingEntryServiceTest {
 
 	@Test
 	public void testAddSharingEntryWithViewPermission() throws Exception {
-		_registerSharingAssetPermissionChecker(
-			new TestSharingAssetPermissionChecker(
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
 				Arrays.asList(SharingEntryActionKey.VIEW)));
 
 		long classNameId =
-			_testSharingAssetPermissionClassName.getClassNameId();
+			_testSharingPermissionCheckerClassName.getClassNameId();
 		long classPK = RandomTestUtil.randomLong();
 
 		ServiceContext serviceContext =
@@ -191,17 +190,17 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
 	}
 
-	private void _registerSharingAssetPermissionChecker(
-		SharingAssetPermissionChecker sharingAssetPermissionChecker) {
+	private void _registerSharingPermissionChecker(
+		SharingPermissionChecker sharingPermissionChecker) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
 			"model.class.name",
-			_testSharingAssetPermissionClassName.getValue());
+			_testSharingPermissionCheckerClassName.getValue());
 
 		_serviceRegistration = _bundleContext.registerService(
-			SharingAssetPermissionChecker.class, sharingAssetPermissionChecker,
+			SharingPermissionChecker.class, sharingPermissionChecker,
 			properties);
 	}
 
@@ -216,13 +215,12 @@ public class SharingEntryServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private ServiceRegistration<SharingAssetPermissionChecker>
-		_serviceRegistration;
+	private ServiceRegistration<SharingPermissionChecker> _serviceRegistration;
 
 	@Inject
 	private SharingEntryService _sharingEntryService;
 
-	private ClassName _testSharingAssetPermissionClassName;
+	private ClassName _testSharingPermissionCheckerClassName;
 
 	@DeleteAfterTestRun
 	private User _toUser;
@@ -230,10 +228,10 @@ public class SharingEntryServiceTest {
 	@DeleteAfterTestRun
 	private User _user;
 
-	private class TestSharingAssetPermissionChecker
-		implements SharingAssetPermissionChecker {
+	private class TestSharingPermissionChecker
+		implements SharingPermissionChecker {
 
-		public TestSharingAssetPermissionChecker(
+		public TestSharingPermissionChecker(
 			List<SharingEntryActionKey> sharingEntryActionKeys) {
 
 			_sharingEntryActionKeys = sharingEntryActionKeys;

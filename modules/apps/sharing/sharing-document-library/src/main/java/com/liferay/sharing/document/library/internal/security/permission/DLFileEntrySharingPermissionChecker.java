@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.document.library.internal.security.permission.resource.SharingEntryDLFileEntryModelResourcePermissionRegistrar;
-import com.liferay.sharing.security.permission.SharingAssetPermissionChecker;
+import com.liferay.sharing.security.permission.SharingPermissionChecker;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.DLFileEntry",
-	service = SharingAssetPermissionChecker.class
+	service = SharingPermissionChecker.class
 )
-public class DLFileEntrySharingAssetPermissionChecker
-	implements SharingAssetPermissionChecker {
+public class DLFileEntrySharingPermissionChecker
+	implements SharingPermissionChecker {
 
 	@Override
 	public void check(

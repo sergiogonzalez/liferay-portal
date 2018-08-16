@@ -49,7 +49,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.sharing.constants.SharingEntryActionKey;
-import com.liferay.sharing.security.permission.SharingAssetPermissionChecker;
+import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
@@ -64,7 +64,7 @@ import org.junit.runner.RunWith;
  * @author Sergio González
  */
 @RunWith(Arquillian.class)
-public class DLFileEntrySharingAssetPermissionCheckerTest {
+public class DLFileEntrySharingPermissionCheckerTest {
 
 	@ClassRule
 	@Rule
@@ -112,7 +112,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_user, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
@@ -127,7 +127,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_user, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.UPDATE));
@@ -142,7 +142,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_user, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.VIEW));
@@ -162,7 +162,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.UPDATE));
@@ -182,7 +182,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.VIEW));
@@ -202,7 +202,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
@@ -219,7 +219,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
@@ -236,7 +236,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.UPDATE));
@@ -253,7 +253,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.VIEW));
@@ -273,7 +273,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
@@ -293,7 +293,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.VIEW));
@@ -313,7 +313,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.UPDATE));
@@ -333,7 +333,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
@@ -353,7 +353,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.UPDATE));
@@ -371,7 +371,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingAssetPermissionChecker.check(
+			_sharingPermissionChecker.check(
 				permissionChecker, _fileEntry.getFileEntryId(),
 				_fileEntry.getGroupId(),
 				Arrays.asList(SharingEntryActionKey.VIEW));
@@ -379,7 +379,7 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntrySharingAssetPermissionCheckerTest.class);
+		DLFileEntrySharingPermissionCheckerTest.class);
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -401,13 +401,13 @@ public class DLFileEntrySharingAssetPermissionCheckerTest {
 	@Inject
 	private RoleLocalService _roleLocalService;
 
+	@Inject
+	private SharingEntryLocalService _sharingEntryLocalService;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.repository.model.DLFileEntry"
 	)
-	private SharingAssetPermissionChecker _sharingAssetPermissionChecker;
-
-	@Inject
-	private SharingEntryLocalService _sharingEntryLocalService;
+	private SharingPermissionChecker _sharingPermissionChecker;
 
 	private User _user;
 
