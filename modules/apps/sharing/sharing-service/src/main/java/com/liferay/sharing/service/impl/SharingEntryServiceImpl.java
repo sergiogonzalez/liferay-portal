@@ -14,28 +14,76 @@
 
 package com.liferay.sharing.service.impl;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingAssetPermissionChecker;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
+import java.util.Collection;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 /**
- * The implementation of the sharing entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.sharing.service.SharingEntryService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see SharingEntryServiceBaseImpl
- * @see com.liferay.sharing.service.SharingEntryServiceUtil
+ * @author Sergio González
  */
 public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.sharing.service.SharingEntryServiceUtil} to access the sharing entry remote service.
-	 */
+	@Override
+	public SharingEntry addSharingEntry(
+			long toUserId, long classNameId, long classPK, long groupId,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SharingAssetPermissionChecker sharingAssetPermissionChecker =
+			_serviceTrackerMap.getService(classNameId);
+
+		sharingAssetPermissionChecker.check(
+			getPermissionChecker(), classPK, groupId, sharingEntryActionKeys);
+
+		return sharingEntryLocalService.addSharingEntry(
+			getUserId(), toUserId, classNameId, classPK, groupId,
+			sharingEntryActionKeys, serviceContext);
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		Bundle bundle = FrameworkUtil.getBundle(SharingEntryServiceImpl.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SharingAssetPermissionChecker.class,
+			"(model.class.name=*)",
+			(serviceReference, emitter) -> {
+				emitter.emit(
+					classNameLocalService.getClassNameId(
+						(String)serviceReference.getProperty(
+							"model.class.name")));
+			});
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTrackerMap.close();
+	}
+
+	@ServiceReference(type = ClassNameLocalService.class)
+	protected ClassNameLocalService classNameLocalService;
+
+	private ServiceTrackerMap<Long, SharingAssetPermissionChecker>
+		_serviceTrackerMap;
 
 }
