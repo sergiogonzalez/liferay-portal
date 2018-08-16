@@ -16,9 +16,16 @@ package com.liferay.sharing.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.sharing.service.SharingEntryServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.sharing.service.SharingEntryServiceUtil} service utility. The
+ * {@link SharingEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,29 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see SharingEntryServiceHttp
  * @see com.liferay.sharing.model.SharingEntrySoap
- * @see com.liferay.sharing.service.SharingEntryServiceUtil
+ * @see SharingEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class SharingEntryServiceSoap {
+	public static com.liferay.sharing.model.SharingEntrySoap addSharingEntry(
+		long toUserId, long classNameId, long classPK, long groupId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.sharing.model.SharingEntry returnValue = SharingEntryServiceUtil.addSharingEntry(toUserId,
+					classNameId, classPK, groupId, sharingEntryActionKeys,
+					serviceContext);
+
+			return com.liferay.sharing.model.SharingEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SharingEntryServiceSoap.class);
 }

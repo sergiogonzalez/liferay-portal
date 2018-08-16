@@ -21,9 +21,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.model.SharingEntry;
+
+import java.util.Collection;
 
 /**
  * Provides the remote service interface for SharingEntry. Methods of this
@@ -49,6 +55,10 @@ public interface SharingEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryServiceUtil} to access the sharing entry remote service. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SharingEntry addSharingEntry(long toUserId, long classNameId,
+		long classPK, long groupId,
+		Collection<SharingEntryActionKey> sharingEntryActionKeys,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

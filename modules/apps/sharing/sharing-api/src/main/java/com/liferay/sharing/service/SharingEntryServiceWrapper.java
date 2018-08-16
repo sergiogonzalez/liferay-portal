@@ -32,6 +32,16 @@ public class SharingEntryServiceWrapper implements SharingEntryService,
 		_sharingEntryService = sharingEntryService;
 	}
 
+	@Override
+	public com.liferay.sharing.model.SharingEntry addSharingEntry(
+		long toUserId, long classNameId, long classPK, long groupId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharingEntryService.addSharingEntry(toUserId, classNameId,
+			classPK, groupId, sharingEntryActionKeys, serviceContext);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

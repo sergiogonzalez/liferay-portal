@@ -42,6 +42,15 @@ public class SharingEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sharing.service.impl.SharingEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
+		long toUserId, long classNameId, long classPK, long groupId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSharingEntry(toUserId, classNameId, classPK, groupId,
+			sharingEntryActionKeys, serviceContext);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
