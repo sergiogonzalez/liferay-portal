@@ -17,7 +17,7 @@ package com.liferay.sharing.search.internal.permission;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.search.permission.SearchPermissionFilterProcessor;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterProcessor;
 
 import org.osgi.service.component.annotations.Component;
 
