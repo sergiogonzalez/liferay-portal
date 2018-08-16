@@ -89,6 +89,31 @@ public class SharingEntryServiceTest {
 		}
 	}
 
+	@Test(expected = PrincipalException.class)
+	public void testAddSharingEntryWithInvalidClassNameIdThrowsException()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(SharingEntryActionKey.VIEW)));
+
+		ClassName invalidClassName = _classNameLocalService.addClassName(
+			"InvalidClassName");
+
+		long classNameId = invalidClassName.getClassNameId();
+
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryService.addSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			Arrays.asList(
+				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+			serviceContext);
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddSharingEntryWithUpdatePermissionWhenUserHasViewPermissionThrowsException()
 		throws Exception {

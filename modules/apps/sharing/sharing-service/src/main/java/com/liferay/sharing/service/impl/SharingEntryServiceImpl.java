@@ -91,6 +91,12 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		SharingPermissionChecker sharingPermissionChecker =
 			_serviceTrackerMap.getService(classNameId);
 
+		if (sharingPermissionChecker == null) {
+			throw new PrincipalException(
+				"sharing permission checker is null for class name id " +
+					classNameId);
+		}
+
 		if (sharingPermissionChecker.hasPermission(
 				getPermissionChecker(), classPK, groupId,
 				sharingEntryActionKeys)) {
