@@ -54,6 +54,7 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -112,10 +113,11 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_user, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
+			Assert.assertTrue(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
 		}
 	}
 
@@ -127,10 +129,11 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_user, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.UPDATE));
+			Assert.assertTrue(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.UPDATE)));
 		}
 	}
 
@@ -142,14 +145,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_user, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.VIEW));
+			Assert.assertTrue(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.VIEW)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithAddDiscussionPermissionCannotShareWithUpdate()
 		throws Exception {
 
@@ -162,14 +166,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.UPDATE));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.UPDATE)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithAddDiscussionPermissionCannotShareWithView()
 		throws Exception {
 
@@ -182,10 +187,11 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.VIEW));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.VIEW)));
 		}
 	}
 
@@ -202,14 +208,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
+			Assert.assertTrue(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithoutAddDiscussionPermissionCannotShareWithAddDiscussion()
 		throws Exception {
 
@@ -219,14 +226,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithoutUpdatePermissionCannotShareWithUpdate()
 		throws Exception {
 
@@ -236,14 +244,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.UPDATE));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.UPDATE)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithoutViewPermissionCannotShareWithView()
 		throws Exception {
 
@@ -253,14 +262,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.VIEW));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.VIEW)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithUpdatePermissionCannotShareWithAddDiscussion()
 		throws Exception {
 
@@ -273,14 +283,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithUpdatePermissionCannotShareWithView()
 		throws Exception {
 
@@ -293,10 +304,11 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.VIEW));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.VIEW)));
 		}
 	}
 
@@ -313,14 +325,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.UPDATE));
+			Assert.assertTrue(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.UPDATE)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithViewPermissionCannotShareWithAddDiscussion()
 		throws Exception {
 
@@ -333,14 +346,15 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION)));
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test
 	public void testUserWithViewPermissionCannotShareWithUpdate()
 		throws Exception {
 
@@ -353,10 +367,11 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.UPDATE));
+			Assert.assertFalse(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.UPDATE)));
 		}
 	}
 
@@ -371,10 +386,11 @@ public class DLFileEntrySharingPermissionCheckerTest {
 			ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_sharingPermissionChecker.check(
-				permissionChecker, _fileEntry.getFileEntryId(),
-				_fileEntry.getGroupId(),
-				Arrays.asList(SharingEntryActionKey.VIEW));
+			Assert.assertTrue(
+				_sharingPermissionChecker.hasPermission(
+					permissionChecker, _fileEntry.getFileEntryId(),
+					_fileEntry.getGroupId(),
+					Arrays.asList(SharingEntryActionKey.VIEW)));
 		}
 	}
 

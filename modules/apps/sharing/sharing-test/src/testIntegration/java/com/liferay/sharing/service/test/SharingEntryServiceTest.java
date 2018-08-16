@@ -15,7 +15,6 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -72,7 +71,6 @@ public class SharingEntryServiceTest {
 		_group = GroupTestUtil.addGroup();
 		_fromUser = UserTestUtil.addUser();
 		_toUser = UserTestUtil.addUser();
-		_user = UserTestUtil.addUser();
 
 		ServiceTestUtil.setUser(_fromUser);
 
@@ -91,7 +89,7 @@ public class SharingEntryServiceTest {
 		}
 	}
 
-	@Test(expected = PortalException.class)
+	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddSharingEntryWithUpdatePermissionWhenUserHasViewPermissionThrowsException()
 		throws Exception {
 
@@ -142,7 +140,7 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
 	}
 
-	@Test(expected = PortalException.class)
+	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasViewPermissionThrowsException()
 		throws Exception {
 
@@ -225,9 +223,6 @@ public class SharingEntryServiceTest {
 	@DeleteAfterTestRun
 	private User _toUser;
 
-	@DeleteAfterTestRun
-	private User _user;
-
 	private class TestSharingPermissionChecker
 		implements SharingPermissionChecker {
 
@@ -238,18 +233,19 @@ public class SharingEntryServiceTest {
 		}
 
 		@Override
-		public void check(
-				PermissionChecker permissionChecker, long classPK, long groupId,
-				Collection<SharingEntryActionKey> sharingEntryActionKeys)
-			throws PrincipalException {
+		public boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, long groupId,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys) {
 
 			for (SharingEntryActionKey sharingEntryActionKey :
 					sharingEntryActionKeys) {
 
 				if (!_sharingEntryActionKeys.contains(sharingEntryActionKey)) {
-					throw new PrincipalException();
+					return false;
 				}
 			}
+
+			return true;
 		}
 
 		private final List<SharingEntryActionKey> _sharingEntryActionKeys;

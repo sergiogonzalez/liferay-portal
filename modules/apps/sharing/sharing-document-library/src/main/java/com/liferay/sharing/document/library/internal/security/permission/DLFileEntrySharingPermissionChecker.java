@@ -43,7 +43,7 @@ public class DLFileEntrySharingPermissionChecker
 	implements SharingPermissionChecker {
 
 	@Override
-	public void check(
+	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, long groupId,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys)
 		throws PortalException {
@@ -52,13 +52,18 @@ public class DLFileEntrySharingPermissionChecker
 				sharingEntryActionKeys) {
 
 			if (!_actionKeysSet.contains(sharingEntryActionKey)) {
-				continue;
+				return false;
 			}
 
-			_dlFileEntryModelResourcePermission.check(
-				permissionChecker, classPK,
-				sharingEntryActionKey.getActionId());
+			if (!_dlFileEntryModelResourcePermission.contains(
+					permissionChecker, classPK,
+					sharingEntryActionKey.getActionId())) {
+
+				return false;
+			};
 		}
+
+		return true;
 	}
 
 	@Activate

@@ -25,7 +25,7 @@ import java.util.Collection;
  */
 public interface SharingPermissionChecker {
 
-	public void check(
+	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, long groupId,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys)
 		throws PortalException;

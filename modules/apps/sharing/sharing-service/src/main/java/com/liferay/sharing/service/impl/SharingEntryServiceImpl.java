@@ -17,6 +17,8 @@ package com.liferay.sharing.service.impl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -26,6 +28,7 @@ import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -43,11 +46,8 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SharingPermissionChecker sharingPermissionChecker =
-			_serviceTrackerMap.getService(classNameId);
-
-		sharingPermissionChecker.check(
-			getPermissionChecker(), classPK, groupId, sharingEntryActionKeys);
+		_checkSharingPermission(
+			getUserId(), classNameId, classPK, groupId, sharingEntryActionKeys);
 
 		return sharingEntryLocalService.addSharingEntry(
 			getUserId(), toUserId, classNameId, classPK, groupId,
@@ -82,6 +82,43 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 	@ServiceReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
+
+	private void _checkSharingPermission(
+			long fromUserId, long classNameId, long classPK, long groupId,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+		throws PortalException {
+
+		SharingPermissionChecker sharingPermissionChecker =
+			_serviceTrackerMap.getService(classNameId);
+
+		if (sharingPermissionChecker.hasPermission(
+				getPermissionChecker(), classPK, groupId,
+				sharingEntryActionKeys)) {
+
+			return;
+		}
+
+		ClassName className = classNameLocalService.fetchByClassNameId(
+			classNameId);
+
+		String resourceName = String.valueOf(classNameId);
+
+		if (className != null) {
+			resourceName = className.getClassName();
+		}
+
+		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
+			sharingEntryActionKeys.stream();
+
+		String[] actionIds = sharingEntryActionKeyStream.map(
+			SharingEntryActionKey::getActionId
+		).toArray(
+			String[]::new
+		);
+
+		throw new PrincipalException.MustHavePermission(
+			fromUserId, resourceName, classPK, actionIds);
+	}
 
 	private ServiceTrackerMap<Long, SharingPermissionChecker>
 		_serviceTrackerMap;
