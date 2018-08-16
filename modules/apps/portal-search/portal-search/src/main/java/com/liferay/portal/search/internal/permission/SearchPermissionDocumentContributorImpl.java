@@ -32,12 +32,19 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldsContributor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -99,9 +106,36 @@ public class SearchPermissionDocumentContributorImpl
 			companyId, groupId, className, classPK, viewActionId, document);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSearchPermissionFieldsContributor(
+		SearchPermissionFieldsContributor searchPermissionFieldsContributor) {
+
+		_searchPermissionFieldsContributors.add(
+			searchPermissionFieldsContributor);
+	}
+
+	protected void removeSearchPermissionFieldsContributor(
+		SearchPermissionFieldsContributor searchPermissionFieldsContributor) {
+
+		_searchPermissionFieldsContributors.remove(
+			searchPermissionFieldsContributor);
+	}
+
 	private void _addPermissionFields(
 		long companyId, long groupId, String className, long classPK,
 		String viewActionId, Document doc) {
+
+		Stream<SearchPermissionFieldsContributor> stream =
+			_searchPermissionFieldsContributors.stream();
+
+		stream.forEach(
+			searchPermissionFieldsContributor ->
+				searchPermissionFieldsContributor.addPermissionFields(
+					className, String.valueOf(classPK), doc));
 
 		try {
 			List<Role> roles = _resourcePermissionLocalService.getRoles(
@@ -160,5 +194,8 @@ public class SearchPermissionDocumentContributorImpl
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private final Collection<SearchPermissionFieldsContributor>
+		_searchPermissionFieldsContributors = new CopyOnWriteArrayList<>();
 
 }

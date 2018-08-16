@@ -50,7 +50,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
-import com.liferay.portal.search.permission.SearchPermissionFilterProcessor;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldsContributor;
+import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterProcessor;
 
 import java.io.Serializable;
 
@@ -188,10 +189,29 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
+	protected void addSearchPermissionFieldsContributor(
+		SearchPermissionFieldsContributor searchPermissionFieldsContributor) {
+
+		_searchPermissionFieldsContributors.add(
+			searchPermissionFieldsContributor);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void addSearchPermissionFilterProcessor(
 		SearchPermissionFilterProcessor searchPermissionFilterProcessor) {
 
 		_searchPermissionFilterProcessors.add(searchPermissionFilterProcessor);
+	}
+
+	protected void removeSearchPermissionFieldsContributor(
+		SearchPermissionFieldsContributor searchPermissionFieldsContributor) {
+
+		_searchPermissionFieldsContributors.remove(
+			searchPermissionFieldsContributor);
 	}
 
 	protected void removeSearchPermissionFilterProcessor(
@@ -215,6 +235,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			long companyId, long groupId, String className, String classPK,
 			String viewActionId, Document doc)
 		throws Exception {
+
+		for (SearchPermissionFieldsContributor
+				searchPermissionFieldsContributor :
+					_searchPermissionFieldsContributors) {
+
+			searchPermissionFieldsContributor.addPermissionFields(
+				className, classPK, doc);
+		}
 
 		List<Role> roles = _resourcePermissionLocalService.getRoles(
 			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL, classPK,
@@ -546,6 +574,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	private volatile SearchPermissionCheckerConfiguration
 		_searchPermissionCheckerConfiguration;
+	private final Collection<SearchPermissionFieldsContributor>
+		_searchPermissionFieldsContributors = new CopyOnWriteArrayList<>();
 	private final Collection<SearchPermissionFilterProcessor>
 		_searchPermissionFilterProcessors = new CopyOnWriteArrayList<>();
 
