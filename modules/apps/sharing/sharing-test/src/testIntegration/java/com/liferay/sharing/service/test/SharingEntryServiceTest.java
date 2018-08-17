@@ -32,6 +32,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.SharingEntryService;
@@ -211,6 +212,15 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
 		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testDeleteNonExistingSharingEntry() throws Exception {
+		_sharingEntryService.updateSharingEntry(
+			RandomTestUtil.randomLong(),
+			Arrays.asList(
+				SharingEntryActionKey.ADD_DISCUSSION,
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
