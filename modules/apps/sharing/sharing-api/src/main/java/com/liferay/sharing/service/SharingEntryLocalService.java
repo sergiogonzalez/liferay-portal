@@ -115,8 +115,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException;
 
-	public SharingEntry deleteSharingEntry(long toUserId, long classNameId,
-		long classPK) throws PortalException;
+	public SharingEntry deleteSharingEntry(long fromUserId, long toUserId,
+		long classNameId, long classPK) throws PortalException;
 
 	/**
 	* Deletes the sharing entry from the database. Also notifies the appropriate model listeners.
@@ -247,6 +247,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getSharingEntries(long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getSharingEntries(long toUserId,
+		long classNameId, long classPK) throws PortalException;
+
 	/**
 	* Returns all the sharing entries matching the UUID and company.
 	*
@@ -291,10 +295,6 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntry(long sharingEntryId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SharingEntry getSharingEntry(long toUserId, long classNameId,
-		long classPK) throws PortalException;
 
 	/**
 	* Returns the sharing entry matching the UUID and group.
