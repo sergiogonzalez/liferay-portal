@@ -319,6 +319,10 @@ public interface SharingEntryLocalService extends BaseLocalService,
 	public boolean hasSharingPermission(long toUserId, long classNameId,
 		long classPK, SharingEntryActionKey sharingEntryActionKey);
 
+	public SharingEntry updateSharingEntry(long sharingEntryId,
+		Collection<SharingEntryActionKey> sharingEntryActionKeys)
+		throws PortalException;
+
 	/**
 	* Updates the sharing entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

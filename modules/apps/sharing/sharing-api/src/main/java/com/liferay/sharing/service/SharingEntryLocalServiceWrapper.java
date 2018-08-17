@@ -412,6 +412,15 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 			classNameId, classPK, sharingEntryActionKey);
 	}
 
+	@Override
+	public com.liferay.sharing.model.SharingEntry updateSharingEntry(
+		long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sharingEntryLocalService.updateSharingEntry(sharingEntryId,
+			sharingEntryActionKeys);
+	}
+
 	/**
 	* Updates the sharing entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
