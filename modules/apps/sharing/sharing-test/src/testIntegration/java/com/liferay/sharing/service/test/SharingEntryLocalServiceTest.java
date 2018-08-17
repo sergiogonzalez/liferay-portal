@@ -369,8 +369,8 @@ public class SharingEntryLocalServiceTest {
 	@Test(expected = NoSuchEntryException.class)
 	public void testDeleteNonExistingSharingEntry() throws Exception {
 		_sharingEntryLocalService.deleteSharingEntry(
-			_toUser.getUserId(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong());
+			_fromUser.getUserId(), _toUser.getUserId(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 	}
 
 	@Test
@@ -451,7 +451,7 @@ public class SharingEntryLocalServiceTest {
 				sharingEntry.getSharingEntryId()));
 
 		_sharingEntryLocalService.deleteSharingEntry(
-			_toUser.getUserId(), classNameId, classPK);
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK);
 
 		Assert.assertNull(
 			_sharingEntryLocalService.fetchSharingEntry(
