@@ -134,6 +134,31 @@ public class SharingEntryServiceTest {
 			Arrays.asList(SharingEntryActionKey.UPDATE), serviceContext);
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testUpdateSharingEntryWithUpdatePermissionWhenUserHasViewPermissionThrowsException()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		_sharingEntryService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryActionKey.UPDATE));
+	}
+
 	@Test
 	public void testAddSharingEntryWithViewAndUpdatePermission()
 		throws Exception {
@@ -165,6 +190,41 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(classPK, sharingEntry.getClassPK());
 	}
 
+	@Test
+	public void testUpdateSharingEntryWithViewAndUpdatePermission()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(
+					SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		sharingEntry = _sharingEntryService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(),
+			Arrays.asList(
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
+
+		Assert.assertEquals(3, sharingEntry.getActionIds());
+		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
+		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
+		Assert.assertEquals(
+			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
+		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
+		Assert.assertEquals(classPK, sharingEntry.getClassPK());
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddSharingEntryWithViewAndUpdatePermissionWhenUserHasViewPermissionThrowsException()
 		throws Exception {
@@ -185,6 +245,31 @@ public class SharingEntryServiceTest {
 			Arrays.asList(
 				SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
 			serviceContext);
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testUpdateSharingEntryWithViewAndUpdatePermissionWhenUserHasViewPermissionThrowsException()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			Arrays.asList(SharingEntryActionKey.VIEW), serviceContext);
+
+		_sharingEntryService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(),
+			Arrays.asList(
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
 	}
 
 	@Test
