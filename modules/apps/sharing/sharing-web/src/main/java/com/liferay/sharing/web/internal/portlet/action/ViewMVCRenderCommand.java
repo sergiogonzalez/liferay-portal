@@ -15,6 +15,8 @@
 package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
 import javax.portlet.RenderRequest;
@@ -39,7 +41,22 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		Template template = getTemplate(renderRequest);
+
+		template.put("shareActionURL", "/URL");
+		template.put("classNameId", 10);
+		template.put("classPK", 20);
+		template.put(
+			"refererPortletName",
+			"_com_liferay_document_library_web_portlet_DLAdminPortlet_");
+		template.put("shareEnabled", true);
+		template.put("sharePermissionKey", "view");
+
 		return "Sharing";
+	}
+
+	protected Template getTemplate(RenderRequest renderRequest) {
+		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
 }
