@@ -750,6 +750,15 @@ public class SharingEntryLocalServiceTest {
 				SharingEntryActionKey.VIEW));
 	}
 
+	@Test(expected = NoSuchEntryException.class)
+	public void testUpdateNonExistingSharingEntry() throws Exception {
+		_sharingEntryLocalService.updateSharingEntry(
+			RandomTestUtil.randomLong(),
+			Arrays.asList(
+				SharingEntryActionKey.ADD_DISCUSSION,
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
+	}
+
 	@Test
 	public void testUpdateSharingEntry() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
