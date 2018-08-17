@@ -459,6 +459,48 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSharingEntryDoesNotDeleteOtherSharingEntriesToSameUse()
+		throws Exception {
+
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry sharingEntry1 = _sharingEntryLocalService.addSharingEntry(
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
+			_group.getGroupId(), Arrays.asList(SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		long userId = RandomTestUtil.randomLong();
+
+		SharingEntry sharingEntry2 = _sharingEntryLocalService.addSharingEntry(
+			userId, _toUser.getUserId(), classNameId, classPK,
+			_group.getGroupId(),
+			Arrays.asList(
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			serviceContext);
+
+		Assert.assertNotNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry1.getSharingEntryId()));
+		Assert.assertNotNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry2.getSharingEntryId()));
+
+		_sharingEntryLocalService.deleteSharingEntry(
+			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK);
+
+		Assert.assertNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry1.getSharingEntryId()));
+		Assert.assertNotNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry2.getSharingEntryId()));
+	}
+
+	@Test
 	public void testDeleteToUserSharingEntries() throws Exception {
 		long toUserId = RandomTestUtil.randomLong();
 
