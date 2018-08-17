@@ -188,6 +188,31 @@ public class SharingEntryLocalServiceImpl
 		return false;
 	}
 
+	@Override
+	public SharingEntry updateSharingEntry(
+			long sharingEntryId,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+		throws PortalException {
+
+		_validateSharingEntryActionKeys(sharingEntryActionKeys);
+
+		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
+			sharingEntryId);
+
+		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
+			sharingEntryActionKeys.stream();
+
+		sharingEntryActionKeyStream.map(
+			SharingEntryActionKey::getBitwiseVaue
+		).reduce(
+			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
+		).ifPresent(
+			actionIds -> sharingEntry.setActionIds(actionIds)
+		);
+
+		return sharingEntryPersistence.update(sharingEntry);
+	}
+
 	private void _validateSharingEntryActionKeys(
 			Collection<SharingEntryActionKey> sharedEntryActionKeys)
 		throws InvalidSharingEntryActionKeyException {
