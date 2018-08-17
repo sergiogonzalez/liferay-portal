@@ -378,6 +378,14 @@ public class SharingEntryLocalServiceUtil {
 			sharingEntryActionKey);
 	}
 
+	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
+		long sharingEntryId,
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys);
+	}
+
 	/**
 	* Updates the sharing entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
