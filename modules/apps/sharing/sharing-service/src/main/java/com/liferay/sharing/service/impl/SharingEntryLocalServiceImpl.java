@@ -194,10 +194,10 @@ public class SharingEntryLocalServiceImpl
 			Collection<SharingEntryActionKey> sharingEntryActionKeys)
 		throws PortalException {
 
-		_validateSharingEntryActionKeys(sharingEntryActionKeys);
-
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
 			sharingEntryId);
+
+		_validateSharingEntryActionKeys(sharingEntryActionKeys);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
 			sharingEntryActionKeys.stream();
