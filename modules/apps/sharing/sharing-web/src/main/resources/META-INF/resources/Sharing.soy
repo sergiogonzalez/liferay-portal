@@ -2,10 +2,91 @@
 
 /**
  * Sharing Component
- *
- * @param id
  */
+
 {template .render}
-	<div id="{$id}">
+	{@param id: string}
+	{@param shareEnabled: bool}
+	{@param shareActionURL: string}
+	{@param? _handleSubmit: any}
+	{@param? _handleInputChange: any}
+
+	<div id="{$id}" class="sharing-modal-content">
+		<form action="{$shareActionURL}" method="post" data-onsubmit="{$_handleSubmit}">
+			<h4>Invite to collaborate</h4>
+			<div class="form-group">
+				<input class="form-control" type="text" name="userEmailAddress" placeholder="Enter name or email adress" data-onchange="{$_handleInputChange}" />
+
+				<div class="form-text">Use commas to include multiple collaborators</div>
+			</div>
+
+			<div class="form-group">
+				<div class="custom-control custom-checkbox">
+					<label>
+						<input checked="{$shareEnabled ? 'true' : false}" class="custom-control-input" type="checkbox" name="shareEnabled" data-onchange="{$_handleInputChange}" />
+
+						<span class="custom-control-label">
+							<span class="custom-control-label-text">Allow the document to be shared with others users</span>
+						</span>
+					</label>
+				</div>
+			</div>
+
+			<h4 class="text-uppercase">Sharing permissions</h4>
+			<div class="form-group">
+				<div class="custom-control custom-radio">
+					<label>
+						<input checked class="custom-control-input" name="sharePermissionKey" type="radio" value="edition" data-onchange="{$_handleInputChange}" />
+
+						<span class="custom-control-label">
+							<span class="custom-control-label-text">
+								Edition
+								<div class="form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate illum dolore</div>
+							</span>
+						</span>
+					</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+					<label>
+						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="comemnts" data-onchange="{$_handleInputChange}" />
+
+						<span class="custom-control-label">
+							<span class="custom-control-label-text">
+								Comemnts
+								<div class="form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate illum dolore</div>
+							</span>
+						</span>
+					</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+					<label>
+						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="view" data-onchange="{$_handleInputChange}" />
+
+						<span class="custom-control-label">
+							<span class="custom-control-label-text">
+								View
+								<div class="form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate illum dolore</div>
+							</span>
+						</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="modal-item-last">
+					<div class="btn-group">
+						<div class="btn-group-item">
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+						</div>
+
+						<div class="btn-group-item">
+							<button class="btn btn-primary" type="submit">Share</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 {/template}
