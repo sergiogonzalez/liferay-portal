@@ -645,6 +645,8 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_MAX_COMMENTS = "discussion.max.comments";
 
+	public static final String DISCUSSION_SUBSCRIBE = "discussion.subscribe";
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
