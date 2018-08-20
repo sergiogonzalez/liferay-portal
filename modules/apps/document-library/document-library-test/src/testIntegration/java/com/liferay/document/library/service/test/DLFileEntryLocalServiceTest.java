@@ -85,6 +85,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -699,6 +700,32 @@ public class DLFileEntryLocalServiceTest {
 			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext,
 			new HashMap<String, Serializable>());
+	}
+
+	@Test
+	public void testVerifyFolderModifiedDateAfterAddFileEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+		Date modifiedDateBefore = folder.getModifiedDate();
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				folder.getFolderId(), StringPool.BLANK,
+				ContentTypes.TEXT_PLAIN, "FE1.exe", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), (byte[])null, serviceContext);
+
+		folder = DLAppServiceUtil.getFolder(folder.getFolderId());
+
+		Date modifiedDateAfter = folder.getModifiedDate();
+
+		Assert.assertNotEquals(modifiedDateBefore, modifiedDateAfter);
 	}
 
 	@DeleteAfterTestRun

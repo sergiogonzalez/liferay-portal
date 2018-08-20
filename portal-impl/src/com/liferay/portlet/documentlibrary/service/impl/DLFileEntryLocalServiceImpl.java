@@ -774,7 +774,6 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
-
 		return dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 	}
 

@@ -527,7 +527,7 @@ public class DLAppHelperLocalServiceImpl
 		// Folder
 
 		if (dlFileShortcut.getFolderId() !=
-			 DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			dlFolderLocalService.updateLastPostDate(
 				dlFileShortcut.getFolderId(), new Date());

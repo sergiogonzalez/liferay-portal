@@ -251,9 +251,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		deleteFolderDependencies(dlFolder, includeTrashedEntries);
 
-		if (dlFolder.isApproved()) {
+		long folderParentId = dlFolder.getParentFolderId();
+
+		if (dlFolder.isApproved() &&
+			(folderParentId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
 			dlFolderLocalService.updateLastPostDate(
-				dlFolder.getParentFolderId(), dlFolder.getLastPostDate());
+				folderParentId, dlFolder.getLastPostDate());
 		}
 
 		return dlFolder;
@@ -1175,9 +1179,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		// Parent folder
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
+		long folderParentId = dlFolder.getParentFolderId();
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(folderParentId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
 			dlFolderLocalService.updateLastPostDate(
-				dlFolder.getParentFolderId(), dlFolder.getLastPostDate());
+				folderParentId, dlFolder.getLastPostDate());
 		}
 
 		// Asset
