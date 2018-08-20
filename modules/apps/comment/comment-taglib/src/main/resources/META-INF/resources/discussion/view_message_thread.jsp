@@ -62,10 +62,14 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							<div class="text-truncate">
 								<liferay-util:whitespace-remover>
 									<aui:a cssClass="username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
-										<%= HtmlUtil.escape(discussionComment.getUserName()) %>
-										<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">
-											<%= StringPool.SPACE %>(<liferay-ui:message key="you" />)
-										</c:if>
+										<c:choose>
+											<c:when test="<%= discussionComment.getUserId() == user.getUserId() %>">
+												<%= HtmlUtil.escape(discussionComment.getUserName()) %> (<liferay-ui:message key="you" />)
+											</c:when>
+											<c:otherwise>
+												<%= HtmlUtil.escape(discussionComment.getUserName()) %>
+											</c:otherwise>
+										</c:choose>
 									</aui:a>
 								</liferay-util:whitespace-remover>
 
@@ -102,8 +106,12 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 												</div>
 
+												<%
+												Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
+												%>
+
 												<div class="text-secondary">
-													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionComment.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 												</div>
 											</div>
 										</div>
@@ -202,7 +210,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 							<aui:script>
 								window['<%= namespace + randomNamespace + index %>EditOnChange'] = function(html) {
-								Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>editReplyButton<%= index %>', html.trim() === '');
+									Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>editReplyButton<%= index %>', html.trim() === '');
 								};
 							</aui:script>
 						</div>

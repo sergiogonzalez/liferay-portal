@@ -92,18 +92,18 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						boolean canSubscribe = !stagingGroupHelper.isLocalStagingGroup(siteGroup) && !stagingGroupHelper.isRemoteStagingGroup(siteGroup) && themeDisplay.isSignedIn() && discussionPermission.hasSubscribePermission(company.getCompanyId(), siteGroup.getGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK());
 
-						String subscriptionHandleClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
+						String subscriptionOnClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
 						<c:if test="<%= canSubscribe %>">
 							<c:choose>
 								<c:when test="<%= subscribed %>">
-									<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionHandleClick %>" type="button">
+									<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
 										<liferay-ui:message key="subscribe" />
 									</button>
 								</c:when>
 								<c:otherwise>
-									<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionHandleClick %>" type="button">
+									<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
 										<liferay-ui:message key="unsubscribe" />
 									</button>
 								</c:otherwise>
@@ -721,8 +721,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					var currentTarget = event.currentTarget;
 
 					popover.set('align.node', currentTarget);
-					popover.set('headerContent', currentTarget.attr('data-inreply-title'));
 					popover.set('bodyContent', currentTarget.attr('data-inreply-content'));
+					popover.set('headerContent', currentTarget.attr('data-inreply-title'));
 
 					popover.show();
 				},
