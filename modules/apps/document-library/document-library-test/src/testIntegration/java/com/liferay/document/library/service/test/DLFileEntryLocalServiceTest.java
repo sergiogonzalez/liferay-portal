@@ -589,6 +589,34 @@ public class DLFileEntryLocalServiceTest {
 				dlFileEntry1.getFileEntryId(), dlFileEntry2LockUuid.getUuid()));
 	}
 
+	@Test
+	public void testVerifyFolderModifiedDateAfterAddFileEntry()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		Date modifiedDateBefore = folder.getModifiedDate();
+
+		DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			folder.getFolderId(), StringPool.BLANK, ContentTypes.TEXT_PLAIN,
+			"FE1.exe", RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), (byte[])null, serviceContext);
+
+		folder = DLAppServiceUtil.getFolder(folder.getFolderId());
+
+		Date modifiedDateAfter = folder.getModifiedDate();
+
+		Assert.assertNotEquals(modifiedDateBefore, modifiedDateAfter);
+	}
+
 	protected DLFileEntry addAndApproveFileEntry(
 			DLFolder dlFolder, Map<String, DDMFormValues> ddmFormValuesMap,
 			InputStream inputStream, ServiceContext serviceContext)
@@ -700,32 +728,6 @@ public class DLFileEntryLocalServiceTest {
 			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext,
 			new HashMap<String, Serializable>());
-	}
-
-	@Test
-	public void testVerifyFolderModifiedDateAfterAddFileEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Folder folder = DLAppServiceUtil.addFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				serviceContext);
-
-		Date modifiedDateBefore = folder.getModifiedDate();
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				folder.getFolderId(), StringPool.BLANK,
-				ContentTypes.TEXT_PLAIN, "FE1.exe", RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), (byte[])null, serviceContext);
-
-		folder = DLAppServiceUtil.getFolder(folder.getFolderId());
-
-		Date modifiedDateAfter = folder.getModifiedDate();
-
-		Assert.assertNotEquals(modifiedDateBefore, modifiedDateAfter);
 	}
 
 	@DeleteAfterTestRun
