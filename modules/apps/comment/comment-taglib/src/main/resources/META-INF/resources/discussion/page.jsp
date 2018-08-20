@@ -139,12 +139,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 												<aui:input name="postReplyBody0" type="hidden" />
 
-												<%-- Remove this check
-												<c:if test="<%= canSubscribe && !subscribed %>">
-													<aui:input helpMessage="comments-subscribe-me-help" label="subscribe-me" name="subscribe" type="checkbox" value="<%= PropsValues.DISCUSSION_SUBSCRIBE_BY_DEFAULT %>" />
-												</c:if>
-												--%>
-
 												<aui:button-row>
 													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 												</aui:button-row>
