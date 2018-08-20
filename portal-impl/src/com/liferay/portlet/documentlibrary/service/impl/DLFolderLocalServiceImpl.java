@@ -144,12 +144,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			addFolderResources(dlFolder, serviceContext.getModelPermissions());
 		}
 
-		// Parent folder
-
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			dlFolderLocalService.updateLastPostDate(parentFolderId, now);
-		}
-
 		return dlFolder;
 	}
 
@@ -256,6 +250,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		deleteSubfolders(dlFolder, includeTrashedEntries);
 
 		deleteFolderDependencies(dlFolder, includeTrashedEntries);
+
+		if (dlFolder.isApproved()) {
+			dlFolderLocalService.updateLastPostDate(
+				dlFolder.getParentFolderId(), dlFolder.getLastPostDate());
+		}
 
 		return dlFolder;
 	}
@@ -683,9 +682,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
+		long oldParentFolderId = dlFolder.getParentFolderId();
+
 		parentFolderId = getParentFolderId(dlFolder, parentFolderId);
 
-		if (dlFolder.getParentFolderId() == parentFolderId) {
+		if (oldParentFolderId == parentFolderId) {
 			return dlFolder;
 		}
 
@@ -714,6 +715,20 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			rebuildTree(
 				dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
 				true);
+
+			// Parent folder
+
+			if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				dlFolderLocalService.updateLastPostDate(
+					parentFolderId, new Date());
+			}
+
+			if (oldParentFolderId !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				dlFolderLocalService.updateLastPostDate(
+					oldParentFolderId, new Date());
+			}
 
 			return dlFolder;
 		}
@@ -1130,7 +1145,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return;
 		}
 
-		dlFolder.setModifiedDate(dlFolder.getModifiedDate());
+		dlFolder.setModifiedDate(lastPostDate);
 		dlFolder.setLastPostDate(lastPostDate);
 
 		dlFolderPersistence.update(dlFolder);
@@ -1157,6 +1172,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setStatusDate(new Date());
 
 		dlFolderPersistence.update(dlFolder);
+
+		// Parent folder
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			dlFolderLocalService.updateLastPostDate(
+				dlFolder.getParentFolderId(), dlFolder.getLastPostDate());
+		}
 
 		// Asset
 
