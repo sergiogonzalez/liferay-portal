@@ -5,7 +5,7 @@ $light-color: #E7E7ED;
 
 .taglib-discussion {
 	$discussion-indent: 1rem;
-	$discussion-indent-xs: 3.5rem;
+	$discussion-indent-sm: 3.5rem;
 	$discussion-margin-button: 1.5rem;
 
 	font-size: .875rem;
@@ -49,8 +49,8 @@ $light-color: #E7E7ED;
 				padding-left: 0;
 			}
 
-			@include xs {
-				padding-left: $discussion-indent-xs;
+			@include sm {
+				padding-left: $discussion-indent-sm;
 			}
 		}
 	}
@@ -62,8 +62,8 @@ $light-color: #E7E7ED;
 	.lfr-discussion-body {
 		font-size: 1rem;
 
-		@include xs {
-			padding-left: $discussion-indent-xs;
+		@include sm {
+			padding-left: $discussion-indent-sm;
 		}
 	}
 
@@ -80,7 +80,7 @@ $light-color: #E7E7ED;
 		text-transform: uppercase;
 	}
 
-	@include xs {
+	@include sm {
 		.dropdown {
 			display: none;
 		}
