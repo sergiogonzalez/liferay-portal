@@ -95,20 +95,22 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						String subscriptionOnClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<c:if test="<%= canSubscribe %>">
-							<c:choose>
-								<c:when test="<%= subscribed %>">
-									<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
-										<liferay-ui:message key="subscribe" />
-									</button>
-								</c:when>
-								<c:otherwise>
-									<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
-										<liferay-ui:message key="unsubscribe" />
-									</button>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
+						<div class="lfr-discussion-subscribe-button-container">
+							<c:if test="<%= canSubscribe %>">
+								<c:choose>
+									<c:when test="<%= subscribed %>">
+										<button aria-label="<liferay-ui:message key="subscribe-to-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+											<liferay-ui:message key="subscribe" />
+										</button>
+									</c:when>
+									<c:otherwise>
+										<button aria-label="<liferay-ui:message key="unsubscribe-from-comments" />" class="btn btn-outline-primary btn-sm" onclick="<%= subscriptionOnClick %>" type="button">
+											<liferay-ui:message key="unsubscribe" />
+										</button>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</div>
 
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<aui:input name="emailAddress" type="hidden" />
