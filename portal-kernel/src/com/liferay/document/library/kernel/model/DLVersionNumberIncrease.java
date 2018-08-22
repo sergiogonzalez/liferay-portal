@@ -12,27 +12,21 @@
  * details.
  */
 
-package com.liferay.document.library.opener.google.drive.web.internal.constants;
-
-import com.liferay.portal.kernel.util.Constants;
+package com.liferay.document.library.kernel.model;
 
 /**
  * @author Adolfo Pérez
  */
-public class DLOpenerGoogleDriveWebConstants {
+public enum DLVersionNumberIncrease {
 
-	public static final String GOOGLE_DRIVE_ADD = Constants.ADD;
+	MAJOR, MINOR, NONE;
 
-	public static final String GOOGLE_DRIVE_CANCEL_CHECKOUT =
-		Constants.CANCEL_CHECKOUT;
+	public static DLVersionNumberIncrease fromBoolean(boolean majorVersion) {
+		if (majorVersion) {
+			return MAJOR;
+		}
 
-	public static final String GOOGLE_DRIVE_CHECKIN = Constants.CHECKIN;
-
-	public static final String GOOGLE_DRIVE_CHECKOUT = Constants.CHECKOUT;
-
-	public static final String GOOGLE_DRIVE_EDIT = Constants.EDIT;
-
-	public static final String GOOGLE_DRIVE_SERVLET_PATH =
-		"/document_library/google/oauth2";
+		return MINOR;
+	}
 
 }

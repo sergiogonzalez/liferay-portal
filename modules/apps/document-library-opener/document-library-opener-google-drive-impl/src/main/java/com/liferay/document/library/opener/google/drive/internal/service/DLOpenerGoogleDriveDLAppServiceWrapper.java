@@ -14,9 +14,15 @@
 
 package com.liferay.document.library.opener.google.drive.internal.service;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
+import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
+import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
+import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -54,29 +60,52 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
 		if (_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+			DLOpenerFileEntryReference dlOpenerFileEntryReference =
+				_dlOpenerFileEntryReferenceLocalService.
+					getDLOpenerFileEntryReference(fileEntry);
+
 			_dlOpenerGoogleDriveManager.delete(_getUserId(), fileEntry);
+
+			if ((dlOpenerFileEntryReference.getType() ==
+					DLOpenerFileEntryReferenceConstants.TYPE_NEW) &&
+				DLFileEntryConstants.VERSION_DEFAULT.equals(
+					fileEntry.getVersion())) {
+
+				deleteFileEntry(fileEntryId);
+			}
 		}
 	}
 
 	@Override
 	public void checkInFileEntry(
-			long fileEntryId, boolean majorVersion, String changeLog,
-			ServiceContext serviceContext)
+			long fileEntryId, DLVersionNumberIncrease dlVersionNumberIncrease,
+			String changeLog, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
 		if (!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 			super.checkInFileEntry(
-				fileEntryId, majorVersion, changeLog, serviceContext);
+				fileEntryId, dlVersionNumberIncrease, changeLog,
+				serviceContext);
 
 			return;
 		}
 
 		_updateFileEntryFromGoogleDrive(fileEntry, serviceContext);
 
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(fileEntry);
+
+		if (dlOpenerFileEntryReference.getType() ==
+				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {
+
+			dlVersionNumberIncrease = DLVersionNumberIncrease.NONE;
+		}
+
 		super.checkInFileEntry(
-			fileEntryId, majorVersion, changeLog, serviceContext);
+			fileEntryId, dlVersionNumberIncrease, changeLog, serviceContext);
 
 		_dlOpenerGoogleDriveManager.delete(
 			serviceContext.getUserId(), fileEntry);
@@ -111,15 +140,19 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		File file = _dlOpenerGoogleDriveManager.getContentFile(
-			serviceContext.getUserId(), fileEntry);
+		DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference =
+			_dlOpenerGoogleDriveManager.requestEditAccess(
+				serviceContext.getUserId(), fileEntry);
+
+		File file = dlOpenerGoogleDriveFileReference.getContentFile();
 
 		try {
 			updateFileEntry(
 				fileEntry.getFileEntryId(), fileEntry.getFileName(),
-				fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), StringPool.BLANK, false, file,
-				serviceContext);
+				fileEntry.getMimeType(),
+				dlOpenerGoogleDriveFileReference.getTitle(),
+				fileEntry.getDescription(), StringPool.BLANK,
+				DLVersionNumberIncrease.MINOR, file, serviceContext);
 		}
 		finally {
 			if (file != null) {
@@ -136,6 +169,10 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLOpenerGoogleDriveDLAppServiceWrapper.class);
+
+	@Reference
+	private DLOpenerFileEntryReferenceLocalService
+		_dlOpenerFileEntryReferenceLocalService;
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
