@@ -117,7 +117,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 		Object object = _map.get(name);
 
-		soyValueProvider = _toSoyValue(object);
+		soyValueProvider = _toSoyValueProvider(object);
 
 		_computedValues.put(name, soyValueProvider);
 
@@ -184,7 +184,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		appendable.append('}');
 	}
 
-	private Object _propertyName(String methodName) {
+	private String _propertyName(String methodName) {
 		if (methodName.startsWith("get") || methodName.startsWith("is")) {
 			methodName = methodName.replaceFirst("^(?:get|is)", "");
 		}
@@ -192,7 +192,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		return StringUtil.lowerCaseFirstLetter(methodName);
 	}
 
-	private SoyValue _toSoyValue(Object object) {
+	private SoyValueProvider _toSoyValueProvider(Object object) {
 		if (object == null) {
 			return NullData.INSTANCE;
 		}
@@ -202,7 +202,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		else if (object instanceof SoyRawData) {
 			SoyRawData soyRawData = (SoyRawData)object;
 
-			return _toSoyValue(soyRawData.getValue());
+			return _toSoyValueProvider(soyRawData.getValue());
 		}
 		else if (object instanceof String) {
 			return StringData.forValue((String)object);
@@ -226,7 +226,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			entries.forEach(
 				entry -> soyMapData.put(
-					entry.getKey(), _toSoyValue(entry.getValue())));
+					entry.getKey(), _toSoyValueProvider(entry.getValue())));
 
 			return soyMapData;
 		}
@@ -238,7 +238,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 			Iterator<String> it = jsonObject.keys();
 
 			it.forEachRemaining(
-				key -> soyMapData.put(key, _toSoyValue(jsonObject.get(key))));
+				key -> soyMapData.put(key, _toSoyValueProvider(jsonObject.get(key))));
 
 			return soyMapData;
 		}
@@ -249,7 +249,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			Iterator it = jsonArray.iterator();
 
-			it.forEachRemaining(value -> soyListData.add(_toSoyValue(value)));
+			it.forEachRemaining(value -> soyListData.add(_toSoyValueProvider(value)));
 
 			return soyListData;
 		}
@@ -258,7 +258,7 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			Iterable<?> iterable = (Iterable<?>)object;
 
-			iterable.forEach(entry -> soyListData.add(_toSoyValue(entry)));
+			iterable.forEach(entry -> soyListData.add(_toSoyValueProvider(entry)));
 
 			return soyListData;
 		}
@@ -297,7 +297,8 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 				if ((parameterTypes.length == 0) &&
 					!returnType.equals(Void.class) &&
 					!declaringClass.equals(Object.class) &&
-					!declaringClass.equals(Annotation.class)) {
+					!declaringClass.equals(Annotation.class) &&
+					!declaringClass.equals(Enum.class)) {
 
 					Object methodValue = method.invoke(object);
 
@@ -311,6 +312,15 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 						soyMapData.put(
 							_propertyName(method.getName()), methodValue);
+					}
+					else {
+						SoyTemplateRecord soyTemplateRecord =
+							new SoyTemplateRecord();
+
+						soyTemplateRecord.add(
+							_propertyName(method.getName()), methodValue);
+
+						return soyTemplateRecord;
 					}
 				}
 			}
