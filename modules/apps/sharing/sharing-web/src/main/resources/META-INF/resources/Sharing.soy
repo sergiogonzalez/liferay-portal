@@ -10,6 +10,7 @@
 	{@param shareActionURL: string}
 	{@param? _handleSubmit: any}
 	{@param? _handleInputChange: any}
+	{@param sharingEntryPermissionDisplays: list<?>}
 
 	<div id="{$id}" class="sharing-modal-content">
 		<form action="{$shareActionURL}" method="post" data-onsubmit="{$_handleSubmit}">
@@ -36,7 +37,7 @@
 			<div class="form-group">
 				<div class="custom-control custom-radio">
 					<label>
-						<input checked class="custom-control-input" name="sharePermissionKey" type="radio" value="edition" data-onchange="{$_handleInputChange}" />
+						<input checked class="custom-control-input" name="sharePermissionKey" type="radio" value="UPDATE" data-onchange="{$_handleInputChange}" />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">
@@ -49,7 +50,7 @@
 
 				<div class="custom-control custom-radio">
 					<label>
-						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="comemnts" data-onchange="{$_handleInputChange}" />
+						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="COMMENTS" data-onchange="{$_handleInputChange}" />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">
@@ -62,7 +63,7 @@
 
 				<div class="custom-control custom-radio">
 					<label>
-						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="view" data-onchange="{$_handleInputChange}" />
+						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="VIEW" data-onchange="{$_handleInputChange}" />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">
@@ -72,6 +73,33 @@
 						</span>
 					</label>
 				</div>
+			</div>
+
+			<div class="form-group">
+				{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
+					<div class="custom-control custom-radio">
+						<label>
+							{let $attributes kind="attributes"}
+								class="custom-control-input"
+								name="sharePermissionKey"
+								type="radio"
+								value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}"
+								data-onchange="{$_handleInputChange}"
+								{if not $sharingEntryPermissionDisplay.enabled}
+									disabled="disabled"
+								{/if}
+							{/let}
+							<input {$attributes} />
+
+							<span class="custom-control-label">
+								<span class="custom-control-label-text">
+									{msg desc=""}{$sharingEntryPermissionDisplay.titleKey}{/msg}
+									<div class="form-text">{msg desc=""}{$sharingEntryPermissionDisplay.descriptionKey}{/msg}</div>
+								</span>
+							</span>
+						</label>
+					</div>
+				{/foreach}
 			</div>
 
 			<div class="modal-footer">
@@ -88,5 +116,18 @@
 				</div>
 			</div>
 		</form>
+
+
+		{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
+			<strong>Edition key: </strong>{msg desc=""}edition{/msg}
+			<strong>Edition description key: </strong>{msg desc=""}collaborators-can-view-comment-update-the-document
+{/msg}
+			<br><br>
+			{index($sharingEntryPermissionDisplay)}<br>
+			{$sharingEntryPermissionDisplay.enabled}<br>
+			{$sharingEntryPermissionDisplay.titleKey}<br>
+			{$sharingEntryPermissionDisplay.descriptionKey}<br>
+			{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}<br>
+		{/foreach}
 	</div>
 {/template}
