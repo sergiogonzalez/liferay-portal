@@ -10,6 +10,16 @@
 	{@param shareActionURL: string}
 	{@param? _handleSubmit: any}
 	{@param? _handleInputChange: any}
+	{@param sharingEntryPermissionDisplays: list<?>}
+
+				{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
+					{let $index: index($sharingEntryPermissionDisplay) /}
+					{$index}
+					{$sharingEntryPermissionDisplay.enabled}
+					{$sharingEntryPermissionDisplay.titleKey}
+					{$sharingEntryPermissionDisplay.descriptionKey}
+					{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}
+				{/foreach}
 
 	<div id="{$id}" class="sharing-modal-content">
 		<form action="{$shareActionURL}" method="post" data-onsubmit="{$_handleSubmit}">
@@ -36,7 +46,7 @@
 			<div class="form-group">
 				<div class="custom-control custom-radio">
 					<label>
-						<input checked class="custom-control-input" name="sharePermissionKey" type="radio" value="edition" data-onchange="{$_handleInputChange}" />
+						<input checked class="custom-control-input" name="sharePermissionKey" type="radio" value="UPDATE" data-onchange="{$_handleInputChange}" />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">
@@ -49,7 +59,7 @@
 
 				<div class="custom-control custom-radio">
 					<label>
-						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="comemnts" data-onchange="{$_handleInputChange}" />
+						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="COMMENTS" data-onchange="{$_handleInputChange}" />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">
@@ -62,7 +72,7 @@
 
 				<div class="custom-control custom-radio">
 					<label>
-						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="view" data-onchange="{$_handleInputChange}" />
+						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="VIEW" data-onchange="{$_handleInputChange}" />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">
