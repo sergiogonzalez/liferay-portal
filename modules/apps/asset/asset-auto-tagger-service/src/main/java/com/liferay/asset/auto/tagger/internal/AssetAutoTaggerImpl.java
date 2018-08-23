@@ -64,29 +64,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Override
-	public boolean isAutoTaggable(AssetEntry assetEntry) {
-		try {
-			AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
-				_getAssetAutoTaggerConfiguration(assetEntry);
-
-			if (assetAutoTaggerConfiguration.isEnabled() &&
-				assetEntry.isVisible() &&
-				ListUtil.isNotEmpty(
-					_getAssetAutoTagProviders(assetEntry.getClassName()))) {
-
-				return true;
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return false;
-	}
-
-	@Override
 	public void tag(AssetEntry assetEntry) throws PortalException {
-		if (!isAutoTaggable(assetEntry)) {
+		if (!_isAutoTaggable(assetEntry)) {
 			return;
 		}
 
@@ -274,6 +253,26 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		serviceContext.setScopeGroupId(assetEntry.getGroupId());
 
 		return serviceContext;
+	}
+
+	private boolean _isAutoTaggable(AssetEntry assetEntry) {
+		try {
+			AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
+				_getAssetAutoTaggerConfiguration(assetEntry);
+
+			if (assetAutoTaggerConfiguration.isEnabled() &&
+				assetEntry.isVisible() &&
+				ListUtil.isNotEmpty(
+					_getAssetAutoTagProviders(assetEntry.getClassName()))) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return false;
 	}
 
 	private void _reindex(AssetEntry assetEntry) throws PortalException {
