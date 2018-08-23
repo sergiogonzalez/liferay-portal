@@ -54,10 +54,6 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 					return null;
 				}
 
-				if (!_assetAutoTagger.isAutoTaggable(assetEntry)) {
-					return null;
-				}
-
 				Message message = new Message();
 
 				message.setPayload(assetEntry);
