@@ -13,8 +13,18 @@ class Sharing extends PortletBase {
 		this.classPK = config.classPK;
 	}
 
-	_getEmailAdress(userEmailAddress = '') {
-		return userEmailAddress.split(/,\s*/);
+	/**
+	 * Returns af tokens that should be emails.
+	 * Does not validate emails to see if they are well formed.
+	 * @param {string} emailAddress a single paramater which is one or
+	 * more emails separated by comma, semicolon, or whitespace (space, tab, or newline).
+	 * @return {Array<String>} List of lowercase string that should be emails.
+	 * @review
+	 */
+	_getEmailAdress(emailAddress = '') {
+		return emailAddress
+			.toLowerCase()
+			.split(/[\s,;]+/);
 	}
 
 	/**
@@ -33,7 +43,7 @@ class Sharing extends PortletBase {
 				classPK: this.classPK,
 				shareEnabled: this.shareEnabled,
 				sharePermissionKey: this.sharePermissionKey,
-				userEmailAddress: this.userEmailAddress
+				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
 		);
 	}
