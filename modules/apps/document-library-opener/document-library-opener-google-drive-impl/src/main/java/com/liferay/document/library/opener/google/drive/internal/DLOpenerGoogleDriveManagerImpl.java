@@ -64,8 +64,8 @@ public class DLOpenerGoogleDriveManagerImpl
 				new com.google.api.services.drive.model.File();
 
 			file.setMimeType(
-				DLOpenerGoogleDriveMimeTypes.
-					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+					fileEntry.getMimeType()));
 			file.setName(fileEntry.getTitle());
 
 			FileContent fileContent = new FileContent(
@@ -109,8 +109,8 @@ public class DLOpenerGoogleDriveManagerImpl
 				new com.google.api.services.drive.model.File();
 
 			file.setMimeType(
-				DLOpenerGoogleDriveMimeTypes.
-					APPLICATION_VND_GOOGLE_APPS_DOCUMENT);
+				DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+					fileEntry.getMimeType()));
 			file.setName(fileEntry.getTitle());
 
 			Drive drive = new Drive.Builder(
