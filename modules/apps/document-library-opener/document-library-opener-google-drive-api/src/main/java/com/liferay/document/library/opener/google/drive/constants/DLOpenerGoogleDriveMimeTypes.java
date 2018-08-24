@@ -31,6 +31,13 @@ public class DLOpenerGoogleDriveMimeTypes {
 	public static final String APPLICATION_VND_GOOGLE_APPS_DOCUMENT =
 		"application/vnd.google-apps.document";
 
+	public static final String APPLICATION_VND_PPTX =
+		"application/vnd.openxmlformats-officedocument.presentationml." +
+			"presentation";
+
+	public static final String APPLICATION_VND_XSLX =
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
 	public static boolean isMimeTypeSupported(String mimeType) {
 		return _mimeTypes.contains(mimeType);
 	}
