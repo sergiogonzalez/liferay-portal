@@ -11,6 +11,7 @@ class Sharing extends PortletBase {
 
 		this.classNameId = config.classNameId;
 		this.classPK = config.classPK;
+		this.refererPortletName = config.refererPortletName;
 	}
 
 	/**
@@ -45,6 +46,10 @@ class Sharing extends PortletBase {
 				sharePermissionKey: this.sharePermissionKey,
 				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
+		).then(
+			response => {
+				Liferay.Portlet.refresh(`#p_p_id_${this.refererPortletName}`);
+			}
 		);
 	}
 
@@ -65,7 +70,6 @@ class Sharing extends PortletBase {
  */
 Sharing.STATE = {
 	shareActionURL: Config.string().required(),
-	refererPortletName: Config.string().required(),
 	shareEnabled: Config.bool().required(),
 	sharePermissionKey: Config.string().required()
 };
