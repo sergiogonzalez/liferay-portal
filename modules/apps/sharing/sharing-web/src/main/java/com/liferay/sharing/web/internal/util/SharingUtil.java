@@ -58,11 +58,10 @@ public class SharingUtil {
 
 		try {
 			if (sharingPermissionChecker.hasPermission(
-					permissionChecker, classPK, groupId,
-					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION))) {
+				permissionChecker, classPK, groupId,
+				Arrays.asList(SharingEntryActionKey.VIEW))) {
 
-				sharingEntryActionKeys.add(
-					SharingEntryActionKey.ADD_DISCUSSION);
+				sharingEntryActionKeys.add(SharingEntryActionKey.VIEW);
 			}
 		}
 		catch (PortalException pe) {
@@ -71,8 +70,8 @@ public class SharingUtil {
 
 		try {
 			if (sharingPermissionChecker.hasPermission(
-					permissionChecker, classPK, groupId,
-					Arrays.asList(SharingEntryActionKey.UPDATE))) {
+				permissionChecker, classPK, groupId,
+				Arrays.asList(SharingEntryActionKey.UPDATE))) {
 
 				sharingEntryActionKeys.add(SharingEntryActionKey.UPDATE);
 			}
@@ -84,14 +83,17 @@ public class SharingUtil {
 		try {
 			if (sharingPermissionChecker.hasPermission(
 					permissionChecker, classPK, groupId,
-					Arrays.asList(SharingEntryActionKey.VIEW))) {
+					Arrays.asList(SharingEntryActionKey.ADD_DISCUSSION))) {
 
-				sharingEntryActionKeys.add(SharingEntryActionKey.VIEW);
+				sharingEntryActionKeys.add(
+					SharingEntryActionKey.ADD_DISCUSSION);
 			}
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 		}
+
+
 
 		return SharingEntryPermissionDisplay.getSharingEntryPermissionDisplays(
 			sharingEntryActionKeys);

@@ -31,45 +31,8 @@ public class SharingEntryPermissionDisplay {
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			new ArrayList<>();
 
-		if (sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
-			sharingEntryPermissionDisplays.add(
-				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.VIEW.getActionId(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getDescriptionKey(),
-					true));
-		}
-		else {
-			sharingEntryPermissionDisplays.add(
-				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.VIEW.getActionId(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getDescriptionKey(),
-					false));
-		}
-
 		if (sharingEntryActionKeys.contains(
-				SharingEntryActionKey.ADD_DISCUSSION) &&
-			sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
-
-			sharingEntryPermissionDisplays.add(
-				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getActionId(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getDescriptionKey(),
-					true));
-		}
-		else {
-			sharingEntryPermissionDisplays.add(
-				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getActionId(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getDescriptionKey(),
-					false));
-		}
-
-		if (sharingEntryActionKeys.contains(
-				SharingEntryActionKey.ADD_DISCUSSION) &&
+			SharingEntryActionKey.ADD_DISCUSSION) &&
 			sharingEntryActionKeys.contains(SharingEntryActionKey.UPDATE) &&
 			sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
 
@@ -86,6 +49,43 @@ public class SharingEntryPermissionDisplay {
 					SharingEntryPermissionDisplayActionKey.UPDATE.getActionId(),
 					SharingEntryPermissionDisplayActionKey.UPDATE.getTitleKey(),
 					SharingEntryPermissionDisplayActionKey.UPDATE.getDescriptionKey(),
+					false));
+		}
+
+		if (sharingEntryActionKeys.contains(
+				SharingEntryActionKey.ADD_DISCUSSION) &&
+			sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+
+			sharingEntryPermissionDisplays.add(
+				new SharingEntryPermissionDisplay(
+					SharingEntryPermissionDisplayActionKey.COMMENTS.getActionId(),
+					SharingEntryPermissionDisplayActionKey.COMMENTS.getTitleKey(),
+					SharingEntryPermissionDisplayActionKey.COMMENTS.getDescriptionKey(),
+					true));
+		}
+		else {
+			sharingEntryPermissionDisplays.add(
+				new SharingEntryPermissionDisplay(
+					SharingEntryPermissionDisplayActionKey.COMMENTS.getActionId(),
+					SharingEntryPermissionDisplayActionKey.COMMENTS.getTitleKey(),
+					SharingEntryPermissionDisplayActionKey.COMMENTS.getDescriptionKey(),
+					false));
+		}
+
+		if (sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+			sharingEntryPermissionDisplays.add(
+				new SharingEntryPermissionDisplay(
+					SharingEntryPermissionDisplayActionKey.VIEW.getActionId(),
+					SharingEntryPermissionDisplayActionKey.VIEW.getTitleKey(),
+					SharingEntryPermissionDisplayActionKey.VIEW.getDescriptionKey(),
+					true));
+		}
+		else {
+			sharingEntryPermissionDisplays.add(
+				new SharingEntryPermissionDisplay(
+					SharingEntryPermissionDisplayActionKey.VIEW.getActionId(),
+					SharingEntryPermissionDisplayActionKey.VIEW.getTitleKey(),
+					SharingEntryPermissionDisplayActionKey.VIEW.getDescriptionKey(),
 					false));
 		}
 
