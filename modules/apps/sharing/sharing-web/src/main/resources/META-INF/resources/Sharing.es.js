@@ -68,13 +68,19 @@ class Sharing extends PortletBase {
 		);
 	}
 
+	/**
+	 * Sync the inputs with the state
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
 	_handleInputChange(event) {
 		const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
 
-    this[name] = value;
-  }
+		this[name] = value;
+	}
 }
 
 /**
