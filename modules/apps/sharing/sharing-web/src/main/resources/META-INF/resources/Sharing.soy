@@ -2,10 +2,88 @@
 
 /**
  * Sharing Component
- *
- * @param id
  */
+
 {template .render}
-	<div id="{$id}">
+	{@param id: string}
+	{@param shareEnabled: bool}
+	{@param shareActionURL: string}
+	{@param sharingEntryPermissionDisplays: list<?>}
+	{@param? _closeDialog: any}
+	{@param? _handleInputChange: any}
+	{@param? _handleSubmit: any}
+
+	<div id="{$id}" class="sharing-modal-content">
+		<form action="{$shareActionURL}" method="post" data-onsubmit="{$_handleSubmit}">
+			<h4>Invite to collaborate</h4>
+			<div class="form-group">
+				<input class="form-control" type="text" name="userEmailAddress" placeholder="Enter name or email adress" data-onchange="{$_handleInputChange}" />
+
+				<div class="form-text">Use commas to include multiple collaborators</div>
+			</div>
+
+			<div class="form-group">
+				<div class="custom-control custom-checkbox">
+					<label>
+						{let $shareEnabledAttributes kind="attributes"}
+							class="custom-control-input"
+							data-onchange="{$_handleInputChange}"
+							name="shareEnabled"
+							type="checkbox"
+							{if $shareEnabled}
+								checked="checked"
+							{/if}
+						{/let}
+						<input {$shareEnabledAttributes} />
+
+						<span class="custom-control-label">
+							<span class="custom-control-label-text">Allow the document to be shared with others users</span>
+						</span>
+					</label>
+				</div>
+			</div>
+
+			<h4 class="text-uppercase">Sharing permissions</h4>
+			<div class="form-group">
+				{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
+					<div class="custom-control custom-radio">
+						<label>
+							{let $sharePermissionKeyAttributes kind="attributes"}
+								class="custom-control-input"
+								data-onchange="{$_handleInputChange}"
+								name="sharePermissionKey"
+								type="radio"
+								value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}"
+								{if not $sharingEntryPermissionDisplay.enabled}
+									disabled="disabled"
+								{/if}
+							{/let}
+							<input {$sharePermissionKeyAttributes} />
+
+							<span class="custom-control-label">
+								<span class="custom-control-label-text">
+									{msg desc=""}{$sharingEntryPermissionDisplay.titleKey}{/msg}
+									<div class="form-text">{msg desc=""}{$sharingEntryPermissionDisplay.descriptionKey}{/msg}</div>
+								</span>
+							</span>
+						</label>
+					</div>
+				{/foreach}
+			</div>
+
+			<div class="modal-footer">
+				<div class="modal-item-last">
+					<div class="btn-group">
+						<div class="btn-group-item">
+							<button class="btn btn-secondary" data-onclick="{$_closeDialog}" type="button">Cancel</button>
+						</div>
+
+						<div class="btn-group-item">
+							<button class="btn btn-primary" type="submit">Share</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 {/template}
