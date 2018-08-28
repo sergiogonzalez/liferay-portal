@@ -12,6 +12,20 @@ class Sharing extends PortletBase {
 		this.classNameId = config.classNameId;
 		this.classPK = config.classPK;
 		this.refererPortletName = config.refererPortletName;
+		// default temporal value
+		this.shareDialogId = config.shareDialogId || 'sharingDialog';
+	}
+
+	/**
+	 * Close the SharingDialog
+	 * @review
+	 */
+	_closeDialog() {
+		const shareDialog = Liferay.Util.getWindow(this.shareDialogId);
+
+		if (shareDialog && shareDialog.hide) {
+			shareDialog.hide();
+		}
 	}
 
 	/**
@@ -49,6 +63,7 @@ class Sharing extends PortletBase {
 		).then(
 			response => {
 				Liferay.Portlet.refresh(`#p_p_id_${this.refererPortletName}`);
+				this._closeDialog();
 			}
 		);
 	}
