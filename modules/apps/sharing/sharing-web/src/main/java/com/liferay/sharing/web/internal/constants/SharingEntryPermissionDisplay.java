@@ -88,17 +88,17 @@ public class SharingEntryPermissionDisplay {
 			sharingEntryPermissionDisplayActionKey,
 		boolean enabled, ResourceBundle resourceBundle) {
 
-		_sharingEntryPermissionDisplayActionKeyActionId =
-			sharingEntryPermissionDisplayActionKey.getActionId();
+		_enabled = enabled;
 
-		_title = LanguageUtil.get(
-			resourceBundle,
-			sharingEntryPermissionDisplayActionKey.getTitleKey());
 		_description = LanguageUtil.get(
 			resourceBundle,
 			sharingEntryPermissionDisplayActionKey.getDescriptionKey());
+		_sharingEntryPermissionDisplayActionKeyActionId =
+			sharingEntryPermissionDisplayActionKey.getActionId();
+		_title = LanguageUtil.get(
+			resourceBundle,
+			sharingEntryPermissionDisplayActionKey.getTitleKey());
 
-		_enabled = enabled;
 	}
 
 	public String getDescription() {
