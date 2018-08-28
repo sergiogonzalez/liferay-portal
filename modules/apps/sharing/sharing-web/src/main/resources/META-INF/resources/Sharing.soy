@@ -24,7 +24,16 @@
 			<div class="form-group">
 				<div class="custom-control custom-checkbox">
 					<label>
-						<input checked="{$shareEnabled ? 'true' : false}" class="custom-control-input" type="checkbox" name="shareEnabled" data-onchange="{$_handleInputChange}" />
+						{let $shareEnabledAttributes kind="attributes"}
+							class="custom-control-input"
+							data-onchange="{$_handleInputChange}"
+							name="shareEnabled"
+							type="checkbox"
+							{if $shareEnabled}
+								checked="checked"
+							{/if}
+						{/let}
+						<input {$shareEnabledAttributes} />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">Allow the document to be shared with others users</span>
@@ -35,61 +44,20 @@
 
 			<h4 class="text-uppercase">Sharing permissions</h4>
 			<div class="form-group">
-				<div class="custom-control custom-radio">
-					<label>
-						<input checked class="custom-control-input" name="sharePermissionKey" type="radio" value="UPDATE" data-onchange="{$_handleInputChange}" />
-
-						<span class="custom-control-label">
-							<span class="custom-control-label-text">
-								Edition
-								<div class="form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate illum dolore</div>
-							</span>
-						</span>
-					</label>
-				</div>
-
-				<div class="custom-control custom-radio">
-					<label>
-						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="COMMENTS" data-onchange="{$_handleInputChange}" />
-
-						<span class="custom-control-label">
-							<span class="custom-control-label-text">
-								Comemnts
-								<div class="form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate illum dolore</div>
-							</span>
-						</span>
-					</label>
-				</div>
-
-				<div class="custom-control custom-radio">
-					<label>
-						<input class="custom-control-input" name="sharePermissionKey" type="radio" value="VIEW" data-onchange="{$_handleInputChange}" />
-
-						<span class="custom-control-label">
-							<span class="custom-control-label-text">
-								View
-								<div class="form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias cupiditate illum dolore</div>
-							</span>
-						</span>
-					</label>
-				</div>
-			</div>
-
-			<div class="form-group">
 				{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
 					<div class="custom-control custom-radio">
 						<label>
-							{let $attributes kind="attributes"}
+							{let $sharePermissionKeyAttributes kind="attributes"}
 								class="custom-control-input"
+								data-onchange="{$_handleInputChange}"
 								name="sharePermissionKey"
 								type="radio"
 								value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}"
-								data-onchange="{$_handleInputChange}"
 								{if not $sharingEntryPermissionDisplay.enabled}
 									disabled="disabled"
 								{/if}
 							{/let}
-							<input {$attributes} />
+							<input {$sharePermissionKeyAttributes} />
 
 							<span class="custom-control-label">
 								<span class="custom-control-label-text">
@@ -116,18 +84,5 @@
 				</div>
 			</div>
 		</form>
-
-
-		{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
-			<strong>Edition key: </strong>{msg desc=""}edition{/msg}
-			<strong>Edition description key: </strong>{msg desc=""}collaborators-can-view-comment-update-the-document
-{/msg}
-			<br><br>
-			{index($sharingEntryPermissionDisplay)}<br>
-			{$sharingEntryPermissionDisplay.enabled}<br>
-			{$sharingEntryPermissionDisplay.titleKey}<br>
-			{$sharingEntryPermissionDisplay.descriptionKey}<br>
-			{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}<br>
-		{/foreach}
 	</div>
 {/template}
