@@ -170,11 +170,13 @@ public class SharingDLDisplayContextHelper {
 		PortletURL sharingURL = PortletURLFactoryUtil.create(
 			_request, sharingPortletId, PortletRequest.RENDER_PHASE);
 
+		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
+
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 			DLFileEntry.class.getName());
 
-		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
 		sharingURL.setParameter("classNameId", String.valueOf(classNameId));
+
 		sharingURL.setParameter(
 			"classPK", String.valueOf(_fileEntry.getFileEntryId()));
 
