@@ -25,14 +25,14 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.service.SharingEntryService;
-import com.liferay.sharing.web.internal.constants.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.constants.SharingEntryPermissionDisplayActionKey;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -45,6 +45,7 @@ import javax.portlet.ActionResponse;
 	service = MVCActionCommand.class
 )
 public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -54,10 +55,8 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String sharePermissionKey = ParamUtil.getString(
 			actionRequest, "sharePermissionKey");
-		String userEmailAddress = ParamUtil.getString(actionRequest, "userEmailAddress");
-
-		System.out.println(classNameId);
-		System.out.println(classNameId);
+		String userEmailAddress = ParamUtil.getString(
+			actionRequest, "userEmailAddress");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -85,7 +84,6 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 					serviceContext);
 			}
 		}
-
 	}
 
 	@Reference

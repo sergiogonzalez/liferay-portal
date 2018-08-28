@@ -178,15 +178,18 @@ public class SharingDLDisplayContextHelper {
 		sharingURL.setParameter(
 			"classPK", String.valueOf(_fileEntry.getFileEntryId()));
 
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		sharingURL.setParameter(
+			"refererPortletNamespace", liferayPortletResponse.getNamespace());
+
 		try {
 			sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		catch (Exception e) {
 			throw new SystemException("Unable to set window state", e);
 		}
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
 
 		StringBundler sb = new StringBundler(6);
 

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.web.internal.constants.SharingEntryPermissionDisplay;
@@ -29,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -45,7 +49,7 @@ public class SharingUtil {
 	public List<SharingEntryPermissionDisplay>
 		getSharingEntryPermissionDisplays(
 			PermissionChecker permissionChecker, long classNameId, long classPK,
-			long groupId) {
+			long groupId, Locale locale) {
 
 		List<SharingEntryActionKey> sharingEntryActionKeys = new ArrayList<>();
 
@@ -58,8 +62,8 @@ public class SharingUtil {
 
 		try {
 			if (sharingPermissionChecker.hasPermission(
-				permissionChecker, classPK, groupId,
-				Arrays.asList(SharingEntryActionKey.VIEW))) {
+					permissionChecker, classPK, groupId,
+					Arrays.asList(SharingEntryActionKey.VIEW))) {
 
 				sharingEntryActionKeys.add(SharingEntryActionKey.VIEW);
 			}
@@ -70,8 +74,8 @@ public class SharingUtil {
 
 		try {
 			if (sharingPermissionChecker.hasPermission(
-				permissionChecker, classPK, groupId,
-				Arrays.asList(SharingEntryActionKey.UPDATE))) {
+					permissionChecker, classPK, groupId,
+					Arrays.asList(SharingEntryActionKey.UPDATE))) {
 
 				sharingEntryActionKeys.add(SharingEntryActionKey.UPDATE);
 			}
@@ -93,10 +97,11 @@ public class SharingUtil {
 			_log.error(pe, pe);
 		}
 
-
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 
 		return SharingEntryPermissionDisplay.getSharingEntryPermissionDisplays(
-			sharingEntryActionKeys);
+			sharingEntryActionKeys, resourceBundle);
 	}
 
 	@Activate
@@ -121,6 +126,9 @@ public class SharingUtil {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private ServiceTrackerMap<Long, SharingPermissionChecker>
 		_serviceTrackerMap;
