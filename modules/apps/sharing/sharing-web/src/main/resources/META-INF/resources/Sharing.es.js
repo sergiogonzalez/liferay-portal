@@ -11,8 +11,7 @@ class Sharing extends PortletBase {
 
 		this.classNameId = config.classNameId;
 		this.classPK = config.classPK;
-		this.refererPortletName = config.refererPortletName;
-		// default temporal value
+		this.refererPortletNamespace = config.refererPortletNamespace;
 		this.shareDialogId = config.shareDialogId || 'sharingDialog';
 	}
 
@@ -62,7 +61,7 @@ class Sharing extends PortletBase {
 			}
 		).then(
 			response => {
-				Liferay.Portlet.refresh(`#p_p_id_${this.refererPortletName}`);
+				Liferay.Portlet.refresh(`#p_p_id${this.refererPortletNamespace}`);
 				this._closeDialog();
 			}
 		);

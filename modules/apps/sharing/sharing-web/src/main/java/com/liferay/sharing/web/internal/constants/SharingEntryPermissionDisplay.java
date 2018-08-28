@@ -14,10 +14,12 @@
 
 package com.liferay.sharing.web.internal.constants;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * @author Sergio González
@@ -26,30 +28,27 @@ public class SharingEntryPermissionDisplay {
 
 	public static List<SharingEntryPermissionDisplay>
 		getSharingEntryPermissionDisplays(
-			List<SharingEntryActionKey> sharingEntryActionKeys) {
+			List<SharingEntryActionKey> sharingEntryActionKeys,
+			ResourceBundle resourceBundle) {
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			new ArrayList<>();
 
 		if (sharingEntryActionKeys.contains(
-			SharingEntryActionKey.ADD_DISCUSSION) &&
+				SharingEntryActionKey.ADD_DISCUSSION) &&
 			sharingEntryActionKeys.contains(SharingEntryActionKey.UPDATE) &&
 			sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
 
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.UPDATE.getActionId(),
-					SharingEntryPermissionDisplayActionKey.UPDATE.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.UPDATE.getDescriptionKey(),
-					true));
+					SharingEntryPermissionDisplayActionKey.UPDATE, true,
+					resourceBundle));
 		}
 		else {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.UPDATE.getActionId(),
-					SharingEntryPermissionDisplayActionKey.UPDATE.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.UPDATE.getDescriptionKey(),
-					false));
+					SharingEntryPermissionDisplayActionKey.UPDATE, false,
+					resourceBundle));
 		}
 
 		if (sharingEntryActionKeys.contains(
@@ -58,70 +57,69 @@ public class SharingEntryPermissionDisplay {
 
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getActionId(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getDescriptionKey(),
-					true));
+					SharingEntryPermissionDisplayActionKey.COMMENTS, true,
+					resourceBundle));
 		}
 		else {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getActionId(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.COMMENTS.getDescriptionKey(),
-					false));
+					SharingEntryPermissionDisplayActionKey.COMMENTS, false,
+					resourceBundle));
 		}
 
 		if (sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.VIEW.getActionId(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getDescriptionKey(),
-					true));
+					SharingEntryPermissionDisplayActionKey.VIEW, true,
+					resourceBundle));
 		}
 		else {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
-					SharingEntryPermissionDisplayActionKey.VIEW.getActionId(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getTitleKey(),
-					SharingEntryPermissionDisplayActionKey.VIEW.getDescriptionKey(),
-					false));
+					SharingEntryPermissionDisplayActionKey.VIEW, false,
+					resourceBundle));
 		}
 
 		return sharingEntryPermissionDisplays;
 	}
 
 	public SharingEntryPermissionDisplay(
-		String sharingEntryPermissionDisplayActionKeyActionId,
-		String titleKey, String descriptionKey,
-		boolean enabled) {
+		SharingEntryPermissionDisplayActionKey
+			sharingEntryPermissionDisplayActionKey,
+		boolean enabled, ResourceBundle resourceBundle) {
 
 		_sharingEntryPermissionDisplayActionKeyActionId =
-			sharingEntryPermissionDisplayActionKeyActionId;
-		_titleKey = titleKey;
-		_descriptionKey = descriptionKey;
+			sharingEntryPermissionDisplayActionKey.getActionId();
+
+		_title = LanguageUtil.get(
+			resourceBundle,
+			sharingEntryPermissionDisplayActionKey.getTitleKey());
+		_description = LanguageUtil.get(
+			resourceBundle,
+			sharingEntryPermissionDisplayActionKey.getDescriptionKey());
+
 		_enabled = enabled;
+	}
+
+	public String getDescription() {
+		return _description;
 	}
 
 	public String getSharingEntryPermissionDisplayActionKeyActionId() {
 		return _sharingEntryPermissionDisplayActionKeyActionId;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
 	public boolean isEnabled() {
 		return _enabled;
 	}
 
+	private final String _description;
 	private final boolean _enabled;
 	private final String _sharingEntryPermissionDisplayActionKeyActionId;
-	private final String _titleKey;
-	private final String _descriptionKey;
+	private final String _title;
 
-	public String getTitleKey() {
-		return _titleKey;
-	}
-
-	public String getDescriptionKey() {
-		return _descriptionKey;
-	}
 }

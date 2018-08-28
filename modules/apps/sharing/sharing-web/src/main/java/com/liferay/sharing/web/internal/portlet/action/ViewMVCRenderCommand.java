@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.web.internal.constants.SharingEntryPermissionDisplay;
-import com.liferay.sharing.web.internal.constants.SharingEntryPermissionDisplayActionKey;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.util.SharingUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -65,19 +63,25 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 		long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
-		template.put("portletNamespace", renderResponse.getNamespace());
-		template.put("shareActionURL", shareActionURL.toString());
 		template.put("classNameId", classNameId);
 		template.put("classPK", classPK);
+
+		template.put("portletNamespace", renderResponse.getNamespace());
+
+		String refererPortletNamespace = ParamUtil.getString(
+			renderRequest, "refererPortletNamespace");
+
+		template.put("refererPortletNamespace", refererPortletNamespace);
+
+		template.put("shareActionURL", shareActionURL.toString());
 		template.put(
-			"refererPortletName",
-			"_com_liferay_document_library_web_portlet_DLAdminPortlet_");
+			"shareDialogId", refererPortletNamespace + "sharingDialog");
 		template.put("shareEnabled", true);
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			_sharingUtil.getSharingEntryPermissionDisplays(
 				themeDisplay.getPermissionChecker(), classNameId, classPK,
-				themeDisplay.getScopeGroupId());
+				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
 
 		template.put(
 			"sharingEntryPermissionDisplays", sharingEntryPermissionDisplays);
