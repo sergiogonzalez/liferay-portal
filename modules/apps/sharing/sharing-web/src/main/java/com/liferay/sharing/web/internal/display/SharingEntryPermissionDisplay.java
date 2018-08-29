@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.constants;
+package com.liferay.sharing.web.internal.display;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
-import com.liferay.sharing.web.internal.constants.SharingEntryPermissionDisplay;
+import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 
 import java.util.ArrayList;
 import java.util.Arrays;
