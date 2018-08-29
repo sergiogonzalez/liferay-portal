@@ -54,8 +54,10 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		boolean shareable = ParamUtil.getBoolean(actionRequest, "shareable");
-		String sharingPermissionKey = ParamUtil.getString(
-			actionRequest, "sharingPermissionKey");
+		String sharingEntryPermissionDisplayActionKeyActionId =
+			ParamUtil.getString(
+				actionRequest,
+				"sharingEntryPermissionDisplayActionKeyActionId");
 		String userEmailAddress = ParamUtil.getString(
 			actionRequest, "userEmailAddress");
 
@@ -68,7 +70,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		SharingEntryPermissionDisplayActionKey
 			sharingEntryPermissionDisplayActionKey =
 				SharingEntryPermissionDisplayActionKey.parseFromActionId(
-					sharingPermissionKey);
+					sharingEntryPermissionDisplayActionKeyActionId);
 
 		String[] userEmailAddresses = StringUtil.split(userEmailAddress);
 

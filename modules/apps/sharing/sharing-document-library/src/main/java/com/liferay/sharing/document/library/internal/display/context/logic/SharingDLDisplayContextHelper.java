@@ -149,6 +149,9 @@ public class SharingDLDisplayContextHelper {
 			_getLiferayPortletResponse();
 
 		template.put("namespace", liferayPortletResponse.getNamespace());
+		template.put(
+			"sharingDialogId",
+			_getSharingDialogId(liferayPortletResponse.getNamespace()));
 
 		template.processTemplate(unsyncStringWriter);
 
@@ -185,6 +188,9 @@ public class SharingDLDisplayContextHelper {
 
 		sharingURL.setParameter(
 			"refererPortletNamespace", liferayPortletResponse.getNamespace());
+		sharingURL.setParameter(
+			"sharingDialogId",
+			_getSharingDialogId(liferayPortletResponse.getNamespace()));
 
 		try {
 			sharingURL.setWindowState(LiferayWindowState.POP_UP);
@@ -203,6 +209,10 @@ public class SharingDLDisplayContextHelper {
 		sb.append("');");
 
 		return sb.toString();
+	}
+
+	private String _getSharingDialogId(String namespace) {
+		return namespace.concat("sharingDialogId");
 	}
 
 	private final FileEntry _fileEntry;

@@ -9,10 +9,10 @@ class Sharing extends PortletBase {
 	constructor(config, ...args) {
 		super(config, ...args);
 
-		this.classNameId = config.classNameId;
-		this.classPK = config.classPK;
-		this.refererPortletNamespace = config.refererPortletNamespace;
-		this.sharingDialogId = config.sharingDialogId || 'sharingDialogId';
+		this._classNameId = config.classNameId;
+		this._classPK = config.classPK;
+		this._refererPortletNamespace = config.refererPortletNamespace;
+		this._sharingDialogId = config.sharingDialogId || 'sharingDialogId';
 	}
 
 	/**
@@ -20,7 +20,7 @@ class Sharing extends PortletBase {
 	 * @review
 	 */
 	_closeDialog() {
-		const sharingDialog = Liferay.Util.getWindow(this.sharingDialogId);
+		const sharingDialog = Liferay.Util.getWindow(this._sharingDialogId);
 
 		if (sharingDialog && sharingDialog.hide) {
 			sharingDialog.hide();
@@ -53,15 +53,15 @@ class Sharing extends PortletBase {
 		this.fetch(
 			this.shareActionURL,
 			{
-				classNameId: this.classNameId,
-				classPK: this.classPK,
+				classNameId: this._classNameId,
+				classPK: this._classPK,
 				shareable: this.shareable,
-				sharingPermissionKey: this.sharingPermissionKey,
+				sharingEntryPermissionDisplayActionKeyActionId: this.sharingEntryPermissionDisplayActionKeyActionId,
 				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
 		).then(
 			response => {
-				parent.Liferay.Portlet.refresh(`#p_p_id${this.refererPortletNamespace}`);
+				parent.Liferay.Portlet.refresh(`#p_p_id${this._refererPortletNamespace}`);
 				this._closeDialog();
 			}
 		);
@@ -89,9 +89,9 @@ class Sharing extends PortletBase {
  * @type {!Object}
  */
 Sharing.STATE = {
-	shareable: Config.bool().required(),
+	shareable: Config.bool().value(true),
 	shareActionURL: Config.string().required(),
-	sharingPermissionKey: Config.string().required()
+	sharingEntryPermissionDisplayActionKeyActionId: Config.string().required()
 };
 
 Soy.register(Sharing, templates);
