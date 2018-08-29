@@ -48,10 +48,10 @@
 				{foreach $sharingEntryPermissionDisplay in $sharingEntryPermissionDisplays}
 					<div class="custom-control custom-radio">
 						<label>
-							{let $sharePermissionKeyAttributes kind="attributes"}
+							{let $sharingPermissionKeyAttributes kind="attributes"}
 								class="custom-control-input"
 								data-onchange="{$_handleInputChange}"
-								name="sharePermissionKey"
+								name="sharingPermissionKey"
 								type="radio"
 								value="{$sharingEntryPermissionDisplay.sharingEntryPermissionDisplayActionKeyActionId}"
 								{if not $sharingEntryPermissionDisplay.enabled}
@@ -59,7 +59,7 @@
 								{/if}
 							{/let}
 
-							<input {$sharePermissionKeyAttributes} />
+							<input {$sharingPermissionKeyAttributes} />
 
 							<span class="custom-control-label">
 								<span class="custom-control-label-text">

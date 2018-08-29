@@ -12,7 +12,7 @@ class Sharing extends PortletBase {
 		this.classNameId = config.classNameId;
 		this.classPK = config.classPK;
 		this.refererPortletNamespace = config.refererPortletNamespace;
-		this.shareDialogId = config.shareDialogId || 'sharingDialog';
+		this.sharingDialogId = config.sharingDialogId || 'sharingDialogId';
 	}
 
 	/**
@@ -20,10 +20,10 @@ class Sharing extends PortletBase {
 	 * @review
 	 */
 	_closeDialog() {
-		const shareDialog = Liferay.Util.getWindow(this.shareDialogId);
+		const sharingDialog = Liferay.Util.getWindow(this.sharingDialogId);
 
-		if (shareDialog && shareDialog.hide) {
-			shareDialog.hide();
+		if (sharingDialog && sharingDialog.hide) {
+			sharingDialog.hide();
 		}
 	}
 
@@ -56,7 +56,7 @@ class Sharing extends PortletBase {
 				classNameId: this.classNameId,
 				classPK: this.classPK,
 				shareable: this.shareable,
-				sharePermissionKey: this.sharePermissionKey,
+				sharingPermissionKey: this.sharingPermissionKey,
 				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
 		).then(
@@ -91,7 +91,7 @@ class Sharing extends PortletBase {
 Sharing.STATE = {
 	shareable: Config.bool().required(),
 	shareActionURL: Config.string().required(),
-	sharePermissionKey: Config.string().required()
+	sharingPermissionKey: Config.string().required()
 };
 
 Soy.register(Sharing, templates);
