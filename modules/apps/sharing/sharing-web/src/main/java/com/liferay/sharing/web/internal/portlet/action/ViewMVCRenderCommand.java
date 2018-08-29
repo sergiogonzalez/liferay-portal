@@ -76,7 +76,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("shareActionURL", shareActionURL.toString());
 		template.put(
 			"shareDialogId", refererPortletNamespace + "sharingDialog");
-		template.put("shareEnabled", true);
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			_sharingUtil.getSharingEntryPermissionDisplays(

@@ -55,7 +55,7 @@ class Sharing extends PortletBase {
 			{
 				classNameId: this.classNameId,
 				classPK: this.classPK,
-				shareEnabled: this.shareEnabled,
+				shareable: this.shareable,
 				sharePermissionKey: this.sharePermissionKey,
 				userEmailAddress: this._getEmailAdress(this.userEmailAddress)
 			}
@@ -89,8 +89,8 @@ class Sharing extends PortletBase {
  * @type {!Object}
  */
 Sharing.STATE = {
+	shareable: Config.bool().required(),
 	shareActionURL: Config.string().required(),
-	shareEnabled: Config.bool().required(),
 	sharePermissionKey: Config.string().required()
 };
 

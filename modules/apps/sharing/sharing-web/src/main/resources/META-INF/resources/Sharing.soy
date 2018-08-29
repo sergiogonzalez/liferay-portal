@@ -6,7 +6,6 @@
 
 {template .render}
 	{@param id: string}
-	{@param shareEnabled: bool}
 	{@param shareActionURL: string}
 	{@param sharingEntryPermissionDisplays: list<?>}
 	{@param? _closeDialog: any}
@@ -26,17 +25,15 @@
 			<div class="form-group">
 				<div class="custom-control custom-checkbox">
 					<label>
-						{let $shareEnabledAttributes kind="attributes"}
+						{let $shareableAttributes kind="attributes"}
 							class="custom-control-input"
 							data-onchange="{$_handleInputChange}"
-							name="shareEnabled"
+							name="shareable"
 							type="checkbox"
-							{if $shareEnabled}
-								checked="checked"
-							{/if}
+							checked="checked"
 						{/let}
 
-						<input {$shareEnabledAttributes} />
+						<input {$shareableAttributes} />
 
 						<span class="custom-control-label">
 							<span class="custom-control-label-text">{msg desc=""}allow-the-document-to-be-shared-with-other-users{/msg}</span>
