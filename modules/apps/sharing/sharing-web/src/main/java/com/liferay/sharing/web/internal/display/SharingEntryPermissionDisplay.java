@@ -98,7 +98,6 @@ public class SharingEntryPermissionDisplay {
 		_title = LanguageUtil.get(
 			resourceBundle,
 			sharingEntryPermissionDisplayActionKey.getTitleKey());
-
 	}
 
 	public String getDescription() {
