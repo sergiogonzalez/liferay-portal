@@ -61,7 +61,7 @@ class Sharing extends PortletBase {
 			}
 		).then(
 			response => {
-				Liferay.Portlet.refresh(`#p_p_id${this.refererPortletNamespace}`);
+				parent.Liferay.Portlet.refresh(`#p_p_id${this.refererPortletNamespace}`);
 				this._closeDialog();
 			}
 		);
