@@ -105,22 +105,12 @@ public class SharingEntryLocalServiceImpl
 
 	@Override
 	public void deleteGroupSharingEntries(long groupId) {
-		List<SharingEntry> sharingEntries =
-			sharingEntryPersistence.findByGroupId(groupId);
-
-		for (SharingEntry sharingEntry : sharingEntries) {
-			sharingEntryPersistence.remove(sharingEntry);
-		}
+		sharingEntryPersistence.removeByGroupId(groupId);
 	}
 
 	@Override
 	public void deleteSharingEntries(long classNameId, long classPK) {
-		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByC_C(
-			classNameId, classPK);
-
-		for (SharingEntry sharingEntry : sharingEntries) {
-			sharingEntryPersistence.remove(sharingEntry);
-		}
+		sharingEntryPersistence.removeByC_C(classNameId, classPK);
 	}
 
 	@Override
@@ -128,20 +118,13 @@ public class SharingEntryLocalServiceImpl
 			long fromUserId, long toUserId, long classNameId, long classPK)
 		throws PortalException {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.findByFU_TU_C_C(
+		return sharingEntryPersistence.removeByFU_TU_C_C(
 			fromUserId, toUserId, classNameId, classPK);
-
-		return sharingEntryPersistence.remove(sharingEntry);
 	}
 
 	@Override
 	public void deleteToUserSharingEntries(long toUserId) {
-		List<SharingEntry> sharingEntries =
-			sharingEntryPersistence.findByToUserId(toUserId);
-
-		for (SharingEntry sharingEntry : sharingEntries) {
-			sharingEntryPersistence.remove(sharingEntry);
-		}
+		sharingEntryPersistence.removeByToUserId(toUserId);
 	}
 
 	@Override
