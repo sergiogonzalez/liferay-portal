@@ -105,6 +105,11 @@ public class SharingUtil {
 			sharingEntryActionKeys, resourceBundle);
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	public void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -116,11 +121,6 @@ public class SharingUtil {
 						(String)serviceReference.getProperty(
 							"model.class.name")));
 			});
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	public void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Deactivate
