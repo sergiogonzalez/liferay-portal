@@ -12,29 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.convert.documentlibrary;
+package com.liferay.adaptive.media.image.internal.util;
 
-import com.liferay.document.library.kernel.store.Store;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 /**
- * @author Iván Zaera
  * @author Roberto Díaz
  */
-public interface DLStoreConvertProcess {
+public class AMStoreUtil {
 
-	public void copy(Store sourceStore, Store targetStore)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #copy(Store, Store)}
-	 */
-	@Deprecated
-	public default void migrate(DLStoreConverter dlStoreConverter)
-		throws PortalException {
+	public static String getConfigurationEntryPath(String configurationUuid) {
+		return String.format("adaptive/%s", configurationUuid);
 	}
 
-	public void move(Store sourceStore, Store targetStore)
-		throws PortalException;
+	public static String getFileVersionPath(
+		FileVersion fileVersion, String configurationUuid) {
+
+		return String.format(
+			"adaptive/%s/%d/%d/%d/%d/", configurationUuid,
+			fileVersion.getGroupId(), fileVersion.getRepositoryId(),
+			fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+	}
 
 }
