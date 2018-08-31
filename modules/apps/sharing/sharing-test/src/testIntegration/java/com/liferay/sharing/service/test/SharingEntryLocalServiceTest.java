@@ -648,7 +648,8 @@ public class SharingEntryLocalServiceTest {
 	public void testHasShareableSharingPermissionWithUnshareableAddDiscussionAndViewSharingEntryActionKey()
 		throws Exception {
 
-		long classNameId = RandomTestUtil.randomLong();
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
 		long classPK = RandomTestUtil.randomLong();
 
 		ServiceContext serviceContext =
@@ -680,7 +681,8 @@ public class SharingEntryLocalServiceTest {
 	public void testHasSharingPermissionWithAddDiscussionAndViewSharingEntryActionKey()
 		throws Exception {
 
-		long classNameId = RandomTestUtil.randomLong();
+		long classNameId = _classNameLocalService.getClassNameId(
+			Group.class.getName());
 		long classPK = RandomTestUtil.randomLong();
 
 		ServiceContext serviceContext =
