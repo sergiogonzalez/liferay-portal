@@ -104,6 +104,11 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteExpiredEntries() {
+		sharingEntryPersistence.removeByExpirationDate(DateUtil.newDate());
+	}
+
+	@Override
 	public void deleteGroupSharingEntries(long groupId) {
 		sharingEntryPersistence.removeByGroupId(groupId);
 	}
