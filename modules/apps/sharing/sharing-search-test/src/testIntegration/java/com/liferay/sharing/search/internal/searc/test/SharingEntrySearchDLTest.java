@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.search.internal.index.test;
+package com.liferay.sharing.search.internal.searc.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
