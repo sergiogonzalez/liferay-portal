@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.constants.SharingEntryActionKey;
@@ -299,7 +300,7 @@ public class SharingEntryLocalServiceImpl
 			notificationEventJSONObject.put(
 				"classPK", sharingEntry.getSharingEntryId());
 
-			User fromUser = userLocalService.fetchUser(
+			User fromUser = _userLocalService.fetchUser(
 				sharingEntry.getFromUserId());
 
 			if (fromUser != null) {
@@ -357,6 +358,9 @@ public class SharingEntryLocalServiceImpl
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = UserNotificationEventLocalService.class)
 	private UserNotificationEventLocalService
