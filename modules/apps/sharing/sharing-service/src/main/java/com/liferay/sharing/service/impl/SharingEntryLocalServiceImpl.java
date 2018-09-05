@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -308,17 +306,10 @@ public class SharingEntryLocalServiceImpl
 					"fromUserFullName", fromUser.getFullName());
 			}
 
-			NotificationEvent notificationEvent =
-				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), portletId,
-					notificationEventJSONObject);
-
-			notificationEvent.setDeliveryRequired(0);
-			notificationEvent.setDeliveryType(
-				UserNotificationDeliveryConstants.TYPE_WEBSITE);
-
-			_userNotificationEventLocalService.addUserNotificationEvent(
-				sharingEntry.getToUserId(), false, notificationEvent);
+			_userNotificationEventLocalService.sendUserNotificationEvents(
+				sharingEntry.getToUserId(), portletId,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				notificationEventJSONObject);
 		}
 	}
 
