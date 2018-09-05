@@ -274,7 +274,12 @@ public class SharingEntryLocalServiceImpl
 			actionIds -> sharingEntry.setActionIds(actionIds)
 		);
 
-		return sharingEntryPersistence.update(sharingEntry);
+		SharingEntry finalSharingEntry = sharingEntryPersistence.update(
+			sharingEntry);
+
+		_sendNotificationEvent(finalSharingEntry);
+
+		return finalSharingEntry;
 	}
 
 	private void _sendNotificationEvent(SharingEntry sharingEntry)
