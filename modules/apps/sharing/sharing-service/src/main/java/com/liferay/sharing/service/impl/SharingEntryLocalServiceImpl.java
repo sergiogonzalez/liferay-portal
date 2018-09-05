@@ -15,9 +15,20 @@
 package com.liferay.sharing.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.NotificationEvent;
+import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.exception.InvalidSharingEntryActionKeyException;
@@ -69,14 +80,19 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryActionKeys.stream();
 
 		sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getBitwiseVaue
+			SharingEntryActionKey::getBitwiseValue
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
 			actionIds -> sharingEntry.setActionIds(actionIds)
 		);
 
-		return sharingEntryPersistence.update(sharingEntry);
+		SharingEntry finalSharingEntry = sharingEntryPersistence.update(
+			sharingEntry);
+
+		_sendNotificationEvent(finalSharingEntry);
+
+		return finalSharingEntry;
 	}
 
 	@Override
@@ -208,7 +224,7 @@ public class SharingEntryLocalServiceImpl
 
 			long actionIds = sharingEntry.getActionIds();
 
-			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+			if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
 				return true;
 			}
 		}
@@ -228,7 +244,7 @@ public class SharingEntryLocalServiceImpl
 		for (SharingEntry sharingEntry : sharingEntries) {
 			long actionIds = sharingEntry.getActionIds();
 
-			if ((actionIds & sharingEntryActionKey.getBitwiseVaue()) != 0) {
+			if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
 				return true;
 			}
 		}
@@ -251,14 +267,58 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryActionKeys.stream();
 
 		sharingEntryActionKeyStream.map(
-			SharingEntryActionKey::getBitwiseVaue
+			SharingEntryActionKey::getBitwiseValue
 		).reduce(
 			(bitwiseValue1, bitwiseValue2) -> bitwiseValue1 | bitwiseValue2
 		).ifPresent(
 			actionIds -> sharingEntry.setActionIds(actionIds)
 		);
 
-		return sharingEntryPersistence.update(sharingEntry);
+		SharingEntry finalSharingEntry = sharingEntryPersistence.update(
+			sharingEntry);
+
+		_sendNotificationEvent(finalSharingEntry);
+
+		return finalSharingEntry;
+	}
+
+	private void _sendNotificationEvent(SharingEntry sharingEntry)
+		throws PortalException {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			SharingEntry.class.getName(), PortletProvider.Action.ADD);
+
+		if (UserNotificationManagerUtil.isDeliver(
+				sharingEntry.getToUserId(), portletId, 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			JSONObject notificationEventJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			notificationEventJSONObject.put(
+				"classPK", sharingEntry.getSharingEntryId());
+
+			User fromUser = userLocalService.fetchUser(
+				sharingEntry.getFromUserId());
+
+			if (fromUser != null) {
+				notificationEventJSONObject.put(
+					"fromUserFullName", fromUser.getFullName());
+			}
+
+			NotificationEvent notificationEvent =
+				NotificationEventFactoryUtil.createNotificationEvent(
+					System.currentTimeMillis(), portletId,
+					notificationEventJSONObject);
+
+			notificationEvent.setDeliveryRequired(0);
+			notificationEvent.setDeliveryType(
+				UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+			_userNotificationEventLocalService.addUserNotificationEvent(
+				sharingEntry.getToUserId(), false, notificationEvent);
+		}
 	}
 
 	private void _validateSharingEntryActionKeys(
@@ -297,5 +357,9 @@ public class SharingEntryLocalServiceImpl
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = UserNotificationEventLocalService.class)
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }
