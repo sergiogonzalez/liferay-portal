@@ -221,9 +221,7 @@ public class SharingEntryLocalServiceImpl
 				continue;
 			}
 
-			long actionIds = sharingEntry.getActionIds();
-
-			if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
+			if (hasSharingPermission(sharingEntry, sharingEntryActionKey)) {
 				return true;
 			}
 		}
@@ -241,11 +239,23 @@ public class SharingEntryLocalServiceImpl
 				toUserId, classNameId, classPK);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			long actionIds = sharingEntry.getActionIds();
-
-			if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
+			if (hasSharingPermission(sharingEntry, sharingEntryActionKey)) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean hasSharingPermission(
+		SharingEntry sharingEntry,
+		SharingEntryActionKey sharingEntryActionKey) {
+
+		long actionIds = sharingEntry.getActionIds();
+
+		if ((actionIds & sharingEntryActionKey.getBitwiseValue()) != 0) {
+			return true;
 		}
 
 		return false;
