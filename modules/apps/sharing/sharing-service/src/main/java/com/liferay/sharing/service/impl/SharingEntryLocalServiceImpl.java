@@ -15,9 +15,21 @@
 package com.liferay.sharing.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.NotificationEvent;
+import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.exception.InvalidSharingEntryActionKeyException;
@@ -76,7 +88,12 @@ public class SharingEntryLocalServiceImpl
 			actionIds -> sharingEntry.setActionIds(actionIds)
 		);
 
-		return sharingEntryPersistence.update(sharingEntry);
+		SharingEntry finalSharingEntry = sharingEntryPersistence.update(
+			sharingEntry);
+
+		_sendNotificationEvent(finalSharingEntry);
+
+		return finalSharingEntry;
 	}
 
 	@Override
@@ -261,6 +278,45 @@ public class SharingEntryLocalServiceImpl
 		return sharingEntryPersistence.update(sharingEntry);
 	}
 
+	private void _sendNotificationEvent(SharingEntry sharingEntry)
+		throws PortalException {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			SharingEntry.class.getName(), PortletProvider.Action.ADD);
+
+		if (UserNotificationManagerUtil.isDeliver(
+				sharingEntry.getToUserId(), portletId, 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			JSONObject notificationEventJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			notificationEventJSONObject.put(
+				"classPK", sharingEntry.getSharingEntryId());
+
+			User fromUser = _userLocalService.fetchUser(
+				sharingEntry.getFromUserId());
+
+			if (fromUser != null) {
+				notificationEventJSONObject.put(
+					"fromUserFullName", fromUser.getFullName());
+			}
+
+			NotificationEvent notificationEvent =
+				NotificationEventFactoryUtil.createNotificationEvent(
+					System.currentTimeMillis(), portletId,
+					notificationEventJSONObject);
+
+			notificationEvent.setDeliveryRequired(0);
+			notificationEvent.setDeliveryType(
+				UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+			_userNotificationEventLocalService.addUserNotificationEvent(
+				sharingEntry.getToUserId(), false, notificationEvent);
+		}
+	}
+
 	private void _validateSharingEntryActionKeys(
 			Collection<SharingEntryActionKey> sharedEntryActionKeys)
 		throws InvalidSharingEntryActionKeyException {
@@ -297,5 +353,12 @@ public class SharingEntryLocalServiceImpl
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@ServiceReference(type = UserNotificationEventLocalService.class)
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }
