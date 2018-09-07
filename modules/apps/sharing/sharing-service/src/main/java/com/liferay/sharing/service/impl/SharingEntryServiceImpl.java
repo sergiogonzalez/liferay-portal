@@ -90,7 +90,8 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
@@ -102,7 +103,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			sharingEntryActionKeys);
 
 		return sharingEntryLocalService.updateSharingEntry(
-			sharingEntryId, sharingEntryActionKeys);
+			sharingEntryId, sharingEntryActionKeys, serviceContext);
 	}
 
 	@ServiceReference(type = ClassNameLocalService.class)

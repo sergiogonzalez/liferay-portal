@@ -277,7 +277,8 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
