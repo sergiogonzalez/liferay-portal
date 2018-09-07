@@ -70,6 +70,6 @@ public interface SharingEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public SharingEntry updateSharingEntry(long sharingEntryId,
-		Collection<SharingEntryActionKey> sharingEntryActionKeys)
-		throws PortalException;
+		Collection<SharingEntryActionKey> sharingEntryActionKeys,
+		ServiceContext serviceContext) throws PortalException;
 }
