@@ -81,13 +81,14 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = super.updateSharingEntry(
-			sharingEntryId, sharingEntryActionKeys);
+			sharingEntryId, sharingEntryActionKeys, serviceContext);
 
-		_sendNotificationEvent(sharingEntry, null);
+		_sendNotificationEvent(sharingEntry, serviceContext);
 
 		return sharingEntry;
 	}
