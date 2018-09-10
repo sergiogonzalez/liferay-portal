@@ -18,32 +18,19 @@
 
 <%
 DLOpenerGoogleDriveFileReference googleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
+
+long cssLastModifiedTime = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+
+ServletContext servletContext = session.getServletContext();
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta content="initial-scale=1.0, width=device-width" name="viewport">
-	<style type="text/css">
-		body {
-			overflow: hidden;
-		}
-
-		.google-docs-toolbar {
-			background-color: #0b5fff;
-			color: #fff;
-			height: 3rem;
-			max-height: 3rem;
-		}
-
-		.google-docs-iframe {
-			height: calc(100vh - 3rem);
-			width: 100%;
-		}
-	</style>
-
-	<link href="/o/frontend-css-web/main.css?browserId=other&amp;themeId=admin_WAR_admintheme&amp;languageId=en_US&amp;b=7100&amp;t=1535541653363" id="liferayPortalCSS" rel="stylesheet" type="text/css" />
-	<link href="/o/admin-theme/css/clay.css?browserId=other&themeId=admin_WAR_admintheme&languageId=en_US&b=7100&t=1535546086145" id="liferayPortalCSS" rel="stylesheet" type="text/css" />
+	<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_CSS) + "/main.css", cssLastModifiedTime)) %>" id="liferayPortalCSS" rel="stylesheet" type="text/css" />
+	<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/clay.css")) %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />
+	<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), servletContext.getContextPath(), "/css/google_docs.css"))) %>" id="liferayGDriveCSS" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
