@@ -69,37 +69,26 @@ ServletContext servletContext = session.getServletContext();
 
 <script type="application/javascript">
 	(function() {
-		var closeAndCheckinBtn = document.getElementById("closeAndCheckinBtn");
+		function registerCloseEvent(elementId, url) {
+			var element = document.getElementById(elementId);
 
-		closeAndCheckinBtn.onclick = function() {
-			fetch(
-				'<%= checkInURL %>',
-				{
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(function(response) {
-				if (response.ok) {
-					window.close();
-				}
-			});
-		};
+			element.onclick = function() {
+				fetch(
+					url,
+					{
+						credentials: 'include',
+						method: 'POST'
+					}
+				).then(function(response) {
+					if (response.ok) {
+						window.close();
+					}
+				});
+			};
+		}
 
-		var discardChangesBtn = document.getElementById("discardChangesBtn");
-
-		discardChangesBtn.onclick = function() {
-			fetch(
-				'<%= cancelCheckoutURL %>',
-				{
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(function(response) {
-				if (response.ok) {
-					window.close();
-				}
-			});
-		};
+		registerCloseEvent("closeAndCheckinBtn", '<%= checkInURL %>');
+		registerCloseEvent("discardChangesBtn", '<%= cancelCheckoutURL %>');
 	})();
 </script>
 </body>
