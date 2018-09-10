@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.sharing.constants.SharingEntryActionKey;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.notifications.internal.constants.SharingNotificationsConstants;
 import com.liferay.sharing.notifications.internal.notifications.SharingNotificationMessageProvider;
 import com.liferay.sharing.notifications.internal.util.NotificationsSharingEntryUtil;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -73,7 +73,10 @@ public class NotificationsSharingEntryLocalServiceWrapper
 			fromUserId, toUserId, classNameId, classPK, groupId, shareable,
 			sharingEntryActionKeys, serviceContext);
 
-		_sendNotificationEvent(sharingEntry, serviceContext);
+		_sendNotificationEvent(
+			sharingEntry,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			serviceContext);
 
 		return sharingEntry;
 	}
@@ -88,7 +91,10 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		SharingEntry sharingEntry = super.updateSharingEntry(
 			sharingEntryId, sharingEntryActionKeys, serviceContext);
 
-		_sendNotificationEvent(sharingEntry, serviceContext);
+		_sendNotificationEvent(
+			sharingEntry,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+			serviceContext);
 
 		return sharingEntry;
 	}
@@ -111,7 +117,8 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	}
 
 	private void _sendNotificationEvent(
-		SharingEntry sharingEntry, ServiceContext serviceContext) {
+		SharingEntry sharingEntry, int notificationType,
+		ServiceContext serviceContext) {
 
 		try {
 			User user = _userLocalService.getUser(sharingEntry.getToUserId());
@@ -145,8 +152,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 			subscriptionSender.setHtmlFormat(true);
 			subscriptionSender.setMailId(
 				"sharing_entry", sharingEntry.getSharingEntryId());
-			subscriptionSender.setNotificationType(
-				SharingNotificationsConstants.NOTIFICATION_TYPE_SHARE);
+			subscriptionSender.setNotificationType(notificationType);
 			subscriptionSender.setPortletId(SharingPortletKeys.SHARING);
 			subscriptionSender.setScopeGroupId(sharingEntry.getGroupId());
 			subscriptionSender.setServiceContext(serviceContext);
