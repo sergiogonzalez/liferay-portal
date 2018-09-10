@@ -1,0 +1,15 @@
+body {
+	overflow: hidden;
+}
+
+.google-docs-toolbar {
+	background-color: #0B5FFF;
+	color: #FFF;
+	height: 3rem;
+	max-height: 3rem;
+}
+
+.google-docs-iframe {
+	height: calc(100vh - 3rem);
+	width: 100%;
+}
