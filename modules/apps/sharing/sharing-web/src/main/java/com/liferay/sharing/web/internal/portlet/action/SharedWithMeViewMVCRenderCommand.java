@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.context.SharedWithMeViewDisplayContext;
-import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -50,8 +49,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 
 		SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext =
 			new SharedWithMeViewDisplayContext(
-				themeDisplay, _sharingEntryLocalService,
-				_sharingEntryInterpreterTracker);
+				themeDisplay, _sharingEntryLocalService);
 
 		renderRequest.setAttribute(
 			SharedWithMeViewDisplayContext.class.getName(),
@@ -59,9 +57,6 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 
 		return "/shared_with_me/view.jsp";
 	}
-
-	@Reference
-	private SharingEntryInterpreterTracker _sharingEntryInterpreterTracker;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

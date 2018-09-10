@@ -17,13 +17,27 @@
 <%@ include file="/shared_with_me/init.jsp" %>
 
 <%
-long sharingEntryId = ParamUtil.getLong(request, "sharingEntryId");
+AssetRenderer assetRenderer = (AssetRenderer)renderRequest.getAttribute(AssetRenderer.class.getName());
+AssetRendererFactory assetRendererFactory = assetRenderer.getAssetRendererFactory();
 
-SharingEntry sharingEntry = SharingEntryLocalServiceUtil.getSharingEntry(sharingEntryId);
-
-SharingEntryInterpreter sharingEntryInterpreter = (SharingEntryInterpreter)renderRequest.getAttribute(SharingEntryInterpreter.class.getName());
-
-SharingEntryViewRenderer sharingEntryViewRenderer = sharingEntryInterpreter.getSharingEntryViewRenderer();
-
-sharingEntryViewRenderer.render(sharingEntryInterpreter.getEntry(sharingEntry), request, response);
+AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 %>
+
+<liferay-asset:asset-display
+	assetEntry="<%= assetEntry %>"
+	assetRenderer="<%= assetRenderer %>"
+	assetRendererFactory="<%= assetRendererFactory %>"
+	showExtraInfo="<%= true %>"
+	template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
+/>
+
+<c:if test="<%= assetRenderer.isCommentable() %>">
+	<liferay-comment:discussion
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		formName='<%= "fm" + assetEntry.getClassPK() %>'
+		ratingsEnabled="<%= false %>"
+		redirect="<%= currentURL %>"
+		userId="<%= assetRenderer.getUserId() %>"
+	/>
+</c:if>

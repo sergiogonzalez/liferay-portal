@@ -14,19 +14,17 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
-
-import java.util.Optional;
+import com.liferay.sharing.web.internal.util.SharingAssetUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -72,19 +70,17 @@ public class SharedWithMeViewSharingEntryMVCRenderCommand
 						sharingEntryId));
 			}
 
-			Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-				_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-					sharingEntry.getClassNameId());
+			AssetRenderer assetRenderer = SharingAssetUtil.getAssetRenderer(
+				sharingEntry);
 
-			SharingEntryInterpreter sharingEntryInterpreter =
-				sharingEntryInterpreterOptional.orElseThrow(
-					() -> new PortletException(
-						"sharing entry interpreter is null for class name id " +
-							sharingEntry.getClassNameId()));
+			if (assetRenderer == null) {
+				throw new PortletException(
+					"sharing entry asset renderer is null for class name id " +
+						sharingEntry.getClassNameId());
+			}
 
 			renderRequest.setAttribute(
-				SharingEntryInterpreter.class.getName(),
-				sharingEntryInterpreter);
+				AssetRenderer.class.getName(), assetRenderer);
 
 			return "/shared_with_me/view_sharing_entry.jsp";
 		}
@@ -92,9 +88,6 @@ public class SharedWithMeViewSharingEntryMVCRenderCommand
 			throw new PortletException(e);
 		}
 	}
-
-	@Reference
-	private SharingEntryInterpreterTracker _sharingEntryInterpreterTracker;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

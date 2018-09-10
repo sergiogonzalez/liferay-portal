@@ -14,21 +14,19 @@
 
 package com.liferay.sharing.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.constants.SharingEntryActionKey;
-import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.web.internal.interpreter.SharingEntryInterpreterTracker;
+import com.liferay.sharing.web.internal.util.SharingAssetUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.PortletURL;
 
@@ -39,64 +37,52 @@ public class SharedWithMeViewDisplayContext {
 
 	public SharedWithMeViewDisplayContext(
 		ThemeDisplay themeDisplay,
-		SharingEntryLocalService sharingEntryLocalService,
-		SharingEntryInterpreterTracker sharingEntryInterpreterTracker) {
+		SharingEntryLocalService sharingEntryLocalService) {
 
 		_themeDisplay = themeDisplay;
 		_sharingEntryLocalService = sharingEntryLocalService;
-		_sharingEntryInterpreterTracker = sharingEntryInterpreterTracker;
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry) {
-		Optional<SharingEntryInterpreter> sharingEntryInterpreter =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-				sharingEntry.getClassNameId());
+		AssetRenderer assetRenderer = SharingAssetUtil.getAssetRenderer(
+			sharingEntry);
 
-		return sharingEntryInterpreter.map(
-			curSharingEntryInterpreter ->
-				curSharingEntryInterpreter.getAssetTypeTitle(
-					sharingEntry, _themeDisplay.getLocale())
-		).orElse(
-			StringPool.BLANK
-		);
+		if (assetRenderer != null) {
+			AssetRendererFactory assetRendererFactory =
+				assetRenderer.getAssetRendererFactory();
+
+			return assetRendererFactory.getTypeName(_themeDisplay.getLocale());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getTitle(SharingEntry sharingEntry) {
-		Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-				sharingEntry.getClassNameId());
+		AssetRenderer assetRenderer = SharingAssetUtil.getAssetRenderer(
+			sharingEntry);
 
-		return sharingEntryInterpreterOptional.map(
-			curSharingEntryInterpreter ->
-				curSharingEntryInterpreter.getTitle(sharingEntry)
-		).orElse(
-			StringPool.BLANK
-		);
+		if (assetRenderer != null) {
+			return assetRenderer.getTitle(_themeDisplay.getLocale());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public PortletURL getURLEdit(
 			SharingEntry sharingEntry,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		throws Exception {
 
-		Optional<SharingEntryInterpreter> sharingEntryInterpreterOptional =
-			_sharingEntryInterpreterTracker.getSharingEntryInterpreter(
-				sharingEntry.getClassNameId());
+		AssetRenderer assetRenderer = SharingAssetUtil.getAssetRenderer(
+			sharingEntry);
 
-		if (!sharingEntryInterpreterOptional.isPresent()) {
-			return null;
+		if (assetRenderer != null) {
+			return assetRenderer.getURLEdit(
+				liferayPortletRequest, liferayPortletResponse);
 		}
 
-		SharingEntryInterpreter sharingEntryInterpreter =
-			sharingEntryInterpreterOptional.get();
-
-		SharingEntryEditRenderer sharingEntryEditRenderer =
-			sharingEntryInterpreter.getSharingEntryEditRenderer();
-
-		return sharingEntryEditRenderer.getURLEdit(
-			sharingEntryInterpreter.getEntry(sharingEntry),
-			liferayPortletRequest, liferayPortletResponse);
+		return null;
 	}
 
 	public boolean hasEditPermission(SharingEntry sharingEntry) {
@@ -118,8 +104,6 @@ public class SharedWithMeViewDisplayContext {
 		searchContainer.setResults(sharingEntries);
 	}
 
-	private final SharingEntryInterpreterTracker
-		_sharingEntryInterpreterTracker;
 	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final ThemeDisplay _themeDisplay;
 
