@@ -48,6 +48,7 @@ ServletContext servletContext = session.getServletContext();
 
 	<div class="autofit-col">
 		<clay:button
+			id="discardChangesBtn"
 			label='<%= LanguageUtil.get(resourceBundle, "discard-changes") %>'
 			size="sm"
 		/>
@@ -61,13 +62,34 @@ ServletContext servletContext = session.getServletContext();
 	<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>" />
 </portlet:actionURL>
 
+<portlet:actionURL name="/document_library/edit_in_google_docs" var="cancelCheckoutURL">
+	<portlet:param name="fileEntryId" value="<%= String.valueOf(googleDriveFileReference.getFileEntryId()) %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>" />
+</portlet:actionURL>
+
 <script type="application/javascript">
 	(function() {
-		var btn = document.getElementById("closeAndCheckinBtn");
+		var closeAndCheckinBtn = document.getElementById("closeAndCheckinBtn");
 
-		btn.onclick = function() {
+		closeAndCheckinBtn.onclick = function() {
 			fetch(
 				'<%= checkInURL %>',
+				{
+					credentials: 'include',
+					method: 'POST'
+				}
+			).then(function(response) {
+				if (response.ok) {
+					window.close();
+				}
+			});
+		};
+
+		var discardChangesBtn = document.getElementById("discardChangesBtn");
+
+		discardChangesBtn.onclick = function() {
+			fetch(
+				'<%= cancelCheckoutURL %>',
 				{
 					credentials: 'include',
 					method: 'POST'
