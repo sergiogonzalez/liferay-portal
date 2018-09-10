@@ -14,7 +14,10 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.service.SharingEntryService;
@@ -33,6 +37,7 @@ import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +79,22 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		if (userEmailAddress.contains("error")) {
+			HttpServletResponse response = _portal.getHttpServletResponse(
+				actionResponse);
+
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("erorrMessage", "invalid email address");
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+
+			return;
+		}
+
 		SharingEntryPermissionDisplayActionKey
 			sharingEntryPermissionDisplayActionKey =
 				SharingEntryPermissionDisplayActionKey.parseFromActionId(
@@ -98,6 +119,9 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SharingEntryService _sharingEntryService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;
