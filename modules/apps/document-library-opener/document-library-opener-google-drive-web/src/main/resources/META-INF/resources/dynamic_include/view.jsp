@@ -64,13 +64,3 @@ DLOpenerGoogleDriveFileReference googleDriveFileReference = (DLOpenerGoogleDrive
 			TIME_SHOW_MSG);
 	}
 </script>
-
-<style>
-	.google-docs-redirect-modal {
-		font-size: .875rem;
-		text-align: center;
-	}
-	.google-docs-redirect-modal .modal-header {
-		display: none;
-	}
-</style>
