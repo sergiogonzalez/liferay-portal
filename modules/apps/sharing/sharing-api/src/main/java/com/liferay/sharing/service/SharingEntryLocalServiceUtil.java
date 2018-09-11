@@ -421,10 +421,12 @@ public class SharingEntryLocalServiceUtil {
 
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys)
+		java.util.Collection<com.liferay.sharing.constants.SharingEntryActionKey> sharingEntryActionKeys,
+		boolean shareable, java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys);
+				   .updateSharingEntry(sharingEntryId, sharingEntryActionKeys,
+			shareable, expirationDate);
 	}
 
 	/**
