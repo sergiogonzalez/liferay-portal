@@ -594,7 +594,7 @@ public class SharingEntryServiceTest {
 
 		Assert.assertTrue(sharingEntry.isShareable());
 
-		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
+		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryActionKey.VIEW), false, null);
 
@@ -628,7 +628,7 @@ public class SharingEntryServiceTest {
 
 		Date expirationDate = Date.from(now.plus(2, ChronoUnit.DAYS));
 
-		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
+		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryActionKey.VIEW), true, expirationDate);
 
@@ -660,7 +660,7 @@ public class SharingEntryServiceTest {
 
 		Date expirationDate = Date.from(now.minus(2, ChronoUnit.DAYS));
 
-		_sharingEntryLocalService.updateSharingEntry(
+		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryActionKey.VIEW), true, expirationDate);
 	}
