@@ -290,7 +290,7 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
 			Collection<SharingEntryActionKey> sharingEntryActionKeys,
-			Date expirationDate)
+			boolean shareable, Date expirationDate)
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
@@ -300,6 +300,7 @@ public class SharingEntryLocalServiceImpl
 
 		_validateExpirationDate(expirationDate);
 
+		sharingEntry.setShareable(shareable);
 		sharingEntry.setExpirationDate(expirationDate);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =

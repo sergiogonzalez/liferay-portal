@@ -429,7 +429,7 @@ public class SharingEntryServiceTest {
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			null);
+			true, null);
 	}
 
 	@Test
@@ -457,7 +457,7 @@ public class SharingEntryServiceTest {
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			null);
+			true, null);
 
 		Assert.assertEquals(3, sharingEntry.getActionIds());
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
@@ -494,7 +494,7 @@ public class SharingEntryServiceTest {
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(
 				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
-			null);
+			true, null);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -519,7 +519,7 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.UPDATE), null);
+			Arrays.asList(SharingEntryActionKey.UPDATE), true, null);
 	}
 
 	private void _registerSharingPermissionChecker(
