@@ -32,6 +32,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.exception.InvalidSharingEntryActionKeyException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
@@ -44,6 +45,7 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -95,6 +97,140 @@ public class SharingEntryServiceTest {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
+	}
+
+	@Test
+	public void testAddOrUpdateSharingEntryAddsNewSharingEntry()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(
+					SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+		long classPK = RandomTestUtil.randomLong();
+
+		Instant now = Instant.now();
+
+		Date expirationDate = Date.from(now.plus(2, ChronoUnit.DAYS));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry sharingEntry =
+			_sharingEntryService.addOrUpdateSharingEntry(
+				_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+				true, Arrays.asList(SharingEntryActionKey.VIEW), expirationDate,
+				serviceContext);
+
+		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
+		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
+		Assert.assertEquals(
+			_fromUser.getUserId(), sharingEntry.getFromUserId());
+		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
+		Assert.assertEquals(classNameId, sharingEntry.getClassNameId());
+		Assert.assertEquals(classPK, sharingEntry.getClassPK());
+		Assert.assertTrue(sharingEntry.isShareable());
+		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
+	}
+
+	@Test
+	public void testAddOrUpdateSharingEntryUpdatesSharingEntry()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(
+					SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+		long classPK = RandomTestUtil.randomLong();
+
+		Instant now = Instant.now();
+
+		Date expirationDate = Date.from(now.plus(2, ChronoUnit.DAYS));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SharingEntry addSharingEntry = _sharingEntryService.addSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			true, Arrays.asList(SharingEntryActionKey.VIEW), expirationDate,
+			serviceContext);
+
+		Assert.assertTrue(addSharingEntry.isShareable());
+		Assert.assertEquals(1, addSharingEntry.getActionIds());
+		Assert.assertEquals(
+			expirationDate, addSharingEntry.getExpirationDate());
+
+		expirationDate = Date.from(now.plus(3, ChronoUnit.DAYS));
+
+		SharingEntry updateSharingEntry =
+			_sharingEntryService.addOrUpdateSharingEntry(
+				_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+				false,
+				Arrays.asList(
+					SharingEntryActionKey.VIEW, SharingEntryActionKey.UPDATE),
+				expirationDate, serviceContext);
+
+		Assert.assertFalse(updateSharingEntry.isShareable());
+		Assert.assertEquals(3, updateSharingEntry.getActionIds());
+		Assert.assertEquals(
+			expirationDate, updateSharingEntry.getExpirationDate());
+
+		Assert.assertEquals(
+			addSharingEntry.getSharingEntryId(),
+			updateSharingEntry.getSharingEntryId());
+	}
+
+	@Test(expected = InvalidSharingEntryActionKeyException.class)
+	public void testAddOrUpdateSharingEntryWithEmptySharingEntryActionKeys()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(
+					SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryService.addOrUpdateSharingEntry(
+			_toUser.getUserId(), classNameId, RandomTestUtil.randomLong(),
+			_group.getGroupId(), true, Collections.emptyList(), null,
+			serviceContext);
+	}
+
+	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	public void testAddOrUpdateSharingEntryWithExpirationDateInThePast()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			new TestSharingPermissionChecker(
+				Arrays.asList(
+					SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW)));
+
+		long classNameId =
+			_testSharingPermissionCheckerClassName.getClassNameId();
+		long classPK = RandomTestUtil.randomLong();
+
+		Instant now = Instant.now();
+
+		Date expirationDate = Date.from(now.minus(2, ChronoUnit.DAYS));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_sharingEntryService.addOrUpdateSharingEntry(
+			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
+			true, Arrays.asList(SharingEntryActionKey.VIEW), expirationDate,
+			serviceContext);
 	}
 
 	@Test(expected = PrincipalException.class)
