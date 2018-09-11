@@ -289,13 +289,18 @@ public class SharingEntryLocalServiceImpl
 	@Override
 	public SharingEntry updateSharingEntry(
 			long sharingEntryId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Date expirationDate)
 		throws PortalException {
 
 		SharingEntry sharingEntry = sharingEntryPersistence.findByPrimaryKey(
 			sharingEntryId);
 
 		_validateSharingEntryActionKeys(sharingEntryActionKeys);
+
+		_validateExpirationDate(expirationDate);
+
+		sharingEntry.setExpirationDate(expirationDate);
 
 		Stream<SharingEntryActionKey> sharingEntryActionKeyStream =
 			sharingEntryActionKeys.stream();

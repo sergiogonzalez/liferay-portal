@@ -1067,7 +1067,8 @@ public class SharingEntryLocalServiceTest {
 			RandomTestUtil.randomLong(),
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			null);
 	}
 
 	@Test
@@ -1089,7 +1090,8 @@ public class SharingEntryLocalServiceTest {
 		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			null);
 
 		Assert.assertEquals(3, sharingEntry.getActionIds());
 
@@ -1097,7 +1099,8 @@ public class SharingEntryLocalServiceTest {
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.VIEW));
+				SharingEntryActionKey.VIEW),
+			null);
 
 		Assert.assertEquals(5, sharingEntry.getActionIds());
 
@@ -1105,7 +1108,8 @@ public class SharingEntryLocalServiceTest {
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(
 				SharingEntryActionKey.ADD_DISCUSSION,
-				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW));
+				SharingEntryActionKey.UPDATE, SharingEntryActionKey.VIEW),
+			null);
 
 		Assert.assertEquals(7, sharingEntry.getActionIds());
 	}
@@ -1126,7 +1130,7 @@ public class SharingEntryLocalServiceTest {
 
 		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.VIEW));
+			Arrays.asList(SharingEntryActionKey.VIEW), null);
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
@@ -1172,7 +1176,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(SharingEntryActionKey.VIEW), null, serviceContext);
 
 		_sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(), Collections.emptyList());
+			sharingEntry.getSharingEntryId(), Collections.emptyList(), null);
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1192,7 +1196,7 @@ public class SharingEntryLocalServiceTest {
 
 		_sharingEntryLocalService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryActionKey.UPDATE));
+			Arrays.asList(SharingEntryActionKey.UPDATE), null);
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1216,7 +1220,7 @@ public class SharingEntryLocalServiceTest {
 		sharingEntryActionKeys.add(null);
 
 		_sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(), sharingEntryActionKeys);
+			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, null);
 	}
 
 	@Test(expected = InvalidSharingEntryActionKeyException.class)
@@ -1239,7 +1243,7 @@ public class SharingEntryLocalServiceTest {
 		sharingEntryActionKeys.add(null);
 
 		_sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(), sharingEntryActionKeys);
+			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, null);
 	}
 
 	private void _expireSharingEntry(SharingEntry sharingEntry) {
