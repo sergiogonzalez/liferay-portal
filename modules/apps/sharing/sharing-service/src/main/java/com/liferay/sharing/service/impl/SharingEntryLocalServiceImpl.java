@@ -56,6 +56,28 @@ public class SharingEntryLocalServiceImpl
 	extends SharingEntryLocalServiceBaseImpl {
 
 	@Override
+	public SharingEntry addOrUpdateSharingEntry(
+			long fromUserId, long toUserId, long classNameId, long classPK,
+			long groupId, boolean shareable,
+			Collection<SharingEntryActionKey> sharingEntryActionKeys,
+			Date expirationDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryPersistence.fetchByFU_TU_C_C(
+			fromUserId, toUserId, classNameId, classPK);
+
+		if (sharingEntry == null) {
+			return addSharingEntry(
+				fromUserId, toUserId, classNameId, classPK, groupId, shareable,
+				sharingEntryActionKeys, expirationDate, serviceContext);
+		}
+
+		return updateSharingEntry(
+			sharingEntry.getSharingEntryId(), sharingEntryActionKeys, shareable,
+			expirationDate);
+	}
+
+	@Override
 	public SharingEntry addSharingEntry(
 			long fromUserId, long toUserId, long classNameId, long classPK,
 			long groupId, boolean shareable,
