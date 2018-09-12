@@ -15,6 +15,7 @@
 package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -138,7 +138,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_extensions = new ArrayList<>();
 		_itemSelectedEventName = null;
 		_itemSelectorReturnTypeResolver = null;
-		_maxFileSize = UploadServletRequestConfigurationHelperUtil.getMaxSize();
+		_maxFileSize = DLValidatorUtil.getMaxAllowableSize();
 		_portletURL = null;
 		_repositoryEntries = new ArrayList<>();
 		_repositoryEntriesCount = 0;
@@ -274,8 +274,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private List<String> _extensions = new ArrayList<>();
 	private String _itemSelectedEventName;
 	private ItemSelectorReturnTypeResolver _itemSelectorReturnTypeResolver;
-	private long _maxFileSize =
-		UploadServletRequestConfigurationHelperUtil.getMaxSize();
+	private long _maxFileSize = DLValidatorUtil.getMaxAllowableSize();
 	private PortletURL _portletURL;
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
 	private int _repositoryEntriesCount;
