@@ -31,6 +31,10 @@ DLOpenerGoogleDriveFileReference googleDriveFileReference = (DLOpenerGoogleDrive
 	</aui:script>
 </c:if>
 
+<liferay-util:html-top>
+	<link href="<%= themeDisplay.getPortalURL() + PortalUtil.getPathProxy() + application.getContextPath() + "/css/document_library.css" %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <script>
 	window.<portlet:namespace />redirectNotification = function(url) {
 		var TIME_SHOW_MSG = 2000;
