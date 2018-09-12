@@ -17,11 +17,50 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
+DLOpenerGoogleDriveFileReference googleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
 %>
 
-<c:if test="<%= dlOpenerGoogleDriveFileReference != null %>">
+<c:if test="<%= googleDriveFileReference != null %>">
+	<portlet:renderURL var="renderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/open_google_docs" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(googleDriveFileReference.getFileEntryId()) %>" />
+	</portlet:renderURL>
+
 	<aui:script>
-		window.open('<%= dlOpenerGoogleDriveFileReference.getGoogleDocsEditURL() %>');
+		window.open('<%= renderURL %>');
 	</aui:script>
 </c:if>
+
+<script>
+	window.<portlet:namespace />redirectNotification = function(url) {
+		var TIME_SHOW_MSG = 2000;
+
+		Liferay.Util.openWindow(
+			{
+				dialog:
+				{
+					bodyContent: '<p><liferay-ui:message key="you-are-being-redirected-to-an-external-editor-to-edit-this-document" /></p><div aria-hidden="true" class="loading-animation"></div>',
+					cssClass: 'google-docs-redirect-modal',
+					height: 172,
+					modal: true,
+					resizable: false,
+					title: '',
+					width: 320
+				}
+			}
+		);
+
+		setTimeout(
+			function() {
+				var form = document.createElement('form');
+
+				form.method = 'POST';
+				form.action = url;
+
+				document.body.appendChild(form);
+
+				form.submit();
+			},
+			TIME_SHOW_MSG);
+	}
+</script>
