@@ -21,18 +21,18 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 %>
 
 <c:if test="<%= dlOpenerGoogleDriveFileReference != null %>">
-	<portlet:renderURL var="renderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:renderURL var="openGoogleDocsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/open_google_docs" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
 	</portlet:renderURL>
 
 	<aui:script>
-		window.open('<%= renderURL %>');
+		window.open('<%= openGoogleDocsURL %>');
 	</aui:script>
 </c:if>
 
 <liferay-util:html-top>
-	<link href="<%= themeDisplay.getPortalURL() + PortalUtil.getPathProxy() + application.getContextPath() + "/css/document_library.css" %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), application.getContextPath(), "/css/document_library.css")) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <script>
