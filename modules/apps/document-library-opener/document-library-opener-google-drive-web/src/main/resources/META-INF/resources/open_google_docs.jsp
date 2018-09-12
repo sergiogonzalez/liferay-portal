@@ -20,76 +20,74 @@
 DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoogleDriveFileReference)request.getAttribute(DLOpenerGoogleDriveWebKeys.DL_OPENER_GOOGLE_DRIVE_FILE_REFERENCE);
 
 long cssLastModifiedTime = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_CSS);
-
-ServletContext servletContext = session.getServletContext();
 %>
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta content="initial-scale=1.0, width=device-width" name="viewport">
-	<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_CSS) + "/main.css", cssLastModifiedTime)) %>" id="liferayPortalCSS" rel="stylesheet" type="text/css" />
-	<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/clay.css")) %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />
-	<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), servletContext.getContextPath(), "/css/google_docs.css"))) %>" id="liferayGDriveCSS" rel="stylesheet" type="text/css" />
-</head>
+	<head>
+		<meta content="initial-scale=1.0, width=device-width" name="viewport">
+		<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_CSS) + "/main.css", cssLastModifiedTime)) %>" id="liferayPortalCSS" rel="stylesheet" type="text/css" />
+		<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/clay.css")) %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />
+		<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, StringBundler.concat(themeDisplay.getCDNBaseURL(), PortalUtil.getPathProxy(), application.getContextPath(), "/css/google_docs.css"))) %>" id="liferayGoogleDriveCSS" rel="stylesheet" type="text/css" />
+	</head>
 
-<body>
-<div class="autofit-padded autofit-row autofit-row-center google-docs-toolbar">
-	<div class="autofit-col autofit-col-expand">
-		<div class="autofit-section">
-			<clay:button
-				icon="angle-left"
-				id="closeAndCheckinBtn"
-				label='<%= LanguageUtil.format(resourceBundle, "save-and-return-to-x", themeDisplay.getSiteGroupName()) %>'
-				size="sm"
-			/>
+	<body>
+		<div class="autofit-padded autofit-row autofit-row-center google-docs-toolbar">
+			<div class="autofit-col autofit-col-expand">
+				<div class="autofit-section">
+					<clay:button
+						icon="angle-left"
+						id="closeAndCheckinBtn"
+						label='<%= LanguageUtil.format(resourceBundle, "save-and-return-to-x", themeDisplay.getSiteGroupName()) %>'
+						size="sm"
+					/>
+				</div>
+			</div>
+
+			<div class="autofit-col">
+				<clay:button
+					id="discardChangesBtn"
+					label='<%= LanguageUtil.get(resourceBundle, "discard-changes") %>'
+					size="sm"
+				/>
+			</div>
 		</div>
-	</div>
 
-	<div class="autofit-col">
-		<clay:button
-			id="discardChangesBtn"
-			label='<%= LanguageUtil.get(resourceBundle, "discard-changes") %>'
-			size="sm"
-		/>
-	</div>
-</div>
+		<iframe class="google-docs-iframe" frameborder="0" id="<portlet:namespace />gDocsIFrame" src="<%= dlOpenerGoogleDriveFileReference.getGoogleDocsEditURL() %>"></iframe>
 
-<iframe class="google-docs-iframe" frameborder="0" id="<portlet:namespace />gDocsIFrame" src="<%= dlOpenerGoogleDriveFileReference.getGoogleDocsEditURL() %>"></iframe>
+		<portlet:actionURL name="/document_library/edit_in_google_docs" var="checkInURL">
+			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>" />
+		</portlet:actionURL>
 
-<portlet:actionURL name="/document_library/edit_in_google_docs" var="checkInURL">
-	<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN %>" />
-</portlet:actionURL>
+		<portlet:actionURL name="/document_library/edit_in_google_docs" var="cancelCheckoutURL">
+			<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>" />
+		</portlet:actionURL>
 
-<portlet:actionURL name="/document_library/edit_in_google_docs" var="cancelCheckoutURL">
-	<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CANCEL_CHECKOUT %>" />
-</portlet:actionURL>
+		<script type="application/javascript">
+			(function() {
+				function registerCloseEvent(elementId, url) {
+					var element = document.getElementById(elementId);
 
-<script type="application/javascript">
-	(function() {
-		function registerCloseEvent(elementId, url) {
-			var element = document.getElementById(elementId);
+					element.onclick = function() {
+						fetch(
+							url,
+							{
+								credentials: 'include',
+								method: 'POST'
+							}
+						).then(function(response) {
+							if (response.ok) {
+								window.close();
+							}
+						});
+					};
+				}
 
-			element.onclick = function() {
-				fetch(
-					url,
-					{
-						credentials: 'include',
-						method: 'POST'
-					}
-				).then(function(response) {
-					if (response.ok) {
-						window.close();
-					}
-				});
-			};
-		}
-
-		registerCloseEvent("closeAndCheckinBtn", '<%= checkInURL %>');
-		registerCloseEvent("discardChangesBtn", '<%= cancelCheckoutURL %>');
-	})();
-</script>
-</body>
+				registerCloseEvent("closeAndCheckinBtn", '<%= checkInURL %>');
+				registerCloseEvent("discardChangesBtn", '<%= cancelCheckoutURL %>');
+			})();
+		</script>
+	</body>
 </html>
