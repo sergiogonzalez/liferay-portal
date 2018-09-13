@@ -197,6 +197,25 @@ class ManagementToolbar extends ClayComponent {
 			);
 		}
 	}
+
+	/**
+	 * Handles a UI action and transfers control if an actionHandler is set and
+	 * it implements the proper action handler
+	 * @param {object} event The event from the component
+	 * @private
+	 * @review
+	 */
+
+	_handleUIAction(event) {
+		const eventName = event.type;
+		const handlerName = 'on' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
+
+		if (this.actionHandler) {
+			Liferay.componentReady(this.actionHandler).then(
+				actionHandler => actionHandler[handlerName] && actionHandler[handlerName](event)
+			);
+		}
+	}
 }
 
 /**
