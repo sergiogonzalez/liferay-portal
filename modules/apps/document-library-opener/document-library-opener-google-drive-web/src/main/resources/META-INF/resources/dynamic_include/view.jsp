@@ -31,9 +31,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(dlOpenerGoogleDriveFileReference.getFileEntryId()) %>" />
 	</portlet:renderURL>
 
-	<aui:script>
-		window.open('<%= openGoogleDocsURL %>');
-	</aui:script>
+	<%= googleDriveBackgroundTaskStatusURL %>
 </c:if>
 
 <liferay-util:html-top>
