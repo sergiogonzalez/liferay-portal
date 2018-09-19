@@ -14,7 +14,7 @@
 
 package com.liferay.sharing.web.internal.display;
 
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.util.Arrays;
 import java.util.List;

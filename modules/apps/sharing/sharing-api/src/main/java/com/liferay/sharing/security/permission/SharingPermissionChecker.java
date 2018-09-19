@@ -16,7 +16,6 @@ package com.liferay.sharing.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.sharing.constants.SharingEntryAction;
 
 import java.util.Collection;
 
