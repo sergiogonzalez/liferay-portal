@@ -17,7 +17,7 @@ package com.liferay.sharing.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 
 /**
  * Provides a wrapper for {@link SharingEntryLocalService}.

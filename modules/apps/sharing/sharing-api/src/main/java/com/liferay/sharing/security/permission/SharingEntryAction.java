@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.constants;
+package com.liferay.sharing.security.permission;
 
 import java.util.Objects;
 

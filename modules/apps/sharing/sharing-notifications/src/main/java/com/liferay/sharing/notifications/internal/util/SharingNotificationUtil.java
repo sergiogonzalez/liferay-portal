@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.sharing.constants.SharingEntryAction;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Locale;

@@ -15,7 +15,7 @@
 package com.liferay.sharing.web.internal.display;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.util.ArrayList;
 import java.util.List;

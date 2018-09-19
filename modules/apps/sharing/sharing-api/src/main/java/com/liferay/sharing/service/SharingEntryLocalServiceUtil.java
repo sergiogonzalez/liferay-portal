@@ -16,7 +16,7 @@ package com.liferay.sharing.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
