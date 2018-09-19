@@ -16,7 +16,7 @@ package com.liferay.sharing.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.constants.SharingEntryAction;
 
 import java.util.Collection;
 
@@ -27,7 +27,7 @@ public interface SharingPermissionChecker {
 
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, long groupId,
-			Collection<SharingEntryActionKey> sharingEntryActionKeys)
+			Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException;
 
 }

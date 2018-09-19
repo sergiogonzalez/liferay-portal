@@ -14,7 +14,7 @@
 
 package com.liferay.sharing.web.internal.display;
 
-import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.constants.SharingEntryAction;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,15 +27,15 @@ public enum SharingEntryPermissionDisplayActionKey {
 
 	COMMENTS(
 		"COMMENTS", "comments", "collaborators-can-comment-on-the-document",
-		SharingEntryActionKey.ADD_DISCUSSION, SharingEntryActionKey.VIEW),
+		SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 	UPDATE(
 		"UPDATE", "edition",
 		"collaborators-can-view-comment-update-the-document",
-		SharingEntryActionKey.ADD_DISCUSSION, SharingEntryActionKey.UPDATE,
-		SharingEntryActionKey.VIEW),
+		SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
+		SharingEntryAction.VIEW),
 	VIEW(
 		"VIEW", "view", "collaborators-can-only-view-the-document",
-		SharingEntryActionKey.VIEW);
+		SharingEntryAction.VIEW);
 
 	public static SharingEntryPermissionDisplayActionKey parseFromActionId(
 		String actionId) {
@@ -61,8 +61,8 @@ public enum SharingEntryPermissionDisplayActionKey {
 		return _descriptionKey;
 	}
 
-	public List<SharingEntryActionKey> getSharingEntryActionKeys() {
-		return _sharingEntryActionKeys;
+	public List<SharingEntryAction> getSharingEntryActions() {
+		return _sharingEntryActions;
 	}
 
 	public String getTitleKey() {
@@ -71,17 +71,17 @@ public enum SharingEntryPermissionDisplayActionKey {
 
 	private SharingEntryPermissionDisplayActionKey(
 		String actionId, String titleKey, String descriptionKey,
-		SharingEntryActionKey... sharingEntryActionKeys) {
+		SharingEntryAction... sharingEntryActions) {
 
 		_actionId = actionId;
 		_titleKey = titleKey;
 		_descriptionKey = descriptionKey;
-		_sharingEntryActionKeys = Arrays.asList(sharingEntryActionKeys);
+		_sharingEntryActions = Arrays.asList(sharingEntryActions);
 	}
 
 	private final String _actionId;
 	private final String _descriptionKey;
-	private final List<SharingEntryActionKey> _sharingEntryActionKeys;
+	private final List<SharingEntryAction> _sharingEntryActions;
 	private final String _titleKey;
 
 }

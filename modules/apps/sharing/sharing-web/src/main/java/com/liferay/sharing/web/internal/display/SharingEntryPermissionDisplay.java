@@ -15,7 +15,7 @@
 package com.liferay.sharing.web.internal.display;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.sharing.constants.SharingEntryActionKey;
+import com.liferay.sharing.constants.SharingEntryAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +28,15 @@ public class SharingEntryPermissionDisplay {
 
 	public static List<SharingEntryPermissionDisplay>
 		getSharingEntryPermissionDisplays(
-			List<SharingEntryActionKey> sharingEntryActionKeys,
+			List<SharingEntryAction> sharingEntryActions,
 			ResourceBundle resourceBundle) {
 
 		List<SharingEntryPermissionDisplay> sharingEntryPermissionDisplays =
 			new ArrayList<>();
 
-		if (sharingEntryActionKeys.contains(
-				SharingEntryActionKey.ADD_DISCUSSION) &&
-			sharingEntryActionKeys.contains(SharingEntryActionKey.UPDATE) &&
-			sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+		if (sharingEntryActions.contains(SharingEntryAction.ADD_DISCUSSION) &&
+			sharingEntryActions.contains(SharingEntryAction.UPDATE) &&
+			sharingEntryActions.contains(SharingEntryAction.VIEW)) {
 
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
@@ -51,9 +50,8 @@ public class SharingEntryPermissionDisplay {
 					resourceBundle));
 		}
 
-		if (sharingEntryActionKeys.contains(
-				SharingEntryActionKey.ADD_DISCUSSION) &&
-			sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+		if (sharingEntryActions.contains(SharingEntryAction.ADD_DISCUSSION) &&
+			sharingEntryActions.contains(SharingEntryAction.VIEW)) {
 
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
@@ -67,7 +65,7 @@ public class SharingEntryPermissionDisplay {
 					resourceBundle));
 		}
 
-		if (sharingEntryActionKeys.contains(SharingEntryActionKey.VIEW)) {
+		if (sharingEntryActions.contains(SharingEntryAction.VIEW)) {
 			sharingEntryPermissionDisplays.add(
 				new SharingEntryPermissionDisplay(
 					SharingEntryPermissionDisplayActionKey.VIEW, true,
