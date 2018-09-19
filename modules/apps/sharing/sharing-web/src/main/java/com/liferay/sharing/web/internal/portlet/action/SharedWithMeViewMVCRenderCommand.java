@@ -80,9 +80,9 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 				if (sharingEntry.getToUserId() != themeDisplay.getUserId()) {
 					throw new PrincipalException(
 						StringBundler.concat(
-							"user id ", themeDisplay.getUserId(),
+							"User ", themeDisplay.getUserId(),
 							" does not have permission to view sharing entry ",
-							"id ", sharingEntryId));
+							sharingEntryId));
 				}
 
 				SharingEntryInterpreter<Object> sharingEntryInterpreter =
@@ -90,7 +90,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 
 				if (sharingEntryInterpreter == null) {
 					throw new PortletException(
-						"sharing entry interpreter is null for class name id " +
+						"Sharing entry interpreter is null for class name ID " +
 							sharingEntry.getClassNameId());
 				}
 
