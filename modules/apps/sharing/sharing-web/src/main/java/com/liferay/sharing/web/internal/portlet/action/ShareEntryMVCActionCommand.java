@@ -90,7 +90,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 					user.getUserId(), classNameId, classPK,
 					themeDisplay.getScopeGroupId(), shareable,
 					sharingEntryPermissionDisplayActionKey.
-						getSharingEntryActionKeys(),
+						getSharingEntryActions(),
 					expirationDate, serviceContext);
 			}
 		}
