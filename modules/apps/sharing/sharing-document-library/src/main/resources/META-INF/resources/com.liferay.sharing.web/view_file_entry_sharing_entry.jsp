@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.sharing.web/init.jsp" %>
 
 <%
-FileEntry fileEntry = (FileEntry)request.getAttribute("view_file_entry_sharing_entry.jsp-fileEntry");
+FileEntry fileEntry = (FileEntry)request.getAttribute(SharingDLWebKeys.FILE_ENTRY);
 %>
 
 <liferay-asset:asset-display

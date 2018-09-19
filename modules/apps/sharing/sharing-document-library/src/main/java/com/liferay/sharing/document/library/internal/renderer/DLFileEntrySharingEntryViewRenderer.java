@@ -17,6 +17,7 @@ package com.liferay.sharing.document.library.internal.renderer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.sharing.document.library.internal.constants.SharingDLWebKeys;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 
 import java.io.IOException;
@@ -45,8 +46,7 @@ public class DLFileEntrySharingEntryViewRenderer
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);
 
-		request.setAttribute(
-			"view_file_entry_sharing_entry.jsp-fileEntry", fileEntry);
+		request.setAttribute(SharingDLWebKeys.FILE_ENTRY, fileEntry);
 
 		try {
 			requestDispatcher.include(request, response);

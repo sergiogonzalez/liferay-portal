@@ -23,7 +23,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.sharing.document.library.internal.constants.SharingDLWebKeys" %>
 
 <liferay-frontend:defineObjects />
 
