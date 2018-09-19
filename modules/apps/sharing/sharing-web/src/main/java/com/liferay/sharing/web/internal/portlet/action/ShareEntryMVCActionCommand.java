@@ -16,17 +16,23 @@ package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
@@ -34,9 +40,11 @@ import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayActionKey;
 
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,21 +87,8 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		if (userEmailAddress.contains("error")) {
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				actionResponse);
-
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("erorrMessage", "invalid email address");
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
-
-			return;
-		}
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
 		SharingEntryPermissionDisplayActionKey
 			sharingEntryPermissionDisplayActionKey =
@@ -102,26 +97,75 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String[] userEmailAddresses = StringUtil.split(userEmailAddress);
 
-		for (String curUserEmailAddresses : userEmailAddresses) {
-			User user = _userLocalService.fetchUserByEmailAddress(
-				themeDisplay.getCompanyId(), curUserEmailAddresses);
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					for (String curUserEmailAddresses : userEmailAddresses) {
+						User user = _userLocalService.fetchUserByEmailAddress(
+							themeDisplay.getCompanyId(), curUserEmailAddresses);
 
-			if (user != null) {
-				_sharingEntryService.addOrUpdateSharingEntry(
-					user.getUserId(), classNameId, classPK,
-					themeDisplay.getScopeGroupId(), shareable,
-					sharingEntryPermissionDisplayActionKey.
-						getSharingEntryActionKeys(),
-					expirationDate, serviceContext);
-			}
+						if ((user != null) &&
+							(user.getUserId() != themeDisplay.getUserId())) {
+
+							_sharingEntryService.addOrUpdateSharingEntry(
+								user.getUserId(), classNameId, classPK,
+								themeDisplay.getScopeGroupId(), shareable,
+								sharingEntryPermissionDisplayActionKey.
+									getSharingEntryActionKeys(),
+								expirationDate, serviceContext);
+						}
+					}
+
+					return null;
+				});
 		}
+		catch (Throwable t) {
+			HttpServletResponse response = _portal.getHttpServletResponse(
+				actionResponse);
+
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			String errorMessage =
+				"an-unexpected-error-occurred-while-sharing-the-item";
+
+			if (t.getCause() instanceof PrincipalException) {
+				errorMessage = "you-do-not-have-permission-to-share-this-item";
+			}
+
+			jsonObject.put("erorrMessage", errorMessage);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+
+			return;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"successMessage",
+			LanguageUtil.get(
+				resourceBundle, "the-item-was-shared-successfully"));
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
-	@Reference
-	private SharingEntryService _sharingEntryService;
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference
+	private SharingEntryService _sharingEntryService;
 
 	@Reference
 	private UserLocalService _userLocalService;
