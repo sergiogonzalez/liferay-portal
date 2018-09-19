@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.model.SharingEntry;
 
 import java.util.Collection;

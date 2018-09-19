@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 

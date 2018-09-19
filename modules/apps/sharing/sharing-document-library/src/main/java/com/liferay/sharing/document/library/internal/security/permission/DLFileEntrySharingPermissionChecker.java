@@ -18,8 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.sharing.constants.SharingEntryAction;
 import com.liferay.sharing.document.library.internal.security.permission.resource.SharingEntryDLFileEntryModelResourcePermissionRegistrar;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 
 import java.util.Arrays;

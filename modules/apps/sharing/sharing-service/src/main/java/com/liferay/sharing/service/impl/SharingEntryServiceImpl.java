@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.sharing.constants.SharingEntryAction;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 

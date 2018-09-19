@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-import com.liferay.sharing.constants.SharingEntryAction;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Dictionary;
