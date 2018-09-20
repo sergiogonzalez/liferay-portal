@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * @author Sergio González
  */
-public enum SharingEntryPermissionDisplayActionKey {
+public enum SharingEntryPermissionDisplayAction {
 
 	COMMENTS(
 		"COMMENTS", "comments", "collaborators-can-comment-on-the-document",
@@ -37,7 +37,7 @@ public enum SharingEntryPermissionDisplayActionKey {
 		"VIEW", "view", "collaborators-can-only-view-the-document",
 		SharingEntryAction.VIEW);
 
-	public static SharingEntryPermissionDisplayActionKey parseFromActionId(
+	public static SharingEntryPermissionDisplayAction parseFromActionId(
 		String actionId) {
 
 		if (Objects.equals(COMMENTS.getActionId(), actionId)) {
@@ -69,7 +69,7 @@ public enum SharingEntryPermissionDisplayActionKey {
 		return _titleKey;
 	}
 
-	private SharingEntryPermissionDisplayActionKey(
+	private SharingEntryPermissionDisplayAction(
 		String actionId, String titleKey, String descriptionKey,
 		SharingEntryAction... sharingEntryActions) {
 
