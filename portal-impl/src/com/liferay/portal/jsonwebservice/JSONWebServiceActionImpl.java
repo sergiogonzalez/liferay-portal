@@ -184,6 +184,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 			return _convertListToArray(list, parameterType.getComponentType());
 		}
+		else if (Enum.class.isAssignableFrom(parameterType)) {
+			String valueString = value.toString();
+
+			return Enum.valueOf(((Class<Enum>)parameterType), valueString);
+		}
 		else if (parameterType.equals(Calendar.class)) {
 			Calendar calendar = Calendar.getInstance();
 
