@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.constants;
+package com.liferay.sharing.security.permission;
 
 import org.junit.Assert;
 import org.junit.Test;
