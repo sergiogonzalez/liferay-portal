@@ -34,11 +34,6 @@ public class DiscussionTaglibHelper {
 			_className = _getAttribute("className");
 		}
 
-		if (!_className.startsWith(_MBDISCUSSION_CLASS_NAME)) {
-			_className =
-				_MBDISCUSSION_CLASS_NAME + StringPool.UNDERLINE + _className;
-		}
-
 		return _className;
 	}
 
@@ -80,6 +75,10 @@ public class DiscussionTaglibHelper {
 		}
 
 		return _redirect;
+	}
+
+	public String getSubscriptionClassName() {
+		return _MBDISCUSSION_CLASS_NAME + StringPool.UNDERLINE + getClassName();
 	}
 
 	public long getUserId() {
