@@ -68,7 +68,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 </liferay-util:buffer>
 
 <liferay-portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(wikiRequestHelper.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" />
 	<portlet:param name="redirect" value="<%= wikiRequestHelper.getCurrentURL() %>" />
 	<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 	<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -92,30 +92,8 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			rootElement: '#<portlet:namespace />uploaderContainer',
 			simultaneousUploads: 1,
 			'strings.uploadsCompleteText': '<%= LanguageUtil.get(request, "all-files-are-saved") %>',
-			uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
-		}
-	);
-
-	uploader.on(
-		'uploadComplete',
-		function(event) {
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />pageAttachments');
-
-			if (searchContainer) {
-				var rowColumns = [];
-
-				var deleteURL = Liferay.PortletURL.createURL('<%= deleteURL.toString() %>');
-
-				deleteURL.setParameter('fileName', event.name);
-
-				rowColumns.push(event.name);
-				rowColumns.push(uploader.formatStorage(event.size));
-				rowColumns.push('<a class="delete-attachment" data-rowid="' + event.id + '" data-url="' + deleteURL.toString() + '" href="javascript:;"><%= trashHelper.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
-
-				searchContainer.addRow(rowColumns, event.id);
-
-				searchContainer.updateDataStore();
-			}
+			tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
+			uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
 		}
 	);
 </aui:script>

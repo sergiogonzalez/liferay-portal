@@ -211,11 +211,14 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 				throw new PortalException(cause);
 			}
-			else if (cmd.equals(Constants.ADD)) {
-				_wikiAttachmentsHelper.addAttachments(actionRequest);
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				addTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteAttachment(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				deleteTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				_wikiAttachmentsHelper.emptyTrash(actionRequest);
