@@ -595,20 +595,15 @@ public class DLImpl implements DL {
 		if (appendVersion) {
 			sb.append("?version=");
 			sb.append(fileVersion.getVersion());
+			sb.append("&t=");
+		}
+		else {
+			sb.append("?t=");
 		}
 
-		if (_isDocumentSupported(fileVersion)) {
-			if (appendVersion) {
-				sb.append("&t=");
-			}
-			else {
-				sb.append("?t=");
-			}
+		Date modifiedDate = fileVersion.getModifiedDate();
 
-			Date modifiedDate = fileVersion.getModifiedDate();
-
-			sb.append(modifiedDate.getTime());
-		}
+		sb.append(modifiedDate.getTime());
 
 		sb.append(queryString);
 
@@ -1226,14 +1221,6 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
-	}
-
-	private boolean _isDocumentSupported(FileVersion fileVersion) {
-		if ((fileVersion == null) || (fileVersion.getSize() == 0)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";
