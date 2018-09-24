@@ -84,14 +84,19 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			%>
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+			deleteFile: '<%= deleteURL.toString() %>',
 			fallback: '#<portlet:namespace />fallback',
 			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 			maxFileSize: '<%= dlConfiguration.fileMaxSize() %> ',
 			namespace: '<portlet:namespace />',
-			removeOnComplete: true,
 			rootElement: '#<portlet:namespace />uploaderContainer',
-			simultaneousUploads: 1,
-			'strings.uploadsCompleteText': '<%= LanguageUtil.get(request, "all-files-are-saved") %>',
+			tempFileURL: {
+				method: Liferay.Service.bind('/wiki.wikipage/get-temp-file-names'),
+				params: {
+					nodeId: <%= node.getNodeId() %>,
+					folderName: '<%= WikiConstants.TEMP_FOLDER_NAME %>'
+				}
+			},
 			tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
 			uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
 		}
