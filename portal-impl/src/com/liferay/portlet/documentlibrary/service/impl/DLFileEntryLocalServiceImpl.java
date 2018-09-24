@@ -766,6 +766,14 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
 
+		if (dlFileEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			long folderId = dlFileEntry.getFolderId();
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				dlFolderLocalService.updateLastPostDate(folderId, new Date());
+			}
+		}
+
 		return dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 	}
 
@@ -2458,6 +2466,7 @@ public class DLFileEntryLocalServiceImpl
 			fileEntryId);
 
 		long oldDataRepositoryId = dlFileEntry.getDataRepositoryId();
+		long oldFolderId = dlFileEntry.getFolderId();
 
 		validateFile(
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
@@ -2485,12 +2494,13 @@ public class DLFileEntryLocalServiceImpl
 		// Folder
 
 		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-				newFolderId);
+			dlFolderLocalService.updateLastPostDate(
+				newFolderId, serviceContext.getModifiedDate(null));
+		}
 
-			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
-
-			dlFolderPersistence.update(dlFolder);
+		if (oldFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			dlFolderLocalService.updateLastPostDate(
+				oldFolderId, serviceContext.getModifiedDate(null));
 		}
 
 		// File
