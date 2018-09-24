@@ -16,7 +16,6 @@ package com.liferay.sharing.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.sharing.security.permission.SharingEntryAction;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -46,7 +45,7 @@ public class SharingEntryServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
-		java.util.Collection<SharingEntryAction> sharingEntryActions,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,7 +58,7 @@ public class SharingEntryServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 		long toUserId, long classNameId, long classPK, long groupId,
 		boolean shareable,
-		java.util.Collection<SharingEntryAction> sharingEntryActions,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,7 +78,7 @@ public class SharingEntryServiceUtil {
 
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<SharingEntryAction> sharingEntryActions,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		boolean shareable, java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

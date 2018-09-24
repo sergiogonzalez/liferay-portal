@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.io.Serializable;
 
@@ -342,8 +342,7 @@ public interface SharingEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasShareableSharingPermission(long toUserId,
-		long classNameId, long classPK,
-		SharingEntryAction sharingEntryAction);
+		long classNameId, long classPK, SharingEntryAction sharingEntryAction);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSharingPermission(long toUserId, long classNameId,
@@ -354,8 +353,8 @@ public interface SharingEntryLocalService extends BaseLocalService,
 		SharingEntryAction sharingEntryAction);
 
 	public SharingEntry updateSharingEntry(long sharingEntryId,
-		Collection<SharingEntryAction> sharingEntryActions,
-		boolean shareable, Date expirationDate, ServiceContext serviceContext)
+		Collection<SharingEntryAction> sharingEntryActions, boolean shareable,
+		Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

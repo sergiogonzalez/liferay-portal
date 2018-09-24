@@ -16,7 +16,6 @@ package com.liferay.sharing.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.sharing.security.permission.SharingEntryAction;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -46,20 +45,20 @@ public class SharingEntryLocalServiceUtil {
 	public static com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
-		java.util.Collection<SharingEntryAction> sharingEntryActions,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addOrUpdateSharingEntry(fromUserId, toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActions,
-			expirationDate, serviceContext);
+			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 		long fromUserId, long toUserId, long classNameId, long classPK,
 		long groupId, boolean shareable,
-		java.util.Collection<SharingEntryAction> sharingEntryActions,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -417,7 +416,7 @@ public class SharingEntryLocalServiceUtil {
 
 	public static boolean hasShareableSharingPermission(long toUserId,
 		long classNameId, long classPK,
-		SharingEntryAction sharingEntryAction) {
+		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction) {
 		return getService()
 				   .hasShareableSharingPermission(toUserId, classNameId,
 			classPK, sharingEntryAction);
@@ -425,22 +424,22 @@ public class SharingEntryLocalServiceUtil {
 
 	public static boolean hasSharingPermission(long toUserId, long classNameId,
 		long classPK,
-		SharingEntryAction sharingEntryAction) {
+		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction) {
 		return getService()
 				   .hasSharingPermission(toUserId, classNameId, classPK,
-					   sharingEntryAction);
+			sharingEntryAction);
 	}
 
 	public static boolean hasSharingPermission(
 		com.liferay.sharing.model.SharingEntry sharingEntry,
-		SharingEntryAction sharingEntryAction) {
+		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction) {
 		return getService()
 				   .hasSharingPermission(sharingEntry, sharingEntryAction);
 	}
 
 	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
 		long sharingEntryId,
-		java.util.Collection<SharingEntryAction> sharingEntryActions,
+		java.util.Collection<com.liferay.sharing.security.permission.SharingEntryAction> sharingEntryActions,
 		boolean shareable, java.util.Date expirationDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

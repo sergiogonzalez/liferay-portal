@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 
 import java.util.Collection;
 import java.util.Date;
@@ -76,7 +76,7 @@ public interface SharingEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public SharingEntry updateSharingEntry(long sharingEntryId,
-		Collection<SharingEntryAction> sharingEntryActions,
-		boolean shareable, Date expirationDate, ServiceContext serviceContext)
+		Collection<SharingEntryAction> sharingEntryActions, boolean shareable,
+		Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
 }
