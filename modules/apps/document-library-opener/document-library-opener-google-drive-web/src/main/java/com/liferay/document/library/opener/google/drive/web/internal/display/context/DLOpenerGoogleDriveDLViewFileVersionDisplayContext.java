@@ -93,39 +93,29 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 			_updateCancelCheckoutAndCheckinMenuItems(menuItems);
 
-			menuItems.add(_createEditInGoogleDocsMenuItem());
+			menuItems.add(
+				_createEditInGoogleDocsMenuItem(
+					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
 
 			return menu;
 		}
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		menuItems.add(_createCheckoutInGoogleDocsMenuItem());
+		menuItems.add(
+			_createEditInGoogleDocsMenuItem(
+				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
 
 		return menu;
 	}
 
-	private MenuItem _createCheckoutInGoogleDocsMenuItem() {
-		URLMenuItem menuItem = new URLMenuItem();
-
-		menuItem.setLabel(
-			LanguageUtil.get(_resourceBundle, "checkout-to-google-docs"));
-		menuItem.setMethod(HttpMethods.POST);
-		menuItem.setURL(
-			_getActionURL(
-				DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT));
-
-		return menuItem;
-	}
-
-	private MenuItem _createEditInGoogleDocsMenuItem() {
+	private MenuItem _createEditInGoogleDocsMenuItem(String cmd) {
 		URLMenuItem menuItem = new URLMenuItem();
 
 		menuItem.setLabel(
 			LanguageUtil.get(_resourceBundle, "edit-in-google-docs"));
 		menuItem.setMethod(HttpMethods.POST);
-		menuItem.setURL(
-			_getActionURL(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
+		menuItem.setURL(_getActionURL(cmd));
 
 		return menuItem;
 	}
