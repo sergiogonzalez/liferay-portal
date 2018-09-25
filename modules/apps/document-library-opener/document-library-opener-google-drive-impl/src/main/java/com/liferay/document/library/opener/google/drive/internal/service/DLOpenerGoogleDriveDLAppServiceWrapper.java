@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
 import com.liferay.document.library.opener.google.drive.upload.UniqueFileEntryTitleProvider;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
@@ -143,7 +144,10 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		try {
 			updateFileEntry(
-				fileEntry.getFileEntryId(), fileEntry.getFileName(),
+				fileEntry.getFileEntryId(),
+				dlOpenerGoogleDriveFileReference.getTitle() +
+					DLOpenerGoogleDriveMimeTypes.getMimeTypeExtension(
+						fileEntry.getMimeType()),
 				fileEntry.getMimeType(),
 				_uniqueFileEntryTitleProvider.provide(
 					fileEntry.getGroupId(), fileEntry.getFolderId(),
