@@ -153,7 +153,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private boolean _isCheckedOutInGoogleDrive() throws PortalException {
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
-		if (fileEntry.isCheckedOut() ||
+		if (fileEntry.isCheckedOut() &&
 			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			return true;
