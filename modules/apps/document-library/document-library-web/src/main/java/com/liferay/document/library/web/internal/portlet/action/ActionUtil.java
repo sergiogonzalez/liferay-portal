@@ -15,16 +15,16 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -94,15 +94,11 @@ public class ActionUtil {
 
 		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 
-		FileEntry fileEntry = null;
-
-		if (fileEntryId > 0) {
-			fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-		}
-
-		if (fileEntry == null) {
+		if (fileEntryId <= 0) {
 			return null;
 		}
+
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
@@ -128,13 +124,11 @@ public class ActionUtil {
 
 		long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
 
-		FileShortcut fileShortcut = null;
-
-		if (fileShortcutId > 0) {
-			fileShortcut = DLAppServiceUtil.getFileShortcut(fileShortcutId);
+		if (fileShortcutId <= 0) {
+			return null;
 		}
 
-		return fileShortcut;
+		return DLAppServiceUtil.getFileShortcut(fileShortcutId);
 	}
 
 	public static FileShortcut getFileShortcut(PortletRequest portletRequest)
@@ -156,9 +150,14 @@ public class ActionUtil {
 		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
 		for (long fileShortcutId : fileShortcutIds) {
-			if (fileShortcutId > 0) {
+			try {
 				fileShortcuts.add(
 					DLAppServiceUtil.getFileShortcut(fileShortcutId));
+			}
+			catch (NoSuchFileShortcutException nsfse) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfse, nsfse);
+				}
 			}
 		}
 
@@ -183,22 +182,13 @@ public class ActionUtil {
 			return null;
 		}
 
-		FileVersion fileVersion = null;
-
 		String version = ParamUtil.getString(request, "version");
 
 		if (Validator.isNotNull(version)) {
-			fileVersion = fileEntry.getFileVersion(version);
-		}
-		else {
-			fileVersion = fileEntry.getFileVersion();
+			return fileEntry.getFileVersion(version);
 		}
 
-		if (RawMetadataProcessorUtil.isSupported(fileVersion)) {
-			RawMetadataProcessorUtil.generateMetadata(fileVersion);
-		}
-
-		return fileVersion;
+		return fileEntry.getFileVersion();
 	}
 
 	public static FileVersion getFileVersion(
@@ -235,24 +225,25 @@ public class ActionUtil {
 				portletPreferences.getValue("rootFolderId", null));
 		}
 
-		Folder folder = null;
-
-		if (folderId > 0) {
-			folder = DLAppServiceUtil.getFolder(folderId);
-
-			if (folder.getModel() instanceof DLFolder) {
-				DLFolder dlFolder = (DLFolder)folder.getModel();
-
-				if (dlFolder.isInTrash()) {
-					throw new NoSuchFolderException(
-						"{folderId=" + folderId + "}");
-				}
-			}
-		}
-		else {
+		if (folderId <= 0) {
 			DLPermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
+
+			return null;
+		}
+
+		Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+		if (!folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
+			return folder;
+		}
+
+		TrashCapability trashCapability = folder.getRepositoryCapability(
+			TrashCapability.class);
+
+		if (trashCapability.isInTrash(folder)) {
+			throw new NoSuchFolderException("{folderId=" + folderId + "}");
 		}
 
 		return folder;
@@ -307,18 +298,15 @@ public class ActionUtil {
 
 		long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
-		Repository repository = null;
-
 		if (repositoryId > 0) {
-			repository = RepositoryServiceUtil.getRepository(repositoryId);
-		}
-		else {
-			DLPermission.check(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
+			return RepositoryServiceUtil.getRepository(repositoryId);
 		}
 
-		return repository;
+		DLPermission.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.VIEW);
+
+		return null;
 	}
 
 	public static Repository getRepository(PortletRequest portletRequest)
