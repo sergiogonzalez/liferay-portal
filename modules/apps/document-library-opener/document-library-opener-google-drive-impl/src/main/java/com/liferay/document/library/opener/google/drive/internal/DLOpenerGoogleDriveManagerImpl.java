@@ -193,6 +193,11 @@ public class DLOpenerGoogleDriveManagerImpl
 	}
 
 	@Override
+	public boolean isConfigured() {
+		return _oAuth2Manager.isConfigured();
+	}
+
+	@Override
 	public boolean isGoogleDriveFile(FileEntry fileEntry) {
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.

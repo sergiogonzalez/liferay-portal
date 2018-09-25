@@ -80,7 +80,8 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	@Override
 	public Menu getMenu() throws PortalException {
 		if (!DLOpenerGoogleDriveMimeTypes.isMimeTypeSupported(
-				fileVersion.getMimeType())) {
+				fileVersion.getMimeType()) ||
+			!_dlOpenerGoogleDriveManager.isConfigured()) {
 
 			return super.getMenu();
 		}
