@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -330,6 +332,65 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(_request, "order-by"));
 						});
+				}
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				long fileEntryTypeId = _getFileEntryTypeId();
+
+				if (fileEntryTypeId != -1) {
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								labelItem.setCloseable(false);
+
+								String label = LanguageUtil.get(
+									_request, "document-types");
+
+								String fileEntryTypeName = LanguageUtil.get(
+									_request, "basic-document");
+
+								if (fileEntryTypeId !=
+										DLFileEntryTypeConstants.
+											FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+									DLFileEntryType fileEntryType =
+										DLFileEntryTypeLocalServiceUtil.
+											getFileEntryType(fileEntryTypeId);
+
+									fileEntryTypeName = fileEntryType.getName(
+										_request.getLocale());
+								}
+
+								label = String.format(
+									"%s: %s", label, fileEntryTypeName);
+
+								labelItem.setLabel(label);
+							}
+						)
+					);
+				}
+
+				String navigation = _getNavigation();
+
+				if (navigation.equals("mine")) {
+					add(
+						labelItem -> {
+							labelItem.setCloseable(false);
+
+							String label = LanguageUtil.get(_request, "owner");
+
+							label = String.format(
+								"%s: %s", label, _themeDisplay.getUser().getFullName()
+							);
+
+							labelItem.setLabel(label);
+						}
+					);
 				}
 			}
 		};
