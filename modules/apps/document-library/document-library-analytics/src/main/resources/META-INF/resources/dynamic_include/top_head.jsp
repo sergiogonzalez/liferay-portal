@@ -43,6 +43,7 @@
 						'Document',
 						{
 							groupId: match[1],
+							fileEntryId: uri.getParameterValue('id'),
 							fileEntryUUID: match[4],
 							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 							title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
