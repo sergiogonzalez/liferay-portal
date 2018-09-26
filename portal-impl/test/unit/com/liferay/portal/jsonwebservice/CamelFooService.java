@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.transaction.Isolation;
 
 /**
  * @author Igor Spasic
@@ -30,6 +31,13 @@ public class CamelFooService {
 	}
 
 	public static void helloWorld() {
+	}
+
+	public static void addIsolation(Isolation isolation) {
+	}
+
+	public static Isolation getIsolation() {
+		return Isolation.DEFAULT;
 	}
 
 	@JSONWebService(method = HttpMethods.POST)
