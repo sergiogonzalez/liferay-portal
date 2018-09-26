@@ -592,14 +592,15 @@ public class DLImpl implements DL {
 		sb.append(StringPool.SLASH);
 		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));
 
+		sb.append("?id=");
+		sb.append(fileEntry.getFileEntryId());
+
 		if (appendVersion) {
-			sb.append("?version=");
+			sb.append("&version=");
 			sb.append(fileVersion.getVersion());
-			sb.append("&t=");
 		}
-		else {
-			sb.append("?t=");
-		}
+
+		sb.append("&t=");
 
 		Date modifiedDate = fileVersion.getModifiedDate();
 
