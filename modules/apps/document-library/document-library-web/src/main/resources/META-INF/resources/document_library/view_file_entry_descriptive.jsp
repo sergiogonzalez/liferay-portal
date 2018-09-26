@@ -22,7 +22,12 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 FileEntry fileEntry = null;
 FileShortcut fileShortcut = null;
 
-if (row.getObject() instanceof FileEntry) {
+if (row.getObject() instanceof AssetEntry) {
+	AssetEntry assetEntry = (AssetEntry)row.getObject();
+
+	fileEntry = DLAppServiceUtil.getFileEntry(assetEntry.getClassPK());
+}
+else if (row.getObject() instanceof FileEntry) {
 	fileEntry = (FileEntry)row.getObject();
 }
 else if (row.getObject() instanceof FileShortcut) {
