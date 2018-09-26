@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -639,6 +641,58 @@ public class JournalDisplayContext {
 							dropdownGroupItem.setLabel(
 								LanguageUtil.get(_request, "order-by"));
 						});
+				}
+			}
+		};
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				if (isNavigationMine()) {
+					add(
+						labelItem -> {
+							ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+
+							String label = LanguageUtil.get(_request, "owner");
+
+							label = String.format(
+								"%s: %s", label, themeDisplay.getUser().getFullName()
+							);
+
+							labelItem.setLabel(label);
+						}
+					);
+				}
+
+				if (isNavigationStructure()) {
+					add(
+						labelItem -> {
+							String label = LanguageUtil.get(_request, "structures");
+
+							label = String.format(
+								"%s: %s", label, getDDMStructureName()
+							);
+
+							labelItem.setLabel(label);
+						}
+					);
+				}
+
+				int status = getStatus();
+
+				if (status != -1) {
+					add(
+						labelItem -> {
+							String label = LanguageUtil.get(_request, "status");
+
+							label = String.format(
+								"%s: %s", label, WorkflowConstants.getStatusLabel(status)
+							);
+
+							labelItem.setLabel(label);
+						}
+					);
 				}
 			}
 		};
