@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -33,6 +31,8 @@ import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -370,9 +370,7 @@ public class DLAdminManagementToolbarDisplayContext {
 									"%s: %s", label, fileEntryTypeName);
 
 								labelItem.setLabel(label);
-							}
-						)
-					);
+							}));
 				}
 
 				String navigation = _getNavigation();
@@ -385,12 +383,11 @@ public class DLAdminManagementToolbarDisplayContext {
 							String label = LanguageUtil.get(_request, "owner");
 
 							label = String.format(
-								"%s: %s", label, _themeDisplay.getUser().getFullName()
-							);
+								"%s: %s", label,
+								_themeDisplay.getUser().getFullName());
 
 							labelItem.setLabel(label);
-						}
-					);
+						});
 				}
 			}
 		};

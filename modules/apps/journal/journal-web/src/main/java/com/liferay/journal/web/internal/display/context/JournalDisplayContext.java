@@ -14,8 +14,6 @@
 
 package com.liferay.journal.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -25,6 +23,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
@@ -652,31 +652,30 @@ public class JournalDisplayContext {
 				if (isNavigationMine()) {
 					add(
 						labelItem -> {
-							ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
 
 							String label = LanguageUtil.get(_request, "owner");
 
 							label = String.format(
-								"%s: %s", label, themeDisplay.getUser().getFullName()
-							);
+								"%s: %s", label,
+								themeDisplay.getUser().getFullName());
 
 							labelItem.setLabel(label);
-						}
-					);
+						});
 				}
 
 				if (isNavigationStructure()) {
 					add(
 						labelItem -> {
-							String label = LanguageUtil.get(_request, "structures");
+							String label = LanguageUtil.get(
+								_request, "structures");
 
 							label = String.format(
-								"%s: %s", label, getDDMStructureName()
-							);
+								"%s: %s", label, getDDMStructureName());
 
 							labelItem.setLabel(label);
-						}
-					);
+						});
 				}
 
 				int status = getStatus();
@@ -687,12 +686,11 @@ public class JournalDisplayContext {
 							String label = LanguageUtil.get(_request, "status");
 
 							label = String.format(
-								"%s: %s", label, WorkflowConstants.getStatusLabel(status)
-							);
+								"%s: %s", label,
+								WorkflowConstants.getStatusLabel(status));
 
 							labelItem.setLabel(label);
-						}
-					);
+						});
 				}
 			}
 		};
