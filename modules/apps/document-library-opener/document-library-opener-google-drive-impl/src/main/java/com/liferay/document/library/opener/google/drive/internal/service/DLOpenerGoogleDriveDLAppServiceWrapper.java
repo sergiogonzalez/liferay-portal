@@ -20,6 +20,8 @@ import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
+import com.liferay.document.library.opener.google.drive.upload.UniqueFileEntryTitleProvider;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringPool;
@@ -58,7 +60,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		if (_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+		if (_dlOpenerGoogleDriveManager.isConfigured() &&
+			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
 				_dlOpenerFileEntryReferenceLocalService.
 					getDLOpenerFileEntryReference(fileEntry);
@@ -83,7 +87,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		if (!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+		if (!_dlOpenerGoogleDriveManager.isConfigured() ||
+			!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+
 			super.checkInFileEntry(
 				fileEntryId, majorVersion, changeLog, serviceContext);
 
@@ -106,7 +112,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		if (!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+		if (!_dlOpenerGoogleDriveManager.isConfigured() ||
+			!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
+
 			super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 
 			return;
@@ -136,9 +144,14 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		try {
 			updateFileEntry(
-				fileEntry.getFileEntryId(), fileEntry.getFileName(),
+				fileEntry.getFileEntryId(),
+				dlOpenerGoogleDriveFileReference.getTitle() +
+					DLOpenerGoogleDriveMimeTypes.getMimeTypeExtension(
+						fileEntry.getMimeType()),
 				fileEntry.getMimeType(),
-				dlOpenerGoogleDriveFileReference.getTitle(),
+				_uniqueFileEntryTitleProvider.provide(
+					fileEntry.getGroupId(), fileEntry.getFolderId(),
+					dlOpenerGoogleDriveFileReference.getTitle()),
 				fileEntry.getDescription(), StringPool.BLANK, false, file,
 				serviceContext);
 		}
@@ -164,5 +177,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	@Reference
+	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;
 
 }
