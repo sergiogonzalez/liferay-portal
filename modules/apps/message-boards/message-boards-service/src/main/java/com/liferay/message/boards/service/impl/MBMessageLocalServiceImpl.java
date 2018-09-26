@@ -2187,7 +2187,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String className = (String)serviceContext.getAttribute("className");
 		long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
-		subscriptionSender.addPersistedSubscribers(className, classPK);
+		subscriptionSender.addPersistedSubscribers(
+			MBDiscussion.class.getName() + StringPool.UNDERLINE + className,
+			classPK);
 
 		subscriptionSender.flushNotificationsAsync();
 	}

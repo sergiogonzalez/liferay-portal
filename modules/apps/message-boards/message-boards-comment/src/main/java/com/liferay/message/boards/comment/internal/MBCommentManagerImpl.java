@@ -359,7 +359,9 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		_mbDiscussionLocalService.subscribeDiscussion(
-			userId, groupId, className, classPK);
+			userId, groupId,
+			MBDiscussion.class.getName() + StringPool.UNDERLINE + className,
+			classPK);
 	}
 
 	@Override
@@ -368,7 +370,9 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		_mbDiscussionLocalService.unsubscribeDiscussion(
-			userId, className, classPK);
+			userId,
+			MBDiscussion.class.getName() + StringPool.UNDERLINE + className,
+			classPK);
 	}
 
 	@Override
