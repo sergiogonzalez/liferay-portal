@@ -109,6 +109,9 @@ public class OAuth2Manager {
 
 			_configured = true;
 		}
+		else {
+			_configured = false;
+		}
 
 		GoogleAuthorizationCodeFlow.Builder googleAuthorizationCodeFlowBuilder =
 			new GoogleAuthorizationCodeFlow.Builder(
