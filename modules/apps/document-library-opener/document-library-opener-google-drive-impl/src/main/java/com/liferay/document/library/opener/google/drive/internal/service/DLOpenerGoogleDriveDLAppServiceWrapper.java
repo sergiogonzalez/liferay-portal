@@ -142,18 +142,22 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		File file = dlOpenerGoogleDriveFileReference.getContentFile();
 
+		String title = fileEntry.getTitle();
+
+		if (!title.equals(dlOpenerGoogleDriveFileReference.getTitle())) {
+			title = _uniqueFileEntryTitleProvider.provide(
+				fileEntry.getGroupId(), fileEntry.getFolderId(),
+				dlOpenerGoogleDriveFileReference.getTitle());
+		}
+
 		try {
 			updateFileEntry(
 				fileEntry.getFileEntryId(),
 				dlOpenerGoogleDriveFileReference.getTitle() +
 					DLOpenerGoogleDriveMimeTypes.getMimeTypeExtension(
 						fileEntry.getMimeType()),
-				fileEntry.getMimeType(),
-				_uniqueFileEntryTitleProvider.provide(
-					fileEntry.getGroupId(), fileEntry.getFolderId(),
-					dlOpenerGoogleDriveFileReference.getTitle()),
-				fileEntry.getDescription(), StringPool.BLANK, false, file,
-				serviceContext);
+				fileEntry.getMimeType(), title, fileEntry.getDescription(),
+				StringPool.BLANK, false, file, serviceContext);
 		}
 		finally {
 			if (file != null) {
