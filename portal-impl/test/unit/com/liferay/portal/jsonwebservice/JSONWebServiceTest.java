@@ -99,28 +99,6 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
-	public void testEnumReturnValue() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/camelfoo/get-isolation");
-
-		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
-			mockHttpServletRequest);
-
-		Assert.assertEquals("DEFAULT", jsonWebServiceAction.invoke());
-	}
-
-	@Test
-	public void testEnumParameter() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/camelfoo/add-isolation/isolation/DEFAULT");
-
-		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
-			mockHttpServletRequest);
-
-		jsonWebServiceAction.invoke();
-	}
-
-	@Test
 	public void testArgumentsMatching() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/hello-world");
@@ -293,6 +271,28 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals(
 			ServiceContext.class.getName(), jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testEnumParameter() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/camelfoo/add-isolation/isolation/DEFAULT");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		jsonWebServiceAction.invoke();
+	}
+
+	@Test
+	public void testEnumReturnValue() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/camelfoo/get-isolation");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("DEFAULT", jsonWebServiceAction.invoke());
 	}
 
 	@Test
