@@ -25,17 +25,8 @@ FileShortcut fileShortcut = null;
 if (row != null) {
 	Object result = row.getObject();
 
-	if (result instanceof AssetEntry) {
-		AssetEntry assetEntry = (AssetEntry)result;
+	if (result instanceof FileEntry) {
 
-		if (assetEntry.getClassName().equals(DLFileEntryConstants.getClassName())) {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
-		}
-		else {
-			fileShortcut = DLAppLocalServiceUtil.getFileShortcut(assetEntry.getClassPK());
-		}
-	}
-	else if (result instanceof FileEntry) {
 		fileEntry = (FileEntry)result;
 	}
 	else if (result instanceof FileShortcut) {

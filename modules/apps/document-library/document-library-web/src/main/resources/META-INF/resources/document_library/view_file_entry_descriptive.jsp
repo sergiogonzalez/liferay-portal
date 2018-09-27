@@ -22,11 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 FileEntry fileEntry = null;
 FileShortcut fileShortcut = null;
 
-if (row.getObject() instanceof FileEntry) {
-	fileEntry = (FileEntry)row.getObject();
+Object result = row.getObject();
+
+if (result instanceof FileEntry) {
+	fileEntry = (FileEntry)result;
 }
-else if (row.getObject() instanceof FileShortcut) {
-	fileShortcut = (FileShortcut)row.getObject();
+else if (result instanceof FileShortcut) {
+	fileShortcut = (FileShortcut)result;
 
 	fileShortcut = fileShortcut.toEscapedModel();
 
@@ -49,6 +51,7 @@ PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 %>
 

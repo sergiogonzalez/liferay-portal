@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.document.library.constants.DLPortletKeys;
@@ -21,7 +22,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -489,15 +488,8 @@ public class DLAdminDisplayContext {
 		else {
 			if (navigation.equals("home")) {
 				if (useAssetEntryQuery) {
-					long[] classNameIds = {
-						PortalUtil.getClassNameId(
-							DLFileEntryConstants.getClassName()),
-						PortalUtil.getClassNameId(
-							DLFileShortcutConstants.getClassName())
-					};
-
 					AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
-						classNameIds, dlSearchContainer);
+						DLFileEntryConstants.getClassName(), dlSearchContainer);
 
 					assetEntryQuery.setEnablePermissions(true);
 					assetEntryQuery.setExcludeZeroViewCount(false);
@@ -507,7 +499,14 @@ public class DLAdminDisplayContext {
 
 					dlSearchContainer.setTotal(total);
 
-					results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+					List<AssetEntry> assetEntries =
+						AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+					for (AssetEntry assetEntry : assetEntries) {
+						results.add(
+							DLAppLocalServiceUtil.getFileEntry(
+								assetEntry.getClassPK()));
+					}
 				}
 				else {
 					long repositoryId = getRepositoryId();
