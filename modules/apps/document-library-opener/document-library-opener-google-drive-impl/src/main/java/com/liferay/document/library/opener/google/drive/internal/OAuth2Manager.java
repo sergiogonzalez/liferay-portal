@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = OAuth2Manager.class
 )
 public class OAuth2Manager {
