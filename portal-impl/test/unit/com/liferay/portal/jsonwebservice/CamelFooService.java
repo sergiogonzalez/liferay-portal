@@ -23,21 +23,21 @@ import com.liferay.portal.kernel.transaction.Isolation;
  */
 public class CamelFooService {
 
+	public static void addIsolation(Isolation isolation) {
+	}
+
 	@JSONWebService("cool-new-world")
 	public static void braveNewWorld() {
+	}
+
+	public static Isolation getIsolation() {
+		return Isolation.DEFAULT;
 	}
 
 	public static void hello() {
 	}
 
 	public static void helloWorld() {
-	}
-
-	public static void addIsolation(Isolation isolation) {
-	}
-
-	public static Isolation getIsolation() {
-		return Isolation.DEFAULT;
 	}
 
 	@JSONWebService(method = HttpMethods.POST)
