@@ -160,7 +160,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append(themeDisplay.getPathContext());
 		sb.append("/documents/");
@@ -172,6 +172,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			URLCodec.encodeURL(html.unescape(fileEntry.getTitle()), true));
 		sb.append(StringPool.SLASH);
 		sb.append(fileEntry.getUuid());
+		sb.append(StringPool.QUESTION);
+		sb.append(fileEntry.getFileEntryId());
 
 		return html.escape(sb.toString());
 	}
