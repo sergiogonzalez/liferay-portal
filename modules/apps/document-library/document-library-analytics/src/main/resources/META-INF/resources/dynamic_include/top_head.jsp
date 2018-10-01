@@ -36,14 +36,15 @@
 				var uri = new Uri(anchor.href);
 
 				var match = pathnameRegexp.exec(uri.getPathname());
+				var fileEntryId = uri.getParameterValue('id');
 
-				if (match) {
+				if (match && fileEntryId) {
 					Analytics.send(
 						'documentDownloaded',
 						'Document',
 						{
 							groupId: match[1],
-							fileEntryId: uri.getParameterValue('id'),
+							fileEntryId: fileEntryId,
 							fileEntryUUID: match[4],
 							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 							title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
