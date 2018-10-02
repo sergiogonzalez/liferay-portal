@@ -19,6 +19,9 @@ package com.liferay.document.library.web.internal.constants;
  */
 public class DLWebKeys {
 
+	public static final String DIRECTORY_INDEXING_ENABLED =
+		"DIRECTORY_INDEXING_ENABLED";
+
 	public static final String DOCUMENT_LIBRARY_ADMIN_DISPLAY_CONTEXT =
 		"DOCUMENT_LIBRARY_ADMIN_DISPLAY_CONTEXT";
 
