@@ -23,3 +23,24 @@ boolean directoryIndexingEnabled = GetterUtil.getBoolean(request.getAttribute(DL
 %>
 
 <aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}, false) %>' label="enable-directory-indexing" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value="<%= directoryIndexingEnabled %>" />
+
+<%
+Set<String> dlFileEntryCreationPermissionPolicyNameSet = (Set)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_CREATION_PERMISSION_POLICY_NAME_SET);
+
+String dlFileEntryCreationPermissionPolicyName = GetterUtil.getString(request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_CREATION_PERMISSION_POLICY_NAME));
+%>
+
+<aui:select label="document-creation-permission-policy" name="TypeSettingsProperties--dlFileEntryCreationPermissionPolicyName--">
+	<aui:option label="none" selected='<%= "none".equals(dlFileEntryCreationPermissionPolicyName) %>' value="none" />
+
+	<%
+	for (String curDLFileEntryCreationPermissionPolicyName : dlFileEntryCreationPermissionPolicyNameSet) {
+	%>
+
+		<aui:option label="<%= curDLFileEntryCreationPermissionPolicyName %>" selected="<%= curDLFileEntryCreationPermissionPolicyName.equals(dlFileEntryCreationPermissionPolicyName) %>" value="<%= curDLFileEntryCreationPermissionPolicyName %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>

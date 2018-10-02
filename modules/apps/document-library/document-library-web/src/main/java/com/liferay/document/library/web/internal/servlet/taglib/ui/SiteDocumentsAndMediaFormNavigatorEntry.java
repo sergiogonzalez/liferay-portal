@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.servlet.taglib.ui;
 
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
-import com.liferay.document.library.web.internal.security.permission.resource.DLPermissionPolicy;
+import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryCreationPermissionPolicy;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -94,6 +94,21 @@ public class SiteDocumentsAndMediaFormNavigatorEntry
 		request.setAttribute(
 			DLWebKeys.DIRECTORY_INDEXING_ENABLED, directoryIndexingEnabled);
 
+		request.setAttribute(
+			DLWebKeys.
+				DOCUMENT_LIBRARY_FILE_ENTRY_CREATION_PERMISSION_POLICY_NAME_SET,
+			_serviceTrackerMap.keySet());
+
+		String dlFileEntryCreationPermissionPolicyName =
+			PropertiesParamUtil.getString(
+				typeSettingsProperties, request,
+				"dlFileEntryCreationPermissionPolicyName");
+
+		request.setAttribute(
+			DLWebKeys.
+				DOCUMENT_LIBRARY_FILE_ENTRY_CREATION_PERMISSION_POLICY_NAME,
+			dlFileEntryCreationPermissionPolicyName);
+
 		super.include(request, response);
 	}
 
@@ -118,7 +133,8 @@ public class SiteDocumentsAndMediaFormNavigatorEntry
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DLPermissionPolicy.class, "permission.policy.name");
+			bundleContext, DLFileEntryCreationPermissionPolicy.class,
+			"file.entry.creation.permission.policy.name");
 	}
 
 	@Deactivate
@@ -131,6 +147,7 @@ public class SiteDocumentsAndMediaFormNavigatorEntry
 		return "/sites_admin/documents_and_media.jsp";
 	}
 
-	private ServiceTrackerMap<String, DLPermissionPolicy> _serviceTrackerMap;
+	private ServiceTrackerMap<String, DLFileEntryCreationPermissionPolicy>
+		_serviceTrackerMap;
 
 }

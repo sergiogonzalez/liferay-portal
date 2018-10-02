@@ -15,9 +15,24 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryCreationPermissionPolicy;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Iván Zaera
@@ -35,8 +50,52 @@ public class EditFileEntryMVCRenderCommand
 	extends GetFileEntryMVCRenderCommand {
 
 	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		String dlFileEntryCreationPermissionPolicyName = GetterUtil.getString(
+			group.getLiveParentTypeSettingsProperty(
+				"dlFileEntryCreationPermissionPolicyName"));
+
+		DLFileEntryCreationPermissionPolicy
+			dlFileEntryCreationPermissionPolicy = null;
+
+		if (Validator.isNotNull(dlFileEntryCreationPermissionPolicyName)) {
+			dlFileEntryCreationPermissionPolicy = _serviceTrackerMap.getService(
+				dlFileEntryCreationPermissionPolicyName);
+		}
+
+		renderRequest.setAttribute(
+			DLFileEntryCreationPermissionPolicy.class.getName(),
+			dlFileEntryCreationPermissionPolicy);
+
+		return super.render(renderRequest, renderResponse);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DLFileEntryCreationPermissionPolicy.class,
+			"file.entry.creation.permission.policy.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	@Override
 	protected String getPath() {
 		return "/document_library/edit_file_entry.jsp";
 	}
+
+	private ServiceTrackerMap<String, DLFileEntryCreationPermissionPolicy>
+		_serviceTrackerMap;
 
 }

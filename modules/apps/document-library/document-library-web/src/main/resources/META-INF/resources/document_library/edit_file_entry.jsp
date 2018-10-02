@@ -485,11 +485,29 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= (fileEntry == null) && dlEditFileEntryDisplayContext.isPermissionsVisible() %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= DLFileEntryConstants.getClassName() %>"
-						/>
-					</aui:fieldset>
+
+					<%
+					DLFileEntryCreationPermissionPolicy dlFileEntryCreationPermissionPolicy = (DLFileEntryCreationPermissionPolicy)request.getAttribute(DLFileEntryCreationPermissionPolicy.class.getName());
+					%>
+
+					<c:choose>
+						<c:when test="<%= dlFileEntryCreationPermissionPolicy != null %>">
+
+							<%
+							DLPermissionPolicyRenderer dlPermissionPolicyRenderer = new DLPermissionPolicyRenderer(renderResponse.getNamespace(), dlFileEntryCreationPermissionPolicy.getModelPermissions(themeDisplay.getScopeGroupId(), folderId));
+
+							dlPermissionPolicyRenderer.renderModelPermissions(request, response);
+							%>
+
+						</c:when>
+						<c:otherwise>
+							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+								<liferay-ui:input-permissions
+									modelName="<%= DLFileEntryConstants.getClassName() %>"
+								/>
+							</aui:fieldset>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 
 				<c:if test="<%= pending %>">
