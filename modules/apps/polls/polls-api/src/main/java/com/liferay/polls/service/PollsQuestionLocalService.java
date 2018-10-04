@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -92,6 +93,13 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void addQuestionResources(long questionId,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
+	public void addQuestionResources(long questionId,
 		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
@@ -99,6 +107,13 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
+	public void addQuestionResources(PollsQuestion question,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	public void addQuestionResources(PollsQuestion question,
 		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
