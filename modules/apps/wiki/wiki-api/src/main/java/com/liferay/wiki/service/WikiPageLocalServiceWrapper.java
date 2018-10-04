@@ -89,6 +89,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public void addPageResources(long nodeId, String title,
 		String[] groupPermissions, String[] guestPermissions)
@@ -105,6 +109,17 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			addGuestPermissions);
 	}
 
+	@Override
+	public void addPageResources(com.liferay.wiki.model.WikiPage page,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiPageLocalService.addPageResources(page, modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public void addPageResources(com.liferay.wiki.model.WikiPage page,
 		String[] groupPermissions, String[] guestPermissions)
