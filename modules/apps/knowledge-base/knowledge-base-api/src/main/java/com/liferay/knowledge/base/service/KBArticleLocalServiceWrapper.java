@@ -80,6 +80,18 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	@Override
 	public void addKBArticleResources(
 		com.liferay.knowledge.base.model.KBArticle kbArticle,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kbArticleLocalService.addKBArticleResources(kbArticle, modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public void addKBArticleResources(
+		com.liferay.knowledge.base.model.KBArticle kbArticle,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleLocalService.addKBArticleResources(kbArticle,
@@ -94,6 +106,10 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public void addKBArticleResources(long kbArticleId,
 		String[] groupPermissions, String[] guestPermissions)
