@@ -1168,16 +1168,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticlePersistence.update(oldKBArticle);
 		}
 
-		// Resources
-
-		if ((serviceContext.getGroupPermissions() != null) ||
-			(serviceContext.getGuestPermissions() != null)) {
-
-			updateKBArticleResources(
-				kbArticle, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
-		}
-
 		// Asset
 
 		updateKBArticleAsset(
