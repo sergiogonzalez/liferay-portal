@@ -568,7 +568,7 @@ public class DLImpl implements DL {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		if ((themeDisplay != null) && absoluteURL) {
 			sb.append(themeDisplay.getPortalURL());
@@ -592,14 +592,15 @@ public class DLImpl implements DL {
 		sb.append(StringPool.SLASH);
 		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));
 
+		sb.append("?id=");
+		sb.append(fileEntry.getFileEntryId());
+
 		if (appendVersion) {
-			sb.append("?version=");
+			sb.append("&version=");
 			sb.append(fileVersion.getVersion());
-			sb.append("&t=");
 		}
-		else {
-			sb.append("?t=");
-		}
+
+		sb.append("&t=");
 
 		Date modifiedDate = fileVersion.getModifiedDate();
 
