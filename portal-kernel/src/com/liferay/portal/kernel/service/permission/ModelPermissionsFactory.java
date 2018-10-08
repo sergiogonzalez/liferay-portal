@@ -40,45 +40,6 @@ public class ModelPermissionsFactory {
 
 	public static final String MODEL_PERMISSIONS_PREFIX = "modelPermissions";
 
-	public static ModelPermissions create(
-		boolean addGroupPermissions, boolean addGuestPermissions,
-		String className) {
-
-		ModelPermissions modelPermissions = new ModelPermissions();
-
-		if (addGroupPermissions) {
-			List<String> modelResourceGroupDefaultActions =
-				ResourceActionsUtil.getModelResourceGroupDefaultActions(
-					className);
-
-			modelPermissions.addRolePermissions(
-				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
-				modelResourceGroupDefaultActions.toArray(
-					new String[modelResourceGroupDefaultActions.size()]));
-		}
-		else {
-			modelPermissions.addRolePermissions(
-				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, new String[0]);
-		}
-
-		if (addGuestPermissions) {
-			List<String> modelResourceGuestDefaultActions =
-				ResourceActionsUtil.getModelResourceGuestDefaultActions(
-					className);
-
-			modelPermissions.addRolePermissions(
-				RoleConstants.GUEST,
-				modelResourceGuestDefaultActions.toArray(
-					new String[modelResourceGuestDefaultActions.size()]));
-		}
-		else {
-			modelPermissions.addRolePermissions(
-				RoleConstants.GUEST, new String[0]);
-		}
-
-		return modelPermissions;
-	}
-
 	public static ModelPermissions create(HttpServletRequest request) {
 		return _createModelPermissions(request.getParameterMap(), null);
 	}
@@ -162,7 +123,25 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions createWithDefaultPermissions(
 		String className) {
 
-		return create(true, true, className);
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		List<String> modelResourceGroupDefaultActions =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(className);
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE,
+			modelResourceGroupDefaultActions.toArray(
+				new String[modelResourceGroupDefaultActions.size()]));
+
+		List<String> modelResourceGuestDefaultActions =
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(className);
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.GUEST,
+			modelResourceGuestDefaultActions.toArray(
+				new String[modelResourceGuestDefaultActions.size()]));
+
+		return modelPermissions;
 	}
 
 	private static String _addClassNamePostfix(
