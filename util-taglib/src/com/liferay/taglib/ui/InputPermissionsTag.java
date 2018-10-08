@@ -48,34 +48,32 @@ public class InputPermissionsTag extends IncludeTag {
 
 		request.setAttribute("liferay-ui:input-permissions:formName", formName);
 
-		if (modelName != null) {
-			List<String> supportedActions =
-				ResourceActionsUtil.getModelResourceActions(modelName);
-			List<String> groupDefaultActions =
-				ResourceActionsUtil.getModelResourceGroupDefaultActions(
-					modelName);
-			List<String> guestDefaultActions =
-				ResourceActionsUtil.getModelResourceGuestDefaultActions(
-					modelName);
-			List<String> guestUnsupportedActions =
-				ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
-					modelName);
+		List<String> supportedActions =
+			ResourceActionsUtil.getModelResourceActions(modelName);
+		List<String> groupDefaultActions =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(
+				modelName);
+		List<String> guestDefaultActions =
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(
+				modelName);
+		List<String> guestUnsupportedActions =
+			ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+				modelName);
 
-			request.setAttribute(
-				"liferay-ui:input-permissions:groupDefaultActions",
-				groupDefaultActions);
-			request.setAttribute(
-				"liferay-ui:input-permissions:guestDefaultActions",
-				guestDefaultActions);
-			request.setAttribute(
-				"liferay-ui:input-permissions:guestUnsupportedActions",
-				guestUnsupportedActions);
-			request.setAttribute(
-				"liferay-ui:input-permissions:modelName", modelName);
-			request.setAttribute(
-				"liferay-ui:input-permissions:supportedActions",
-				supportedActions);
-		}
+		request.setAttribute(
+			"liferay-ui:input-permissions:groupDefaultActions",
+			groupDefaultActions);
+		request.setAttribute(
+			"liferay-ui:input-permissions:guestDefaultActions",
+			guestDefaultActions);
+		request.setAttribute(
+			"liferay-ui:input-permissions:guestUnsupportedActions",
+			guestUnsupportedActions);
+		request.setAttribute(
+			"liferay-ui:input-permissions:modelName", modelName);
+		request.setAttribute(
+			"liferay-ui:input-permissions:supportedActions",
+			supportedActions);
 
 		PortalIncludeUtil.include(pageContext, page);
 
