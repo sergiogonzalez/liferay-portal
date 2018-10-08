@@ -178,15 +178,13 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
-			if (modelPermissions != null) {
-				for (String roleName : modelPermissions.getRoleNames()) {
-					Role role = getRole(companyId, groupId, roleName);
+			for (String roleName : modelPermissions.getRoleNames()) {
+				Role role = getRole(companyId, groupId, roleName);
 
-					setResourcePermissions(
-						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-						primKey, role.getRoleId(),
-						modelPermissions.getActionIds(roleName));
-				}
+				setResourcePermissions(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					primKey, role.getRoleId(),
+					modelPermissions.getActionIds(roleName));
 			}
 		}
 		finally {
