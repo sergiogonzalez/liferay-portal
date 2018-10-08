@@ -128,7 +128,8 @@ public class DDLRecordSetLocalServiceUtil {
 	* @param groupPermissions whether to add group permissions
 	* @param guestPermissions whether to add guest permissions
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addRecordSetResources(DDLRecordSet, ModelPermissions)}
 	*/
 	@Deprecated
 	public static void addRecordSetResources(
