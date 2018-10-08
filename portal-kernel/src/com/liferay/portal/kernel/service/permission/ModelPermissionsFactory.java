@@ -58,17 +58,20 @@ public class ModelPermissionsFactory {
 		for (Map.Entry<String, String[]> entry :
 				modelPermissionsParameterMap.entrySet()) {
 
-			String roleName = entry.getKey();
-
-			Role role = null;
-
 			try {
-				role = RoleLocalServiceUtil.getRole(
-					CompanyThreadLocal.getCompanyId(), roleName);
+				Role role = RoleLocalServiceUtil.getRole(
+					CompanyThreadLocal.getCompanyId(), entry.getKey());
+
+				if (modelPermissions == null) {
+					modelPermissions = new ModelPermissions();
+				}
+
+				modelPermissions.addRolePermissions(
+					role.getName(), entry.getValue());
 			}
 			catch (PortalException pe) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Unable to get role " + roleName);
+					_log.info("Unable to get role " + entry.getKey());
 				}
 
 				// LPS-52675
@@ -76,16 +79,7 @@ public class ModelPermissionsFactory {
 				if (_log.isDebugEnabled()) {
 					_log.debug(pe, pe);
 				}
-
-				continue;
 			}
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			modelPermissions.addRolePermissions(
-				role.getName(), entry.getValue());
 		}
 
 		return modelPermissions;
