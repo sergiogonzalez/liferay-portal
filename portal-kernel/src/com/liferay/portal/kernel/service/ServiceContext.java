@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -397,7 +398,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	@Deprecated
 	public String[] getGroupPermissions() {
 		if (_modelPermissions == null) {
-			return null;
+			return StringPool.EMPTY_ARRAY;
 		}
 
 		return _modelPermissions.getActionIds(
@@ -439,7 +440,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	@Deprecated
 	public String[] getGuestPermissions() {
 		if (_modelPermissions == null) {
-			return null;
+			return StringPool.EMPTY_ARRAY;
 		}
 
 		return _modelPermissions.getActionIds(RoleConstants.GUEST);
