@@ -60,9 +60,7 @@ public class ServiceContextFactory {
 
 		ServiceContext serviceContext = _getInstance(request);
 
-		if (serviceContext.getModelPermissions() == null) {
-			serviceContext.setModelPermissions(new ModelPermissions());
-		}
+		_ensureValidModelPermissions(serviceContext);
 
 		return serviceContext;
 	}
@@ -72,9 +70,7 @@ public class ServiceContextFactory {
 
 		ServiceContext serviceContext = _getInstance(portletRequest);
 
-		if (serviceContext.getModelPermissions() == null) {
-			serviceContext.setModelPermissions(new ModelPermissions());
-		}
+		_ensureValidModelPermissions(serviceContext);
 
 		return serviceContext;
 	}
@@ -88,15 +84,11 @@ public class ServiceContextFactory {
 		// Permissions
 
 		if (serviceContext.getModelPermissions() == null) {
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				request, className);
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			serviceContext.setModelPermissions(modelPermissions);
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(request, className));
 		}
+
+		_ensureValidModelPermissions(serviceContext);
 
 		// Expando
 
@@ -120,15 +112,11 @@ public class ServiceContextFactory {
 		// Permissions
 
 		if (serviceContext.getModelPermissions() == null) {
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				portletRequest, className);
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			serviceContext.setModelPermissions(modelPermissions);
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(portletRequest, className));
 		}
+
+		_ensureValidModelPermissions(serviceContext);
 
 		// Expando
 
@@ -152,15 +140,12 @@ public class ServiceContextFactory {
 		// Permissions
 
 		if (serviceContext.getModelPermissions() == null) {
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				uploadPortletRequest, className);
-
-			if (modelPermissions == null) {
-				modelPermissions = new ModelPermissions();
-			}
-
-			serviceContext.setModelPermissions(modelPermissions);
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(
+					uploadPortletRequest, className));
 		}
+
+		_ensureValidModelPermissions(serviceContext);
 
 		// Expando
 
@@ -173,6 +158,14 @@ public class ServiceContextFactory {
 		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
 		return serviceContext;
+	}
+
+	private static void _ensureValidModelPermissions(
+		ServiceContext serviceContext) {
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(new ModelPermissions());
+		}
 	}
 
 	private static ServiceContext _getInstance(HttpServletRequest request)
