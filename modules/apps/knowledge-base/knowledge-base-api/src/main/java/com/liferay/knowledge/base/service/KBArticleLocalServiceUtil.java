@@ -92,7 +92,8 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addKBArticleResources(KBArticle, ModelPermissions)}
 	*/
 	@Deprecated
 	public static void addKBArticleResources(
@@ -112,7 +113,8 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addKBArticleResources(KBArticle, ModelPermissions)}
 	*/
 	@Deprecated
 	public static void addKBArticleResources(long kbArticleId,

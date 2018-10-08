@@ -63,7 +63,8 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
 	*/
 	@Deprecated
 	public static void addNodeResources(long nodeId, String[] groupPermissions,
@@ -86,7 +87,8 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
 	*/
 	@Deprecated
 	public static void addNodeResources(com.liferay.wiki.model.WikiNode node,

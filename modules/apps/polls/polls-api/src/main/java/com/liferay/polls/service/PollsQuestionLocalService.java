@@ -96,7 +96,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addQuestionResources(long, ModelPermissions)}
 	*/
 	@Deprecated
 	public void addQuestionResources(long questionId,
@@ -111,7 +112,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addQuestionResources(PollsQuestion, ModelPermissions)}
 	*/
 	@Deprecated
 	public void addQuestionResources(PollsQuestion question,

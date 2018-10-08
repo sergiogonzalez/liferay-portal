@@ -99,7 +99,8 @@ public interface KBArticleLocalService extends BaseLocalService,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addKBArticleResources(KBArticle, ModelPermissions)}
 	*/
 	@Deprecated
 	public void addKBArticleResources(KBArticle kbArticle,
@@ -111,7 +112,8 @@ public interface KBArticleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addKBArticleResources(KBArticle, ModelPermissions)}
 	*/
 	@Deprecated
 	public void addKBArticleResources(long kbArticleId,

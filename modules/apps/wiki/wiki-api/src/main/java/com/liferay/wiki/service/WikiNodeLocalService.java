@@ -79,7 +79,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		boolean addGuestPermissions) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
 	*/
 	@Deprecated
 	public void addNodeResources(long nodeId, String[] groupPermissions,
@@ -92,7 +93,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
 	*/
 	@Deprecated
 	public void addNodeResources(WikiNode node, String[] groupPermissions,
