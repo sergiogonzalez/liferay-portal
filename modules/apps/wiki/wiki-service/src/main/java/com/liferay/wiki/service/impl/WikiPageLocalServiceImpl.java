@@ -407,7 +407,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #addPageResources(WikiPage, ModelPermissions)}
 	 */
 	@Deprecated
 	@Override
@@ -445,7 +446,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #addPageResources(WikiPage, ModelPermissions)}
 	 */
 	@Deprecated
 	@Override
