@@ -177,17 +177,22 @@ public class ModelPermissionsFactory {
 	private static ModelPermissions _createModelPermissions(
 		HttpServletRequest request, String className) {
 
+		return _createModelPermissions(request.getParameterMap(), className);
+	}
+
+	private static ModelPermissions _createModelPermissions(
+		Map<String, String[]> parameterMap, String className) {
+
 		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				request.getParameterMap(), className);
+			_getModelPermissionsParameterMap(parameterMap, className);
 
 		if (!modelPermissionsParameterMap.isEmpty()) {
 			return create(modelPermissionsParameterMap);
 		}
 
-		String[] groupPermissions = request.getParameterValues(
+		String[] groupPermissions = parameterMap.get(
 			_addClassNamePostfix("groupPermissions", className));
-		String[] guestPermissions = request.getParameterValues(
+		String[] guestPermissions = parameterMap.get(
 			_addClassNamePostfix("guestPermissions", className));
 
 		if ((groupPermissions != null) || (guestPermissions != null)) {
@@ -204,28 +209,8 @@ public class ModelPermissionsFactory {
 	private static ModelPermissions _createModelPermissions(
 		PortletRequest portletRequest, String className) {
 
-		Map<String, String[]> modelPermissionsParameterMap =
-			_getModelPermissionsParameterMap(
-				portletRequest.getParameterMap(), className);
-
-		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
-		}
-
-		String[] groupPermissions = portletRequest.getParameterValues(
-			_addClassNamePostfix("groupPermissions", className));
-		String[] guestPermissions = portletRequest.getParameterValues(
-			_addClassNamePostfix("guestPermissions", className));
-
-		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
-		}
-
-		if (Validator.isNull(className)) {
-			return null;
-		}
-
-		return createWithDefaultPermissions(className);
+		return _createModelPermissions(
+			portletRequest.getParameterMap(), className);
 	}
 
 	private static Map<String, String[]> _getModelPermissionsParameterMap(
