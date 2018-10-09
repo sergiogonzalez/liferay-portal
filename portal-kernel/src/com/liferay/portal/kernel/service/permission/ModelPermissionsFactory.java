@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -58,28 +57,21 @@ public class ModelPermissionsFactory {
 		for (Map.Entry<String, String[]> entry :
 				modelPermissionsParameterMap.entrySet()) {
 
-			try {
-				Role role = RoleLocalServiceUtil.getRole(
-					CompanyThreadLocal.getCompanyId(), entry.getKey());
+			Role role = RoleLocalServiceUtil.fetchRole(
+				CompanyThreadLocal.getCompanyId(), entry.getKey());
 
-				if (modelPermissions == null) {
-					modelPermissions = new ModelPermissions();
-				}
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to get role " + entry.getKey());
 
-				modelPermissions.addRolePermissions(
-					role.getName(), entry.getValue());
+				continue;
 			}
-			catch (PortalException pe) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to get role " + entry.getKey());
-				}
 
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
+			if (modelPermissions == null) {
+				modelPermissions = new ModelPermissions();
 			}
+
+			modelPermissions.addRolePermissions(
+				role.getName(), entry.getValue());
 		}
 
 		return modelPermissions;
