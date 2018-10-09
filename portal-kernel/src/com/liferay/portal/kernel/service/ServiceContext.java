@@ -113,8 +113,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setCurrentURL(getCurrentURL());
 		serviceContext.setExpandoBridgeAttributes(getExpandoBridgeAttributes());
 		serviceContext.setFailOnPortalException(isFailOnPortalException());
-		serviceContext.setGroupPermissions(getGroupPermissions());
-		serviceContext.setGuestPermissions(getGuestPermissions());
 
 		if (_headers != null) {
 			serviceContext.setHeaders(_headers);
@@ -206,13 +204,17 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		String[] groupPermissions = groupPermissionsList.toArray(
 			new String[groupPermissionsList.size()]);
-
-		setGroupPermissions(groupPermissions);
-
 		String[] guestPermissions = guestPermissionsList.toArray(
 			new String[guestPermissionsList.size()]);
 
-		setGuestPermissions(guestPermissions);
+		ModelPermissions modelPermissions = getModelPermissions();
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
+		modelPermissions.addRolePermissions(
+			RoleConstants.GUEST, guestPermissions);
+
+		setModelPermissions(modelPermissions);
 	}
 
 	/**
@@ -382,7 +384,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * resource.
 	 *
 	 * @return the specific group permissions
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
+	@Deprecated
 	public String[] getGroupPermissions() {
 		return _modelPermissions.getActionIds(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE);
@@ -418,7 +422,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * resource.
 	 *
 	 * @return the specific guest permissions
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
+	@Deprecated
 	public String[] getGuestPermissions() {
 		return _modelPermissions.getActionIds(RoleConstants.GUEST);
 	}
@@ -1000,14 +1006,6 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		setFailOnPortalException(serviceContext.isFailOnPortalException());
 
-		if (serviceContext.getGroupPermissions() != null) {
-			setGroupPermissions(serviceContext.getGroupPermissions());
-		}
-
-		if (serviceContext.getGuestPermissions() != null) {
-			setGuestPermissions(serviceContext.getGuestPermissions());
-		}
-
 		if (serviceContext._headers != null) {
 			setHeaders(serviceContext._headers);
 		}
@@ -1021,6 +1019,10 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		if (Validator.isNotNull(serviceContext.getLayoutURL())) {
 			setLayoutURL(serviceContext.getLayoutURL());
+		}
+
+		if (serviceContext.getModelPermissions() != null) {
+			setModelPermissions(serviceContext.getModelPermissions());
 		}
 
 		if (serviceContext.getModifiedDate() != null) {
@@ -1311,7 +1313,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * manipulates the resource.
 	 *
 	 * @param groupPermissions the permissions (optionally <code>null</code>)
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
+	@Deprecated
 	public void setGroupPermissions(String[] groupPermissions) {
 		_modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
@@ -1324,7 +1328,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *
 	 * @param guestPermissions the guest permissions (optionally
 	 *        <code>null</code>)
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
+	@Deprecated
 	public void setGuestPermissions(String[] guestPermissions) {
 		_modelPermissions.addRolePermissions(
 			RoleConstants.GUEST, guestPermissions);
@@ -1617,7 +1623,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _languageId;
 	private String _layoutFullURL;
 	private String _layoutURL;
-	private ModelPermissions _modelPermissions = new ModelPermissions();
+	private ModelPermissions _modelPermissions;
 	private Date _modifiedDate;
 	private String _pathFriendlyURLPrivateGroup;
 	private String _pathFriendlyURLPrivateUser;
