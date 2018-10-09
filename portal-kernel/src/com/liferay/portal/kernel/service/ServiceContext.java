@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -122,8 +123,12 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setLanguageId(getLanguageId());
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
 		serviceContext.setLayoutURL(getLayoutURL());
-		serviceContext.setModelPermissions(
-			(ModelPermissions)_modelPermissions.clone());
+
+		if (_modelPermissions != null) {
+			serviceContext.setModelPermissions(
+				(ModelPermissions)_modelPermissions.clone());
+		}
+
 		serviceContext.setModifiedDate(getModifiedDate());
 		serviceContext.setPathFriendlyURLPrivateGroup(
 			getPathFriendlyURLPrivateGroup());
@@ -208,6 +213,10 @@ public class ServiceContext implements Cloneable, Serializable {
 			new String[guestPermissionsList.size()]);
 
 		ModelPermissions modelPermissions = getModelPermissions();
+
+		if (modelPermissions == null) {
+			modelPermissions = new ModelPermissions();
+		}
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
@@ -388,6 +397,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	@Deprecated
 	public String[] getGroupPermissions() {
+		if (_modelPermissions == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
 		return _modelPermissions.getActionIds(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE);
 	}
@@ -426,6 +439,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	@Deprecated
 	public String[] getGuestPermissions() {
+		if (_modelPermissions == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
 		return _modelPermissions.getActionIds(RoleConstants.GUEST);
 	}
 
@@ -1317,6 +1334,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	@Deprecated
 	public void setGroupPermissions(String[] groupPermissions) {
+		if (_modelPermissions == null) {
+			_modelPermissions = new ModelPermissions();
+		}
+
 		_modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
 	}
@@ -1332,6 +1353,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	@Deprecated
 	public void setGuestPermissions(String[] guestPermissions) {
+		if (_modelPermissions == null) {
+			_modelPermissions = new ModelPermissions();
+		}
+
 		_modelPermissions.addRolePermissions(
 			RoleConstants.GUEST, guestPermissions);
 	}
